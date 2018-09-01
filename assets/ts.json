@@ -1,0 +1,570 @@
+{ "columns":0,
+ "grid":
+    {
+     "height":1,
+     "orientation":"orthogonal",
+     "width":1
+    },
+ "margin":0,
+ "name":"123",
+ "spacing":0,
+ "tilecount":92,
+ "tileheight":394,
+ "tiles":
+    {
+     "0":
+        {
+         "image":"demomap\/tiles\/Tile (1).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "1":
+        {
+         "image":"demomap\/tiles\/Tile (2).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "10":
+        {
+         "image":"demomap\/tiles\/Tile (11).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "11":
+        {
+         "image":"demomap\/tiles\/Tile (12).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "12":
+        {
+         "image":"demomap\/tiles\/Tile (13).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "13":
+        {
+         "image":"demomap\/tiles\/Tile (14).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "14":
+        {
+         "image":"demomap\/tiles\/Tile (15).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "15":
+        {
+         "image":"demomap\/tiles\/Tile (16).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "16":
+        {
+         "image":"demomap\/tiles\/Tile (17).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "17":
+        {
+         "image":"demomap\/tiles\/Tile (18).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "18":
+        {
+         "image":"demomap\/tiles\/Tile (19).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "19":
+        {
+         "image":"demomap\/tiles\/Tile (19).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "2":
+        {
+         "image":"demomap\/tiles\/Tile (3).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "20":
+        {
+         "image":"demomap\/tiles\/Tile (21).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "21":
+        {
+         "image":"demomap\/tiles\/Tile (22).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "22":
+        {
+         "image":"demomap\/tiles\/Tile (23).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "23":
+        {
+         "image":"demomap\/tiles\/Tile (24).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "24":
+        {
+         "image":"demomap\/tiles\/Tile (25).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "25":
+        {
+         "image":"demomap\/tiles\/Tile (26).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "26":
+        {
+         "image":"demomap\/tiles\/Tile (27).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "27":
+        {
+         "image":"demomap\/tiles\/Tile (28).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "28":
+        {
+         "image":"demomap\/tiles\/Tile (29).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "29":
+        {
+         "image":"demomap\/tiles\/Tile (30).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "3":
+        {
+         "image":"demomap\/tiles\/Tile (4).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "30":
+        {
+         "image":"demomap\/tiles\/Tile (31).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "31":
+        {
+         "image":"demomap\/tiles\/Tile (32).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "32":
+        {
+         "image":"demomap\/tiles\/Tile (33).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "33":
+        {
+         "image":"demomap\/tiles\/Tile (34).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "34":
+        {
+         "image":"demomap\/tiles\/Tile (35).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "35":
+        {
+         "image":"demomap\/tiles\/Tile (36).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "36":
+        {
+         "image":"demomap\/tiles\/Tile (37).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "37":
+        {
+         "image":"demomap\/tiles\/Tile (38).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "38":
+        {
+         "image":"demomap\/tiles\/Tile (39).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "39":
+        {
+         "image":"demomap\/tiles\/Tile (40).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "4":
+        {
+         "image":"demomap\/tiles\/Tile (5).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "40":
+        {
+         "image":"demomap\/tiles\/Tile (41).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "41":
+        {
+         "image":"demomap\/tiles\/Tile (42).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "42":
+        {
+         "image":"demomap\/tiles\/Tile (43).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "43":
+        {
+         "image":"demomap\/tiles\/Tile (44).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "44":
+        {
+         "image":"demomap\/tiles\/Tile (45).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "45":
+        {
+         "image":"demomap\/tiles\/Tile (46).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "46":
+        {
+         "image":"demomap\/tiles\/Tile (47).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "47":
+        {
+         "image":"demomap\/tiles\/Tile (48).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "48":
+        {
+         "image":"demomap\/tiles\/Tile (49).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "49":
+        {
+         "image":"demomap\/tiles\/Tile (50).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "5":
+        {
+         "image":"demomap\/tiles\/Tile (6).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "50":
+        {
+         "image":"demomap\/tiles\/Tile (51).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "51":
+        {
+         "image":"demomap\/tiles\/Tile (52).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "52":
+        {
+         "image":"demomap\/tiles\/Tile (53).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "53":
+        {
+         "image":"demomap\/tiles\/Tile (54).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "54":
+        {
+         "image":"demomap\/tiles\/Tile (55).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "55":
+        {
+         "image":"demomap\/tiles\/Tile (56).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "56":
+        {
+         "image":"demomap\/tiles\/Tile (57).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "57":
+        {
+         "image":"demomap\/tiles\/Tile (58).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "58":
+        {
+         "image":"demomap\/tiles\/Tile (59).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "59":
+        {
+         "image":"demomap\/tiles\/Tile (60).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "6":
+        {
+         "image":"demomap\/tiles\/Tile (7).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "60":
+        {
+         "image":"demomap\/tiles\/Tile (61).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "61":
+        {
+         "image":"demomap\/tiles\/Tile (62).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "62":
+        {
+         "image":"demomap\/tiles\/Tile (63).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "63":
+        {
+         "image":"demomap\/tiles\/Tile (64).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "64":
+        {
+         "image":"demomap\/tiles\/Tile (65).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "65":
+        {
+         "image":"demomap\/tiles\/Tile (66).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "66":
+        {
+         "image":"demomap\/tiles\/Tile (67).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "67":
+        {
+         "image":"demomap\/tiles\/Tile (68).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "68":
+        {
+         "image":"demomap\/tiles\/Tile (69).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "69":
+        {
+         "image":"demomap\/tiles\/Tile (70).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "7":
+        {
+         "image":"demomap\/tiles\/Tile (8).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "70":
+        {
+         "image":"demomap\/tiles\/Tile (71).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "71":
+        {
+         "image":"demomap\/tiles\/Tile (72).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "72":
+        {
+         "image":"demomap\/tiles\/Tile (73).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "73":
+        {
+         "image":"demomap\/tiles\/Tile (74).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "74":
+        {
+         "image":"demomap\/tiles\/Tile (75).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "75":
+        {
+         "image":"demomap\/tiles\/Tile (76).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "76":
+        {
+         "image":"demomap\/tiles\/Tile (77).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "77":
+        {
+         "image":"demomap\/tiles\/Tile (78).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "78":
+        {
+         "image":"demomap\/tiles\/Tile (79).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "79":
+        {
+         "image":"demomap\/tiles\/Tile (80).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "8":
+        {
+         "image":"demomap\/tiles\/Tile (9).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "80":
+        {
+         "image":"demomap\/tiles\/Tile (81).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "81":
+        {
+         "image":"demomap\/tiles\/Tile (82).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "82":
+        {
+         "image":"demomap\/tiles\/Tile (83).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "83":
+        {
+         "image":"demomap\/\u041d\u043e\u0432\u0430\u044f \u043f\u0430\u043f\u043a\u0430\/Barrel (2).png",
+         "imageheight":74,
+         "imagewidth":57
+        },
+     "84":
+        {
+         "image":"demomap\/\u041d\u043e\u0432\u0430\u044f \u043f\u0430\u043f\u043a\u0430\/Pot (1).png",
+         "imageheight":61,
+         "imagewidth":45
+        },
+     "85":
+        {
+         "image":"demomap\/\u041d\u043e\u0432\u0430\u044f \u043f\u0430\u043f\u043a\u0430\/Skeleton1.png",
+         "imageheight":46,
+         "imagewidth":56
+        },
+     "86":
+        {
+         "image":"demomap\/\u041d\u043e\u0432\u0430\u044f \u043f\u0430\u043f\u043a\u0430\/Skeleton2.png",
+         "imageheight":37,
+         "imagewidth":53
+        },
+     "87":
+        {
+         "image":"demomap\/\u041d\u043e\u0432\u0430\u044f \u043f\u0430\u043f\u043a\u0430\/Torch (3).png",
+         "imageheight":75,
+         "imagewidth":41
+        },
+     "88":
+        {
+         "image":"demomap\/\u041d\u043e\u0432\u0430\u044f \u043f\u0430\u043f\u043a\u0430\/4.png",
+         "imageheight":62,
+         "imagewidth":68
+        },
+     "89":
+        {
+         "image":"demomap\/\u041d\u043e\u0432\u0430\u044f \u043f\u0430\u043f\u043a\u0430\/3.png",
+         "imageheight":72,
+         "imagewidth":76
+        },
+     "9":
+        {
+         "image":"demomap\/tiles\/Tile (10).png",
+         "imageheight":64,
+         "imagewidth":64
+        },
+     "90":
+        {
+         "image":"demomap\/\u041d\u043e\u0432\u0430\u044f \u043f\u0430\u043f\u043a\u0430\/Banner (1).png",
+         "imageheight":66,
+         "imagewidth":46
+        },
+     "91":
+        {
+         "image":"demomap\/\u041d\u043e\u0432\u0430\u044f \u043f\u0430\u043f\u043a\u0430\/Banner (2).png",
+         "imageheight":98,
+         "imagewidth":46
+        }
+    },
+ "tilewidth":304,
+ "type":"tileset"
+}
