@@ -1,56 +1,72 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
-		<meta charset="utf-8" />
-		<title>Learn Game Development at ZENVA.com</title>
-<link rel="stylesheet" type="text/css" href="css/style.css">
-		<script type="text/javascript" src="js/phaser.min.js"></script>
-		<script type="text/javascript" src="js/maze.js"></script>
-		<script type="text/javascript" src="js/pegman.js"></script>
-		<script type="text/javascript" src="js/Boot.js"></script>
-		<script type="text/javascript" src="js/Preload.js"></script>
-		<script type="text/javascript" src="js/Game.js"></script>
+<head>
+    <meta charset="utf-8" />
+    <title>Learn Game Development at ZENVA.com</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script type="text/javascript" src="js/phaser.min.js"></script>
+    <script type="text/javascript" src="js/maze.js"></script>
+    <script type="text/javascript" src="js/pegman.js"></script>
+    <script type="text/javascript" src="js/Boot.js"></script>
+    <script type="text/javascript" src="js/Preload.js"></script>
+    <script type="text/javascript" src="js/Game.js"></script>
+    <script type="text/javascript" src="js/blockly/blockly_compressed.js"></script>
+    <script type="text/javascript" src="js/blockly/blocks_compressed.js"></script>
+    <script type="text/javascript" src="js/blockly/javascript_compressed.js"></script>
+    <script type="text/javascript" src="js/blockly/msg/js/en.js"></script>
+    <script type="text/javascript" src="js/blockly/blocks.js"></script>
+    <style>
+    body {
+        padding: 0px;
+        margin: 0px;
+    }
+    </style>
+</head>
 
-		
+<body onload="init();">
+    <div id="canvasContainer">
+    </div>
 
-		<style>
-		  body {
-		    padding: 0px;
-		    margin: 0px;
-		  }
-		  </style>
-	</head>
+    <xml id="toolbox" style="display: none">
+        <!--<block type="controls_if"></block>-->
+                <block type="maze_up"></block>
+        <block type="maze_down"></block>
+        <block type="maze_left"></block>
+        <block type="maze_right"></block>
+        <block type="controls_repeat_ext"></block>
+        <block type="logic_compare"></block>
+        <block type="math_number"></block>
+        <block type="math_arithmetic"></block>
 
-	<body onload="init();">  
-	<div id="canvasContainer">
-		
-	</div>
-	
-	<div id="editor">
-	</div>
-	
-	<table width="400">
-	<tr>
-		<td style="width: 190px; text-align: center; vertical-align: top;">
-			<button id="codeButton" class="notext" title="Code">
-				<img src="./assets/1x1.gif" class="code icon21">
-			</button>
-			<button id="linkButton" class="notext" title="Link">
-				<img src="./assets/1x1.gif" class="link icon21">
-			</button>
-		</td>
-		<td>
-			<button id="runButton" class="primary" title="Run">
-				<img src="./assets/1x1.gif" class="run icon21"> Run Program
-			</button>
-			<button id="resetButton" class="primary" style="display: none" title="Reset">
-				<img src="./assets/1x1.gif" class="stop icon21"> Reset
-			</button>
-		</td>
-	</tr>
-	</table>
-		<!-- include the main game file -->
-		<script src="js/main.js"></script>
-	</body>
+    </xml>
+    <table width="400">
+        <tr>
+            <td style="width: 190px; text-align: center; vertical-align: top;">
+                <button id="codeButton" class="notext" title="Code">
+                    <img src="./assets/1x1.gif" class="code icon21">
+                </button>
+                <button id="linkButton" class="notext" title="Link">
+                    <img src="./assets/1x1.gif" class="link icon21">
+                </button>
+            </td>
+            <td>
+                <button id="runButton" class="primary" title="Run">
+                    <img src="./assets/1x1.gif" class="run icon21"> Run Program
+                </button>
+                <button id="resetButton" class="primary" style="display: none" title="Reset">
+                    <img src="./assets/1x1.gif" class="stop icon21"> Reset
+                </button>
+            </td>
+        </tr>
+    </table>
+        <div id="blockly_editor" style="height: 500px; width: 500px; opacity: 1;"></div>
+    <!-- include the main game file -->
+    <script src="js/main.js"></script>
+    <script type="text/javascript">
+
+    var workspace = Blockly.inject('blockly_editor', { toolbox: document.getElementById('toolbox') });
+    </script>
+</body>
+
 </html>

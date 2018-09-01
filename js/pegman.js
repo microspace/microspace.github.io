@@ -31,8 +31,9 @@ var Pegman = {
 		this.postReset();
 	},
 
-	nextAction: function(action) {
-		this.pegmanActions.push(action);
+	nextAction: function(action, step) {
+		var actionobject = {action: action, stepcount: step};
+		this.pegmanActions.push(actionobject);
 	},
 
 	play: function() {
@@ -51,25 +52,26 @@ var Pegman = {
 			this.anim = null;
 		}
 
-		var action = this.pegmanActions.shift();
-		// console.log(action);
+		var actionobject = this.pegmanActions.shift();
+		var action = actionobject.action;
+		var stepcount = actionobject.stepcount;
 		switch (action) {
             case "up":
                 var step = Maze.getStepInDirection["NORTH"];
-                this.moveNSWE(this.posX + step[0], this.posY + step[1]);
+                this.moveNSWE(this.posX + step[0] * stepcount, this.posY + step[1] * stepcount, stepcount);
                 break;
             case "down":
                 var step = Maze.getStepInDirection["SOUTH"];
-                this.moveNSWE(this.posX + step[0], this.posY + step[1]);
+                this.moveNSWE(this.posX + step[0] * stepcount, this.posY + step[1] * stepcount, stepcount);
                 break;
 			case "left":
                 var step = Maze.getStepInDirection["WEST"];
                 //this.pegmanSprite.scale.x *= -1;
-                this.moveNSWE(this.posX + step[0], this.posY + step[1]);
+                this.moveNSWE(this.posX + step[0] * stepcount, this.posY + step[1] * stepcount, stepcount);
                 break;
 			case "right":
                 var step = Maze.getStepInDirection["EAST"];
-                this.moveNSWE(this.posX + step[0], this.posY + step[1]);
+                this.moveNSWE(this.posX + step[0] * stepcount, this.posY + step[1] * stepcount, stepcount);
                 break;
 		}
 	},
@@ -119,31 +121,27 @@ Pegman.animateFailMoveBy = function(stepX, stepY) {
 	}
 
 
-Pegman.moveNSWE = function(x, y) {
+Pegman.moveNSWE = function(x, y, stepcount = 1) {
     this.posX = x;
     this.posY = y;
-    //console.log("d");
-    this.anim = this.pegmanSprite.animations.play("NORTH");
 
+    this.anim = this.pegmanSprite.animations.play("NORTH");
     this.tween = TopDownGame.game.add.tween(this.pegmanSprite);
     this.tween.to({
         x: this.posX * Maze.SQUARE_SIZE,
         y: this.posY * Maze.SQUARE_SIZE,
-    }, 500, Phaser.Easing.Linear.In);
+    }, 500 * stepcount, Phaser.Easing.Linear.In);
     this.tween.onComplete.addOnce(function() {
         //this.pegmanSprite.animations.stop(null, true);
         this.pegmanSprite.animations.play("STAND");
         this.playNextAction();
-
     }, this);
     this.tween.start();
 },
 
 Pegman.moveTo = function(x, y, d) {
-	console.log(x);
 	this.posX = x;
 	this.posY = y;
-    //console.log("d");
     this.anim = this.pegmanSprite.animations.play(d);
 
 	this.tween = game.add.tween(this.pegmanSprite);

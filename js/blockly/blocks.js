@@ -1,73 +1,114 @@
 'use strict';
 
-Blockly.Blocks['maze_moveForward'] = {
+Blockly.Blocks['maze_up'] = {
     /**
      * Block for moving forward.
      * @this Blockly.Block
      */
     init: function() {
         this.jsonInit({
-            "message0": 'Вперёд',
+            "message0": 'Вверх %1',
             "previousStatement": null,
             "nextStatement": null,
-            "tooltip": 'Maze_moveForwardTooltip'
+            "tooltip": 'maze_turnRightTooltip',
+            "args0": [{
+                "type": "field_number",
+                "name": "STEPCOUNT",
+                "value": 2
+            }]
         });
     }
 };
 
-Blockly.JavaScript['maze_moveForward'] = function(block) {
+Blockly.JavaScript['maze_up'] = function(block) {
     // Generate JavaScript for moving forward.
-    return 'Pegman.nextAction("forward");\n';
+    var operator = block.getFieldValue('STEPCOUNT');
+    return 'Pegman.nextAction("up", ' + operator + ');\n';
 };
 
 
 
 
-Blockly.Blocks['maze_turnLeft'] = {
+Blockly.Blocks['maze_down'] = {
     /**
      * Block for moving forward.
      * @this Blockly.Block
      */
     init: function() {
         this.jsonInit({
-            "message0": 'Налево',
+            "message0": 'Вниз %1',
             "previousStatement": null,
             "nextStatement": null,
-            "tooltip": 'Maze_turnLeftTooltip'
+            "tooltip": 'maze_turnRightTooltip',
+            "args0": [{
+                "type": "field_number",
+                "name": "STEPCOUNT",
+                "value": 2
+            }]
         });
     }
 };
 
-Blockly.JavaScript['maze_turnLeft'] = function(block) {
+Blockly.JavaScript['maze_down'] = function(block) {
     // Generate JavaScript for moving forward.
-    return 'Pegman.nextAction("right");\n';
+    var operator = block.getFieldValue('STEPCOUNT');
+    return 'Pegman.nextAction("down", ' + operator + ');\n';
 };
 
 
 
 
 
-Blockly.Blocks['maze_turnRight'] = {
+Blockly.Blocks['maze_right'] = {
     /**
      * Block for moving forward.
      * @this Blockly.Block
      */
     init: function() {
         this.jsonInit({
-            "message0": 'Направо',
+            "message0": 'Направо %1',
             "previousStatement": null,
             "nextStatement": null,
-            "tooltip": 'maze_turnRightTooltip'
+            "tooltip": 'maze_turnRightTooltip',
+            "args0": [{
+                "type": "field_number",
+                "name": "STEPCOUNT",
+                "value": 2
+            }]
         });
     }
 };
 
-Blockly.JavaScript['maze_turnRight'] = function(block) {
+Blockly.JavaScript['maze_right'] = function(block) {
     // Generate JavaScript for moving forward.
-    return 'Pegman.nextAction("left");\n';
+    var operator = block.getFieldValue('STEPCOUNT');
+    return 'Pegman.nextAction("right", ' + operator + ');\n';
 };
 
 
 
+Blockly.Blocks['maze_left'] = {
+    /**
+     * Block for moving forward.
+     * @this Blockly.Block
+     */
+    init: function() {
+        this.jsonInit({
+            "message0": 'Налево %1',
+            "previousStatement": null,
+            "nextStatement": null,
+            "tooltip": 'maze_turnRightTooltip',
+            "args0": [{
+                "type": "field_number",
+                "name": "STEPCOUNT",
+                "value": 2
+            }]
+        });
+    }
+};
 
-
+Blockly.JavaScript['maze_left'] = function(block) {
+    // Generate JavaScript for moving forward.
+    var operator = block.getFieldValue('STEPCOUNT');
+    return 'Pegman.nextAction("left", ' + operator + ');\n';
+};

@@ -23,11 +23,11 @@ Maze.DirectionType = {
 };
 
 
-Maze.ROWS = 40;
-Maze.COLS = 20;
-Maze.SQUARE_SIZE = 16;
-Maze.PEGMAN_HEIGHT = 16;
-Maze.PEGMAN_WIDTH = 16;
+Maze.ROWS = 13;
+Maze.COLS = 13;
+Maze.SQUARE_SIZE = 64;
+Maze.PEGMAN_HEIGHT = 64;
+Maze.PEGMAN_WIDTH = 64;
 
 Maze.MAZE_WIDTH = Maze.SQUARE_SIZE * Maze.COLS;
 Maze.MAZE_HEIGHT = Maze.SQUARE_SIZE * Maze.ROWS;
@@ -36,7 +36,7 @@ Maze.MAZE_HEIGHT = Maze.SQUARE_SIZE * Maze.ROWS;
 Maze.start_ = {};
 Maze.finish_ = {};
 
-Maze.start_ = {x: 2, y: 4};
+Maze.start_ = {x: 3, y: 4};
 
 Maze.finish_ = {x: 60, y: 60};
 

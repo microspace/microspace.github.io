@@ -1,19 +1,11 @@
 'use strict';
 
 var TopDownGame = TopDownGame || {};
-
-TopDownGame.game = new Phaser.Game(160, 160, Phaser.AUTO, 'canvasContainer');
-
+TopDownGame.game = new Phaser.Game(500, 500, Phaser.AUTO, 'canvasContainer', null, false, false);
 TopDownGame.game.state.add('Boot', TopDownGame.Boot);
 TopDownGame.game.state.add('Preload', TopDownGame.Preload);
 TopDownGame.game.state.add('Game', TopDownGame.Game);
-
 TopDownGame.game.state.start('Boot');
-
-
-
-
-
 
 
 var init = function(){
@@ -22,8 +14,6 @@ var init = function(){
 
 	//initDemo();
 };
-
-
 
 
 
@@ -40,8 +30,13 @@ var runProgram = function() {
 	resetButton.disabled = false;
 	
 
+    var code = Blockly.JavaScript.workspaceToCode(workspace);
 
-	Pegman.nextAction("left");
+    try {
+        eval(code);
+    } catch (e) {
+        alert(e);
+    }
 	Pegman.play();
 };
 
@@ -51,6 +46,7 @@ var resetProgram = function() {
 	document.getElementById('resetButton').style.display = 'none';
 	// Prevent double-clicks or double-taps.
 	runButton.disabled = false;
+	flag = false;
 
 	Pegman.reset();
 }
