@@ -68,7 +68,7 @@ var Pegman = {
                 break;
 			case "left":
                 var step = Maze.getStepInDirection["WEST"];
-                //this.pegmanSprite.scale.x *= -1;
+                this.pegmanSprite.scale.x *= -1;
                 this.moveNSWE(this.posX + step[0] * stepcount, this.posY + step[1] * stepcount, stepcount);
                 break;
 			case "right":

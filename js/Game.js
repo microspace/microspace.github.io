@@ -2,8 +2,8 @@ var TopDownGame = TopDownGame || {};
 var player;
 var flag;
 var weapon;
-var sprite = null;
 var explosion;
+var items;
 //title screen
 TopDownGame.Game = function() {};
 
@@ -12,17 +12,19 @@ TopDownGame.Game.prototype = {
         this.map = this.game.add.tilemap('level1');
 
         //the first parameter is the tileset name as specified in Tiled, the second is the key to the asset
-        this.map.addTilesetImage('tileSheet30-08ver64px', 'gameTiles');
+        this.map.addTilesetImage('tileSheet04-01', 'gameTiles');
 
         //create layer
         this.flour = this.map.createLayer('flour');
         this.blockLayer = this.map.createLayer('blockLayer');
+        this.onBlockLayer = this.map.createLayer('onBlockLayer');
+        this.onFlour = this.map.createLayer('onFlour');
 
         //create player
-        var result = this.findObjectsByType('playerStartPosition', this.map, 'objectsLayer')
+        var result = this.findObjectsByType('playerStartPosition', this.map, 'playerLayer')
         player = this.game.add.sprite(result[0].x, result[0].y, 'pegman');
-        player.scale.setTo(0.4, 0.4);
-        player.anchor.setTo(1, 1);
+        player.scale.setTo(0.3, 0.3);
+        player.anchor.setTo(0.5, 0.5);
 
         var fps = 7;
         player.animations.add('NORTH', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], fps, /*loop*/ true);
@@ -63,7 +65,7 @@ TopDownGame.Game.prototype = {
         weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
         weapon.bulletAngleOffset = 0;
         weapon.bulletSpeed = 400;
-        weapon.trackSprite(player, 0, -90, true);
+        weapon.trackSprite(player, 75, -10, true); //-65 выведено экспериментальным путём
         weapon.addBulletAnimation("fly", [0, 1, 2, 3, 4, 5, 6, 7], 40, true);
 
         //explosion
@@ -81,7 +83,7 @@ TopDownGame.Game.prototype = {
     },
     animationStopped: function(sprite, animation) {
 
-        sprite.visible = false;
+        explosion.visible = false;
 
     },
 
@@ -89,8 +91,8 @@ TopDownGame.Game.prototype = {
 
     update: function() {
         //collision
-        this.game.physics.arcade.collide(player, this.blockedLayer);
-        this.game.physics.arcade.overlap(sprite, weapon.bullets, this.bulletHitBarrel, null, this);
+        this.game.physics.arcade.collide(player, this.blockLayer);
+        this.game.physics.arcade.overlap(items, weapon.bullets, this.bulletHitBarrel, null, this);
         //player movement
 
         player.body.velocity.x = 0;
@@ -113,10 +115,10 @@ TopDownGame.Game.prototype = {
         if (fireButton.isDown) {
             weapon.fire();
             player.animations.play('SHOOT');
-            //weapon.bulletAnimation("fly");
         }
 
         this.game.debug.body(player);
+
     },
     render: function() {
         //this.game.debug.spriteBounds(player);
@@ -128,7 +130,7 @@ TopDownGame.Game.prototype = {
         if (!flag) {
             flag = true;
             player.animations.play('HIT');
-            console.log("hit event");
+            console.log("ouch!");
 
             if (Pegman.tween) {
                 Pegman.tween.stop();
@@ -143,19 +145,18 @@ TopDownGame.Game.prototype = {
         explosion.y = sprite.y-30;
         explosion.visible = true;
         explosion.animations.play('EXPL');
-        console.log(sprite.health);
+        
         bullet.kill();
     },
 
     createItems: function() {
         //create items
-        this.items = this.game.add.group();
-        this.items.enableBody = true;
+        items = this.game.add.group();
+        items.enableBody = true;
         var item;
-        result = this.findObjectsByType('barrelFardHit', this.map, 'objectsLayer');
+        result = this.findObjectsByType('barrel', this.map, 'objectLayer');
         result.forEach(function(element) {
-            this.createFromTiledObject(element, this.items);
-
+            this.createFromTiledObject(element, items);
         }, this);
     },
 
@@ -175,7 +176,7 @@ TopDownGame.Game.prototype = {
     },
     //create a sprite from an object
     createFromTiledObject: function(element, group) {
-        sprite = group.create(element.x, element.y, 'barrelFardHit');
+        var sprite = group.create(element.x, element.y, 'barrel');
 
 
         //copy all properties to the sprite

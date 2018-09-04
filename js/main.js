@@ -48,4 +48,5 @@ var resetProgram = function() {
 	runButton.disabled = false;
 	flag = false;
 	Pegman.reset();
+	//sprite.health = 1;
 }
