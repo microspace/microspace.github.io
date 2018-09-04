@@ -112,3 +112,24 @@ Blockly.JavaScript['maze_left'] = function(block) {
     var operator = block.getFieldValue('STEPCOUNT');
     return 'Pegman.nextAction("left", ' + operator + ');\n';
 };
+
+
+Blockly.Blocks['fire'] = {
+    /**
+     * Block for moving forward.
+     * @this Blockly.Block
+     */
+    init: function() {
+        this.jsonInit({
+            "message0": 'Огонь!',
+            "previousStatement": null,
+            "nextStatement": null,
+            "tooltip": 'Выстрел'
+        });
+    }
+};
+
+Blockly.JavaScript['fire'] = function(block) {
+    // Generate JavaScript for moving forward.
+    return 'Pegman.nextAction("fire");\n';
+};

@@ -36,9 +36,9 @@ Maze.MAZE_HEIGHT = Maze.SQUARE_SIZE * Maze.ROWS;
 Maze.start_ = {};
 Maze.finish_ = {};
 
-Maze.start_ = {x: 3, y: 4};
+Maze.start_ = {x: 4, y: 4};
 
-Maze.finish_ = {x: 60, y: 60};
+
 
 Maze.directionToString = function(direction)
 {

@@ -31,9 +31,11 @@ var Pegman = {
 		this.postReset();
 	},
 
-	nextAction: function(action, step) {
+	nextAction: function(action, step = 1) {
+
 		var actionobject = {action: action, stepcount: step};
 		this.pegmanActions.push(actionobject);
+		//console.log(JSON.stringify(this.pegmanActions));
 	},
 
 	play: function() {
@@ -73,6 +75,9 @@ var Pegman = {
                 var step = Maze.getStepInDirection["EAST"];
                 this.moveNSWE(this.posX + step[0] * stepcount, this.posY + step[1] * stepcount, stepcount);
                 break;
+			case "fire":
+			    this.Shoot();
+                break;                
 		}
 	},
 
@@ -132,7 +137,6 @@ Pegman.moveNSWE = function(x, y, stepcount = 1) {
         y: this.posY * Maze.SQUARE_SIZE,
     }, 500 * stepcount, Phaser.Easing.Linear.In);
     this.tween.onComplete.addOnce(function() {
-        //this.pegmanSprite.animations.stop(null, true);
         this.pegmanSprite.animations.play("STAND");
         this.playNextAction();
     }, this);
@@ -150,13 +154,24 @@ Pegman.moveTo = function(x, y, d) {
 			y: this.posY * Maze.SQUARE_SIZE,
 		}, 1000, Phaser.Easing.Linear.In);
 	this.tween.onComplete.addOnce(function() {
-        //this.pegmanSprite.animations.stop(null, true);
         this.pegmanSprite.animations.play("STAND");
 		this.playNextAction();
 
 	}, this);
 	this.tween.start();
 },
+
+Pegman.Shoot = function() {
+
+    this.anim = this.pegmanSprite.animations.play("SHOOT");
+    weapon.fire();
+
+	this.anim.onComplete.addOnce(function() {
+		player.animations.play('STAND');
+		this.playNextAction();
+	}, this);
+},
+
 
 Pegman.turnTo = function(d) {
 	this.anim = this.pegmanSprite.animations.play(d);
