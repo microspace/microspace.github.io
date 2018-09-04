@@ -76,7 +76,7 @@ TopDownGame.Game.prototype = {
         //bullets.callAll('animations.add', 'animations', 'fire', [0,1,2,3,4,5,6], 5, true);bullets.callAll('play', null, 'fire');
         fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
         //the camera will follow the player in the world
-        //this.game.camera.follow(player);
+        this.game.camera.follow(player);
         //move player with cursor keys
         this.cursors = this.game.input.keyboard.createCursorKeys();
         //this.game.physics.arcade.overlap(bullets, aliens, collisionHandler, null, this);
