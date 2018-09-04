@@ -117,7 +117,7 @@ TopDownGame.Game.prototype = {
             player.animations.play('SHOOT');
         }
 
-        this.game.debug.body(player);
+        //this.game.debug.body(player);
 
     },
     render: function() {
