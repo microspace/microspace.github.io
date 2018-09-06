@@ -46,7 +46,10 @@ var resetProgram = function() {
 	document.getElementById('resetButton').style.display = 'none';
 	// Prevent double-clicks or double-taps.
 	runButton.disabled = false;
-	flag = false;
+	
 	Pegman.reset();
+	
+
+
 	//sprite.health = 1;
 }

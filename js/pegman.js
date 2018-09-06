@@ -16,19 +16,24 @@ var Pegman = {
 		this.posY = coords.y;
 		this.pegmanSprite = pegmanSprite;
 
+
 		this.reset();
 	},
 
 	reset: function() {
+		items.forEach(function (c) { c.revive(); });
+		this.posX = Maze.start_.x;
+		this.posY = Maze.start_.y;
 		this.preReset();
 		this.tween = null;
 		this.anim = null;
+		this.pegmanSprite.scale.x = 1
 
-		this.posX = Maze.start_.x;
-		this.posY = Maze.start_.y;
+
 		this.direction = Maze.DirectionType.EAST;
 		this.pegmanActions = [];
 		this.postReset();
+
 	},
 
 	nextAction: function(action, step = 1) {
@@ -54,25 +59,31 @@ var Pegman = {
 			this.anim = null;
 		}
 
+
 		var actionobject = this.pegmanActions.shift();
 		var action = actionobject.action;
 		var stepcount = actionobject.stepcount;
 		switch (action) {
             case "up":
+                weapon.fireAngle = Phaser.ANGLE_RIGHT;
                 var step = Maze.getStepInDirection["NORTH"];
                 this.moveNSWE(this.posX + step[0] * stepcount, this.posY + step[1] * stepcount, stepcount);
                 break;
             case "down":
+                weapon.fireAngle = Phaser.ANGLE_RIGHT;
                 var step = Maze.getStepInDirection["SOUTH"];
                 this.moveNSWE(this.posX + step[0] * stepcount, this.posY + step[1] * stepcount, stepcount);
                 break;
 			case "left":
                 var step = Maze.getStepInDirection["WEST"];
-                this.pegmanSprite.scale.x *= -1;
+                this.pegmanSprite.scale.x = -1;
+                weapon.fireAngle = Phaser.ANGLE_LEFT;
                 this.moveNSWE(this.posX + step[0] * stepcount, this.posY + step[1] * stepcount, stepcount);
                 break;
 			case "right":
                 var step = Maze.getStepInDirection["EAST"];
+                this.pegmanSprite.scale.x = 1;
+                weapon.fireAngle = Phaser.ANGLE_RIGHT;
                 this.moveNSWE(this.posX + step[0] * stepcount, this.posY + step[1] * stepcount, stepcount);
                 break;
 			case "fire":
@@ -101,7 +112,11 @@ Pegman.preReset = function() {
 	}
 };
 Pegman.postReset = function() {
-	this.pegmanSprite.reset(this.posX * Maze.SQUARE_SIZE, this.posY * Maze.SQUARE_SIZE);
+	//this.pegmanSprite.reset(this.posX * Maze.SQUARE_SIZE, this.posY * Maze.SQUARE_SIZE);
+	this.pegmanSprite.x = this.posX * Maze.SQUARE_SIZE;
+	this.pegmanSprite.y = this.posY * Maze.SQUARE_SIZE;
+	flag = false;
+
 	//this.pegmanSprite.animations.play(Maze.directionToString(this.direction));
 };
 

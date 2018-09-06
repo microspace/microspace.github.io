@@ -1,9 +1,25 @@
 var TopDownGame = TopDownGame || {};
 var player;
-var flag;
+var flag = false;
 var weapon;
 var explosion;
 var items;
+
+function getArrayWithLimitedLength(length) {
+    var array = new Array();
+
+    array.push = function() {
+        if (this.length >= length) {
+            this.shift();
+        }
+        return Array.prototype.push.apply(this, arguments);
+    }
+
+    return array;
+
+}
+
+var xyqueue = getArrayWithLimitedLength(10);
 //title screen
 TopDownGame.Game = function() {};
 
@@ -23,7 +39,7 @@ TopDownGame.Game.prototype = {
         //create player
         var result = this.findObjectsByType('playerStartPosition', this.map, 'playerLayer')
         player = this.game.add.sprite(result[0].x, result[0].y, 'pegman');
-        player.scale.setTo(0.3, 0.3);
+        player.scale.setTo(1, 1);
         player.anchor.setTo(0.5, 0.5);
 
         var fps = 7;
@@ -44,28 +60,33 @@ TopDownGame.Game.prototype = {
         player.animations.add('SHOOT', [20, 21, 22, 23, 24], fps, /*loop*/ false);
         player.animations.play('STAND');
 
-        Pegman.init(player, {
-            x: 0,
-            y: 0
-        }); // temporarily. need to rethink
+        
 
         this.upperLayer = this.map.createLayer('upperLayer');
         this.game.physics.arcade.enable(player);
-        player.body.setSize(200, 60, 150, 250);
+        player.body.setSize(55, 20, 35, 57);
         //collision on blockedLayer
 
         this.map.setTileIndexCallback([...Array(500).keys()], this.hitWall, this, this.blockLayer);
+        //this.map.setTileIndexCallback([17, 18, 30, 31], this.hitWall, this, this.blockLayer);
         //this.map.setCollisionBetween(1, 2000, true, 'blockedLayer');
         //resizes the game world to match the layer dimensions
         this.createItems();
         this.blockLayer.resizeWorld();
+
+
+        Pegman.init(player, {
+            x: Maze.start_.x,
+            y: Maze.start_.y
+        }); // temporarily. need to rethink
 
         //bullets
         weapon = this.game.add.weapon(5, 'bullet');
         weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
         weapon.bulletAngleOffset = 0;
         weapon.bulletSpeed = 400;
-        weapon.trackSprite(player, 75, -10, true); //-65 выведено экспериментальным путём
+        //weapon.trackSprite(player, 75, -10, false); //-65 выведено экспериментальным путём
+        weapon.trackSprite(player, 0, -10, false); //-65 выведено экспериментальным путём
         weapon.addBulletAnimation("fly", [0, 1, 2, 3, 4, 5, 6, 7], 40, true);
 
         //explosion
@@ -80,16 +101,55 @@ TopDownGame.Game.prototype = {
         //move player with cursor keys
         this.cursors = this.game.input.keyboard.createCursorKeys();
         //this.game.physics.arcade.overlap(bullets, aliens, collisionHandler, null, this);
+
     },
     animationStopped: function(sprite, animation) {
 
         explosion.visible = false;
+
 
     },
 
 
 
     update: function() {
+
+        xyqueue.push({
+            x: player.x,
+            y: player.y
+        });
+
+        /*
+        if (xyqueue.length > 9) {
+            if (xyqueue[9].x > player.x) {
+                 console.log("-");
+                Pegman.pegmanSprite.scale.x = -1;
+                weapon.fireAngle = Phaser.ANGLE_LEFT;
+                console.log("----------");
+            } 
+
+            if (xyqueue[9].x < player.x){
+                Pegman.pegmanSprite.scale.x = 1;
+                weapon.fireAngle = Phaser.ANGLE_RIGHT;
+            } 
+        } 
+
+console.log(weapon.fireAngle);
+
+if (xyqueue.length > 9) {
+    console.log(xyqueue[0].x);
+    console.log(xyqueue[1].x);
+    console.log(xyqueue[2].x);
+    console.log(xyqueue[3].x);
+    console.log(xyqueue[4].x);
+    console.log(xyqueue[5].x);
+    console.log(xyqueue[6].x);
+    console.log("----------");
+
+
+}
+*/
+
         //collision
         this.game.physics.arcade.collide(player, this.blockLayer);
         this.game.physics.arcade.overlap(items, weapon.bullets, this.bulletHitBarrel, null, this);
@@ -99,17 +159,19 @@ TopDownGame.Game.prototype = {
 
         if (this.cursors.up.isDown) {
             if (player.body.velocity.y == 0)
-                player.body.velocity.y -= 200;
+                player.body.velocity.y -= 600;
+
         } else if (this.cursors.down.isDown) {
             if (player.body.velocity.y == 0)
-                player.body.velocity.y += 200;
+                player.body.velocity.y += 600;
+
         } else {
             player.body.velocity.y = 0;
         }
         if (this.cursors.left.isDown) {
-            player.body.velocity.x -= 200;
+            player.body.velocity.x -= 600;
         } else if (this.cursors.right.isDown) {
-            player.body.velocity.x += 200;
+            player.body.velocity.x += 600;
         }
 
         if (fireButton.isDown) {
@@ -126,26 +188,35 @@ TopDownGame.Game.prototype = {
 
     },
     hitWall: function() {
-
         if (!flag) {
-            flag = true;
-            player.animations.play('HIT');
-            console.log("ouch!");
-
+            // выдергиваем из очереди предыдущие координаты, возвращаем игрока назад. Чтобы hitWall не успел сработать еще ЦЕЛЫХ 3 раза!!!
+            player.y = xyqueue[6].y;
+            player.x = xyqueue[6].x;
             if (Pegman.tween) {
                 Pegman.tween.stop();
             }
+            flag = true;
+            player.animations.play('HIT');
         }
     },
 
     bulletHitBarrel: function(sprite, bullet) {
-        sprite.damage(0.5);
-        sprite.frame = 3;
-        explosion.x = sprite.x-20;
-        explosion.y = sprite.y-30;
+        var damage = 20;
+        sprite.damage(damage);
+        if (sprite.health > 60) {
+            sprite.frame = 3;
+        } else if (sprite.health < 40) {
+            sprite.frame = 6;
+            sprite.health += damage; // говнокод, позволяющий не умирать
+            sprite.body.enable = false; // отключаем физику чтобы пули пролетали сквозь отстатки бочки
+        }
+        
+        explosion.x = sprite.x - 20;
+        explosion.y = sprite.y - 30;
         explosion.visible = true;
         explosion.animations.play('EXPL');
-        
+        console.log(sprite.health);
+
         bullet.kill();
     },
 

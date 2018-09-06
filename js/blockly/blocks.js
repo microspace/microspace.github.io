@@ -11,6 +11,7 @@ Blockly.Blocks['maze_up'] = {
             "previousStatement": null,
             "nextStatement": null,
             "tooltip": 'maze_turnRightTooltip',
+            "colour": 160,
             "args0": [{
                 "type": "field_number",
                 "name": "STEPCOUNT",
@@ -40,6 +41,7 @@ Blockly.Blocks['maze_down'] = {
             "previousStatement": null,
             "nextStatement": null,
             "tooltip": 'maze_turnRightTooltip',
+            "colour": 160,
             "args0": [{
                 "type": "field_number",
                 "name": "STEPCOUNT",
@@ -70,6 +72,7 @@ Blockly.Blocks['maze_right'] = {
             "previousStatement": null,
             "nextStatement": null,
             "tooltip": 'maze_turnRightTooltip',
+            "colour": 160,
             "args0": [{
                 "type": "field_number",
                 "name": "STEPCOUNT",
@@ -98,6 +101,7 @@ Blockly.Blocks['maze_left'] = {
             "previousStatement": null,
             "nextStatement": null,
             "tooltip": 'maze_turnRightTooltip',
+            "colour": 160,
             "args0": [{
                 "type": "field_number",
                 "name": "STEPCOUNT",
@@ -124,6 +128,7 @@ Blockly.Blocks['fire'] = {
             "message0": 'Огонь!',
             "previousStatement": null,
             "nextStatement": null,
+            "colour": 100,
             "tooltip": 'Выстрел'
         });
     }
