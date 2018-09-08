@@ -102,7 +102,7 @@ TopDownGame.Game.prototype = {
         //bullets.callAll('animations.add', 'animations', 'fire', [0,1,2,3,4,5,6], 5, true);bullets.callAll('play', null, 'fire');
         fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
         //the camera will follow the player in the world
-        //this.game.camera.follow(player);
+        this.game.camera.follow(player);
         //move player with cursor keys
         this.cursors = this.game.input.keyboard.createCursorKeys();
         //this.game.physics.arcade.overlap(bullets, aliens, collisionHandler, null, this);
@@ -164,7 +164,7 @@ if (xyqueue.length > 9) {
         this.game.physics.arcade.overlap(items, weapon.bullets, this.bulletHitBarrel, null, this);
         //this.game.physics.arcade.overlap(this.blockLayer, weapon.bullets, this.bulletHitWall, null, this);
         //player movement
-/*
+
         player.body.velocity.x = 0;
 
         if (this.cursors.up.isDown) {
@@ -188,7 +188,7 @@ if (xyqueue.length > 9) {
             weapon.fire();
             player.animations.play('SHOOT');
         }
-*/
+/*
         if (this.cursors.up.isDown) {
             this.game.camera.y -= 4;
         } else if (this.cursors.down.isDown) {
@@ -199,7 +199,7 @@ if (xyqueue.length > 9) {
         } else if (this.cursors.right.isDown) {
             this.game.camera.x += 4;
         }
-
+*/
         //this.game.debug.body(player);
 
     },
