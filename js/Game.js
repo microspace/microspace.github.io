@@ -38,6 +38,8 @@ TopDownGame.Game.prototype = {
 
         //create player
         var result = this.findObjectsByType('playerStartPosition', this.map, 'playerLayer')
+        this.createItems();
+        weapon = this.game.add.weapon(5, 'bullet');
         player = this.game.add.sprite(result[0].x, result[0].y, 'pegman');
         player.scale.setTo(1, 1);
         player.anchor.setTo(0.5, 0.5);
@@ -60,7 +62,7 @@ TopDownGame.Game.prototype = {
         player.animations.add('SHOOT', [20, 21, 22, 23, 24], fps, /*loop*/ false);
         player.animations.play('STAND');
 
-        
+
 
         this.upperLayer = this.map.createLayer('upperLayer');
         this.game.physics.arcade.enable(player);
@@ -71,7 +73,9 @@ TopDownGame.Game.prototype = {
         //this.map.setTileIndexCallback([17, 18, 30, 31], this.hitWall, this, this.blockLayer);
         //this.map.setCollisionBetween(1, 2000, true, 'blockedLayer');
         //resizes the game world to match the layer dimensions
-        this.createItems();
+
+
+
         this.blockLayer.resizeWorld();
 
 
@@ -81,13 +85,14 @@ TopDownGame.Game.prototype = {
         }); // temporarily. need to rethink
 
         //bullets
-        weapon = this.game.add.weapon(5, 'bullet');
+        
         weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
         weapon.bulletAngleOffset = 0;
         weapon.bulletSpeed = 400;
-        //weapon.trackSprite(player, 75, -10, false); //-65 выведено экспериментальным путём
-        weapon.trackSprite(player, 0, -10, false); //-65 выведено экспериментальным путём
-        weapon.addBulletAnimation("fly", [0, 1, 2, 3, 4, 5, 6, 7], 40, true);
+        weapon.fireAngle = Phaser.ANGLE_RIGHT; // shoot at right direcion by default
+        weapon.trackSprite(player, 0, -8, false); //-65 выведено экспериментальным путём
+        //weapon.addBulletAnimation("fly", [0, 1, 2, 3, 4, 5, 6, 7], 40, true);
+
 
         //explosion
         explosion = this.game.add.sprite(0, 0, 'explosion');
@@ -97,10 +102,12 @@ TopDownGame.Game.prototype = {
         //bullets.callAll('animations.add', 'animations', 'fire', [0,1,2,3,4,5,6], 5, true);bullets.callAll('play', null, 'fire');
         fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
         //the camera will follow the player in the world
-        this.game.camera.follow(player);
+        //this.game.camera.follow(player);
         //move player with cursor keys
         this.cursors = this.game.input.keyboard.createCursorKeys();
         //this.game.physics.arcade.overlap(bullets, aliens, collisionHandler, null, this);
+
+
 
     },
     animationStopped: function(sprite, animation) {
@@ -119,6 +126,7 @@ TopDownGame.Game.prototype = {
             y: player.y
         });
 
+        //console.log(weapon.z);
         /*
         if (xyqueue.length > 9) {
             if (xyqueue[9].x > player.x) {
@@ -152,9 +160,11 @@ if (xyqueue.length > 9) {
 
         //collision
         this.game.physics.arcade.collide(player, this.blockLayer);
+        this.game.physics.arcade.overlap(player, items, this.hitWall, null, this);
         this.game.physics.arcade.overlap(items, weapon.bullets, this.bulletHitBarrel, null, this);
+        //this.game.physics.arcade.overlap(this.blockLayer, weapon.bullets, this.bulletHitWall, null, this);
         //player movement
-
+/*
         player.body.velocity.x = 0;
 
         if (this.cursors.up.isDown) {
@@ -178,6 +188,17 @@ if (xyqueue.length > 9) {
             weapon.fire();
             player.animations.play('SHOOT');
         }
+*/
+        if (this.cursors.up.isDown) {
+            this.game.camera.y -= 4;
+        } else if (this.cursors.down.isDown) {
+            this.game.camera.y += 4;
+        }
+        if (this.cursors.left.isDown) {
+            this.game.camera.x -= 4;
+        } else if (this.cursors.right.isDown) {
+            this.game.camera.x += 4;
+        }
 
         //this.game.debug.body(player);
 
@@ -200,22 +221,28 @@ if (xyqueue.length > 9) {
         }
     },
 
+    bulletHitWall: function() {
+        console.log("wall");
+    },
+
+
     bulletHitBarrel: function(sprite, bullet) {
-        var damage = 20;
+
+        var damage = 48;
         sprite.damage(damage);
-        if (sprite.health > 60) {
+        if (sprite.health > 40) {
             sprite.frame = 3;
         } else if (sprite.health < 40) {
             sprite.frame = 6;
             sprite.health += damage; // говнокод, позволяющий не умирать
             sprite.body.enable = false; // отключаем физику чтобы пули пролетали сквозь отстатки бочки
         }
-        
-        explosion.x = sprite.x - 20;
+
+        explosion.x = sprite.x;
         explosion.y = sprite.y - 30;
         explosion.visible = true;
         explosion.animations.play('EXPL');
-        console.log(sprite.health);
+        //console.log(sprite.health);
 
         bullet.kill();
     },
@@ -248,8 +275,6 @@ if (xyqueue.length > 9) {
     //create a sprite from an object
     createFromTiledObject: function(element, group) {
         var sprite = group.create(element.x, element.y, 'barrel');
-
-
         //copy all properties to the sprite
         Object.keys(element.properties).forEach(function(key) {
             sprite[key] = element.properties[key];

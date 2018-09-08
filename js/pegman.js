@@ -21,7 +21,7 @@ var Pegman = {
 	},
 
 	reset: function() {
-		items.forEach(function (c) { c.revive(); });
+		
 		this.posX = Maze.start_.x;
 		this.posY = Maze.start_.y;
 		this.preReset();
@@ -63,6 +63,7 @@ var Pegman = {
 		var actionobject = this.pegmanActions.shift();
 		var action = actionobject.action;
 		var stepcount = actionobject.stepcount;
+		
 		switch (action) {
             case "up":
                 weapon.fireAngle = Phaser.ANGLE_RIGHT;
@@ -112,6 +113,8 @@ Pegman.preReset = function() {
 	}
 };
 Pegman.postReset = function() {
+	items.forEach(function (c) { c.revive(); });
+	items.forEach(function (c) { c.frame = 0; c.body.enable = true;});
 	//this.pegmanSprite.reset(this.posX * Maze.SQUARE_SIZE, this.posY * Maze.SQUARE_SIZE);
 	this.pegmanSprite.x = this.posX * Maze.SQUARE_SIZE;
 	this.pegmanSprite.y = this.posY * Maze.SQUARE_SIZE;

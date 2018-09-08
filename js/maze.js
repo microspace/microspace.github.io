@@ -23,14 +23,11 @@ Maze.DirectionType = {
 };
 
 
-Maze.ROWS = 13;
-Maze.COLS = 13;
-Maze.SQUARE_SIZE = 64;
-Maze.PEGMAN_HEIGHT = 64;
-Maze.PEGMAN_WIDTH = 64;
 
-Maze.MAZE_WIDTH = Maze.SQUARE_SIZE * Maze.COLS;
-Maze.MAZE_HEIGHT = Maze.SQUARE_SIZE * Maze.ROWS;
+Maze.SQUARE_SIZE = 64;
+
+
+
 
 
 Maze.start_ = {};

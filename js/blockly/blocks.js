@@ -128,7 +128,7 @@ Blockly.Blocks['fire'] = {
             "message0": 'Огонь!',
             "previousStatement": null,
             "nextStatement": null,
-            "colour": 100,
+            "colour": 0,
             "tooltip": 'Выстрел'
         });
     }
