@@ -1,7 +1,7 @@
 'use strict';
 
 var TopDownGame = TopDownGame || {};
-TopDownGame.game = new Phaser.Game(600, 600, Phaser.AUTO, 'canvasContainer', null, false, true);
+TopDownGame.game = new Phaser.Game(1000, 600, Phaser.AUTO, 'canvasContainer', null, false, true);
 TopDownGame.game.state.add('Boot', TopDownGame.Boot);
 TopDownGame.game.state.add('Preload', TopDownGame.Preload);
 TopDownGame.game.state.add('Game', TopDownGame.Game);
@@ -46,6 +46,7 @@ var resetProgram = function() {
 	document.getElementById('resetButton').style.display = 'none';
 	// Prevent double-clicks or double-taps.
 	runButton.disabled = false;
+	weapon.fireAngle = Phaser.ANGLE_RIGHT;
 
 
 	

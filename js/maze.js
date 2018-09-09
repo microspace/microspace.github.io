@@ -34,7 +34,7 @@ Maze.start_ = {};
 Maze.finish_ = {};
 
 
-Maze.start_ = {x: 2, y: 8};
+Maze.start_ = {x: 2.5, y: 8.1};
 
 
 
