@@ -1,23 +1,60 @@
 var TopDownGame = TopDownGame || {};
 var player;
+var pointer;
 var flag = false;
 var weapon;
 var explosion;
 var items;
-
-function getArrayWithLimitedLength(length) {
-    var array = new Array();
-
-    array.push = function() {
-        if (this.length >= length) {
-            this.shift();
-        }
-        return Array.prototype.push.apply(this, arguments);
-    }
-
-    return array;
-
-}
+var currentScene = 0; // 0 is start scene of the level
+var scenes = [{
+    "id": 0,
+    "name": "Scene0",
+    "status": 0,
+    "startPos": [
+        300,
+        400
+    ],
+    "endPos": [
+        300,
+        500
+    ]
+}, {
+    "id": 1,
+    "name": "Scene1",
+    "status": 0,
+    "startPos": [
+        300,
+        400
+    ],
+    "endPos": [
+        300,
+        500
+    ]
+}, {
+    "id": 2,
+    "name": "Scene2",
+    "status": 0,
+    "startPos": [
+        300,
+        400
+    ],
+    "endPos": [
+        300,
+        500
+    ]
+}, {
+    "id": 3,
+    "name": "Scene3",
+    "status": 0,
+    "startPos": [
+        300,
+        400
+    ],
+    "endPos": [
+        300,
+        500
+    ]
+}];
 
 var xyqueue = getArrayWithLimitedLength(10);
 //title screen
@@ -37,10 +74,31 @@ TopDownGame.Game.prototype = {
         this.onFlour = this.map.createLayer('onFlour');
 
         //create player
-        var result = this.findObjectsByType('playerStartPosition', this.map, 'playerLayer')
+        // load all data from map json, populate the structure.
+        this.loadSceneData();
+        //var result = this.findObjectsByType('playerStartPosition', this.map, 'playerLayer');
         this.createItems();
         weapon = this.game.add.weapon(5, 'bullet');
-        player = this.game.add.sprite(result[0].x, result[0].y, 'pegman');
+        player = this.game.add.sprite(scenes[currentScene].startPos[0], scenes[currentScene].startPos[1], 'pegman');
+        console.log(scenes[currentScene].startPos[0]);
+        console.log(scenes[currentScene].startPos[1]);
+
+        // bless this mess
+        Maze.start_ = {
+            x: scenes[currentScene].startPos[0] / 64,
+            y: scenes[currentScene].startPos[1] / 64
+        };
+
+
+        //var result = this.findObjectsByType('playerFirstStop', this.map, 'playerLayer');
+        pointer = this.game.add.sprite(scenes[currentScene].endPos[0], scenes[currentScene].endPos[1], 'pointer');
+        pointer.scale.setTo(0.8, 0.8);
+        pointer.animations.add('ANIM', [0, 1], 2, /*loop*/ true);
+        pointer.animations.play('ANIM');
+
+        
+
+
         player.scale.setTo(1, 1);
         player.anchor.setTo(0.5, 0.5);
 
@@ -62,37 +120,29 @@ TopDownGame.Game.prototype = {
         player.animations.add('SHOOT', [20, 21, 22, 23, 24], fps, /*loop*/ false);
         player.animations.play('STAND');
 
-
-
         this.upperLayer = this.map.createLayer('upperLayer');
         this.game.physics.arcade.enable(player);
+        this.game.physics.arcade.enable(pointer);
         player.body.setSize(55, 20, 35, 57);
+
+        pointer.body.setSize(40, 40, 32, 12);
         //collision on blockedLayer
 
         this.map.setTileIndexCallback([...Array(500).keys()], this.hitWall, this, this.blockLayer);
         //this.map.setTileIndexCallback([17, 18, 30, 31], this.hitWall, this, this.blockLayer);
         //this.map.setCollisionBetween(1, 2000, true, 'blockedLayer');
         //resizes the game world to match the layer dimensions
-
-
-
         this.blockLayer.resizeWorld();
-
-
-        Pegman.init(player, {
-            x: Maze.start_.x,
-            y: Maze.start_.y
-        }); // temporarily. need to rethink
+        Pegman.init(player);
 
         //bullets
-        
+
         weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
         weapon.bulletAngleOffset = 0;
         weapon.bulletSpeed = 400;
         weapon.fireAngle = Phaser.ANGLE_RIGHT; // shoot at right direcion by default
         weapon.trackSprite(player, 0, -8, false); //-65 выведено экспериментальным путём
         //weapon.addBulletAnimation("fly", [0, 1, 2, 3, 4, 5, 6, 7], 40, true);
-
 
         //explosion
         explosion = this.game.add.sprite(0, 0, 'explosion');
@@ -106,15 +156,9 @@ TopDownGame.Game.prototype = {
         //move player with cursor keys
         this.cursors = this.game.input.keyboard.createCursorKeys();
         //this.game.physics.arcade.overlap(bullets, aliens, collisionHandler, null, this);
-
-
-
     },
     animationStopped: function(sprite, animation) {
-
         explosion.visible = false;
-
-
     },
 
 
@@ -126,42 +170,11 @@ TopDownGame.Game.prototype = {
             y: player.y
         });
 
-        //console.log(weapon.z);
-        /*
-        if (xyqueue.length > 9) {
-            if (xyqueue[9].x > player.x) {
-                 console.log("-");
-                Pegman.pegmanSprite.scale.x = -1;
-                weapon.fireAngle = Phaser.ANGLE_LEFT;
-                console.log("----------");
-            } 
-
-            if (xyqueue[9].x < player.x){
-                Pegman.pegmanSprite.scale.x = 1;
-                weapon.fireAngle = Phaser.ANGLE_RIGHT;
-            } 
-        } 
-
-console.log(weapon.fireAngle);
-
-if (xyqueue.length > 9) {
-    console.log(xyqueue[0].x);
-    console.log(xyqueue[1].x);
-    console.log(xyqueue[2].x);
-    console.log(xyqueue[3].x);
-    console.log(xyqueue[4].x);
-    console.log(xyqueue[5].x);
-    console.log(xyqueue[6].x);
-    console.log("----------");
-
-
-}
-*/
-
         //collision
         this.game.physics.arcade.collide(player, this.blockLayer);
         this.game.physics.arcade.overlap(player, items, this.hitWall, null, this);
         this.game.physics.arcade.overlap(items, weapon.bullets, this.bulletHitBarrel, null, this);
+        //this.game.physics.arcade.overlap(player, pointer, this.sceneCompeteHandler, null, this);
         //this.game.physics.arcade.overlap(this.blockLayer, weapon.bullets, this.bulletHitWall, null, this);
         //player movement
 
@@ -189,19 +202,21 @@ if (xyqueue.length > 9) {
             weapon.fire();
             player.animations.play('SHOOT');
         }
-/*
-        if (this.cursors.up.isDown) {
-            this.game.camera.y -= 4;
-        } else if (this.cursors.down.isDown) {
-            this.game.camera.y += 4;
-        }
-        if (this.cursors.left.isDown) {
-            this.game.camera.x -= 4;
-        } else if (this.cursors.right.isDown) {
-            this.game.camera.x += 4;
-        }
-*/
-        //this.game.debug.body(player);
+        /*
+                if (this.cursors.up.isDown) {
+                    this.game.camera.y -= 4;
+                } else if (this.cursors.down.isDown) {
+                    this.game.camera.y += 4;
+                }
+                if (this.cursors.left.isDown) {
+                    this.game.camera.x -= 4;
+                } else if (this.cursors.right.isDown) {
+                    this.game.camera.x += 4;
+                }
+        */
+        this.game.debug.body(player);
+        this.game.debug.body(pointer);
+        this.game.debug.bodyInfo(player, 32, 50);
 
     },
     render: function() {
@@ -210,6 +225,7 @@ if (xyqueue.length > 9) {
 
     },
     hitWall: function() {
+
         if (!flag) {
             // выдергиваем из очереди предыдущие координаты, возвращаем игрока назад. Чтобы hitWall не успел сработать еще ЦЕЛЫХ 3 раза!!!
             player.y = xyqueue[6].y;
@@ -222,12 +238,14 @@ if (xyqueue.length > 9) {
         }
     },
 
-    bulletHitWall: function() {
-        console.log("wall");
+    sceneCompeteHandler: function (player, pointer) {
+        // do smth when player completes scene
+        currentScene += 1; 
+        $("#successModal").modal(); 
+
     },
-
-
     bulletHitBarrel: function(sprite, bullet) {
+
 
         var damage = 48;
         sprite.damage(damage);
@@ -236,7 +254,7 @@ if (xyqueue.length > 9) {
         } else if (sprite.health < 40) {
             sprite.frame = 6;
             sprite.health += damage; // говнокод, позволяющий не умирать
-            sprite.body.enable = false; // отключаем физику чтобы пули пролетали сквозь отстатки бочки
+            sprite.body.enable = false; // отключаем физику чтобы пули пролетали сквозь остатки бочки
         }
 
         explosion.x = sprite.x;
@@ -281,4 +299,26 @@ if (xyqueue.length > 9) {
             sprite[key] = element.properties[key];
         });
     },
+    loadSceneData: function() {
+        var result = this.findObjectsByType('playerStartPosition', this.map, 'playerLayer');
+        console.log(result[0]);
+        scenes[currentScene].startPos[0] = result[0].x;
+        scenes[currentScene].startPos[1] = result[0].y;
+        var result = this.findObjectsByType('scene1Goal', this.map, 'playerLayer');
+        scenes[currentScene].endPos[0] = result[0].x;
+        scenes[currentScene].endPos[1] = result[0].y;
+    },
 };
+
+
+function getArrayWithLimitedLength(length) {
+    var array = new Array();
+
+    array.push = function() {
+        if (this.length >= length) {
+            this.shift();
+        }
+        return Array.prototype.push.apply(this, arguments);
+    }
+    return array;
+}

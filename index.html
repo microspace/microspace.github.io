@@ -16,26 +16,36 @@
     <script type="text/javascript" src="js/blockly/blockly_compressed.js"></script>
     <script type="text/javascript" src="js/blockly/blocks_compressed.js"></script>
     <script type="text/javascript" src="js/blockly/javascript_compressed.js"></script>
-    <script type="text/javascript" src="js/blockly/msg/js/en.js"></script>
+    <script type="text/javascript" src="js/blockly/msg/js/ru.js"></script>
     <script type="text/javascript" src="js/blockly/blocks.js"></script>
+*
     <style>
-}
+    .blocklySvg {
+        background-color: transparent;
+    }
     </style>
 </head>
 
 <body onload="init();">
     <div class="container-fluid">
         <h3>Нажатие стрелок активируют режим тестера. Пробел это выстрел.</h3>
-        <div class="row">
-            <div class="col-sm-8">
+        <div style="position: relative;">
+            <div id="layer1" width="100" height="100" style="position: absolute; left: 0; top: 0; z-index: 0;">
                 <div class="canvas" id="canvasContainer"></div>
             </div>
-            <div class="col-sm-4">
-                <div class="canvas" id="blockly_editor" style="height: 600px; width: 400px; opacity: 1;"></div>
+            <div id="layer2" width="100" height="100" style="position: absolute; left: 0; top: 0; z-index: 1;">
+                <div class="canvas" id="blockly_editor" style="height: 600px; width: 1200px; opacity: 1;"></div>
+            </div>
+            <div style="position: absolute; left: 100px; top: 650px;">
+                <button id="runButton" class="primary" title="Run">
+                    <img src="./assets/1x1.gif" class="run icon21"> Run Program
+                </button>
+                <button id="resetButton" class="primary" style="display: none" title="Reset">
+                    <img src="./assets/1x1.gif" class="stop icon21"> Reset
+                </button>
             </div>
         </div>
     </div>
-
     <div id="container">
     </div>
     <xml id="toolbox" style="display: none">
@@ -45,30 +55,52 @@
         <block type="maze_right"></block>
         <block type="fire"></block>
         <block type="controls_repeat_ext"></block>
-        <block type="logic_compare"></block>
         <block type="math_number"></block>
         <block type="math_arithmetic"></block>
     </xml>
-    <table width="400">
-        <tr>
-            <td style="width: 190px; text-align: center; vertical-align: top;">
-                <button id="codeButton" class="notext" title="Code">
-                    <img src="./assets/1x1.gif" class="code icon21">
-                </button>
-                <button id="linkButton" class="notext" title="Link">
-                    <img src="./assets/1x1.gif" class="link icon21">
-                </button>
-            </td>
-            <td>
-                <button id="runButton" class="primary" title="Run">
-                    <img src="./assets/1x1.gif" class="run icon21"> Run Program
-                </button>
-                <button id="resetButton" class="primary" style="display: none" title="Reset">
-                    <img src="./assets/1x1.gif" class="stop icon21"> Reset
-                </button>
-            </td>
-        </tr>
-    </table>
+
+
+<div class="modal" tabindex="-1" role="dialog" id="exampleModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Modal body text goes here.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="successModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Поздравляем!!!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Молодец, ты успешно завершил это испытание!</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
     <!-- include the main game file -->
     <script src="js/main.js"></script>
     <script type="text/javascript">
