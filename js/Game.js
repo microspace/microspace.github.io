@@ -79,28 +79,21 @@ TopDownGame.Game.prototype = {
         //var result = this.findObjectsByType('playerStartPosition', this.map, 'playerLayer');
         this.createItems();
         weapon = this.game.add.weapon(5, 'bullet');
-        player = this.game.add.sprite(scenes[currentScene].startPos[0], scenes[currentScene].startPos[1], 'pegman');
-        console.log(scenes[currentScene].startPos[0]);
-        console.log(scenes[currentScene].startPos[1]);
-
-        // bless this mess
-        Maze.start_ = {
-            x: scenes[currentScene].startPos[0] / 64,
-            y: scenes[currentScene].startPos[1] / 64
-        };
 
 
-        //var result = this.findObjectsByType('playerFirstStop', this.map, 'playerLayer');
+        // game goal pointer
         pointer = this.game.add.sprite(scenes[currentScene].endPos[0], scenes[currentScene].endPos[1], 'pointer');
         pointer.scale.setTo(0.8, 0.8);
         pointer.animations.add('ANIM', [0, 1], 2, /*loop*/ true);
         pointer.animations.play('ANIM');
 
-        
-
+        player = this.game.add.sprite(scenes[currentScene].startPos[0], scenes[currentScene].startPos[1], 'pegman');
+        //console.log(scenes[currentScene].startPos[0]);
+        //console.log(scenes[currentScene].startPos[1]);
 
         player.scale.setTo(1, 1);
         player.anchor.setTo(0.5, 0.5);
+        pointer.anchor.setTo(0.5, 0.5);
 
         var fps = 7;
         player.animations.add('NORTH', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], fps, /*loop*/ true);
@@ -123,9 +116,8 @@ TopDownGame.Game.prototype = {
         this.upperLayer = this.map.createLayer('upperLayer');
         this.game.physics.arcade.enable(player);
         this.game.physics.arcade.enable(pointer);
-        player.body.setSize(55, 20, 35, 57);
-
-        pointer.body.setSize(40, 40, 32, 12);
+        player.body.setSize(60, 13, 40, 73); 
+        pointer.body.setSize(10, 65, 48, 10);
         //collision on blockedLayer
 
         this.map.setTileIndexCallback([...Array(500).keys()], this.hitWall, this, this.blockLayer);
@@ -141,7 +133,7 @@ TopDownGame.Game.prototype = {
         weapon.bulletAngleOffset = 0;
         weapon.bulletSpeed = 400;
         weapon.fireAngle = Phaser.ANGLE_RIGHT; // shoot at right direcion by default
-        weapon.trackSprite(player, 0, -8, false); //-65 выведено экспериментальным путём
+        weapon.trackSprite(player, 0, -9, false); //-65 выведено экспериментальным путём
         //weapon.addBulletAnimation("fly", [0, 1, 2, 3, 4, 5, 6, 7], 40, true);
 
         //explosion
@@ -179,7 +171,7 @@ TopDownGame.Game.prototype = {
         //player movement
 
         player.body.velocity.x = 0;
-        var velocity = 250;
+        var velocity = 100;
 
         if (this.cursors.up.isDown) {
             if (player.body.velocity.y == 0)
@@ -216,7 +208,7 @@ TopDownGame.Game.prototype = {
         */
         this.game.debug.body(player);
         this.game.debug.body(pointer);
-        this.game.debug.bodyInfo(player, 32, 50);
+        //this.game.debug.bodyInfo(player, 32, 50);
 
     },
     render: function() {
@@ -241,7 +233,7 @@ TopDownGame.Game.prototype = {
     sceneCompeteHandler: function (player, pointer) {
         // do smth when player completes scene
         currentScene += 1; 
-        $("#successModal").modal(); 
+        $("#exampleModal").modal(); 
 
     },
     bulletHitBarrel: function(sprite, bullet) {
@@ -301,12 +293,26 @@ TopDownGame.Game.prototype = {
     },
     loadSceneData: function() {
         var result = this.findObjectsByType('playerStartPosition', this.map, 'playerLayer');
-        console.log(result[0]);
-        scenes[currentScene].startPos[0] = result[0].x;
-        scenes[currentScene].startPos[1] = result[0].y;
+        scenes[0].startPos[0] = result[0].x;
+        scenes[0].startPos[1] = result[0].y;
         var result = this.findObjectsByType('scene1Goal', this.map, 'playerLayer');
-        scenes[currentScene].endPos[0] = result[0].x;
-        scenes[currentScene].endPos[1] = result[0].y;
+        scenes[0].endPos[0] = result[0].x;
+        scenes[0].endPos[1] = result[0].y;
+        var result = this.findObjectsByType('scene2Goal', this.map, 'playerLayer');
+        scenes[1].startPos[0] = scenes[0].endPos[0];
+        scenes[1].startPos[1] = scenes[0].endPos[1];        
+        scenes[1].endPos[0] = result[0].x;
+        scenes[1].endPos[1] = result[0].y;
+        var result = this.findObjectsByType('scene3Goal', this.map, 'playerLayer');
+        scenes[2].startPos[0] = scenes[1].endPos[0];
+        scenes[2].startPos[1] = scenes[1].endPos[1];        
+        scenes[2].endPos[0] = result[0].x;
+        scenes[2].endPos[1] = result[0].y;     
+        var result = this.findObjectsByType('scene4Goal', this.map, 'playerLayer');
+        scenes[3].startPos[0] = scenes[2].endPos[0];
+        scenes[3].startPos[1] = scenes[2].endPos[1];        
+        scenes[3].endPos[0] = result[0].x;
+        scenes[3].endPos[1] = result[0].y;     
     },
 };
 

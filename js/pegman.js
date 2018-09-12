@@ -1,8 +1,8 @@
 'use strict';
 
 var Pegman = {
-    posX: 0,
-    posY: 0,
+    posX: scenes[currentScene].startPos[0],
+    posY: scenes[currentScene].startPos[1],
     direction: Maze.DirectionType.EAST,
     pegmanActions: [],
 
@@ -11,10 +11,10 @@ var Pegman = {
     tween: null,
 
     init: function(pegmanSprite) {
-        this.posX = null;
-        this.posY = null;
+        this.posX = scenes[currentScene].startPos[0];
+        this.posY = scenes[currentScene].startPos[1];
         this.pegmanSprite = pegmanSprite;
-        $("#exampleModal").modal();
+        //$("#exampleModal").modal();
 
 
         this.reset();
@@ -22,8 +22,9 @@ var Pegman = {
 
     reset: function() {
 
-        this.posX = Maze.start_.x;
-        this.posY = Maze.start_.y;
+
+        this.posX = scenes[currentScene].startPos[0];
+        this.posY = scenes[currentScene].startPos[1];
         this.preReset();
         this.tween = null;
         this.anim = null;
@@ -33,14 +34,41 @@ var Pegman = {
 
     },
 
-    nextAction: function(action, step = 1) {
+    preReset: function() {
+        if (this.tween) {
+            this.tween.stop();
+        }
+        if (this.anim) {
+            this.anim.stop();
+        }
+    },
 
+    postReset: function() {
+        this.pegmanSprite.body.enable = false;
+        //this.pegmanSprite.x = this.posX * Maze.SQUARE_SIZE;
+        //this.pegmanSprite.y = this.posY * Maze.SQUARE_SIZE;
+        this.pegmanSprite.x = scenes[currentScene].startPos[0];
+        this.pegmanSprite.y = scenes[currentScene].startPos[1];
+        pointer.x = scenes[currentScene].endPos[0];
+        pointer.y = scenes[currentScene].endPos[1];
+        this.pegmanSprite.body.enable = true;
+        //this.pegmanSprite.reset(this.posX * Maze.SQUARE_SIZE, this.posY * Maze.SQUARE_SIZE);
+        flag = false;
+        items.forEach(function(c) {
+            c.revive();
+        });
+        items.forEach(function(c) {
+            c.frame = 0;
+            c.body.enable = true;
+        });
+    },
+
+    nextAction: function(action, step = 1) {
         var actionobject = {
             action: action,
             stepcount: step
         };
         this.pegmanActions.push(actionobject);
-        //console.log(JSON.stringify(this.pegmanActions));
     },
 
     play: function() {
@@ -49,10 +77,32 @@ var Pegman = {
 
     playNextAction: function() {
         if (this.pegmanActions.length <= 0) {
-            if (checkOverlap(player, pointer)) {
-                console.log('Drag the sprites. Overlapping: true');
+
+            var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
+            if (isOverlapping == true) {
+                console.log("scene complete!");
+                $("#exampleModal").modal(); 
+                currentScene += 1;
+                this.pegmanSprite.body.enable = false;
+                //this.pegmanSprite.x = this.posX * Maze.SQUARE_SIZE;
+                //this.pegmanSprite.y = this.posY * Maze.SQUARE_SIZE;
+                //this.pegmanSprite.x = scenes[currentScene].startPos[0];
+                //this.pegmanSprite.y = scenes[currentScene].startPos[1];
+                pointer.x = scenes[currentScene].endPos[0];
+                pointer.y = scenes[currentScene].endPos[1];
+                this.pegmanSprite.body.enable = true;
+
+            var runButton = document.getElementById('runButton');
+    runButton.style.display = 'inline';
+    document.getElementById('resetButton').style.display = 'none';
+    // Prevent double-clicks or double-taps.
+    runButton.disabled = false;
+
+
+
             } else {
-                console.log('Drag the sprites. Overlapping: false');
+                //show modal unsuccessful
+                console.log("please try again!");
             }
             return;
         }
@@ -74,24 +124,24 @@ var Pegman = {
             case "up":
                 weapon.fireAngle = Phaser.ANGLE_RIGHT;
                 var step = Maze.getStepInDirection["NORTH"];
-                this.moveNSWE(this.posX + step[0] * stepcount, this.posY + step[1] * stepcount, stepcount);
+                this.moveNSWE(this.posX + Maze.SQUARE_SIZE * step[0] * stepcount, this.posY + Maze.SQUARE_SIZE * step[1] * stepcount, stepcount);
                 break;
             case "down":
                 weapon.fireAngle = Phaser.ANGLE_RIGHT;
                 var step = Maze.getStepInDirection["SOUTH"];
-                this.moveNSWE(this.posX + step[0] * stepcount, this.posY + step[1] * stepcount, stepcount);
+                this.moveNSWE(this.posX + Maze.SQUARE_SIZE * step[0] * stepcount, this.posY + Maze.SQUARE_SIZE * step[1] * stepcount, stepcount);
                 break;
             case "left":
                 var step = Maze.getStepInDirection["WEST"];
                 this.pegmanSprite.scale.x = -1;
                 weapon.fireAngle = Phaser.ANGLE_LEFT;
-                this.moveNSWE(this.posX + step[0] * stepcount, this.posY + step[1] * stepcount, stepcount);
+                this.moveNSWE(this.posX + Maze.SQUARE_SIZE * step[0] * stepcount, this.posY + Maze.SQUARE_SIZE * step[1] * stepcount, stepcount);
                 break;
             case "right":
                 var step = Maze.getStepInDirection["EAST"];
                 this.pegmanSprite.scale.x = 1;
                 weapon.fireAngle = Phaser.ANGLE_RIGHT;
-                this.moveNSWE(this.posX + step[0] * stepcount, this.posY + step[1] * stepcount, stepcount);
+                this.moveNSWE(this.posX + Maze.SQUARE_SIZE * step[0] * stepcount, this.posY + Maze.SQUARE_SIZE * step[1] * stepcount, stepcount);
                 break;
             case "fire":
                 this.Shoot();
@@ -107,9 +157,6 @@ var Pegman = {
     },
 };
 
-
-
-
 Pegman.preReset = function() {
     if (this.tween) {
         this.tween.stop();
@@ -118,63 +165,8 @@ Pegman.preReset = function() {
         this.anim.stop();
     }
 };
-Pegman.postReset = function() {
-    this.pegmanSprite.body.enable = false;
-    this.pegmanSprite.x = this.posX * Maze.SQUARE_SIZE;
-    this.pegmanSprite.y = this.posY * Maze.SQUARE_SIZE;
-    this.pegmanSprite.body.enable = true;
-    //this.pegmanSprite.reset(this.posX * Maze.SQUARE_SIZE, this.posY * Maze.SQUARE_SIZE);
-    flag = false;
-    items.forEach(function(c) {
-        c.revive();
-    });
-    items.forEach(function(c) {
-        c.frame = 0;
-        c.body.enable = true;
-    });
-    //
-
-
-    //this.pegmanSprite.animations.play(Maze.directionToString(this.direction));
-};
-
 
 Pegman.finishPreviousAction = function() {};
-
-
-
-Pegman.animateFailMoveBy = function(stepX, stepY) {
-    var x = this.posX * Maze.SQUARE_SIZE;
-    var y = this.posY * Maze.SQUARE_SIZE;
-    this.tween = game.add.tween(this.pegmanSprite);
-    this.tween
-        .to({
-            x: x + stepX * 10,
-            y: y + stepY * 10
-        }, 200, Phaser.Easing.Linear.None)
-        .to({
-            x: x,
-            y: y
-        }, 10, Phaser.Easing.Linear.None)
-        .to({
-            x: x + stepX * 10,
-            y: y + stepY * 10
-        }, 200, Phaser.Easing.Linear.None)
-        .to({
-            x: x,
-            y: y
-        }, 10, Phaser.Easing.Linear.None)
-        .to({
-            x: x + stepX * 10,
-            y: y + stepY * 10
-        }, 200, Phaser.Easing.Linear.None)
-        .to({
-            x: x,
-            y: y
-        }, 10, Phaser.Easing.Linear.None)
-        .start();
-}
-
 
 Pegman.moveNSWE = function(x, y, stepcount = 1) {
         this.animSpeedByStep = 500;
@@ -184,30 +176,12 @@ Pegman.moveNSWE = function(x, y, stepcount = 1) {
         this.anim = this.pegmanSprite.animations.play("NORTH");
         this.tween = TopDownGame.game.add.tween(this.pegmanSprite);
         this.tween.to({
-            x: this.posX * Maze.SQUARE_SIZE,
-            y: this.posY * Maze.SQUARE_SIZE,
+            x: this.posX,
+            y: this.posY,
         }, this.animSpeedByStep * stepcount, Phaser.Easing.Linear.In);
         this.tween.onComplete.addOnce(function() {
             this.pegmanSprite.animations.play("STAND");
             this.playNextAction();
-        }, this);
-        this.tween.start();
-    },
-
-    Pegman.moveTo = function(x, y, d) {
-        this.posX = x;
-        this.posY = y;
-        this.anim = this.pegmanSprite.animations.play(d);
-
-        this.tween = game.add.tween(this.pegmanSprite);
-        this.tween.to({
-            x: this.posX * Maze.SQUARE_SIZE,
-            y: this.posY * Maze.SQUARE_SIZE,
-        }, 1000, Phaser.Easing.Linear.In);
-        this.tween.onComplete.addOnce(function() {
-            this.pegmanSprite.animations.play("STAND");
-            this.playNextAction();
-
         }, this);
         this.tween.start();
     },
@@ -219,21 +193,4 @@ Pegman.moveNSWE = function(x, y, stepcount = 1) {
             player.animations.play('STAND');
             this.playNextAction();
         }, this);
-    },
-
-
-    Pegman.turnTo = function(d) {
-        this.anim = this.pegmanSprite.animations.play(d);
-        this.anim.onComplete.addOnce(function() {
-            this.playNextAction();
-        }, this);
     };
-
-    function checkOverlap(spriteA, spriteB) {
-
-    var boundsA = spriteA.getBounds();
-    var boundsB = spriteB.getBounds();
-
-    return Phaser.Rectangle.intersects(boundsA, boundsB);
-
-}
