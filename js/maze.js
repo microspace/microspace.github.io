@@ -22,21 +22,9 @@ Maze.DirectionType = {
   WEST: 3
 };
 
-
-
 Maze.SQUARE_SIZE = 64;
 
-
-
-
-
-Maze.start_ = {};
-Maze.finish_ = {};
-
-
 Maze.start_ = {x: 2.5, y: 8.1};
-
-
 
 Maze.directionToString = function(direction)
 {
@@ -62,4 +50,64 @@ Maze.getStepInDirection = {
 	NORTH: [0, -1],
 };
 
-
+Maze.scenes = [{
+    "id": 0,
+    "name": "Scene0",
+    "status": 0,
+    "startPos": [
+        300,
+        400
+    ],
+    "endPos": [
+        300,
+        500
+    ]
+}, {
+    "id": 1,
+    "name": "Scene1",
+    "status": 0,
+    "startPos": [
+        300,
+        400
+    ],
+    "endPos": [
+        300,
+        500
+    ]
+}, {
+    "id": 2,
+    "name": "Scene2",
+    "status": 0,
+    "startPos": [
+        300,
+        400
+    ],
+    "endPos": [
+        300,
+        500
+    ]
+}, {
+    "id": 3,
+    "name": "Scene3",
+    "status": 0,
+    "startPos": [
+        300,
+        400
+    ],
+    "endPos": [
+        300,
+        500
+    ]
+}, {
+    "id": 4,
+    "name": "Scene4",
+    "status": 0,
+    "startPos": [
+        300,
+        400
+    ],
+    "endPos": [
+        300,
+        500
+    ]
+}];

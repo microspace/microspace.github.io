@@ -11,8 +11,6 @@ TopDownGame.game.state.start('Boot');
 var init = function(){
 	Maze.bindClick('runButton', runProgram);
 	Maze.bindClick('resetButton', resetProgram);
-
-	//initDemo();
 };
 
 
@@ -28,10 +26,7 @@ var runProgram = function() {
 	resetButton.style.display = 'inline';
 	// Prevent double-clicks or double-taps.
 	resetButton.disabled = false;
-	
-
     var code = Blockly.JavaScript.workspaceToCode(workspace);
-
     try {
         eval(code);
     } catch (e) {
@@ -47,12 +42,5 @@ var resetProgram = function() {
 	// Prevent double-clicks or double-taps.
 	runButton.disabled = false;
 	weapon.fireAngle = Phaser.ANGLE_RIGHT;
-
-
-	
 	Pegman.reset();
-	
-
-
-	//sprite.health = 1;
 }

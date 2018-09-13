@@ -5,56 +5,10 @@ var flag = false;
 var weapon;
 var explosion;
 var items;
-var currentScene = 0; // 0 is start scene of the level
-var scenes = [{
-    "id": 0,
-    "name": "Scene0",
-    "status": 0,
-    "startPos": [
-        300,
-        400
-    ],
-    "endPos": [
-        300,
-        500
-    ]
-}, {
-    "id": 1,
-    "name": "Scene1",
-    "status": 0,
-    "startPos": [
-        300,
-        400
-    ],
-    "endPos": [
-        300,
-        500
-    ]
-}, {
-    "id": 2,
-    "name": "Scene2",
-    "status": 0,
-    "startPos": [
-        300,
-        400
-    ],
-    "endPos": [
-        300,
-        500
-    ]
-}, {
-    "id": 3,
-    "name": "Scene3",
-    "status": 0,
-    "startPos": [
-        300,
-        400
-    ],
-    "endPos": [
-        300,
-        500
-    ]
-}];
+var barrels;
+var scene = 0; // 0 is start scene of the level
+var goalbarrelcount;
+
 
 var xyqueue = getArrayWithLimitedLength(10);
 //title screen
@@ -78,16 +32,27 @@ TopDownGame.Game.prototype = {
         this.loadSceneData();
         //var result = this.findObjectsByType('playerStartPosition', this.map, 'playerLayer');
         this.createItems();
+        // here we count barrels which we need to hit
+        
+        barrels.forEach(function(c) {
+            if (c["sprite"] == "needToHit") {
+                goalbarrelcount += 1;
+            }
+
+        });
+
+
+
         weapon = this.game.add.weapon(5, 'bullet');
 
 
         // game goal pointer
-        pointer = this.game.add.sprite(scenes[currentScene].endPos[0], scenes[currentScene].endPos[1], 'pointer');
+        pointer = this.game.add.sprite(Maze.scenes[scene].endPos[0], Maze.scenes[scene].endPos[1], 'pointer');
         pointer.scale.setTo(0.8, 0.8);
         pointer.animations.add('ANIM', [0, 1], 2, /*loop*/ true);
         pointer.animations.play('ANIM');
 
-        player = this.game.add.sprite(scenes[currentScene].startPos[0], scenes[currentScene].startPos[1], 'pegman');
+        player = this.game.add.sprite(Maze.scenes[scene].startPos[0], Maze.scenes[scene].startPos[1], 'pegman');
         //console.log(scenes[currentScene].startPos[0]);
         //console.log(scenes[currentScene].startPos[1]);
 
@@ -116,7 +81,7 @@ TopDownGame.Game.prototype = {
         this.upperLayer = this.map.createLayer('upperLayer');
         this.game.physics.arcade.enable(player);
         this.game.physics.arcade.enable(pointer);
-        player.body.setSize(60, 13, 40, 73); 
+        player.body.setSize(60, 13, 40, 73);
         pointer.body.setSize(10, 65, 48, 10);
         //collision on blockedLayer
 
@@ -162,16 +127,18 @@ TopDownGame.Game.prototype = {
             y: player.y
         });
 
+
+
         //collision
         this.game.physics.arcade.collide(player, this.blockLayer);
-        this.game.physics.arcade.overlap(player, items, this.hitWall, null, this);
-        this.game.physics.arcade.overlap(items, weapon.bullets, this.bulletHitBarrel, null, this);
+        this.game.physics.arcade.overlap(player, barrels, this.hitWall, null, this);
+        this.game.physics.arcade.overlap(barrels, weapon.bullets, this.bulletHitBarrel, null, this);
         //this.game.physics.arcade.overlap(player, pointer, this.sceneCompeteHandler, null, this);
         //this.game.physics.arcade.overlap(this.blockLayer, weapon.bullets, this.bulletHitWall, null, this);
         //player movement
 
         player.body.velocity.x = 0;
-        var velocity = 100;
+        var velocity = 400;
 
         if (this.cursors.up.isDown) {
             if (player.body.velocity.y == 0)
@@ -227,45 +194,43 @@ TopDownGame.Game.prototype = {
             }
             flag = true;
             player.animations.play('HIT');
+
+            $("#modaltext").text("Ты ударился! Будь осторожнее!");
+            $("#exampleModal").modal();
+
         }
-    },
-
-    sceneCompeteHandler: function (player, pointer) {
-        // do smth when player completes scene
-        currentScene += 1; 
-        $("#exampleModal").modal(); 
-
     },
     bulletHitBarrel: function(sprite, bullet) {
-
-
         var damage = 48;
         sprite.damage(damage);
-        if (sprite.health > 40) {
-            sprite.frame = 3;
-        } else if (sprite.health < 40) {
-            sprite.frame = 6;
-            sprite.health += damage; // говнокод, позволяющий не умирать
-            sprite.body.enable = false; // отключаем физику чтобы пули пролетали сквозь остатки бочки
+        if (sprite["sprite"] == "restrictedToHit") {
+            $("#modaltext").text("Нельзя стрелять по бочкам с водой! Целься точнее!");
+            $("#exampleModal").modal();
+            Pegman.reset();
+        } else {
+            if (sprite.health > 40) {
+                sprite.frame = 3;
+            } else if (sprite.health < 60) {
+                sprite.frame = 6;
+                sprite.health += damage; // говнокод, позволяющий не умирать
+                sprite.body.enable = false; // отключаем физику чтобы пули пролетали сквозь остатки бочки
+            }
         }
-
         explosion.x = sprite.x;
         explosion.y = sprite.y - 30;
         explosion.visible = true;
         explosion.animations.play('EXPL');
-        //console.log(sprite.health);
-
         bullet.kill();
     },
 
     createItems: function() {
         //create items
-        items = this.game.add.group();
-        items.enableBody = true;
+        barrels = this.game.add.group();
+        barrels.enableBody = true;
         var item;
         result = this.findObjectsByType('barrel', this.map, 'objectLayer');
         result.forEach(function(element) {
-            this.createFromTiledObject(element, items);
+            this.createFromTiledObject(element, barrels);
         }, this);
     },
 
@@ -285,34 +250,53 @@ TopDownGame.Game.prototype = {
     },
     //create a sprite from an object
     createFromTiledObject: function(element, group) {
-        var sprite = group.create(element.x, element.y, 'barrel');
+        var sprite = group.create(element.x, element.y, 'barrel', 4);
         //copy all properties to the sprite
         Object.keys(element.properties).forEach(function(key) {
             sprite[key] = element.properties[key];
         });
+
+        if (sprite["sprite"] == "allowedToHit"){
+            sprite.frame = 0;
+
+        } else if (sprite["sprite"] == "needToHit") {
+            sprite.frame = 4;
+
+        } else if (sprite["sprite"] == "restrictedToHit") {
+            sprite.frame = 1;
+
+        }
     },
     loadSceneData: function() {
         var result = this.findObjectsByType('playerStartPosition', this.map, 'playerLayer');
-        scenes[0].startPos[0] = result[0].x;
-        scenes[0].startPos[1] = result[0].y;
+        Maze.scenes[0].startPos[0] = result[0].x;
+        Maze.scenes[0].startPos[1] = result[0].y;
         var result = this.findObjectsByType('scene1Goal', this.map, 'playerLayer');
-        scenes[0].endPos[0] = result[0].x;
-        scenes[0].endPos[1] = result[0].y;
+        Maze.scenes[0].endPos[0] = result[0].x;
+        Maze.scenes[0].endPos[1] = result[0].y;
+
         var result = this.findObjectsByType('scene2Goal', this.map, 'playerLayer');
-        scenes[1].startPos[0] = scenes[0].endPos[0];
-        scenes[1].startPos[1] = scenes[0].endPos[1];        
-        scenes[1].endPos[0] = result[0].x;
-        scenes[1].endPos[1] = result[0].y;
+        Maze.scenes[1].startPos[0] = Maze.scenes[0].endPos[0];
+        Maze.scenes[1].startPos[1] = Maze.scenes[0].endPos[1];
+        Maze.scenes[1].endPos[0] = result[0].x;
+        Maze.scenes[1].endPos[1] = result[0].y;
+
         var result = this.findObjectsByType('scene3Goal', this.map, 'playerLayer');
-        scenes[2].startPos[0] = scenes[1].endPos[0];
-        scenes[2].startPos[1] = scenes[1].endPos[1];        
-        scenes[2].endPos[0] = result[0].x;
-        scenes[2].endPos[1] = result[0].y;     
+        Maze.scenes[2].startPos[0] = Maze.scenes[1].endPos[0];
+        Maze.scenes[2].startPos[1] = Maze.scenes[1].endPos[1];
+        Maze.scenes[2].endPos[0] = result[0].x;
+        Maze.scenes[2].endPos[1] = result[0].y;
+
         var result = this.findObjectsByType('scene4Goal', this.map, 'playerLayer');
-        scenes[3].startPos[0] = scenes[2].endPos[0];
-        scenes[3].startPos[1] = scenes[2].endPos[1];        
-        scenes[3].endPos[0] = result[0].x;
-        scenes[3].endPos[1] = result[0].y;     
+        Maze.scenes[3].startPos[0] = Maze.scenes[2].endPos[0];
+        Maze.scenes[3].startPos[1] = Maze.scenes[2].endPos[1];
+        Maze.scenes[3].endPos[0] = result[0].x;
+        Maze.scenes[3].endPos[1] = result[0].y;
+
+        Maze.scenes[4].startPos[0] = Maze.scenes[3].endPos[0];
+        Maze.scenes[4].startPos[1] = Maze.scenes[3].endPos[1];
+        Maze.scenes[4].endPos[0] = null;
+        Maze.scenes[4].endPos[1] = null;     
     },
 };
 
