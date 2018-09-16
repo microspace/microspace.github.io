@@ -6,46 +6,43 @@ var weapon;
 var explosion;
 var items;
 var barrels;
-var scene = 0; // 0 is start scene of the level
+var scene = 3; // 0 is start scene of the level
 var goalbarrelcount;
-
-
 var xyqueue = getArrayWithLimitedLength(10);
+var lastSuccessfullPosition = {
+    x: null,
+    y: null
+}; //хранит положение какое было у спрайта когда он в последний раз соверлаппился с целью
 //title screen
 TopDownGame.Game = function() {};
-
 TopDownGame.Game.prototype = {
     create: function() {
         this.map = this.game.add.tilemap('level1');
-
         //the first parameter is the tileset name as specified in Tiled, the second is the key to the asset
         this.map.addTilesetImage('tileSheet04-01', 'gameTiles');
-
         //create layer
         this.flour = this.map.createLayer('flour');
         this.blockLayer = this.map.createLayer('blockLayer');
         this.onBlockLayer = this.map.createLayer('onBlockLayer');
         this.onFlour = this.map.createLayer('onFlour');
-
         //create player
         // load all data from map json, populate the structure.
         this.loadSceneData();
+        lastSuccessfullPosition = {
+    x: Maze.scenes[scene].startPos[0],
+    y: Maze.scenes[scene].startPos[1]
+};
         //var result = this.findObjectsByType('playerStartPosition', this.map, 'playerLayer');
         this.createItems();
         // here we count barrels which we need to hit
-        
+
         barrels.forEach(function(c) {
             if (c["sprite"] == "needToHit") {
                 goalbarrelcount += 1;
             }
-
         });
 
-
-
-        weapon = this.game.add.weapon(5, 'bullet');
-
-
+        weapon = this.game.add.weapon(20, 'bullet');
         // game goal pointer
         pointer = this.game.add.sprite(Maze.scenes[scene].endPos[0], Maze.scenes[scene].endPos[1], 'pointer');
         pointer.scale.setTo(0.8, 0.8);
@@ -256,7 +253,7 @@ TopDownGame.Game.prototype = {
             sprite[key] = element.properties[key];
         });
 
-        if (sprite["sprite"] == "allowedToHit"){
+        if (sprite["sprite"] == "allowedToHit") {
             sprite.frame = 0;
 
         } else if (sprite["sprite"] == "needToHit") {
@@ -296,7 +293,7 @@ TopDownGame.Game.prototype = {
         Maze.scenes[4].startPos[0] = Maze.scenes[3].endPos[0];
         Maze.scenes[4].startPos[1] = Maze.scenes[3].endPos[1];
         Maze.scenes[4].endPos[0] = null;
-        Maze.scenes[4].endPos[1] = null;     
+        Maze.scenes[4].endPos[1] = null;
     },
 };
 

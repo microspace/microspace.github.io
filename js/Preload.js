@@ -12,7 +12,7 @@ TopDownGame.Preload.prototype = {
         this.load.setPreloadSprite(this.preloadBar);
 
         //load game assets
-        this.load.tilemap('level1', 'assets/maps/lesson11/leson1-1.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('level1', 'assets/maps/lesson11/lesson1-1.json', null, Phaser.Tilemap.TILED_JSON);
         this.load.image('gameTiles', 'assets/maps/lesson11/tileSheet04-01.png');
         this.load.spritesheet('bullet', 'assets/sprites/bullet2.png', 20, 9);
         this.load.spritesheet('barrel', 'assets/sprites/barrels64.png', 64, 64);

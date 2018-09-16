@@ -1,39 +1,35 @@
 'use strict';
 
 var Pegman = {
-    posX: Maze.scenes[scene].startPos[0],
-    posY: Maze.scenes[scene].startPos[1],
+    posX: null,
+    posY: null,
     direction: Maze.DirectionType.EAST,
     pegmanActions: [],
-
     pegmanSprite: null,
     anim: null,
     tween: null,
 
     init: function(pegmanSprite) {
-        this.posX = Maze.scenes[scene].startPos[0];
-        this.posY = Maze.scenes[scene].startPos[1];
+        this.posX = lastSuccessfullPosition.x;
+        this.posY = lastSuccessfullPosition.y;
         this.pegmanSprite = pegmanSprite;
         // сделать так чтобы это сообщение не выходило когда игрок начинает со второго уровня
-        $("#modaltext").text("Приветствую тебя рекрут! Я научу тебя пользоваться твоим экзокостюмом. Для начала попробуй просто сдвинуться с места!");
-        $("#exampleModal").modal();
-
-
+        if (scene == 0) {
+            $("#modaltext").text("Приветствую тебя рекрут! Я научу тебя пользоваться твоим экзокостюмом. Для начала попробуй просто сдвинуться с места!");
+            $("#exampleModal").modal();
+        }
         this.reset();
     },
 
     reset: function() {
-
-
-        this.posX = Maze.scenes[scene].startPos[0];
-        this.posY = Maze.scenes[scene].startPos[1];
+        this.posX = lastSuccessfullPosition.x;
+        this.posY = lastSuccessfullPosition.y;
         this.preReset();
         this.tween = null;
         this.anim = null;
         this.pegmanSprite.scale.x = 1
         this.pegmanActions = [];
         this.postReset();
-
     },
 
     preReset: function() {
@@ -49,23 +45,26 @@ var Pegman = {
         this.pegmanSprite.body.enable = false;
         //this.pegmanSprite.x = this.posX * Maze.SQUARE_SIZE;
         //this.pegmanSprite.y = this.posY * Maze.SQUARE_SIZE;
-        this.pegmanSprite.x = Maze.scenes[scene].startPos[0];
-        this.pegmanSprite.y = Maze.scenes[scene].startPos[1];
+        this.pegmanSprite.x = lastSuccessfullPosition.x;
+        this.pegmanSprite.y = lastSuccessfullPosition.y;
         pointer.x = Maze.scenes[scene].endPos[0];
         pointer.y = Maze.scenes[scene].endPos[1];
         this.pegmanSprite.body.enable = true;
         //this.pegmanSprite.reset(this.posX * Maze.SQUARE_SIZE, this.posY * Maze.SQUARE_SIZE);
         flag = false;
         barrels.forEach(function(c) {
-            c.revive();
-            if (c["sprite"] == "allowedToHit") {
-                c.frame = 0;
-            } else if (c["sprite"] == "needToHit") {
-                c.frame = 4;
-            } else if (c["sprite"] == "restrictedToHit") {
-                c.frame = 1;
+            if (c["scene"] - 1 == scene) { //оживляем только те бочки, которые относятся к данной сцене.
+                c.revive();
+                if (c["sprite"] == "allowedToHit") {
+                    c.frame = 0;
+                } else if (c["sprite"] == "needToHit") {
+                    c.frame = 4;
+                } else if (c["sprite"] == "restrictedToHit") {
+                    c.frame = 1;
+                }
+                c.body.enable = true;
             }
-            c.body.enable = true;
+
         });
     },
 
@@ -83,11 +82,9 @@ var Pegman = {
 
     playNextAction: function() {
         if (this.pegmanActions.length <= 0) {
-
             var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
             if (isOverlapping == true) {
                 console.log("scene complete!");
-
                 if (scene == 0) {
                     var messagetext = "Отлично получилось! Теперь попробуй дойди до конца коридора!";
                 } else if (scene == 1) {
@@ -102,47 +99,42 @@ var Pegman = {
                 $("#exampleModal").modal();
                 scene += 1;
                 this.pegmanSprite.body.enable = false;
-                //this.pegmanSprite.x = this.posX * Maze.SQUARE_SIZE;
-                //this.pegmanSprite.y = this.posY * Maze.SQUARE_SIZE;
-                //this.pegmanSprite.x = scenes[currentScene].startPos[0];
-                //this.pegmanSprite.y = scenes[currentScene].startPos[1];
                 pointer.x = Maze.scenes[scene].endPos[0];
                 pointer.y = Maze.scenes[scene].endPos[1];
                 this.pegmanSprite.body.enable = true;
+
+                //Copied from reset button code. Resets html button
                 var runButton = document.getElementById('runButton');
                 runButton.style.display = 'inline';
                 document.getElementById('resetButton').style.display = 'none';
                 // Prevent double-clicks or double-taps.
                 runButton.disabled = false;
+                lastSuccessfullPosition.x = player.x;
+                lastSuccessfullPosition.y = player.y;
             } else {
                 //show modal unsuccessful
                 if (scene == 4) {
+                    console.log(aliveBarrelsCount);
                     var aliveBarrelsCount = 0;
                     barrels.forEach(function(c) {
-
                         if (c["sprite"] == "needToHit" && c.health > 60) {
                             aliveBarrelsCount += 1;
                         }
-
                     });
-                    if (aliveBarrelsCount != 0) {
-                        $("#modaltext").text("Ты убрал не все нужные бочки!");
-                        $("#exampleModal").modal();
-                    } else {
+                    console.log(aliveBarrelsCount);
+                    if (aliveBarrelsCount == 0) {
                         $("#modaltext").text("Победа!!!");
                         $("#exampleModal").modal();
-
+                    } else {
+                        $("#modaltext").text("Ты убрал не все нужные бочки!");
+                        $("#exampleModal").modal();
                     }
                 } else {
                     $("#modaltext").text("Попробуй еще раз, не отчаивайся!");
                     $("#exampleModal").modal();
                     console.log("please try again!");
-
                 }
-
             }
-
-
             return;
         }
 
@@ -211,7 +203,6 @@ Pegman.moveNSWE = function(x, y, stepcount = 1) {
         this.animSpeedByStep = 500;
         this.posX = x;
         this.posY = y;
-
         this.anim = this.pegmanSprite.animations.play("NORTH");
         this.tween = TopDownGame.game.add.tween(this.pegmanSprite);
         this.tween.to({
