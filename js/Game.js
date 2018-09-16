@@ -170,8 +170,8 @@ TopDownGame.Game.prototype = {
                     this.game.camera.x += 4;
                 }
         */
-        this.game.debug.body(player);
-        this.game.debug.body(pointer);
+        //this.game.debug.body(player);
+        //this.game.debug.body(pointer);
         //this.game.debug.bodyInfo(player, 32, 50);
 
     },
