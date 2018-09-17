@@ -15,7 +15,8 @@ Blockly.Blocks['maze_up'] = {
             "args0": [{
                 "type": "field_number",
                 "name": "STEPCOUNT",
-                "value": 2
+                "value": 2,
+
             }]
         });
     }
@@ -138,3 +139,41 @@ Blockly.JavaScript['fire'] = function(block) {
     // Generate JavaScript for moving forward.
     return 'Pegman.nextAction("fire");\n';
 };
+
+
+
+Blockly.Blocks['factory_base'] = {
+
+  init: function() {
+    this.jsonInit({
+  "type": "block_type",
+  "message0": "Нажмите %1",
+      "args0": [
+        {
+          "type": "field_image",
+          "src": "assets/play_icon_300.png",
+          "width": 17,
+          "height": 17,
+          "alt": "▶"
+        }
+      ],
+  "message1": "для запуска %1",
+  "args1": [
+    {
+      "type": "input_statement",
+      "name": "STACK"
+    }
+  ],
+  "colour": 230,
+  "tooltip": "",
+  "helpUrl": ""
+});
+  }
+};
+
+
+Blockly.JavaScript['factory_base'] = function(block) {
+  var statements_stack = Blockly.JavaScript.statementToCode(block, 'STACK');
+  return statements_stack;
+};
+

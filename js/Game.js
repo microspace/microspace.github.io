@@ -36,11 +36,9 @@ TopDownGame.Game.prototype = {
         this.createItems();
         // here we count barrels which we need to hit
 
-        barrels.forEach(function(c) {
-            if (c["sprite"] == "needToHit") {
-                goalbarrelcount += 1;
-            }
-        });
+/*        barrels.forEach(function(c) {
+            console.log(c.health);
+        });*/
 
         weapon = this.game.add.weapon(20, 'bullet');
         // game goal pointer
@@ -192,8 +190,8 @@ TopDownGame.Game.prototype = {
             flag = true;
             player.animations.play('HIT');
 
-            $("#modaltext").text("Ты ударился! Будь осторожнее!");
-            $("#exampleModal").modal();
+/*            $("#modaltext").text("Ты ударился! Будь осторожнее!");
+            $("#exampleModal").modal();*/
 
         }
     },
@@ -224,7 +222,6 @@ TopDownGame.Game.prototype = {
         //create items
         barrels = this.game.add.group();
         barrels.enableBody = true;
-        var item;
         result = this.findObjectsByType('barrel', this.map, 'objectLayer');
         result.forEach(function(element) {
             this.createFromTiledObject(element, barrels);
@@ -263,6 +260,11 @@ TopDownGame.Game.prototype = {
             sprite.frame = 1;
 
         }
+
+/*        if (sprite["flip"] == true) {
+            sprite.scale.x = -1;
+        }*/
+        sprite.health = 100;
     },
     loadSceneData: function() {
         var result = this.findObjectsByType('playerStartPosition', this.map, 'playerLayer');

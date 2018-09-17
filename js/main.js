@@ -1,7 +1,7 @@
 'use strict';
 
 var TopDownGame = TopDownGame || {};
-TopDownGame.game = new Phaser.Game(1200, 600, Phaser.AUTO, 'canvasContainer', null, false, true);
+TopDownGame.game = new Phaser.Game($(window).width(), $(window).height(), Phaser.AUTO, 'canvasContainer', null, false, true);
 TopDownGame.game.state.add('Boot', TopDownGame.Boot);
 TopDownGame.game.state.add('Preload', TopDownGame.Preload);
 TopDownGame.game.state.add('Game', TopDownGame.Game);
@@ -26,6 +26,8 @@ var runProgram = function() {
 	resetButton.style.display = 'inline';
 	// Prevent double-clicks or double-taps.
 	resetButton.disabled = false;
+	//var statements_stack = Blockly.JavaScript.statementToCode(Blockly.Blocks['factory_base'], 'STACK');
+
     var code = Blockly.JavaScript.workspaceToCode(workspace);
     try {
         eval(code);

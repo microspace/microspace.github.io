@@ -1,10 +1,15 @@
-body {
-	margin: 10px;
+html,body { margin:0; padding:0; height:100%; width:100%; }
+
+#full-size {
+  height:100%;
+  width:100%;
+  overflow:hidden; /* or overflow:auto; if you want scrollbars */
 }
+
 #canvasContainer div.kineticjs-content, #canvasContainer canvas, #canvas {
   position: relative;
   background: #F1EEE7;
-  border: 1px solid gray;
+  border: none;
 }
 #editor {
 	position: absolute;
@@ -12,7 +17,7 @@ body {
 	left: 420px;
 	height: 400px;
 	right: 10px;
-	border: 1px solid gray;
+	border: none;
 }
 
 #codeButton {
@@ -21,10 +26,12 @@ body {
 #linkButton {
 	display: none;
 }
-
+.blocklyMainBackground {
+  stroke-width: 0;
+}
 /* Buttons */
 button {
-  margin: 5px;
+  margin: 0px;
   padding: 10px;
   border-radius: 4px;
   border: 1px solid #ddd;

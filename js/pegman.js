@@ -62,6 +62,10 @@ var Pegman = {
                 } else if (c["sprite"] == "restrictedToHit") {
                     c.frame = 1;
                 }
+
+/*                if (c["flip"] == true) {
+                    c.scale.x = -1;
+                } */  
                 c.body.enable = true;
             }
 
@@ -93,7 +97,7 @@ var Pegman = {
                     var messagetext = "Эти бочки преградили тебе путь. Расстреляй их, чтобы пройти дальше!";
                 } else if (scene == 3) {
                     //var messagetext = "А теперь нужно найти 3 бочки с мишенями и подстрелить их. Но не в коем случае не стреляй в бочки с водой!";
-                    var messagetext = "А теперь нужно найти 3 бочки с мишенями и подстрелить их";
+                    var messagetext = "А теперь нужно найти 5 бочки с мишенями и подстрелить их";
                 }
                 $("#modaltext").text(messagetext);
                 $("#exampleModal").modal();
@@ -114,14 +118,12 @@ var Pegman = {
             } else {
                 //show modal unsuccessful
                 if (scene == 4) {
-                    console.log(aliveBarrelsCount);
                     var aliveBarrelsCount = 0;
                     barrels.forEach(function(c) {
                         if (c["sprite"] == "needToHit" && c.health > 60) {
                             aliveBarrelsCount += 1;
                         }
                     });
-                    console.log(aliveBarrelsCount);
                     if (aliveBarrelsCount == 0) {
                         $("#modaltext").text("Победа!!!");
                         $("#exampleModal").modal();
@@ -130,8 +132,8 @@ var Pegman = {
                         $("#exampleModal").modal();
                     }
                 } else {
-                    $("#modaltext").text("Попробуй еще раз, не отчаивайся!");
-                    $("#exampleModal").modal();
+/*                    $("#modaltext").text("Попробуй еще раз, не отчаивайся!");
+                    $("#exampleModal").modal();*/
                     console.log("please try again!");
                 }
             }
@@ -200,7 +202,7 @@ Pegman.preReset = function() {
 Pegman.finishPreviousAction = function() {};
 
 Pegman.moveNSWE = function(x, y, stepcount = 1) {
-        this.animSpeedByStep = 500;
+        this.animSpeedByStep = Math.ceil(500 / 64 * Maze.SQUARE_SIZE);
         this.posX = x;
         this.posY = y;
         this.anim = this.pegmanSprite.animations.play("NORTH");

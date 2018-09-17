@@ -22,9 +22,8 @@ Maze.DirectionType = {
   WEST: 3
 };
 
-Maze.SQUARE_SIZE = 64;
+Maze.SQUARE_SIZE = 1;
 
-Maze.start_ = {x: 2.5, y: 8.1};
 
 Maze.directionToString = function(direction)
 {
