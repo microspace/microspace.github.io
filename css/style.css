@@ -10,6 +10,11 @@ html,body { margin:0; padding:0; height:100%; width:100%; }
   position: relative;
   background: #F1EEE7;
   border: none;
+  margin:0; padding:0;
+}
+
+.canvas {
+  margin:0; padding:0;
 }
 #editor {
 	position: absolute;
@@ -93,4 +98,8 @@ button.notext {
 }
 .stop {
   background-position: -21px -21px;
+}
+
+.blocklyFlyoutBackground {
+background-color: #4d90fe;
 }

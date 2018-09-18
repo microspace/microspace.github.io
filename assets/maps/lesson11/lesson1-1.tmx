@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="35" height="26" tilewidth="64" tileheight="64" infinite="0" nextobjectid="33">
+<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="35" height="26" tilewidth="64" tileheight="64" infinite="0" nextobjectid="35">
  <tileset firstgid="1" name="tileSheet04-01" tilewidth="64" tileheight="64" tilecount="260" columns="13">
-  <image source="tileSheet04-01.png" width="832" height="1280"/>
+  <image source="tileSheet18-09.png" width="832" height="1280"/>
  </tileset>
  <layer name="flourO" width="35" height="26" visible="0">
   <data encoding="csv">
@@ -113,7 +113,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,179,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,180,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -137,13 +137,13 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,32,32,0,0,0,19,17,19,18,33,56,18,19,17,19,22,24,
 19,19,18,19,19,19,18,19,19,19,18,19,19,27,0,0,0,0,0,0,0,0,0,32,30,32,31,33,56,31,32,30,32,22,24,
 32,32,31,32,32,32,31,32,32,32,31,32,32,27,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,178,22,24,
-45,45,44,45,45,45,44,45,45,45,44,45,45,78,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,22,24,
+45,43,44,45,43,45,44,42,45,45,44,45,45,78,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,22,24,
 56,56,56,56,56,56,56,56,56,56,230,231,61,75,15,17,19,74,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,22,24,
-56,56,56,56,56,56,56,56,57,56,56,56,27,15,28,30,32,19,22,24,0,0,0,0,169,169,0,0,0,0,0,0,0,149,24,
+56,56,57,56,56,57,56,56,57,56,56,56,27,15,28,30,32,19,22,24,0,0,0,0,169,169,0,0,0,0,0,0,0,149,24,
 56,56,56,56,56,56,56,56,56,58,56,56,27,28,41,45,45,32,22,24,0,0,0,0,0,0,0,0,0,27,15,33,19,22,24,
 56,56,56,56,56,56,56,56,56,57,56,56,27,41,46,56,56,45,35,37,0,0,0,0,0,0,0,0,0,17,28,33,32,22,24,
-3,3,3,3,6,198,199,2,3,3,52,3,75,33,56,56,56,56,19,19,169,0,0,0,0,0,0,0,0,30,41,45,45,22,24,
-19,19,19,19,19,211,212,19,19,19,27,15,19,33,56,56,56,68,32,32,0,0,0,169,0,0,0,0,0,82,84,85,56,22,24,
+3,3,3,3,6,198,199,2,3,3,52,3,75,33,56,56,56,56,19,19,0,0,0,0,0,0,0,0,0,30,41,45,45,22,24,
+19,19,19,19,19,211,212,19,19,19,27,15,19,33,56,56,56,68,32,32,169,0,177,169,0,0,0,0,0,82,84,85,56,22,24,
 32,32,32,32,32,224,225,32,32,32,27,28,32,33,56,56,56,81,82,83,0,0,0,0,0,0,0,0,0,133,134,85,56,22,24,
 45,45,45,45,45,230,230,45,45,45,27,45,45,46,56,56,56,81,133,134,0,0,0,0,0,0,0,0,0,133,134,85,56,22,24,
 56,56,56,56,56,56,56,56,56,56,27,56,56,56,56,56,56,81,133,134,0,0,0,0,0,0,0,0,0,133,134,85,56,22,24,
@@ -170,21 +170,21 @@
 0,0,0,0,0,0,0,0,0,0,169,164,166,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,180,0,0,179,0,0,191,0,193,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,180,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,174,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,166,164,164,0,0,0,0,0,0,0,0,0,0,0,0,0,0,174,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,187,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,195,193,0,0,0,0,0,0,0,0,0,0,0,0,182,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,165,0,0,0,0,195,193,0,0,0,0,0,0,0,0,0,0,0,0,182,0,0,
 0,0,0,0,192,0,0,194,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,180,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,177,178,0,0,0,0,0,0,0,0,0,165,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,244,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,179,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,178,0,0,180,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,177,178,0,0,0,0,0,0,0,0,248,249,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
  <objectgroup name="playerLayer">
-  <object id="2" gid="178" x="284.5" y="575" width="64" height="64">
+  <object id="2" gid="178" x="287" y="590" width="64" height="64">
    <properties>
     <property name="type" value="playerStartPosition"/>
    </properties>
@@ -211,14 +211,14 @@
   </object>
  </objectgroup>
  <objectgroup name="objectLayer">
-  <object id="5" gid="235" x="1146.33" y="690.333" width="64" height="64">
+  <object id="5" gid="235" x="1151.66" y="697" width="64" height="64">
    <properties>
     <property name="scene" type="int" value="4"/>
     <property name="sprite" value="allowedToHit"/>
     <property name="type" value="barrel"/>
    </properties>
   </object>
-  <object id="7" gid="235" x="1148.83" y="758.333" width="64" height="64">
+  <object id="7" gid="235" x="1148.83" y="765" width="64" height="64">
    <properties>
     <property name="scene" type="int" value="4"/>
     <property name="sprite" value="allowedToHit"/>
@@ -267,33 +267,17 @@
     <property name="type" value="barrel"/>
    </properties>
   </object>
-  <object id="25" gid="235" x="1147.5" y="829.5" width="64" height="64">
+  <object id="25" gid="235" x="1151.84" y="838.166" width="64" height="64">
    <properties>
     <property name="scene" type="int" value="4"/>
     <property name="sprite" value="allowedToHit"/>
     <property name="type" value="barrel"/>
    </properties>
   </object>
-  <object id="26" gid="235" x="1221.5" y="826.167" width="64" height="64">
+  <object id="26" gid="235" x="1216.17" y="833.833" width="64" height="64">
    <properties>
     <property name="scene" type="int" value="4"/>
     <property name="sprite" value="allowedToHit"/>
-    <property name="type" value="barrel"/>
-   </properties>
-  </object>
-  <object id="27" gid="1073742063" x="1039" y="1254.83" width="64" height="64" rotation="180">
-   <properties>
-    <property name="flip" type="bool" value="true"/>
-    <property name="scene" type="int" value="5"/>
-    <property name="sprite" value="needToHit"/>
-    <property name="type" value="barrel"/>
-   </properties>
-  </object>
-  <object id="28" gid="1073742063" x="1024.5" y="1462.83" width="64" height="64" rotation="180">
-   <properties>
-    <property name="flip" type="bool" value="true"/>
-    <property name="scene" type="int" value="5"/>
-    <property name="sprite" value="needToHit"/>
     <property name="type" value="barrel"/>
    </properties>
   </object>
@@ -304,17 +288,33 @@
     <property name="type" value="barrel"/>
    </properties>
   </object>
-  <object id="30" gid="237" x="1215.33" y="691.333" width="64" height="64">
+  <object id="30" gid="237" x="1216.67" y="696.666" width="64" height="64">
    <properties>
     <property name="scene" type="int" value="4"/>
     <property name="sprite" value="allowedToHit"/>
     <property name="type" value="barrel"/>
    </properties>
   </object>
-  <object id="31" gid="237" x="1214" y="759.333" width="64" height="64">
+  <object id="31" gid="237" x="1215.33" y="763.333" width="64" height="64">
    <properties>
     <property name="scene" type="int" value="4"/>
     <property name="sprite" value="allowedToHit"/>
+    <property name="type" value="barrel"/>
+   </properties>
+  </object>
+  <object id="33" gid="242" x="1022.67" y="1257.33" width="64" height="64">
+   <properties>
+    <property name="flipped" type="bool" value="true"/>
+    <property name="scene" type="int" value="5"/>
+    <property name="sprite" value="needToHit"/>
+    <property name="type" value="barrel"/>
+   </properties>
+  </object>
+  <object id="34" gid="242" x="1024" y="1468" width="64" height="64">
+   <properties>
+    <property name="flipped" type="bool" value="true"/>
+    <property name="scene" type="int" value="5"/>
+    <property name="sprite" value="needToHit"/>
     <property name="type" value="barrel"/>
    </properties>
   </object>

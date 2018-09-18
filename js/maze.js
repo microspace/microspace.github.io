@@ -22,7 +22,7 @@ Maze.DirectionType = {
   WEST: 3
 };
 
-Maze.SQUARE_SIZE = 1;
+Maze.SQUARE_SIZE = 64;
 
 
 Maze.directionToString = function(direction)

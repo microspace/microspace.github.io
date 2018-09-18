@@ -6,7 +6,7 @@ var weapon;
 var explosion;
 var items;
 var barrels;
-var scene = 0; // 0 is start scene of the level
+var scene = 3; // 0 is start scene of the level
 var goalbarrelcount;
 var xyqueue = getArrayWithLimitedLength(10);
 var lastSuccessfullPosition = {
@@ -29,16 +29,16 @@ TopDownGame.Game.prototype = {
         // load all data from map json, populate the structure.
         this.loadSceneData();
         lastSuccessfullPosition = {
-    x: Maze.scenes[scene].startPos[0],
-    y: Maze.scenes[scene].startPos[1]
-};
+            x: Maze.scenes[scene].startPos[0],
+            y: Maze.scenes[scene].startPos[1]
+        };
         //var result = this.findObjectsByType('playerStartPosition', this.map, 'playerLayer');
         this.createItems();
         // here we count barrels which we need to hit
 
-/*        barrels.forEach(function(c) {
-            console.log(c.health);
-        });*/
+        /*        barrels.forEach(function(c) {
+                    console.log(c.health);
+                });*/
 
         weapon = this.game.add.weapon(20, 'bullet');
         // game goal pointer
@@ -132,7 +132,7 @@ TopDownGame.Game.prototype = {
         //this.game.physics.arcade.overlap(this.blockLayer, weapon.bullets, this.bulletHitWall, null, this);
         //player movement
 
-        player.body.velocity.x = 0;
+/*        player.body.velocity.x = 0;
         var velocity = 400;
 
         if (this.cursors.up.isDown) {
@@ -155,8 +155,8 @@ TopDownGame.Game.prototype = {
         if (fireButton.isDown) {
             weapon.fire();
             player.animations.play('SHOOT');
-        }
-        /*
+        }*/
+        
                 if (this.cursors.up.isDown) {
                     this.game.camera.y -= 4;
                 } else if (this.cursors.down.isDown) {
@@ -167,7 +167,7 @@ TopDownGame.Game.prototype = {
                 } else if (this.cursors.right.isDown) {
                     this.game.camera.x += 4;
                 }
-        */
+        
         //this.game.debug.body(player);
         //this.game.debug.body(pointer);
         //this.game.debug.bodyInfo(player, 32, 50);
@@ -179,6 +179,7 @@ TopDownGame.Game.prototype = {
 
     },
     hitWall: function() {
+        console.log("hitWall1");
 
         if (!flag) {
             // выдергиваем из очереди предыдущие координаты, возвращаем игрока назад. Чтобы hitWall не успел сработать еще ЦЕЛЫХ 3 раза!!!
@@ -190,8 +191,8 @@ TopDownGame.Game.prototype = {
             flag = true;
             player.animations.play('HIT');
 
-/*            $("#modaltext").text("Ты ударился! Будь осторожнее!");
-            $("#exampleModal").modal();*/
+            /*            $("#modaltext").text("Ты ударился! Будь осторожнее!");
+                        $("#exampleModal").modal();*/
 
         }
     },
@@ -205,8 +206,20 @@ TopDownGame.Game.prototype = {
         } else {
             if (sprite.health > 40) {
                 sprite.frame = 3;
+                if (sprite["sprite"] == "needToHit") {
+                    sprite.frame = 5;
+                }
+                if (sprite["flipped"] == true) {
+                    sprite.frame = 8;
+                }
             } else if (sprite.health < 60) {
                 sprite.frame = 6;
+                if (sprite["sprite"] == "needToHit") {
+                    sprite.frame = 6;
+                }
+                if (sprite["flipped"] == true) {
+                    sprite.frame = 9;
+                }
                 sprite.health += damage; // говнокод, позволяющий не умирать
                 sprite.body.enable = false; // отключаем физику чтобы пули пролетали сквозь остатки бочки
             }
@@ -255,15 +268,16 @@ TopDownGame.Game.prototype = {
 
         } else if (sprite["sprite"] == "needToHit") {
             sprite.frame = 4;
+            if (sprite["flipped"] == true) {
+                sprite.frame = 7;
+            }
 
         } else if (sprite["sprite"] == "restrictedToHit") {
-            sprite.frame = 1;
+            sprite.frame = 2;
 
         }
 
-/*        if (sprite["flip"] == true) {
-            sprite.scale.x = -1;
-        }*/
+
         sprite.health = 100;
     },
     loadSceneData: function() {

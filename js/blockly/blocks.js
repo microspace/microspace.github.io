@@ -151,7 +151,7 @@ Blockly.Blocks['factory_base'] = {
       "args0": [
         {
           "type": "field_image",
-          "src": "assets/play_icon_300.png",
+          "src": "assets/images/play_icon.png",
           "width": 17,
           "height": 17,
           "alt": "▶"

@@ -22,6 +22,8 @@ var Pegman = {
     },
 
     reset: function() {
+        this.pegmanSprite.body.enable = false;
+        console.log('disabled');
         this.posX = lastSuccessfullPosition.x;
         this.posY = lastSuccessfullPosition.y;
         this.preReset();
@@ -42,15 +44,15 @@ var Pegman = {
     },
 
     postReset: function() {
-        this.pegmanSprite.body.enable = false;
+        
         //this.pegmanSprite.x = this.posX * Maze.SQUARE_SIZE;
         //this.pegmanSprite.y = this.posY * Maze.SQUARE_SIZE;
-        this.pegmanSprite.x = lastSuccessfullPosition.x;
-        this.pegmanSprite.y = lastSuccessfullPosition.y;
+        //this.pegmanSprite.x = lastSuccessfullPosition.x;
+        //this.pegmanSprite.y = lastSuccessfullPosition.y;
         pointer.x = Maze.scenes[scene].endPos[0];
         pointer.y = Maze.scenes[scene].endPos[1];
-        this.pegmanSprite.body.enable = true;
-        //this.pegmanSprite.reset(this.posX * Maze.SQUARE_SIZE, this.posY * Maze.SQUARE_SIZE);
+        
+        this.pegmanSprite.reset(lastSuccessfullPosition.x, lastSuccessfullPosition.y);
         flag = false;
         barrels.forEach(function(c) {
             if (c["scene"] - 1 == scene) { //оживляем только те бочки, которые относятся к данной сцене.
@@ -60,7 +62,7 @@ var Pegman = {
                 } else if (c["sprite"] == "needToHit") {
                     c.frame = 4;
                 } else if (c["sprite"] == "restrictedToHit") {
-                    c.frame = 1;
+                    c.frame = 2;
                 }
 
 /*                if (c["flip"] == true) {
@@ -70,6 +72,8 @@ var Pegman = {
             }
 
         });
+        this.pegmanSprite.body.enable = true;
+        console.log('enabled');
     },
 
     nextAction: function(action, step = 1) {
