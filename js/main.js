@@ -13,7 +13,12 @@ $(window).resize(function() {
 TopDownGame.game = new Phaser.Game($(window).width(), $(window).height(), Phaser.AUTO, 'canvasContainer', null, false, true);
 TopDownGame.game.state.add('Boot', TopDownGame.Boot);
 TopDownGame.game.state.add('Preload', TopDownGame.Preload);
-TopDownGame.game.state.add('Game', TopDownGame.Game);
+TopDownGame.game.state.add('lesson11', TopDownGame.Lesson11);
+TopDownGame.game.state.add('lesson21', TopDownGame.Lesson21);
+TopDownGame.game.state.add('lesson22', TopDownGame.Lesson22);
+TopDownGame.game.state.add('lesson23', TopDownGame.Lesson23);
+TopDownGame.game.state.add('lesson24', TopDownGame.Lesson24);
+TopDownGame.game.state.add('lesson25', TopDownGame.Lesson25);
 TopDownGame.game.state.start('Boot');
 
 function resizeGame() {
@@ -50,14 +55,16 @@ var runProgram = function() {
     // Prevent double-clicks or double-taps.
     resetButton.disabled = false;
     //var statements_stack = Blockly.JavaScript.statementToCode(Blockly.Blocks['factory_base'], 'STACK');
-
+    TopDownGame.game.stage.updateTransform();﻿
     var code = Blockly.JavaScript.workspaceToCode(workspace);
     try {
         eval(code);
     } catch (e) {
         alert(e);
     }
+    TopDownGame.game.stage.updateTransform();﻿
     Pegman.play();
+    TopDownGame.game.stage.updateTransform();﻿
 };
 
 var resetProgram = function() {
@@ -66,6 +73,16 @@ var resetProgram = function() {
     document.getElementById('resetButton').style.display = 'none';
     // Prevent double-clicks or double-taps.
     runButton.disabled = false;
-    weapon.fireAngle = Phaser.ANGLE_RIGHT;
-    Pegman.reset();
+    try {
+        weapon.fireAngle = Phaser.ANGLE_RIGHT;
+    } catch {
+
+    }
+
+
+    TopDownGame.game.stage.updateTransform();﻿
+    Pegman.reset2();
+    TopDownGame.game.stage.updateTransform();﻿
+
+    //TopDownGame.game.camera.follow(player);
 }

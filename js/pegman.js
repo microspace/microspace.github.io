@@ -10,26 +10,29 @@ var Pegman = {
     tween: null,
 
     init: function(pegmanSprite) {
-        this.posX = lastSuccessfullPosition.x;
-        this.posY = lastSuccessfullPosition.y;
+        //TopDownGame.game.camera.follow(player);
+
         this.pegmanSprite = pegmanSprite;
         // сделать так чтобы это сообщение не выходило когда игрок начинает со второго уровня
         if (scene == 0) {
             $("#modaltext").text("Приветствую тебя рекрут! Я научу тебя пользоваться твоим экзокостюмом. Для начала попробуй просто сдвинуться с места!");
             $("#exampleModal").modal();
         }
-        this.reset();
+        this.reset2();
     },
 
-    reset: function() {
-        this.pegmanSprite.body.enable = false;
-        console.log('disabled');
+    reset2: function() {
+        TopDownGame.game.stage.updateTransform();﻿
         this.posX = lastSuccessfullPosition.x;
         this.posY = lastSuccessfullPosition.y;
         this.preReset();
         this.tween = null;
+        this.tween1 = null;
+        this.tween2 = null;
         this.anim = null;
-        this.pegmanSprite.scale.x = 1
+        this.pegmanSprite.scale.x = 1;
+        this.pegmanSprite.scale.y = 1;
+        try {b.visible = true;} catch {};
         this.pegmanActions = [];
         this.postReset();
     },
@@ -38,42 +41,62 @@ var Pegman = {
         if (this.tween) {
             this.tween.stop();
         }
+                if (this.tween1) {
+            this.tween1.stop();
+        }
+                if (this.tween2) {
+            this.tween2.stop();
+        }
         if (this.anim) {
             this.anim.stop();
         }
     },
 
     postReset: function() {
-        
-        //this.pegmanSprite.x = this.posX * Maze.SQUARE_SIZE;
-        //this.pegmanSprite.y = this.posY * Maze.SQUARE_SIZE;
-        //this.pegmanSprite.x = lastSuccessfullPosition.x;
-        //this.pegmanSprite.y = lastSuccessfullPosition.y;
-        pointer.x = Maze.scenes[scene].endPos[0];
-        pointer.y = Maze.scenes[scene].endPos[1];
-        
+
         this.pegmanSprite.reset(lastSuccessfullPosition.x, lastSuccessfullPosition.y);
+        this.pegmanSprite.fresh = false;
+
         flag = false;
-        barrels.forEach(function(c) {
-            if (c["scene"] - 1 == scene) { //оживляем только те бочки, которые относятся к данной сцене.
-                c.revive();
-                if (c["sprite"] == "allowedToHit") {
-                    c.frame = 0;
-                } else if (c["sprite"] == "needToHit") {
-                    c.frame = 4;
-                } else if (c["sprite"] == "restrictedToHit") {
-                    c.frame = 2;
+
+        if (TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson11") {
+
+            barrels.forEach(function(c) {
+                if (c["scene"] - 1 == scene) { //оживляем только те бочки, которые относятся к данной сцене.
+
+                    c.revive();
+                    if (c["sprite"] == "allowedToHit") {
+                        c.frame = 234;
+                    } else if (c["sprite"] == "allowedToHit2") {
+                        c.frame = 236;
+                    } else if (c["sprite"] == "needToHit") {
+                        c.frame = 238;
+                        if (c["flipped"] == true) {
+                            c.frame = 241;
+                        }
+                    } else if (c["sprite"] == "restrictedToHit") {
+                        c.frame = 235;
+                    }
+                    c.body.immovable = true;
+
+
+                    c.body.enable = true;
                 }
+            });
+        }
 
-/*                if (c["flip"] == true) {
-                    c.scale.x = -1;
-                } */  
-                c.body.enable = true;
-            }
+        if (TopDownGame.game.state.getCurrentState().key﻿﻿[6] == "2") { // это значит второй уровень (((
+            chests.forEach(function(c) {
+                c.revive();
+            });
 
-        });
-        this.pegmanSprite.body.enable = true;
-        console.log('enabled');
+        }
+
+        this.pegmanSprite.animations.play('STAND');
+
+
+
+
     },
 
     nextAction: function(action, step = 1) {
@@ -90,57 +113,7 @@ var Pegman = {
 
     playNextAction: function() {
         if (this.pegmanActions.length <= 0) {
-            var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
-            if (isOverlapping == true) {
-                console.log("scene complete!");
-                if (scene == 0) {
-                    var messagetext = "Отлично получилось! Теперь попробуй дойди до конца коридора!";
-                } else if (scene == 1) {
-                    var messagetext = "Превосходно! Сейчас надо дойти до тех бочек!";
-                } else if (scene == 2) {
-                    var messagetext = "Эти бочки преградили тебе путь. Расстреляй их, чтобы пройти дальше!";
-                } else if (scene == 3) {
-                    //var messagetext = "А теперь нужно найти 3 бочки с мишенями и подстрелить их. Но не в коем случае не стреляй в бочки с водой!";
-                    var messagetext = "А теперь нужно найти 5 бочки с мишенями и подстрелить их";
-                }
-                $("#modaltext").text(messagetext);
-                $("#exampleModal").modal();
-                scene += 1;
-                this.pegmanSprite.body.enable = false;
-                pointer.x = Maze.scenes[scene].endPos[0];
-                pointer.y = Maze.scenes[scene].endPos[1];
-                this.pegmanSprite.body.enable = true;
-
-                //Copied from reset button code. Resets html button
-                var runButton = document.getElementById('runButton');
-                runButton.style.display = 'inline';
-                document.getElementById('resetButton').style.display = 'none';
-                // Prevent double-clicks or double-taps.
-                runButton.disabled = false;
-                lastSuccessfullPosition.x = player.x;
-                lastSuccessfullPosition.y = player.y;
-            } else {
-                //show modal unsuccessful
-                if (scene == 4) {
-                    var aliveBarrelsCount = 0;
-                    barrels.forEach(function(c) {
-                        if (c["sprite"] == "needToHit" && c.health > 60) {
-                            aliveBarrelsCount += 1;
-                        }
-                    });
-                    if (aliveBarrelsCount == 0) {
-                        $("#modaltext").text("Победа!!!");
-                        $("#exampleModal").modal();
-                    } else {
-                        $("#modaltext").text("Ты убрал не все нужные бочки!");
-                        $("#exampleModal").modal();
-                    }
-                } else {
-/*                    $("#modaltext").text("Попробуй еще раз, не отчаивайся!");
-                    $("#exampleModal").modal();*/
-                    console.log("please try again!");
-                }
-            }
+            Pegman.checkFinal();
             return;
         }
 
@@ -206,7 +179,7 @@ Pegman.preReset = function() {
 Pegman.finishPreviousAction = function() {};
 
 Pegman.moveNSWE = function(x, y, stepcount = 1) {
-        this.animSpeedByStep = Math.ceil(500 / 64 * Maze.SQUARE_SIZE);
+        this.animSpeedByStep = 500;
         this.posX = x;
         this.posY = y;
         this.anim = this.pegmanSprite.animations.play("NORTH");
@@ -225,8 +198,106 @@ Pegman.moveNSWE = function(x, y, stepcount = 1) {
     Pegman.Shoot = function() {
         this.anim = this.pegmanSprite.animations.play("SHOOT");
         weapon.fire();
-        this.anim.onComplete.addOnce(function() {
+        weapon.onKill.addOnce(function() {
             player.animations.play('STAND');
             this.playNextAction();
         }, this);
+        this.anim.onComplete.addOnce(function() {
+            player.animations.play('STAND');
+
+        }, this);
+    },
+
+    Pegman.checkFinal = function() {
+
+
+        if (TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson11") {
+
+            var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
+            if (isOverlapping == true) {
+                console.log("scene complete!");
+                if (scene == 0) {
+                    var messagetext = "Отлично получилось! Теперь попробуй дойди до конца коридора!";
+                } else if (scene == 1) {
+                    var messagetext = "Превосходно! Сейчас надо дойти до тех бочек!";
+                } else if (scene == 2) {
+                    var messagetext = "Эти бочки преградили тебе путь. Расстреляй их, чтобы пройти дальше!";
+                } else if (scene == 3) {
+                    //var messagetext = "А теперь нужно найти 3 бочки с мишенями и подстрелить их. Но не в коем случае не стреляй в бочки с водой!";
+                    var messagetext = "А теперь нужно найти 5 бочки с мишенями и подстрелить их";
+                }
+                $("#modaltext").text(messagetext);
+                $("#exampleModal").modal();
+                scene += 1;
+                this.pegmanSprite.body.enable = false;
+                pointer.x = Maze.scenes[scene].endPos[0];
+                pointer.y = Maze.scenes[scene].endPos[1];
+                this.pegmanSprite.body.enable = true;
+
+                //Copied from reset button code. Resets html button
+                var runButton = document.getElementById('runButton');
+                runButton.style.display = 'inline';
+                document.getElementById('resetButton').style.display = 'none';
+                // Prevent double-clicks or double-taps.
+                runButton.disabled = false;
+                lastSuccessfullPosition.x = player.x;
+                lastSuccessfullPosition.y = player.y;
+            } else {
+                //show modal unsuccessful
+                if (scene == 4) {
+                    var aliveBarrelsCount = 0;
+                    barrels.forEach(function(c) {
+                        if (c["sprite"] == "needToHit" && c.health > 60) {
+                            aliveBarrelsCount += 1;
+                        }
+                    });
+                    console.log(aliveBarrelsCount);
+                    if (aliveBarrelsCount == 0) {
+                        $("#modaltext").text("Победа!!!");
+                        $("#exampleModal").modal();
+                        TopDownGame.game.state.start('lesson21');
+                    } else {
+                        $("#modaltext").text("Ты убрал не все нужные бочки!");
+                        $("#exampleModal").modal();
+                    }
+                } else {
+                    console.log("please try again!");
+                }
+            }
+
+            //TopDownGame.game.state.getCurrentState().key﻿﻿ == "Game" 
+        }
+
+        if (TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson21") {
+
+            var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, chests, null, null, this);
+
+            if (isOverlapping == true) {
+                $("#modaltext").text("Вы завершили уровень 2.1!");
+                $("#exampleModal").modal();
+                TopDownGame.game.state.start('lesson22');
+
+            }
+
+            //TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson21"
+        }
+        if (TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson22") {
+
+            var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, chests, null, null, this);
+
+            if (isOverlapping == true) {
+                $("#modaltext").text("Вы завершили уровень 2.2!");
+                $("#exampleModal").modal();
+                TopDownGame.game.state.start('lesson23');
+
+            }
+
+            //TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson21"
+        }
+
+        if (TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson22") {
+            //тут уже более сложная логика, так как там две бочки
+
+        }
+
     };
