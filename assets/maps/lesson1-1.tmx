@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="35" height="26" tilewidth="64" tileheight="64" infinite="0" nextobjectid="35">
  <tileset firstgid="1" name="tileSheet04-01" tilewidth="64" tileheight="64" tilecount="260" columns="13">
-  <image source="tileSheet18-09.png" width="832" height="1280"/>
+  <image source="E:/ИГРОВАЯ ПЛАТФОРМА ROBOOKY/ГРАФИКА/SHEETS/tileSheet18-09.png" width="832" height="1280"/>
  </tileset>
  <layer name="flour" width="35" height="26">
   <data encoding="csv">
@@ -274,7 +274,6 @@
   </object>
   <object id="33" gid="242" x="1022.67" y="1257.33" width="64" height="64">
    <properties>
-    <property name="flipped" type="bool" value="true"/>
     <property name="scene" type="int" value="5"/>
     <property name="sprite" value="needToHit"/>
     <property name="type" value="barrel"/>
@@ -282,7 +281,6 @@
   </object>
   <object id="34" gid="242" x="1024" y="1468" width="64" height="64">
    <properties>
-    <property name="flipped" type="bool" value="true"/>
     <property name="scene" type="int" value="5"/>
     <property name="sprite" value="needToHit"/>
     <property name="type" value="barrel"/>

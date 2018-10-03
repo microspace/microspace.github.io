@@ -177,3 +177,59 @@ Blockly.JavaScript['factory_base'] = function(block) {
   return statements_stack;
 };
 
+
+
+
+Blockly.Blocks['floatto'] = {
+    /**
+     * Block for moving forward.
+     * @this Blockly.Block
+     */
+    init: function() {
+        this.jsonInit({
+  "type": "floatto",
+  "message0": "Плыть%1 секунду в точку x:%2 y:%3",
+  "args0": [
+    {
+      "type": "field_number",
+      "name": "seconds",
+      "value": 1,
+      "min": 1,
+      "max": 20
+    },
+
+    {
+      "type": "field_number",
+      "name": "tox",
+      "value": 0,
+      "min": -20,
+      "max": 20
+    },
+
+    {
+      "type": "field_number",
+      "name": "toy",
+      "value": 0,
+      "min": -20,
+      "max": 20
+    }
+  ],
+  "inputsInline": true,
+  "previousStatement": null,
+  "nextStatement": null,
+  "colour": 230,
+  "tooltip": "Плыть в точку на карте в течение определенного времени. Остерегайся препятствий!",
+  "helpUrl": ""
+});
+    }
+};
+
+Blockly.JavaScript['floatto'] = function(block) {
+  var number_seconds = block.getFieldValue('seconds');
+  var number_tox = block.getFieldValue('tox');
+  var number_toy = block.getFieldValue('toy');
+ 
+  return 'Pegman.nextAction("nswe", ' + number_seconds + ', ' + number_tox + ', ' + number_toy + ');\n';
+};
+
+

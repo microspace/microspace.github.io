@@ -6,7 +6,7 @@ var weapon;
 var explosion;
 var items;
 var barrels;
-var scene = 0; // 0 is start scene of the level
+var scene = 3; // 0 is start scene of the level
 var goalbarrelcount;
 var xyqueue = getArrayWithLimitedLength(10);
 var lastSuccessfullPosition = {
@@ -25,6 +25,7 @@ TopDownGame.Lesson11.prototype = {
         this.blockLayer = this.map.createLayer('blockLayer');
         this.onBlockLayer = this.map.createLayer('onBlockLayer');
         this.onFlour = this.map.createLayer('onFlour');
+        this.sinkLayer = this.map.createLayer('sinkLayer');
         //create player
         // load all data from map json, populate the structure.
         this.loadSceneData();

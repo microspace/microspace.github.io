@@ -25,9 +25,9 @@ TopDownGame.Lesson25.prototype = {
         this.blockLayer = this.map.createLayer('blockLayer');
         fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
 
-         this.onBlockLayer = this.map.createLayer('onBlockLayer');
-         this.onFlour = this.map.createLayer('onFlour');
-         this.sinkLayer = this.map.createLayer('sinkLayer');
+        this.onBlockLayer = this.map.createLayer('onBlockLayer');
+        this.onFlour = this.map.createLayer('onFlour');
+        this.sinkLayer = this.map.createLayer('sinkLayer');
         //create player
         // load all data from map json, populate the structure.
         //this.loadsceneData();
@@ -37,6 +37,7 @@ TopDownGame.Lesson25.prototype = {
                 };*/
         //var result = this.findObjectsByType('playerStartPosition', this.map, 'playerLayer');
         this.createItems();
+        weapon = this.game.add.weapon(20, 'bullet');
         // here we count barrels which we need to hit
 
         /*        barrels.forEach(function(c) {
@@ -93,12 +94,17 @@ TopDownGame.Lesson25.prototype = {
 
         this.map.setTileIndexCallback([...Array(500).keys()], this.sinkInWater, this, 'sinkLayer');
         this.map.setTileIndexCallback([...Array(500).keys()], this.hitWall, this, 'blockLayer');
+
         //this.map.setCollisionBetween(1, 4000, true, 'blockLayer');
         //resizes the game world to match the layer dimensions
         this.flour.resizeWorld();
         Pegman.init(player);
 
-
+        weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
+        weapon.bulletAngleOffset = 0;
+        weapon.bulletSpeed = Pegman.bulletSpeed;
+        weapon.fireAngle = Phaser.ANGLE_RIGHT; // shoot at right direcion by default
+        weapon.trackSprite(player, 0, -9, false); //-65 выведено экспериментальным путём
         //the camera will follow the player in the world
         this.game.camera.follow(player);
         //move player with cursor keys
@@ -108,23 +114,32 @@ TopDownGame.Lesson25.prototype = {
         //        button = this.game.add.button(1100, 1100, 'button', this.actionOnClick, this, 2, 1, 0)
         var cp = this.game.add.sprite(0, 0, 'coordinateplane');
         //this.blockLayer.debug = true;
-        var t = this.game.add.text(0, 0, "Уровень 2.5", { font: "32px Arial", fill: "#ffffff", align: "center" });
+        var t = this.game.add.text(0, 0, "Уровень 2.5", {
+            font: "32px Arial",
+            fill: "#ffffff",
+            align: "center"
+        });
         t.fixedToCamera = true;
         t.cameraOffset.setTo(700, 10);
-        b = this.game.add.text(0, 0, "0,0", { font: "32px Arial", fill: "#ffffff", align: "center" });
+        b = this.game.add.text(0, 0, "0,0", {
+            font: "32px Arial",
+            fill: "#ffffff",
+            align: "center"
+        });
     },
 
 
 
     update: function() {
 
-        var xtext = Math.floor(player.x / Maze.SQUARE_SIZE) - 8;
-        var ytext = -1 * Math.floor(player.y / Maze.SQUARE_SIZE) + 9;
+        var xtext = Math.floor(player.x / Maze.SQUARE_SIZE) + Maze.coordoffset_x;
+        var ytext = -1 * Math.floor(player.y / Maze.SQUARE_SIZE) + Maze.coordoffset_y;
 
         b.text = xtext + ", " + ytext;
 
-        b.x = Math.floor(player.x - 20);
-        b.y = Math.floor(player.y -  player.height + 20);
+        b.x = Math.floor(player.x + Pegman.textoffset_x);
+        b.y = Math.floor(player.y - player.height + Pegman.textoffset_y);
+
         if (xyqueue.length <= 9) {
             xyqueue.push({
                 x: player.x,
@@ -146,7 +161,10 @@ TopDownGame.Lesson25.prototype = {
         //collision
         this.game.physics.arcade.collide(player, this.blockLayer);
         this.game.physics.arcade.collide(player, this.sinkLayer);
+        this.game.physics.arcade.collide(player, barrels, this.hitWall, null, this);
         this.game.physics.arcade.overlap(player, chests, this.chestCallback, null, this);
+        this.game.physics.arcade.overlap(barrels, weapon.bullets, this.bulletHitBarrel, null, this);
+
         //this.game.physics.arcade.collide(player, barrels, this.hitWall, null, this);
         //this.game.physics.arcade.overlap(barrels, weapon.bullets, this.bulletHitBarrel, null, this);
         //this.game.physics.arcade.overlap(player, pointer, this.scene2CompeteHandler, null, this);
@@ -174,7 +192,7 @@ TopDownGame.Lesson25.prototype = {
         }
 
         if (fireButton.isDown) {
-            TopDownGame.game.state.start('lesson25');
+            //TopDownGame.game.state.start('lesson25');
         }
         /*
                 if (this.cursors.up.isDown) {
@@ -245,6 +263,40 @@ TopDownGame.Lesson25.prototype = {
             flag = true;
         }
     },
+    bulletHitBarrel: function(sprite, bullet) {
+        var damage = 48;
+        sprite.damage(damage);
+        if (sprite["sprite"] == "restrictedToHit") {
+            $("#modaltext").text("Нельзя стрелять по бочкам с водой! Целься точнее!");
+            $("#exampleModal").modal();
+            Pegman.reset2();
+        } else {
+            if (sprite.health > 40) {
+                sprite.frame = 237;
+                if (sprite["sprite"] == "needToHit") {
+                    sprite.frame = 239;
+                }
+                if (sprite["flipped"] == true) {
+                    sprite.frame = 242;
+                }
+            } else if (sprite.health < 60) {
+                sprite.frame = 240;
+                if (sprite["sprite"] == "needToHit") {
+                    sprite.frame = 240;
+                }
+                if (sprite["flipped"] == true) {
+                    sprite.frame = 243;
+                }
+                sprite.health += damage; // говнокод, позволяющий не умирать
+                sprite.body.enable = false; // отключаем физику чтобы пули пролетали сквозь остатки бочки
+            }
+        }
+        explosion.x = sprite.x;
+        explosion.y = sprite.y - 30;
+        explosion.visible = true;
+        explosion.animations.play('EXPL');
+        bullet.kill();
+    },
     chestCallback: function(sprite, chest) {
         chest.visible = false;
     },
@@ -256,6 +308,13 @@ TopDownGame.Lesson25.prototype = {
         result = this.findObjectsByType('chest', this.map, 'objectLayer');
         result.forEach(function(element) {
             this.createFromTiledObject(element, chests);
+        }, this);
+
+        barrels = this.game.add.group();
+        barrels.enableBody = true;
+        result = this.findObjectsByType('barrel', this.map, 'objectLayer');
+        result.forEach(function(element) {
+            this.createFromTiledObject(element, barrels);
         }, this);
     },
 
@@ -280,7 +339,16 @@ TopDownGame.Lesson25.prototype = {
         Object.keys(element.properties).forEach(function(key) {
             sprite[key] = element.properties[key];
         });
+        if (sprite["sprite"] === "allowedToHit") {
+            sprite.frame = 234;
+        }
+        if (sprite["sprite"] === "treasure1") {
+            sprite.frame = 163;
 
+        } else if (sprite["sprite"] === "treasure2") {
+            sprite.frame = 164;
+
+        }
         sprite.health = 100;
         sprite.body.immovable = true;
     },

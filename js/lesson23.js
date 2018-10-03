@@ -96,6 +96,7 @@ TopDownGame.Lesson23.prototype = {
         //resizes the game world to match the layer dimensions
         this.flour.resizeWorld();
         Pegman.init(player);
+        weapon = this.game.add.weapon(20, 'bullet');
 
 
         //the camera will follow the player in the world
@@ -119,18 +120,23 @@ TopDownGame.Lesson23.prototype = {
             fill: "#ffffff",
             align: "center"
         });
+        weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
+        weapon.bulletAngleOffset = 0;
+        weapon.bulletSpeed = Pegman.bulletSpeed;
+        weapon.fireAngle = Phaser.ANGLE_RIGHT; // shoot at right direcion by default
+        weapon.trackSprite(player, 0, -9, false); //-65 выведено экспериментальным путём
     },
 
 
 
     update: function() {
-        var xtext = Math.floor(player.x / Maze.SQUARE_SIZE) - 8;
-        var ytext = -1 * Math.floor(player.y / Maze.SQUARE_SIZE) + 9;
+        var xtext = Math.floor(player.x / Maze.SQUARE_SIZE) + Maze.coordoffset_x;
+        var ytext = -1 * Math.floor(player.y / Maze.SQUARE_SIZE) + Maze.coordoffset_y;
 
         b.text = xtext + ", " + ytext;
 
-        b.x = Math.floor(player.x - 20);
-        b.y = Math.floor(player.y - player.height + 20);
+        b.x = Math.floor(player.x + Pegman.textoffset_x);
+        b.y = Math.floor(player.y - player.height + Pegman.textoffset_y);
 
         if (xyqueue.length <= 9) {
             xyqueue.push({
@@ -145,7 +151,6 @@ TopDownGame.Lesson23.prototype = {
                 });
             }
         }
-
 
 
 

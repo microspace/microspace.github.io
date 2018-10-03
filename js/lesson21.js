@@ -42,12 +42,14 @@ TopDownGame.Lesson21.prototype = {
                     console.log(c.health);
                 });*/
 
-        // weapon = this.game.add.weapon(20, 'bullet');
-        // game goal pointer
-        /*        pointer = this.game.add.sprite(Maze.scenes[scene2].endPos[0], Maze.scenes[scene2].endPos[1], 'pointer');
-                pointer.scale.setTo(0.8, 0.8);
-                pointer.animations.add('ANIM', [0, 1], 2, true);
-                pointer.animations.play('ANIM');*/
+        weapon = this.game.add.weapon(20, 'bullet');
+
+
+
+        explosion = this.game.add.sprite(0, 0, 'explosion');
+        explosion.visible = false;
+        explanim = explosion.animations.add('EXPL', [0, 1, 2, 3, 4, 5], 20, /*loop*/ false);
+        explanim.onComplete.add(this.animationStopped, this);
         var result = this.findObjectsByType('playerStartPosition', this.map, 'playerLayer');
         lastSuccessfullPosition = {
             x: result[0].x,
@@ -87,9 +89,6 @@ TopDownGame.Lesson21.prototype = {
 
         //collision on blockedLayer
 
-
-
-
         this.map.setTileIndexCallback([...Array(500).keys()], this.hitWall, this, 'blockLayer');
         //this.map.setTileIndexCallback([17, 18, 30, 31], this.hitWall, this, this.blockLayer);
         //this.map.setCollisionBetween(1, 4000, true, 'blockLayer');
@@ -107,24 +106,35 @@ TopDownGame.Lesson21.prototype = {
         //        button = this.game.add.button(1100, 1100, 'button', this.actionOnClick, this, 2, 1, 0)
         var cp = this.game.add.sprite(0, 0, 'coordinateplane');
         //this.blockLayer.debug = true;
-        var t = this.game.add.text(0, 0, "Уровень 2.1", { font: "32px Arial", fill: "#ffffff", align: "center" });
+        var t = this.game.add.text(0, 0, "Уровень 2.1", {
+            font: "32px Arial",
+            fill: "#ffffff",
+            align: "center"
+        });
         t.fixedToCamera = true;
         t.cameraOffset.setTo(700, 10);
-        b = this.game.add.text(0, 0, "0,0", { font: "32px Arial", fill: "#ffffff", align: "center" });
-
+        b = this.game.add.text(0, 0, "0,0", {
+            font: "32px Arial",
+            fill: "#ffffff",
+            align: "center"
+        });
+        weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
+        weapon.bulletAngleOffset = 0;
+        weapon.bulletSpeed = Pegman.bulletSpeed;
+        weapon.fireAngle = Phaser.ANGLE_RIGHT; // shoot at right direcion by default
+        weapon.trackSprite(player, 0, -9, false); //-65 выведено экспериментальным путём
     },
 
 
 
     update: function() {
-        var xtext = Math.floor(player.x / Maze.SQUARE_SIZE) - 8;
-        var ytext = -1 * Math.floor(player.y / Maze.SQUARE_SIZE) + 9;
+        var xtext = Math.floor(player.x / Maze.SQUARE_SIZE) + Maze.coordoffset_x;
+        var ytext = -1 * Math.floor(player.y / Maze.SQUARE_SIZE) + Maze.coordoffset_y;
 
         b.text = xtext + ", " + ytext;
 
-        b.x = Math.floor(player.x - 20);
-        b.y = Math.floor(player.y -  player.height + 20);
-
+        b.x = Math.floor(player.x + Pegman.textoffset_x);
+        b.y = Math.floor(player.y - player.height + Pegman.textoffset_y);
 
         if (xyqueue.length <= 9) {
             xyqueue.push({
@@ -193,6 +203,10 @@ TopDownGame.Lesson21.prototype = {
         // this.game.debug.bodyInfo(player, 32, 50);
 
     },
+    animationStopped: function(sprite, animation) {
+        explosion.visible = false;
+    },
+
     hitWall: function() {
 
         if (!flag) {

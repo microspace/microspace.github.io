@@ -1,5 +1,12 @@
 'use strict';
 
+
+var Pegman = Pegman || {};
+
+
+
+
+
 var Pegman = {
     posX: null,
     posY: null,
@@ -14,7 +21,7 @@ var Pegman = {
 
         this.pegmanSprite = pegmanSprite;
         // сделать так чтобы это сообщение не выходило когда игрок начинает со второго уровня
-        if (scene == 0) {
+        if (TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson11" && scene == 0) {
             $("#modaltext").text("Приветствую тебя рекрут! Я научу тебя пользоваться твоим экзокостюмом. Для начала попробуй просто сдвинуться с места!");
             $("#exampleModal").modal();
         }
@@ -32,7 +39,9 @@ var Pegman = {
         this.anim = null;
         this.pegmanSprite.scale.x = 1;
         this.pegmanSprite.scale.y = 1;
-        try {b.visible = true;} catch {};
+        try {
+            b.visible = true;
+        } catch {};
         this.pegmanActions = [];
         this.postReset();
     },
@@ -41,10 +50,10 @@ var Pegman = {
         if (this.tween) {
             this.tween.stop();
         }
-                if (this.tween1) {
+        if (this.tween1) {
             this.tween1.stop();
         }
-                if (this.tween2) {
+        if (this.tween2) {
             this.tween2.stop();
         }
         if (this.anim) {
@@ -85,6 +94,31 @@ var Pegman = {
             });
         }
 
+        if (TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson24" || TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson25") {
+
+            barrels.forEach(function(c) {
+
+                c.revive();
+                if (c["sprite"] == "allowedToHit") {
+                    c.frame = 234;
+                } else if (c["sprite"] == "allowedToHit2") {
+                    c.frame = 236;
+                } else if (c["sprite"] == "needToHit") {
+                    c.frame = 238;
+                    if (c["flipped"] == true) {
+                        c.frame = 241;
+                    }
+                } else if (c["sprite"] == "restrictedToHit") {
+                    c.frame = 235;
+                }
+                c.body.immovable = true;
+
+
+                c.body.enable = true;
+
+            });
+        }
+
         if (TopDownGame.game.state.getCurrentState().key﻿﻿[6] == "2") { // это значит второй уровень (((
             chests.forEach(function(c) {
                 c.revive();
@@ -99,9 +133,11 @@ var Pegman = {
 
     },
 
-    nextAction: function(action, step = 1) {
+    nextAction: function(action, step = 1, tox, toy) {
         var actionobject = {
             action: action,
+            tox: tox,
+            toy: toy,
             stepcount: step
         };
         this.pegmanActions.push(actionobject);
@@ -129,6 +165,9 @@ var Pegman = {
         var actionobject = this.pegmanActions.shift();
         var action = actionobject.action;
         var stepcount = actionobject.stepcount;
+        var tox = actionobject.tox;
+        var toy = actionobject.toy;
+
 
         switch (action) {
             case "up":
@@ -153,6 +192,16 @@ var Pegman = {
                 weapon.fireAngle = Phaser.ANGLE_RIGHT;
                 this.moveNSWE(this.posX + Maze.SQUARE_SIZE * step[0] * stepcount, this.posY + Maze.SQUARE_SIZE * step[1] * stepcount, stepcount);
                 break;
+            case "nswe":
+                this.pegmanSprite.scale.x = 1;
+                weapon.fireAngle = Phaser.ANGLE_RIGHT;
+                //Maze.coordoffset_x = -11;
+                //Maze.coordoffset_y = 9;
+                // нужно вычислить в пикселях куда должен попасть игрок.
+                var goalx = Maze.SQUARE_SIZE * (tox - Maze.coordoffset_x) + Maze.SQUARE_SIZE / 2 ;
+                var goaly = Maze.SQUARE_SIZE * (-1 * toy + Maze.coordoffset_y) + 14;
+                this.moveNSWE(goalx, goaly,  stepcount);
+                break;
             case "fire":
                 this.Shoot();
                 break;
@@ -166,6 +215,12 @@ var Pegman = {
         this.turnTo(d);
     },
 };
+
+
+
+Pegman.textoffset_x = -30;
+Pegman.textoffset_y = 20;
+Pegman.bulletSpeed = 2000;
 
 Pegman.preReset = function() {
     if (this.tween) {
@@ -270,34 +325,120 @@ Pegman.moveNSWE = function(x, y, stepcount = 1) {
 
         if (TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson21") {
 
-            var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, chests, null, null, this);
-
-            if (isOverlapping == true) {
-                $("#modaltext").text("Вы завершили уровень 2.1!");
+            var aliveChestsCount = 0;
+            chests.forEach(function(c) {
+                if (c.visible == true) {
+                    aliveChestsCount += 1;
+                }
+            });
+            console.log(aliveChestsCount);
+            if (aliveChestsCount == 0) {
+                $("#modaltext").text("Молодец!");
                 $("#exampleModal").modal();
                 TopDownGame.game.state.start('lesson22');
-
+                var runButton = document.getElementById('runButton');
+                runButton.style.display = 'inline';
+                document.getElementById('resetButton').style.display = 'none';
+                // Prevent double-clicks or double-taps.
+                runButton.disabled = false;
+            } else {
+                $("#modaltext").text("Ты подобрал не все сундуки!");
+                $("#exampleModal").modal();
             }
 
             //TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson21"
         }
         if (TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson22") {
 
-            var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, chests, null, null, this);
-
-            if (isOverlapping == true) {
-                $("#modaltext").text("Вы завершили уровень 2.2!");
+            var aliveChestsCount = 0;
+            chests.forEach(function(c) {
+                if (c.visible == true) {
+                    aliveChestsCount += 1;
+                }
+            });
+            console.log(aliveChestsCount);
+            if (aliveChestsCount == 0) {
+                $("#modaltext").text("Молодец!");
                 $("#exampleModal").modal();
                 TopDownGame.game.state.start('lesson23');
-
+                var runButton = document.getElementById('runButton');
+                runButton.style.display = 'inline';
+                document.getElementById('resetButton').style.display = 'none';
+                // Prevent double-clicks or double-taps.
+                runButton.disabled = false;
+            } else {
+                $("#modaltext").text("Ты подобрал не все сундуки!");
+                $("#exampleModal").modal();
             }
 
             //TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson21"
         }
 
-        if (TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson22") {
+        if (TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson23") {
+            var aliveChestsCount = 0;
+            chests.forEach(function(c) {
+                if (c.visible == true) {
+                    aliveChestsCount += 1;
+                }
+            });
+            console.log(aliveChestsCount);
+            if (aliveChestsCount == 0) {
+                $("#modaltext").text("Молодец!");
+                $("#exampleModal").modal();
+                TopDownGame.game.state.start('lesson24');
+                var runButton = document.getElementById('runButton');
+                runButton.style.display = 'inline';
+                document.getElementById('resetButton').style.display = 'none';
+                // Prevent double-clicks or double-taps.
+                runButton.disabled = false;
+            } else {
+                $("#modaltext").text("Ты подобрал не все сундуки!");
+                $("#exampleModal").modal();
+            }
+        }
+        if (TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson24") {
             //тут уже более сложная логика, так как там две бочки
 
-        }
 
+            var aliveChestsCount = 0;
+            chests.forEach(function(c) {
+                if (c.visible == true) {
+                    aliveChestsCount += 1;
+                }
+            });
+            console.log(aliveChestsCount);
+            if (aliveChestsCount == 0) {
+                $("#modaltext").text("Победа!!!");
+                $("#exampleModal").modal();
+                TopDownGame.game.state.start('lesson25');
+                var runButton = document.getElementById('runButton');
+                runButton.style.display = 'inline';
+                document.getElementById('resetButton').style.display = 'none';
+                // Prevent double-clicks or double-taps.
+                runButton.disabled = false;
+            } else {
+                $("#modaltext").text("Ты подобрал не все сундуки!");
+                $("#exampleModal").modal();
+            }
+        }
+        if (TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson25") {
+            //тут уже более сложная логика, так как там две бочки
+
+
+            var aliveChestsCount = 0;
+            chests.forEach(function(c) {
+                if (c.visible == true) {
+                    aliveChestsCount += 1;
+                }
+            });
+            console.log(aliveChestsCount);
+            if (aliveChestsCount == 0) {
+                $("#modaltext").text("Победа!!!");
+                $("#exampleModal").modal();
+                TopDownGame.game.state.start('lesson11');
+            } else {
+                $("#modaltext").text("Ты собрал не все сундуки и нельзя стрелять в бочки с водой!");
+                $("#exampleModal").modal();
+            }
+        }
     };
