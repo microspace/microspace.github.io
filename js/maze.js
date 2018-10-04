@@ -24,7 +24,7 @@ Maze.DirectionType = {
 
 Maze.SQUARE_SIZE = 64;
 
-Maze.coordoffset_x = -11;
+Maze.coordoffset_x = -15;
 Maze.coordoffset_y = 9;
 
 
