@@ -25,27 +25,13 @@ TopDownGame.Lesson21.prototype = {
         this.flour = this.map.createLayer('flour');
         this.blockLayer = this.map.createLayer('blockLayer');
 
-        // this.onBlockLayer = this.map.createLayer('onBlockLayer');
-        // this.onFlour = this.map.createLayer('onFlour');
-        //create player
-        // load all data from map json, populate the structure.
-        //this.loadsceneData();
-        /*        lastSuccessfullPosition = {
-                    x: Maze.scenes[scene2].startPos[0],
-                    y: Maze.scenes[scene2].startPos[1]
-                };*/
-        //var result = this.findObjectsByType('playerStartPosition', this.map, 'playerLayer');
+        this.onBlockLayer = this.map.createLayer('onBlockLayer');
+        this.onFlour = this.map.createLayer('onFlour');
+
         this.createItems();
-        // here we count barrels which we need to hit
-
-        /*        barrels.forEach(function(c) {
-                    console.log(c.health);
-                });*/
-
+ 
         weapon = this.game.add.weapon(20, 'bullet');
-
-
-
+ 
         explosion = this.game.add.sprite(0, 0, 'explosion');
         explosion.visible = false;
         explanim = explosion.animations.add('EXPL', [0, 1, 2, 3, 4, 5], 20, /*loop*/ false);
@@ -56,13 +42,9 @@ TopDownGame.Lesson21.prototype = {
             y: result[0].y
         };
         player = this.game.add.sprite(result[0].x, result[0].y, 'pegman');
-        //player.kill();
-        //console.log(scene2s[currentscene2].startPos[0]);
-        //console.log(scene2s[currentscene2].startPos[1]);
-
-
+ 
         player.anchor.setTo(0.5, 0.5);
-        //pointer.anchor.setTo(0.5, 0.5);
+ 
 
         var fps = 7;
         player.animations.add('NORTH', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], fps, /*loop*/ true);
@@ -118,6 +100,7 @@ TopDownGame.Lesson21.prototype = {
             fill: "#ffffff",
             align: "center"
         });
+        b.anchor.set(0.5);
         weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
         weapon.bulletAngleOffset = 0;
         weapon.bulletSpeed = Pegman.bulletSpeed;

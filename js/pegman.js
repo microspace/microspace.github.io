@@ -1,11 +1,6 @@
 'use strict';
 
-
 var Pegman = Pegman || {};
-
-
-
-
 
 var Pegman = {
     posX: null,
@@ -23,6 +18,10 @@ var Pegman = {
         // сделать так чтобы это сообщение не выходило когда игрок начинает со второго уровня
         if (TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson11" && scene == 0) {
             $("#modaltext").text("Приветствую тебя рекрут! Я научу тебя пользоваться твоим экзокостюмом. Для начала попробуй просто сдвинуться с места!");
+            $("#exampleModal").modal();
+        }
+        if (TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson21") {
+            $("#modaltext").text("Рекрут, тебе нужно собрать все сундуки с золотом. Управляй экзокостюмом с помощью систем координат.");
             $("#exampleModal").modal();
         }
         this.reset2();
@@ -200,6 +199,13 @@ var Pegman = {
                 // нужно вычислить в пикселях куда должен попасть игрок.
                 var goalx = Maze.SQUARE_SIZE * (tox - Maze.coordoffset_x) + Maze.SQUARE_SIZE / 2 ;
                 var goaly = Maze.SQUARE_SIZE * (-1 * toy + Maze.coordoffset_y) + 14;
+                if (goalx < player.x) {
+                    this.pegmanSprite.scale.x = -1;
+                    weapon.fireAngle = Phaser.ANGLE_LEFT;
+                } else {
+                    this.pegmanSprite.scale.x = 1;
+                    weapon.fireAngle = Phaser.ANGLE_RIGHT;
+                }
                 this.moveNSWE(goalx, goaly,  stepcount);
                 break;
             case "fire":
@@ -218,9 +224,9 @@ var Pegman = {
 
 
 
-Pegman.textoffset_x = -30;
-Pegman.textoffset_y = 20;
-Pegman.bulletSpeed = 2000;
+Pegman.textoffset_x = 0;
+Pegman.textoffset_y = 45;
+Pegman.bulletSpeed = 1000;
 
 Pegman.preReset = function() {
     if (this.tween) {
@@ -251,6 +257,7 @@ Pegman.moveNSWE = function(x, y, stepcount = 1) {
     },
 
     Pegman.Shoot = function() {
+        sleep(1000);
         this.anim = this.pegmanSprite.animations.play("SHOOT");
         weapon.fire();
         weapon.onKill.addOnce(function() {
@@ -331,9 +338,9 @@ Pegman.moveNSWE = function(x, y, stepcount = 1) {
                     aliveChestsCount += 1;
                 }
             });
-            console.log(aliveChestsCount);
+
             if (aliveChestsCount == 0) {
-                $("#modaltext").text("Молодец!");
+                $("#modaltext").text("Задание выполнено! Переходим на уровень 2.2!");
                 $("#exampleModal").modal();
                 TopDownGame.game.state.start('lesson22');
                 var runButton = document.getElementById('runButton');
@@ -358,7 +365,7 @@ Pegman.moveNSWE = function(x, y, stepcount = 1) {
             });
             console.log(aliveChestsCount);
             if (aliveChestsCount == 0) {
-                $("#modaltext").text("Молодец!");
+                $("#modaltext").text("Задание выполнено! Переходим на уровень 2.3!");
                 $("#exampleModal").modal();
                 TopDownGame.game.state.start('lesson23');
                 var runButton = document.getElementById('runButton');
@@ -383,7 +390,7 @@ Pegman.moveNSWE = function(x, y, stepcount = 1) {
             });
             console.log(aliveChestsCount);
             if (aliveChestsCount == 0) {
-                $("#modaltext").text("Молодец!");
+                $("#modaltext").text("Задание выполнено! Переходим на уровень 2.4!");
                 $("#exampleModal").modal();
                 TopDownGame.game.state.start('lesson24');
                 var runButton = document.getElementById('runButton');
@@ -442,3 +449,13 @@ Pegman.moveNSWE = function(x, y, stepcount = 1) {
             }
         }
     };
+
+
+    function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
+}

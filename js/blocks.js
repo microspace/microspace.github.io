@@ -15,7 +15,7 @@ Blockly.Blocks['maze_up'] = {
             "args0": [{
                 "type": "field_number",
                 "name": "STEPCOUNT",
-                "value": 4,
+                "value": 1,
 
             }]
         });
@@ -46,7 +46,7 @@ Blockly.Blocks['maze_down'] = {
             "args0": [{
                 "type": "field_number",
                 "name": "STEPCOUNT",
-                "value": 4
+                "value": 1
             }]
         });
     }
@@ -77,7 +77,7 @@ Blockly.Blocks['maze_right'] = {
             "args0": [{
                 "type": "field_number",
                 "name": "STEPCOUNT",
-                "value": 4
+                "value": 1
             }]
         });
     }
@@ -106,7 +106,7 @@ Blockly.Blocks['maze_left'] = {
             "args0": [{
                 "type": "field_number",
                 "name": "STEPCOUNT",
-                "value": 4
+                "value": 1
             }]
         });
     }
@@ -193,8 +193,8 @@ Blockly.Blocks['floatto'] = {
     {
       "type": "field_number",
       "name": "seconds",
-      "value": 1,
-      "min": 1,
+      "value": 3,
+      "min": 2,
       "max": 20
     },
 

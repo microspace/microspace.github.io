@@ -6,7 +6,7 @@ var weapon;
 var explosion;
 var items;
 var barrels;
-var scene = 3; // 0 is start scene of the level
+var scene = 4; // 0 is start scene of the level
 var goalbarrelcount;
 var xyqueue = getArrayWithLimitedLength(10);
 var lastSuccessfullPosition = {
@@ -79,6 +79,7 @@ TopDownGame.Lesson11.prototype = {
         //collision on blockedLayer
 
         this.map.setTileIndexCallback([...Array(500).keys()], this.hitWall, this, this.blockLayer);
+        this.map.setTileIndexCallback([81, 82, 83, 132, 133], this.sinkInWater, this, 'sinkLayer');
         //this.map.setTileIndexCallback([17, 18, 30, 31], this.hitWall, this, this.blockLayer);
         //this.map.setCollisionBetween(1, 2000, true, 'blockLayer');
         //resizes the game world to match the layer dimensions
@@ -143,6 +144,7 @@ TopDownGame.Lesson11.prototype = {
 
         //collision
         this.game.physics.arcade.collide(player, this.blockLayer);
+        this.game.physics.arcade.collide(player, this.sinkLayer);
         this.game.physics.arcade.collide(player, barrels, this.hitWall, null, this);
         this.game.physics.arcade.overlap(barrels, weapon.bullets, this.bulletHitBarrel, null, this);
         //this.game.physics.arcade.overlap(player, pointer, this.sceneCompeteHandler, null, this);
@@ -245,7 +247,39 @@ TopDownGame.Lesson11.prototype = {
         explosion.animations.play('EXPL');
         bullet.kill();
     },
+    sinkInWater: function() {
+        if (!flag) {
+            console.log("sinkInWater");
+            
 
+            Pegman.pegmanActions = [];
+            if (Pegman.tween) {
+                Pegman.tween.stop();
+            }
+            this.tween1 = this.game.add.tween(player).to({
+                angle: 359
+            }, 1000, Phaser.Easing.Linear.None, true);
+            var dx;
+            var dy;
+            dx = Math.sign(xyqueue[9].x - xyqueue[7].x);
+            dy = Math.sign(xyqueue[9].y - xyqueue[7].y);
+
+            this.tween2 = this.game.add.tween(player).to({
+                x: player.x + (Maze.SQUARE_SIZE - 10) * dx,
+                y: player.y + (Maze.SQUARE_SIZE - 10) * dy,
+            }, 1000, Phaser.Easing.Circular.Out, true);
+
+            this.tween = this.game.add.tween(player.scale).to({
+                x: 0.1,
+                y: 0.1
+            }, 1000, Phaser.Easing.Linear.None, true);
+
+            this.tween.onComplete.addOnce(function() {
+                player.kill();
+            }, this);
+            flag = true;
+        }
+    },
     createItems: function() {
         //create items
         barrels = this.game.add.group();
