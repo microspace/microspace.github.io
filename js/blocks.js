@@ -144,37 +144,33 @@ Blockly.JavaScript['fire'] = function(block) {
 
 Blockly.Blocks['factory_base'] = {
 
-  init: function() {
-    this.jsonInit({
-  "type": "block_type",
-  "message0": "Нажмите %1",
-      "args0": [
-        {
-          "type": "field_image",
-          "src": "assets/images/play_icon.png",
-          "width": 17,
-          "height": 17,
-          "alt": "▶"
-        }
-      ],
-  "message1": "для запуска %1",
-  "args1": [
-    {
-      "type": "input_statement",
-      "name": "STACK"
+    init: function() {
+        this.jsonInit({
+            "type": "block_type",
+            "message0": "Нажмите %1",
+            "args0": [{
+                "type": "field_image",
+                "src": "assets/images/play_icon.png",
+                "width": 17,
+                "height": 17,
+                "alt": "▶"
+            }],
+            "message1": "для запуска %1",
+            "args1": [{
+                "type": "input_statement",
+                "name": "STACK"
+            }],
+            "colour": 230,
+            "tooltip": "",
+            "helpUrl": ""
+        });
     }
-  ],
-  "colour": 230,
-  "tooltip": "",
-  "helpUrl": ""
-});
-  }
 };
 
 
 Blockly.JavaScript['factory_base'] = function(block) {
-  var statements_stack = Blockly.JavaScript.statementToCode(block, 'STACK');
-  return statements_stack;
+    var statements_stack = Blockly.JavaScript.statementToCode(block, 'STACK');
+    return statements_stack;
 };
 
 
@@ -187,49 +183,183 @@ Blockly.Blocks['floatto'] = {
      */
     init: function() {
         this.jsonInit({
-  "type": "floatto",
-  "message0": "Плыть%1 секунду в точку x:%2 y:%3",
-  "args0": [
-    {
-      "type": "field_number",
-      "name": "seconds",
-      "value": 3,
-      "min": 2,
-      "max": 20
-    },
+            "type": "floatto",
+            "message0": "Плыть%1 секунду в точку x:%2 y:%3",
+            "args0": [{
+                    "type": "field_number",
+                    "name": "seconds",
+                    "value": 3,
+                    "min": 2,
+                    "max": 20
+                },
 
-    {
-      "type": "field_number",
-      "name": "tox",
-      "value": 0,
-      "min": -20,
-      "max": 20
-    },
+                {
+                    "type": "field_number",
+                    "name": "tox",
+                    "value": 0,
+                    "min": -20,
+                    "max": 20
+                },
 
-    {
-      "type": "field_number",
-      "name": "toy",
-      "value": 0,
-      "min": -20,
-      "max": 20
-    }
-  ],
-  "inputsInline": true,
-  "previousStatement": null,
-  "nextStatement": null,
-  "colour": 230,
-  "tooltip": "Плыть в точку на карте в течение определенного времени. Остерегайся препятствий!",
-  "helpUrl": ""
-});
+                {
+                    "type": "field_number",
+                    "name": "toy",
+                    "value": 0,
+                    "min": -20,
+                    "max": 20
+                }
+            ],
+            "inputsInline": true,
+            "previousStatement": null,
+            "nextStatement": null,
+            "colour": 230,
+            "tooltip": "Плыть в точку на карте в течение определенного времени. Остерегайся препятствий!",
+            "helpUrl": ""
+        });
     }
 };
 
 Blockly.JavaScript['floatto'] = function(block) {
-  var number_seconds = block.getFieldValue('seconds');
-  var number_tox = block.getFieldValue('tox');
-  var number_toy = block.getFieldValue('toy');
- 
-  return 'Pegman.nextAction("nswe", ' + number_seconds + ', ' + number_tox + ', ' + number_toy + ');\n';
+    var number_seconds = block.getFieldValue('seconds');
+    var number_tox = block.getFieldValue('tox');
+    var number_toy = block.getFieldValue('toy');
+
+    return 'Pegman.nextAction("nswe", ' + number_seconds + ', ' + number_tox + ', ' + number_toy + ');\n';
 };
 
 
+Blockly.Blocks['changeskin'] = {
+    /**
+     * Block for moving forward.
+     * @this Blockly.Block
+     */
+    init: function() {
+        this.jsonInit({
+            "message0": 'сменить костюм на %1',
+            "previousStatement": null,
+            "nextStatement": null,
+            "tooltip": 'Сменить костюм',
+            "colour": 160,
+            "args0": [{
+                "type": "field_dropdown",
+                "name": "TILES",
+                "options": [
+                    [{
+                        "src": "assets/images/tile_id1.png",
+                        "width": 24,
+                        "height": 24,
+                        "alt": "tile_id1"
+                    }, "1"],
+                    [{
+                        "src": "assets/images/tile_id2.png",
+                        "width": 24,
+                        "height": 24,
+                        "alt": "tile_id2"
+                    }, "2"],
+                    [{
+                        "src": "assets/images/tile_id5.png",
+                        "width": 24,
+                        "height": 24,
+                        "alt": "tile_id5"
+                    }, "5"]
+                ]
+
+            }]
+        });
+    }
+};
+
+Blockly.JavaScript['changeskin'] = function(block) {
+    // Сгенерировать код для смены костюма
+    var tile_id = block.getFieldValue('TILES');
+    return 'Pegman.nextAction("changeskin", ' + tile_id + ');\n';
+
+
+
+};
+
+
+Blockly.Blocks['changex'] = {
+    /**
+     * Block for moving forward.
+     * @this Blockly.Block
+     */
+    init: function() {
+        this.jsonInit({
+            "message0": 'Изменить х на %1',
+            "previousStatement": null,
+            "nextStatement": null,
+            "tooltip": 'Увеличить или уменьшить координату',
+            "colour": 160,
+            "args0": [{
+                "type": "field_number",
+                "name": "dx",
+                "value": 1,
+                "min": -20,
+                "max": 20
+            }]
+        });
+    }
+};
+
+Blockly.JavaScript['changex'] = function(block) {
+    // Generate JavaScript for moving forward.
+    var dx = block.getFieldValue('dx');
+    var number_seconds = dx;
+    return 'Pegman.nextAction("changex", ' + number_seconds + ', ' + dx + ', ' + 0 + ');\n';
+};
+
+
+Blockly.Blocks['changey'] = {
+    /**
+     * Block for moving forward.
+     * @this Blockly.Block
+     */
+    init: function() {
+        this.jsonInit({
+            "message0": 'Изменить y на %1',
+            "previousStatement": null,
+            "nextStatement": null,
+            "tooltip": 'Увеличить или уменьшить координату',
+            "colour": 160,
+            "args0": [{
+                "type": "field_number",
+                "name": "dy",
+                "value": 1,
+                "min": -20,
+                "max": 20
+            }]
+        });
+    }
+};
+
+Blockly.JavaScript['changey'] = function(block) {
+    // Generate JavaScript for moving forward.
+    var dy = block.getFieldValue('dy');
+    var number_seconds = dy;
+    return 'Pegman.nextAction("changey", ' + number_seconds + ', ' + 0 + ', ' + dy + ');\n';
+};
+
+
+
+
+Blockly.Blocks['build'] = {
+    /**
+     * Block for moving forward.
+     * @this Blockly.Block
+     */
+    init: function() {
+        this.jsonInit({
+            "message0": 'Построить',
+            "previousStatement": null,
+            "nextStatement": null,
+            "colour": 0,
+            "tooltip": 'Устанавливает выделенный блок на карту'
+        });
+    }
+};
+
+Blockly.JavaScript['build'] = function(block) {
+    // Generate JavaScript for moving forward.
+    return 'Pegman.nextAction("build");\n';
+};

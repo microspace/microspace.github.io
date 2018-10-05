@@ -108,18 +108,13 @@ TopDownGame.Lesson23.prototype = {
         //        button = this.game.add.button(1100, 1100, 'button', this.actionOnClick, this, 2, 1, 0)
         var cp = this.game.add.sprite(0, 0, 'coordinateplane');
         //this.blockLayer.debug = true;
-        var t = this.game.add.text(0, 0, "Уровень 2.3", {
-            font: "32px Arial",
-            fill: "#ffffff",
-            align: "center"
-        });
-        t.fixedToCamera = true;
-        t.cameraOffset.setTo(700, 10);
+
         b = this.game.add.text(0, 0, "0,0", {
             font: "32px Arial",
             fill: "#ffffff",
             align: "center"
         });
+        b.anchor.set(0.5);
         weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
         weapon.bulletAngleOffset = 0;
         weapon.bulletSpeed = Pegman.bulletSpeed;

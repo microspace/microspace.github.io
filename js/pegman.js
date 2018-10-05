@@ -21,7 +21,7 @@ var Pegman = {
             $("#exampleModal").modal();
         }
         if (TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson21") {
-            $("#modaltext").text("Рекрут, тебе нужно собрать все сундуки с золотом. Управляй экзокостюмом с помощью систем координат.");
+            $("#modaltext").text("Рекрут, тебе нужно собрать все сундуки с золотом. Управляй экзокостюмом с помощью галактической системы координат.");
             $("#exampleModal").modal();
         }
         this.reset2();
@@ -193,23 +193,38 @@ var Pegman = {
                 break;
             case "nswe":
                 this.pegmanSprite.scale.x = 1;
-                weapon.fireAngle = Phaser.ANGLE_RIGHT;
-                //Maze.coordoffset_x = -11;
-                //Maze.coordoffset_y = 9;
+                try {weapon.fireAngle = Phaser.ANGLE_RIGHT} catch {};
                 // нужно вычислить в пикселях куда должен попасть игрок.
-                var goalx = Maze.SQUARE_SIZE * (tox - Maze.coordoffset_x) + Maze.SQUARE_SIZE / 2 ;
+                var goalx = Maze.SQUARE_SIZE * (tox - Maze.coordoffset_x) + Maze.SQUARE_SIZE / 2;
                 var goaly = Maze.SQUARE_SIZE * (-1 * toy + Maze.coordoffset_y) + 14;
                 if (goalx < player.x) {
                     this.pegmanSprite.scale.x = -1;
-                    weapon.fireAngle = Phaser.ANGLE_LEFT;
+                    try {weapon.fireAngle = Phaser.ANGLE_LEFT} catch {};
                 } else {
                     this.pegmanSprite.scale.x = 1;
-                    weapon.fireAngle = Phaser.ANGLE_RIGHT;
+                    try {weapon.fireAngle = Phaser.ANGLE_RIGHT} catch {};
                 }
-                this.moveNSWE(goalx, goaly,  stepcount);
+                this.moveNSWE(goalx, goaly, stepcount);
+                break;
+            case "changex":
+                var goalx = this.posX + Maze.SQUARE_SIZE * tox;
+                var goaly = this.posY + Maze.SQUARE_SIZE * toy;
+                this.moveNSWE(goalx, goaly, stepcount);
+                break;
+            case "changey":
+                var goalx = this.posX + Maze.SQUARE_SIZE * tox;
+                var goaly = this.posY - Maze.SQUARE_SIZE * toy;
+                this.moveNSWE(goalx, goaly, stepcount);
                 break;
             case "fire":
                 this.Shoot();
+                break;
+            case "changeskin":
+                Pegman.selected_tileid = stepcount;
+                this.pegmanSprite.frame = Pegman.selected_tileid; // в будущем надо сделать по нормальному, сейчас айди фрейма передается как stepcount. Не бейте меня за это
+                break;
+            case "build":
+                
                 break;
         }
     },
@@ -227,6 +242,7 @@ var Pegman = {
 Pegman.textoffset_x = 0;
 Pegman.textoffset_y = 45;
 Pegman.bulletSpeed = 1000;
+Pegman.selected_tileid = 1;
 
 Pegman.preReset = function() {
     if (this.tween) {
@@ -257,7 +273,6 @@ Pegman.moveNSWE = function(x, y, stepcount = 1) {
     },
 
     Pegman.Shoot = function() {
-        sleep(1000);
         this.anim = this.pegmanSprite.animations.play("SHOOT");
         weapon.fire();
         weapon.onKill.addOnce(function() {
@@ -266,15 +281,11 @@ Pegman.moveNSWE = function(x, y, stepcount = 1) {
         }, this);
         this.anim.onComplete.addOnce(function() {
             player.animations.play('STAND');
-
         }, this);
     },
 
     Pegman.checkFinal = function() {
-
-
         if (TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson11") {
-
             var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
             if (isOverlapping == true) {
                 console.log("scene complete!");
@@ -340,8 +351,8 @@ Pegman.moveNSWE = function(x, y, stepcount = 1) {
             });
 
             if (aliveChestsCount == 0) {
-                $("#modaltext").text("Задание выполнено! Переходим на уровень 2.2!");
-                $("#exampleModal").modal();
+                // $("#modaltext").text("Задание выполнено! Переходим на уровень 2.2!");
+                // $("#exampleModal").modal();
                 TopDownGame.game.state.start('lesson22');
                 var runButton = document.getElementById('runButton');
                 runButton.style.display = 'inline';
@@ -365,8 +376,8 @@ Pegman.moveNSWE = function(x, y, stepcount = 1) {
             });
             console.log(aliveChestsCount);
             if (aliveChestsCount == 0) {
-                $("#modaltext").text("Задание выполнено! Переходим на уровень 2.3!");
-                $("#exampleModal").modal();
+                // $("#modaltext").text("Задание выполнено! Переходим на уровень 2.3!");
+                // $("#exampleModal").modal();
                 TopDownGame.game.state.start('lesson23');
                 var runButton = document.getElementById('runButton');
                 runButton.style.display = 'inline';
@@ -390,8 +401,8 @@ Pegman.moveNSWE = function(x, y, stepcount = 1) {
             });
             console.log(aliveChestsCount);
             if (aliveChestsCount == 0) {
-                $("#modaltext").text("Задание выполнено! Переходим на уровень 2.4!");
-                $("#exampleModal").modal();
+                // $("#modaltext").text("Задание выполнено! Переходим на уровень 2.4!");
+                // $("#exampleModal").modal();
                 TopDownGame.game.state.start('lesson24');
                 var runButton = document.getElementById('runButton');
                 runButton.style.display = 'inline';
@@ -440,22 +451,13 @@ Pegman.moveNSWE = function(x, y, stepcount = 1) {
             });
             console.log(aliveChestsCount);
             if (aliveChestsCount == 0) {
-                $("#modaltext").text("Победа!!!");
-                $("#exampleModal").modal();
+                // $("#modaltext").text("Победа!!!");
+                // $("#exampleModal").modal();
                 TopDownGame.game.state.start('lesson11');
             } else {
-                $("#modaltext").text("Ты собрал не все сундуки и нельзя стрелять в бочки с водой!");
+                $("#modaltext").text("Ты собрал не все сундуки!");
                 $("#exampleModal").modal();
             }
         }
     };
 
-
-    function sleep(milliseconds) {
-  var start = new Date().getTime();
-  for (var i = 0; i < 1e7; i++) {
-    if ((new Date().getTime() - start) > milliseconds){
-      break;
-    }
-  }
-}

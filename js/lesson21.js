@@ -29,9 +29,9 @@ TopDownGame.Lesson21.prototype = {
         this.onFlour = this.map.createLayer('onFlour');
 
         this.createItems();
- 
+
         weapon = this.game.add.weapon(20, 'bullet');
- 
+
         explosion = this.game.add.sprite(0, 0, 'explosion');
         explosion.visible = false;
         explanim = explosion.animations.add('EXPL', [0, 1, 2, 3, 4, 5], 20, /*loop*/ false);
@@ -42,9 +42,9 @@ TopDownGame.Lesson21.prototype = {
             y: result[0].y
         };
         player = this.game.add.sprite(result[0].x, result[0].y, 'pegman');
- 
+
         player.anchor.setTo(0.5, 0.5);
- 
+
 
         var fps = 7;
         player.animations.add('NORTH', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], fps, /*loop*/ true);
@@ -88,13 +88,7 @@ TopDownGame.Lesson21.prototype = {
         //        button = this.game.add.button(1100, 1100, 'button', this.actionOnClick, this, 2, 1, 0)
         var cp = this.game.add.sprite(0, 0, 'coordinateplane');
         //this.blockLayer.debug = true;
-        var t = this.game.add.text(0, 0, "Уровень 2.1", {
-            font: "32px Arial",
-            fill: "#ffffff",
-            align: "center"
-        });
-        t.fixedToCamera = true;
-        t.cameraOffset.setTo(700, 10);
+
         b = this.game.add.text(0, 0, "0,0", {
             font: "32px Arial",
             fill: "#ffffff",
@@ -105,7 +99,15 @@ TopDownGame.Lesson21.prototype = {
         weapon.bulletAngleOffset = 0;
         weapon.bulletSpeed = Pegman.bulletSpeed;
         weapon.fireAngle = Phaser.ANGLE_RIGHT; // shoot at right direcion by default
-        weapon.trackSprite(player, 0, -9, false); //-65 выведено экспериментальным путём
+        weapon.trackSprite(player, 0, -9, false); //-9 выведено экспериментальным путём
+
+
+        var tile = this.map.getTile(10, 9);
+        console.log(tile);
+        if (tile) {
+            tile.alpha = 0.5;
+        }
+
     },
 
 
