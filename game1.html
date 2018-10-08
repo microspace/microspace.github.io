@@ -127,8 +127,9 @@
   window.addEventListener('resize', onresize, false);
   onresize();
   Blockly.svgResize(workspace);
-
+var buttonh = blocklyArea.offsetHeight - 200;
 $("#resstart").css({"z-index": 20});
+$("#resstart").css({"top": buttonh + 'px'});
 
 </script>
 </body>

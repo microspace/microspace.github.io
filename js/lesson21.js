@@ -102,12 +102,6 @@ TopDownGame.Lesson21.prototype = {
         weapon.trackSprite(player, 0, -9, false); //-9 выведено экспериментальным путём
 
 
-        var tile = this.map.getTile(10, 9);
-        console.log(tile);
-        if (tile) {
-            tile.alpha = 0.5;
-        }
-
     },
 
 

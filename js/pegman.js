@@ -5,6 +5,8 @@ var Pegman = Pegman || {};
 var Pegman = {
     posX: null,
     posY: null,
+    dposX: 12,
+    dposY: 7,
     direction: Maze.DirectionType.EAST,
     pegmanActions: [],
     pegmanSprite: null,
@@ -31,6 +33,8 @@ var Pegman = {
         TopDownGame.game.stage.updateTransform();﻿
         this.posX = lastSuccessfullPosition.x;
         this.posY = lastSuccessfullPosition.y;
+        this.dposX = 12;
+        this.dposY = 7;
         this.preReset();
         this.tween = null;
         this.tween1 = null;
@@ -132,7 +136,7 @@ var Pegman = {
 
     },
 
-    nextAction: function(action, step = 1, tox, toy) {
+    nextAction: function(action, step = 1, tox = 0, toy = 0) {
         var actionobject = {
             action: action,
             tox: tox,
@@ -193,38 +197,62 @@ var Pegman = {
                 break;
             case "nswe":
                 this.pegmanSprite.scale.x = 1;
-                try {weapon.fireAngle = Phaser.ANGLE_RIGHT} catch {};
+                try {
+                    weapon.fireAngle = Phaser.ANGLE_RIGHT
+                } catch {};
                 // нужно вычислить в пикселях куда должен попасть игрок.
                 var goalx = Maze.SQUARE_SIZE * (tox - Maze.coordoffset_x) + Maze.SQUARE_SIZE / 2;
                 var goaly = Maze.SQUARE_SIZE * (-1 * toy + Maze.coordoffset_y) + 14;
                 if (goalx < player.x) {
                     this.pegmanSprite.scale.x = -1;
-                    try {weapon.fireAngle = Phaser.ANGLE_LEFT} catch {};
+                    try {
+                        weapon.fireAngle = Phaser.ANGLE_LEFT
+                    } catch {};
                 } else {
                     this.pegmanSprite.scale.x = 1;
-                    try {weapon.fireAngle = Phaser.ANGLE_RIGHT} catch {};
+                    try {
+                        weapon.fireAngle = Phaser.ANGLE_RIGHT
+                    } catch {};
                 }
                 this.moveNSWE(goalx, goaly, stepcount);
                 break;
             case "changex":
                 var goalx = this.posX + Maze.SQUARE_SIZE * tox;
                 var goaly = this.posY + Maze.SQUARE_SIZE * toy;
+                this.dposX += tox;
                 this.moveNSWE(goalx, goaly, stepcount);
                 break;
             case "changey":
                 var goalx = this.posX + Maze.SQUARE_SIZE * tox;
                 var goaly = this.posY - Maze.SQUARE_SIZE * toy;
+                this.dposY -= toy;
                 this.moveNSWE(goalx, goaly, stepcount);
                 break;
             case "fire":
                 this.Shoot();
                 break;
             case "changeskin":
-                Pegman.selected_tileid = stepcount;
-                this.pegmanSprite.frame = Pegman.selected_tileid; // в будущем надо сделать по нормальному, сейчас айди фрейма передается как stepcount. Не бейте меня за это
+                this.selected_tileid = stepcount;
+                this.pegmanSprite.frame = this.selected_tileid; // в будущем надо сделать по нормальному, сейчас айди фрейма передается как stepcount. Не бейте меня за это
+                console.log("changeskin");
+                this.playNextAction();
                 break;
             case "build":
-                
+                //tilestodraw
+                console.log("build");
+
+                tilestodraw.forEach(function(tile) {
+                    console.log(tile.x, tile.y, tile.id);
+                    //console.log(Pegman.dposX, Pegman.dposY, Pegman.selected_tileid);
+                    if (tile.x == Pegman.dposX && tile.y == Pegman.dposY && tile.id - 1 == Pegman.selected_tileid) {
+                        var tile = map.getTile(tile.x, tile.y, drawLayer);
+                        if (tile) {
+                            console.log(tile);
+                            tile.alpha = 0;
+                        }
+                    }
+                });
+                this.playNextAction();
                 break;
         }
     },
@@ -460,4 +488,3 @@ Pegman.moveNSWE = function(x, y, stepcount = 1) {
             }
         }
     };
-

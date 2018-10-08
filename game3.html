@@ -52,6 +52,7 @@
         <block type="changex"></block>
         <block type="changey"></block>
         <block type="changeskin"></block>
+        <block type="build"></block>
     </xml>
     <xml id="startBlocks" style="display: none">
         <block type="factory_base" deletable="false" x="20" y="20"></block>
@@ -110,6 +111,9 @@
     Blockly.svgResize(workspace);
 
     $("#resstart").css({ "z-index": 20 });
+    var buttonh = blocklyArea.offsetHeight - 200;
+$("#resstart").css({"z-index": 20});
+$("#resstart").css({"top": buttonh + 'px'});
     </script>
 </body>
 

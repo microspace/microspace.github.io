@@ -272,6 +272,7 @@ Blockly.Blocks['changeskin'] = {
 Blockly.JavaScript['changeskin'] = function(block) {
     // Сгенерировать код для смены костюма
     var tile_id = block.getFieldValue('TILES');
+    //console.log('Pegman.nextAction("changeskin", ' + tile_id + ');\n');
     return 'Pegman.nextAction("changeskin", ' + tile_id + ');\n';
 
 

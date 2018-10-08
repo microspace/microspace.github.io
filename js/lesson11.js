@@ -110,9 +110,6 @@ TopDownGame.Lesson11.prototype = {
         this.cursors = this.game.input.keyboard.createCursorKeys();
         //this.game.physics.arcade.overlap(bullets, aliens, collisionHandler, null, this);
         //this.blockLayer.debug = true;
-        var t = this.game.add.text(0, 0, "Уровень 1.1", { font: "32px Arial", fill: "#ffffff", align: "center" });
-        t.fixedToCamera = true;
-        t.cameraOffset.setTo(700, 10);
 
     },
     animationStopped: function(sprite, animation) {
