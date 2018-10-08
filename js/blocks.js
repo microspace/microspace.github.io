@@ -245,23 +245,65 @@ Blockly.Blocks['changeskin'] = {
                 "name": "TILES",
                 "options": [
                     [{
-                        "src": "assets/images/tile_id1.png",
-                        "width": 24,
-                        "height": 24,
-                        "alt": "tile_id1"
-                    }, "1"],
-                    [{
-                        "src": "assets/images/tile_id2.png",
+                        "src": "assets/images/build/tileid_02.png",
                         "width": 24,
                         "height": 24,
                         "alt": "tile_id2"
-                    }, "2"],
+                    }, "1"],
                     [{
-                        "src": "assets/images/tile_id5.png",
+                        "src": "assets/images/build/tileid_03.png",
                         "width": 24,
                         "height": 24,
-                        "alt": "tile_id5"
-                    }, "5"]
+                        "alt": "tile_id3"
+                    }, "2"],
+                    [{
+                        "src": "assets/images/build/tileid_06.png",
+                        "width": 24,
+                        "height": 24,
+                        "alt": "tile_id6"
+                    }, "5"],
+                    [{
+                        "src": "assets/images/build/tileid_14.png",
+                        "width": 24,
+                        "height": 24,
+                        "alt": "tile_id14"
+                    }, "13"],
+                    [{
+                        "src": "assets/images/build/tileid_19.png",
+                        "width": 24,
+                        "height": 24,
+                        "alt": "tile_id19"
+                    }, "18"],
+                    [{
+                        "src": "assets/images/build/tileid_27.png",
+                        "width": 24,
+                        "height": 24,
+                        "alt": "tile_id27"
+                    }, "26"],
+                    [{
+                        "src": "assets/images/build/tileid_32.png",
+                        "width": 24,
+                        "height": 24,
+                        "alt": "tile_id32"
+                    }, "31"],
+                    [{
+                        "src": "assets/images/build/tileid_40.png",
+                        "width": 24,
+                        "height": 24,
+                        "alt": "tile_id40"
+                    }, "39"],
+                    [{
+                        "src": "assets/images/build/tileid_56.png",
+                        "width": 24,
+                        "height": 24,
+                        "alt": "tile_id56"
+                    }, "55"],
+                    [{
+                        "src": "assets/images/build/tileid_134.png",
+                        "width": 24,
+                        "height": 24,
+                        "alt": "tile_id134"
+                    }, "133"],
                 ]
 
             }]

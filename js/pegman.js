@@ -238,18 +238,12 @@ var Pegman = {
                 this.playNextAction();
                 break;
             case "build":
-                //tilestodraw
-                console.log("build");
-
                 tilestodraw.forEach(function(tile) {
                     console.log(tile.x, tile.y, tile.id);
-                    //console.log(Pegman.dposX, Pegman.dposY, Pegman.selected_tileid);
-                    if (tile.x == Pegman.dposX && tile.y == Pegman.dposY && tile.id - 1 == Pegman.selected_tileid) {
-                        var tile = map.getTile(tile.x, tile.y, drawLayer);
-                        if (tile) {
-                            console.log(tile);
-                            tile.alpha = 0;
-                        }
+                    console.log(Pegman.dposX, Pegman.dposY, Pegman.selected_tileid);
+                    if (tile.x == Pegman.dposX && tile.y == Pegman.dposY && tileid_pairs[tile.id-1] == Pegman.selected_tileid) {
+                        console.log("tile");
+                        //var tiler = map.replace(tile.x, tile.y, 8, 12, 3, 3, drawLayer); 
                     }
                 });
                 this.playNextAction();

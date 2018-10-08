@@ -10,6 +10,19 @@ var drawLayer;
 Pegman.dposX = 12;
 Pegman.dposY = 7;
 
+var tileid_pairs = {
+    260: 13,
+    261: 26,
+    262: 39,
+    263: 1,
+    264: 2,
+    265: 5,
+    266: 55,
+    267: 133,
+    268: 31,
+    269: 18
+};
+
 var lastSuccessfullPosition = {
     x: Maze.SQUARE_SIZE * (Pegman.dposX + 0.5),
     y: Maze.SQUARE_SIZE * (Pegman.dposY + 0.5)
@@ -18,10 +31,11 @@ var lastSuccessfullPosition = {
 TopDownGame.Lesson31 = function() {};
 TopDownGame.Lesson31.prototype = {
     create: function() {
+
         fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
         map = this.game.add.tilemap('lesson31');
         //the first parameter is the tileset name as specified in Tiled, the second is the key to the asset
-        map.addTilesetImage('tileSheets01-10', 'gameTiles');
+        map.addTilesetImage('tileSheets', 'gameTiles');
 
         //create layers
         this.flour = map.createLayer('flour');
@@ -59,24 +73,19 @@ TopDownGame.Lesson31.prototype = {
         //move player with cursor keys
         this.cursors = this.game.input.keyboard.createCursorKeys();
         //console.log(map);
+
         for (var y = 0; y < map.height; ++y) {
             for (var x = 0; x < map.width; ++x) {
                 var tile = map.getTile(x, y, drawLayer);
                 if (tile) {
-                    tile.alpha = 0.63;
-                    //console.log(tile);
                     tilestodraw.push({
                         x: x,
                         y: y,
                         id: tile.index
                     });
                 }
-
             }
         }
-        //console.log(tilestodraw);
-
-
     },
 
     update: function() {
