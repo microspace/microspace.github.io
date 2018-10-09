@@ -11,17 +11,22 @@ TopDownGame.Preload.prototype = {
         this.load.setPreloadSprite(this.preloadBar);
 
         //load game assets
-        this.load.tilemap('lesson31', 'assets/maps/карта 3-1.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('lesson31', 'assets/maps/game3/карта 3-1.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('lesson32', 'assets/maps/game3/карта 3-2.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('lesson33', 'assets/maps/game3/карта 3-3.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('lesson34', 'assets/maps/game3/карта 3-4.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('lesson35', 'assets/maps/game3/карта 3-5.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('lesson36', 'assets/maps/game3/карта 3-6.json', null, Phaser.Tilemap.TILED_JSON);
 
         
-        this.load.spritesheet('totalsheet', 'assets/maps/tileSheet.png', 64, 64);
+        this.load.spritesheet('totalsheet', 'assets/maps/game3/tileSheet.png', 64, 64);
 
         this.load.spritesheet('pegman', 'assets/sprites/player.png', 141, 100);
         this.load.spritesheet('explosion', 'assets/sprites/explosion.png', 99, 87);
         this.load.spritesheet("pointer", "assets/sprites/pointer.png", 107, 77);
 
         this.load.image('bullet', 'assets/images/bullet2.png');
-        this.load.image('gameTiles', 'assets/maps/tileSheet.png');
+        this.load.image('gameTiles', 'assets/maps/game3/tileSheet.png');
         this.load.image('coordinateplane', 'assets/images/coordinatePlane.png');
 
     },

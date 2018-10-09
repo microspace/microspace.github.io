@@ -45,10 +45,6 @@ TopDownGame.Lesson11.prototype = {
         pointer.animations.play('ANIM');
 
         player = this.game.add.sprite(Maze.scenes[scene].startPos[0], Maze.scenes[scene].startPos[1], 'pegman');
-        //player.kill();
-        //console.log(scenes[currentScene].startPos[0]);
-        //console.log(scenes[currentScene].startPos[1]);
-
 
         player.anchor.setTo(0.5, 0.5);
         pointer.anchor.setTo(0.5, 0.5);
@@ -194,9 +190,6 @@ TopDownGame.Lesson11.prototype = {
     hitWall: function() {
 
         if (!flag) {
-
-            console.log("hitWall1");
-            //Pegman.pegmanSprite.body.enable = false;
             player.y = xyqueue[7].y;
             player.x = xyqueue[7].x;
             Pegman.pegmanActions = [];
@@ -204,10 +197,7 @@ TopDownGame.Lesson11.prototype = {
                 Pegman.tween.stop();
             }
             player.animations.play('HIT');
-
             flag = true;
-
-
         }
     },
     bulletHitBarrel: function(sprite, bullet) {
@@ -246,9 +236,6 @@ TopDownGame.Lesson11.prototype = {
     },
     sinkInWater: function() {
         if (!flag) {
-            console.log("sinkInWater");
-            
-
             Pegman.pegmanActions = [];
             if (Pegman.tween) {
                 Pegman.tween.stop();

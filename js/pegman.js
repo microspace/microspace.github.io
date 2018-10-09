@@ -5,7 +5,7 @@ var Pegman = Pegman || {};
 var Pegman = {
     posX: null,
     posY: null,
-    dposX: 12,
+    dposX: 11,
     dposY: 7,
     direction: Maze.DirectionType.EAST,
     pegmanActions: [],
@@ -33,7 +33,7 @@ var Pegman = {
         TopDownGame.game.stage.updateTransform();﻿
         this.posX = lastSuccessfullPosition.x;
         this.posY = lastSuccessfullPosition.y;
-        this.dposX = 12;
+        this.dposX = 11;
         this.dposY = 7;
         this.preReset();
         this.tween = null;
@@ -129,6 +129,21 @@ var Pegman = {
 
         }
 
+        if (TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson31") {
+            // map.replace(tile.id, tileid_pairs[tile.id-1]+1, 0, 0, 20, 20, drawLayer); 
+
+
+
+            tilestodraw.forEach(function(tile) {
+
+                    map.replace(tileid_pairs[tile.id - 1] + 1, tile.id, 0, 0, 20, 20, drawLayer);
+                
+            });
+
+
+
+
+        }
         this.pegmanSprite.animations.play('STAND');
 
 
@@ -234,16 +249,12 @@ var Pegman = {
             case "changeskin":
                 this.selected_tileid = stepcount;
                 this.pegmanSprite.frame = this.selected_tileid; // в будущем надо сделать по нормальному, сейчас айди фрейма передается как stepcount. Не бейте меня за это
-                console.log("changeskin");
                 this.playNextAction();
                 break;
             case "build":
                 tilestodraw.forEach(function(tile) {
-                    console.log(tile.x, tile.y, tile.id);
-                    console.log(Pegman.dposX, Pegman.dposY, Pegman.selected_tileid);
-                    if (tile.x == Pegman.dposX && tile.y == Pegman.dposY && tileid_pairs[tile.id-1] == Pegman.selected_tileid) {
-                        console.log("tile");
-                        //var tiler = map.replace(tile.x, tile.y, 8, 12, 3, 3, drawLayer); 
+                    if (tile.x == Pegman.dposX && tile.y == Pegman.dposY && tileid_pairs[tile.id - 1] == Pegman.selected_tileid) {
+                        map.replace(tile.id, tileid_pairs[tile.id - 1] + 1, tile.x, tile.y, 1, 1, drawLayer);
                     }
                 });
                 this.playNextAction();
@@ -346,7 +357,6 @@ Pegman.moveNSWE = function(x, y, stepcount = 1) {
                             aliveBarrelsCount += 1;
                         }
                     });
-                    console.log(aliveBarrelsCount);
                     if (aliveBarrelsCount == 0) {
                         $("#modaltext").text("Победа!!!");
                         $("#exampleModal").modal();
@@ -396,7 +406,6 @@ Pegman.moveNSWE = function(x, y, stepcount = 1) {
                     aliveChestsCount += 1;
                 }
             });
-            console.log(aliveChestsCount);
             if (aliveChestsCount == 0) {
                 // $("#modaltext").text("Задание выполнено! Переходим на уровень 2.3!");
                 // $("#exampleModal").modal();
@@ -421,7 +430,6 @@ Pegman.moveNSWE = function(x, y, stepcount = 1) {
                     aliveChestsCount += 1;
                 }
             });
-            console.log(aliveChestsCount);
             if (aliveChestsCount == 0) {
                 // $("#modaltext").text("Задание выполнено! Переходим на уровень 2.4!");
                 // $("#exampleModal").modal();
@@ -446,7 +454,6 @@ Pegman.moveNSWE = function(x, y, stepcount = 1) {
                     aliveChestsCount += 1;
                 }
             });
-            console.log(aliveChestsCount);
             if (aliveChestsCount == 0) {
                 $("#modaltext").text("Победа!!!");
                 $("#exampleModal").modal();
@@ -471,7 +478,6 @@ Pegman.moveNSWE = function(x, y, stepcount = 1) {
                     aliveChestsCount += 1;
                 }
             });
-            console.log(aliveChestsCount);
             if (aliveChestsCount == 0) {
                 // $("#modaltext").text("Победа!!!");
                 // $("#exampleModal").modal();

@@ -7,7 +7,7 @@ var tilestodraw = [];
 
 var map;
 var drawLayer;
-Pegman.dposX = 12;
+Pegman.dposX = 11;
 Pegman.dposY = 7;
 
 var tileid_pairs = {
@@ -35,7 +35,7 @@ TopDownGame.Lesson31.prototype = {
         fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
         map = this.game.add.tilemap('lesson31');
         //the first parameter is the tileset name as specified in Tiled, the second is the key to the asset
-        map.addTilesetImage('tileSheets', 'gameTiles');
+        map.addTilesetImage('tileSheets01-10', 'gameTiles');
 
         //create layers
         this.flour = map.createLayer('flour');
@@ -46,6 +46,8 @@ TopDownGame.Lesson31.prototype = {
         //this.createItems();
 
         player = this.game.add.sprite(0, 0, 'totalsheet', Pegman.selected_tileid);
+        player.tint = 0xAAAAAA;
+
 
         player.anchor.setTo(0.5, 0.5);
 
@@ -66,13 +68,14 @@ TopDownGame.Lesson31.prototype = {
 
         this.game.add.tween(player).to({
             alpha: 1
-        }, 500, Phaser.Easing.Cubic.InOut, true, 0, 500, true);
+        }, 500, Phaser.Easing.Cubic.InOut, true, 0, -1, true);
+
+
 
         //the camera will follow the player in the world
         this.game.camera.follow(player);
         //move player with cursor keys
         this.cursors = this.game.input.keyboard.createCursorKeys();
-        //console.log(map);
 
         for (var y = 0; y < map.height; ++y) {
             for (var x = 0; x < map.width; ++x) {
@@ -86,6 +89,7 @@ TopDownGame.Lesson31.prototype = {
                 }
             }
         }
+
     },
 
     update: function() {
@@ -111,8 +115,9 @@ TopDownGame.Lesson31.prototype = {
         }
 
         if (fireButton.isDown) {
-            var tile = map.getTile(12, 6, drawLayer);
-            tile.alpha = 1;
+            drawLayer.destroy();
+            drawLayer = null;
+            drawLayer = map.createLayer('drawLayer');
 
         }
         /*
@@ -131,15 +136,5 @@ TopDownGame.Lesson31.prototype = {
         // this.game.debug.physicsGroup(barrels);
         // this.game.debug.bodyInfo(player, 32, 50);
 
-    },
-
-    setTile: function(x, y) {
-        var tile = map.getTile(x, y, this.drawLayer);
-        if (tile) {
-            console.log(tile);
-            tile.alpha = 1;
-        }
-
     }
-
 };

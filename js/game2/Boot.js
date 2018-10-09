@@ -22,6 +22,6 @@ TopDownGame.Boot.prototype = {
     //physics system
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
     
-    this.state.start('Preload1');
+    this.state.start('Preload');
   }
 };

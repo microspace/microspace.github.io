@@ -11,12 +11,12 @@ $(window).resize(function() {
 
 
 TopDownGame.game = new Phaser.Game($(window).width(), $(window).height(), Phaser.CANVAS, 'canvasContainer', null, false, true);
-TopDownGame.game.state.add('Boot1', TopDownGame.Boot);
-TopDownGame.game.state.add('Preload1', TopDownGame.Preload);
+TopDownGame.game.state.add('Boot', TopDownGame.Boot);
+TopDownGame.game.state.add('Preload', TopDownGame.Preload);
 
 TopDownGame.game.state.add('lesson11', TopDownGame.Lesson11);
 
-TopDownGame.game.state.start('Boot1');
+TopDownGame.game.state.start('Boot');
 
 function resizeGame() {
     var height = $(window).height();
