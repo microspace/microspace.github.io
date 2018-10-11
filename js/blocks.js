@@ -347,7 +347,7 @@ Blockly.Blocks['changex'] = {
 Blockly.JavaScript['changex'] = function(block) {
     // Generate JavaScript for moving forward.
     var dx = block.getFieldValue('dx');
-    var number_seconds = dx;
+    var number_seconds = Math.abs(dx);
     return 'Pegman.nextAction("changex", ' + number_seconds + ', ' + dx + ', ' + 0 + ');\n';
 };
 
@@ -378,7 +378,7 @@ Blockly.Blocks['changey'] = {
 Blockly.JavaScript['changey'] = function(block) {
     // Generate JavaScript for moving forward.
     var dy = block.getFieldValue('dy');
-    var number_seconds = dy;
+    var number_seconds = Math.abs(dy);
     return 'Pegman.nextAction("changey", ' + number_seconds + ', ' + 0 + ', ' + dy + ');\n';
 };
 

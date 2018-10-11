@@ -11,7 +11,7 @@ var map;
 var drawLayer;
 Pegman.dposX = 11;
 Pegman.dposY = 7;
-var data;
+//var data;
 
 var tileid_pairs = {
     260: 13,
@@ -43,11 +43,7 @@ var lastSuccessfullPosition = {
 TopDownGame.Lesson3 = function() {};
 TopDownGame.Lesson3.prototype = {
     create: function() {
-
-        //
-      
-
-        data = this.game.cache.getJSON('data');
+        // data = this.game.cache.getJSON('data');
 
 
         fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
@@ -57,7 +53,7 @@ TopDownGame.Lesson3.prototype = {
 
 
         player = this.game.add.sprite(0, 0, 'totalsheet', Pegman.selected_tileid);
-        player.tint = 0xAAAAAA;
+        player.tint = 0xAADDDD;
         player.anchor.setTo(0.5, 0.5);
         this.game.physics.arcade.enable(player);
         player.body.setSize(60, 13, 40, 73);
@@ -75,7 +71,7 @@ TopDownGame.Lesson3.prototype = {
         //move player with cursor keys
         this.cursors = this.game.input.keyboard.createCursorKeys();
         TopDownGame.game.camera.flash(0x000000, 500);
-        
+
     },
 
     update: function() {
@@ -102,7 +98,7 @@ TopDownGame.Lesson3.prototype = {
 
         if (fireButton.isDown) {
 
-            
+
             // sublevel = 6;
             // change_map('lesson3' + sublevel);
             // Pegman.reset2();
@@ -111,13 +107,7 @@ TopDownGame.Lesson3.prototype = {
         // this.game.debug.body(player);
         // this.game.debug.physicsGroup(barrels);
         // this.game.debug.bodyInfo(player, 32, 50);
-    },
-    flash: function () {
-
-    //  You can set your own flash color and duration
-    this.game.camera.flash(0x000000, 500);
-
-}
+    }
 };
 
 
@@ -158,7 +148,12 @@ function change_map(name) {
             }
         }
     }
-lastSuccessfullPosition.x = Maze.SQUARE_SIZE * (startPositions[name][0] + 0.5);
-lastSuccessfullPosition.y = Maze.SQUARE_SIZE * (startPositions[name][1] + 0.5);
-
+    lastSuccessfullPosition.x = Maze.SQUARE_SIZE * (startPositions[name][0] + 0.5);
+    lastSuccessfullPosition.y = Maze.SQUARE_SIZE * (startPositions[name][1] + 0.5);
+    //Copied from reset button code. Resets html button
+    var runButton = document.getElementById('runButton');
+    runButton.style.display = 'inline';
+    document.getElementById('resetButton').style.display = 'none';
+    // Prevent double-clicks or double-taps.
+    runButton.disabled = false;
 }

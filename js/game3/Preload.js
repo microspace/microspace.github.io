@@ -11,7 +11,7 @@ TopDownGame.Preload.prototype = {
         this.load.setPreloadSprite(this.preloadBar);
         this.game.plugins.add(ParticleEditorPlugin);
 
-        this.game.load.json('data', 'assets/Particles.json');
+        //this.game.load.json('data', 'assets/Particles.json');
 
         //load game assets
         this.load.tilemap('lesson31', 'assets/maps/game3/карта 3-1.json', null, Phaser.Tilemap.TILED_JSON);

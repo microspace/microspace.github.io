@@ -248,17 +248,18 @@ var Pegman = {
                 this.playNextAction();
                 break;
             case "build":
-                console.log(Pegman.dposX, Pegman.dposY, Pegman.selected_tileid);
-
-
+                //console.log(Pegman.dposX, Pegman.dposY, Pegman.selected_tileid);
                 tilestodraw.forEach(function(tile) {
-                    console.log(tile.x, tile.y, tileid_pairs[tile.id - 1]);
+                    //console.log(tile.x, tile.y, tileid_pairs[tile.id - 1]);
                     if (tile.x == Pegman.dposX && tile.y == Pegman.dposY && tileid_pairs[tile.id - 1] == Pegman.selected_tileid) {
-
-
                         map.replace(tile.id, tileid_pairs[tile.id - 1] + 1, tile.x, tile.y, 1, 1, drawLayer);
-                        TopDownGame.game.make.particleEffect(player.x, player.y, data);
+                        //TopDownGame.game.make.particleEffect(player.x, player.y, data);
                         setblocks += 1;
+                        var shake = TopDownGame.game.camera.shake(0.003, 100);
+                        // TopDownGame.game.camera.onShakeComplete.addOnce(function() {
+                        //     Pegman.playNextAction();
+                        // }, this);
+
                     }
                 });
                 this.playNextAction();
@@ -492,9 +493,9 @@ Pegman.moveNSWE = function(x, y, stepcount = 1) {
             }
         }
         if (TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson3") {
-            
+
             if (setblocks == tilestodraw.length) {
-                //sublevel += 1;
+                sublevel += 1;
                 if (sublevel == 7) {
                     $("#modaltext").text("Поздравляю! Ты закончил уровень №3");
                     $("#exampleModal").modal();
