@@ -9,6 +9,9 @@ TopDownGame.Preload.prototype = {
         this.preloadBar = this.add.sprite(this.game.world.centerX, this.game.world.centerY, 'preloadbar');
         this.preloadBar.anchor.setTo(0.5);
         this.load.setPreloadSprite(this.preloadBar);
+        this.game.plugins.add(ParticleEditorPlugin);
+
+        this.game.load.json('data', 'assets/Particles.json');
 
         //load game assets
         this.load.tilemap('lesson31', 'assets/maps/game3/карта 3-1.json', null, Phaser.Tilemap.TILED_JSON);
@@ -31,6 +34,6 @@ TopDownGame.Preload.prototype = {
 
     },
     create: function() {
-        this.state.start('lesson31');
+        this.state.start('lesson3');
     }
 };

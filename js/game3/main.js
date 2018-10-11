@@ -5,17 +5,10 @@ $(window).resize(function() {
     window.resizeGame();
 });﻿
 
-
-
-
-
-
 TopDownGame.game = new Phaser.Game($(window).width(), $(window).height(), Phaser.CANVAS, 'canvasContainer', null, false, true);
-
 TopDownGame.game.state.add('Boot', TopDownGame.Boot);
 TopDownGame.game.state.add('Preload', TopDownGame.Preload);
-TopDownGame.game.state.add('lesson31', TopDownGame.Lesson31);
-
+TopDownGame.game.state.add('lesson3', TopDownGame.Lesson3);
 TopDownGame.game.state.start('Boot');
 
 function resizeGame() {
@@ -28,14 +21,12 @@ function resizeGame() {
     if (TopDownGame.game.renderType === Phaser.WEBGL) {
         TopDownGame.game.renderer.resize(width, height);
     }
-
 }
 
 
 var init = function() {
     Maze.bindClick('runButton', runProgram);
     Maze.bindClick('resetButton', resetProgram);
-
 };
 
 
@@ -75,11 +66,7 @@ var resetProgram = function() {
     } catch {
 
     }
-
-
     TopDownGame.game.stage.updateTransform();﻿
     Pegman.reset2();
     TopDownGame.game.stage.updateTransform();﻿
-
-    //TopDownGame.game.camera.follow(player);
 }

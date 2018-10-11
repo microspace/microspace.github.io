@@ -5,8 +5,8 @@ var Pegman = Pegman || {};
 var Pegman = {
     posX: null,
     posY: null,
-    dposX: 11,
-    dposY: 7,
+    dposX: null,
+    dposY: null,
     direction: Maze.DirectionType.EAST,
     pegmanActions: [],
     pegmanSprite: null,
@@ -26,6 +26,10 @@ var Pegman = {
             $("#modaltext").text("Рекрут, тебе нужно собрать все сундуки с золотом. Управляй экзокостюмом с помощью галактической системы координат.");
             $("#exampleModal").modal();
         }
+        if (TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson3") {
+            $("#modaltext").text("На этом этапе необходимо достроить недостающую часть карты.");
+            $("#exampleModal").modal();
+        }
         this.reset2();
     },
 
@@ -33,8 +37,11 @@ var Pegman = {
         TopDownGame.game.stage.updateTransform();﻿
         this.posX = lastSuccessfullPosition.x;
         this.posY = lastSuccessfullPosition.y;
-        this.dposX = 11;
-        this.dposY = 7;
+        try {
+            this.dposX = startPositions['lesson3' + sublevel][0];
+            this.dposY = startPositions['lesson3' + sublevel][1];
+        } catch {}
+
         this.preReset();
         this.tween = null;
         this.tween1 = null;
@@ -129,26 +136,15 @@ var Pegman = {
 
         }
 
-        if (TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson31") {
+        if (TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson3") {
             // map.replace(tile.id, tileid_pairs[tile.id-1]+1, 0, 0, 20, 20, drawLayer); 
-
-
-
             tilestodraw.forEach(function(tile) {
-
-                    map.replace(tileid_pairs[tile.id - 1] + 1, tile.id, 0, 0, 20, 20, drawLayer);
-                
+                map.replace(tileid_pairs[tile.id - 1] + 1, tile.id, 0, 0, 20, 20, drawLayer);
             });
 
-
-
-
+            setblocks = 0;
         }
         this.pegmanSprite.animations.play('STAND');
-
-
-
-
     },
 
     nextAction: function(action, step = 1, tox = 0, toy = 0) {
@@ -252,9 +248,17 @@ var Pegman = {
                 this.playNextAction();
                 break;
             case "build":
+                console.log(Pegman.dposX, Pegman.dposY, Pegman.selected_tileid);
+
+
                 tilestodraw.forEach(function(tile) {
+                    console.log(tile.x, tile.y, tileid_pairs[tile.id - 1]);
                     if (tile.x == Pegman.dposX && tile.y == Pegman.dposY && tileid_pairs[tile.id - 1] == Pegman.selected_tileid) {
+
+
                         map.replace(tile.id, tileid_pairs[tile.id - 1] + 1, tile.x, tile.y, 1, 1, drawLayer);
+                        TopDownGame.game.make.particleEffect(player.x, player.y, data);
+                        setblocks += 1;
                     }
                 });
                 this.playNextAction();
@@ -486,5 +490,21 @@ Pegman.moveNSWE = function(x, y, stepcount = 1) {
                 $("#modaltext").text("Ты собрал не все сундуки!");
                 $("#exampleModal").modal();
             }
+        }
+        if (TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson3") {
+            
+            if (setblocks == tilestodraw.length) {
+                //sublevel += 1;
+                if (sublevel == 7) {
+                    $("#modaltext").text("Поздравляю! Ты закончил уровень №3");
+                    $("#exampleModal").modal();
+                    sublevel = 1
+                };
+                change_map('lesson3' + sublevel);
+                Pegman.reset2();
+                TopDownGame.game.camera.flash(0x000000, 500);
+
+            }
+
         }
     };

@@ -1,14 +1,17 @@
 var TopDownGame = TopDownGame || {};
+
+
 var player;
 
 var flag = false;
-
+var setblocks;
 var tilestodraw = [];
-
+var sublevel;
 var map;
 var drawLayer;
 Pegman.dposX = 11;
 Pegman.dposY = 7;
+var data;
 
 var tileid_pairs = {
     260: 13,
@@ -22,74 +25,57 @@ var tileid_pairs = {
     268: 31,
     269: 18
 };
+var startPositions = {
+    'lesson31': [8, 10],
+    'lesson32': [13, 9],
+    'lesson33': [16, 11],
+    'lesson34': [13, 5],
+    'lesson35': [11, 10],
+    'lesson36': [10, 9],
 
+
+};
 var lastSuccessfullPosition = {
-    x: Maze.SQUARE_SIZE * (Pegman.dposX + 0.5),
-    y: Maze.SQUARE_SIZE * (Pegman.dposY + 0.5)
+    x: Maze.SQUARE_SIZE * (startPositions['lesson31'][0] + 0.5),
+    y: Maze.SQUARE_SIZE * (startPositions['lesson31'][1] + 0.5)
 }; //хранит положение какое было у спрайта когда он в последний раз соверлаппился с целью
 //title screen
-TopDownGame.Lesson31 = function() {};
-TopDownGame.Lesson31.prototype = {
+TopDownGame.Lesson3 = function() {};
+TopDownGame.Lesson3.prototype = {
     create: function() {
 
+        //
+      
+
+        data = this.game.cache.getJSON('data');
+
+
         fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
-        map = this.game.add.tilemap('lesson31');
-        //the first parameter is the tileset name as specified in Tiled, the second is the key to the asset
-        map.addTilesetImage('tileSheets01-10', 'gameTiles');
+        sublevel = 1;
 
-        //create layers
-        this.flour = map.createLayer('flour');
-        this.blockLayer = map.createLayer('blockLayer');
-        this.onBlockLayer = map.createLayer('onBlockLayer');
-        drawLayer = map.createLayer('drawLayer');
+        change_map('lesson3' + sublevel);
 
-        //this.createItems();
 
         player = this.game.add.sprite(0, 0, 'totalsheet', Pegman.selected_tileid);
         player.tint = 0xAAAAAA;
-
-
         player.anchor.setTo(0.5, 0.5);
-
         this.game.physics.arcade.enable(player);
-        //this.game.physics.arcade.enable(pointer);
         player.body.setSize(60, 13, 40, 73);
-
-        //collision on blockedLayer
-
-        //map.setTileIndexCallback([...Array(500).keys()], this.hitWall, this, 'blockLayer');
-        //map.setTileIndexCallback([17, 18, 30, 31], this.hitWall, this, this.blockLayer);
-        //map.setCollisionBetween(1, 4000, true, 'blockLayer');
-        //resizes the game world to match the layer dimensions
-        this.flour.resizeWorld();
+        flour.resizeWorld();
         Pegman.init(player);
+        change_map('lesson3' + sublevel);
 
         player.alpha = 0;
-
         this.game.add.tween(player).to({
             alpha: 1
         }, 500, Phaser.Easing.Cubic.InOut, true, 0, -1, true);
-
-
 
         //the camera will follow the player in the world
         this.game.camera.follow(player);
         //move player with cursor keys
         this.cursors = this.game.input.keyboard.createCursorKeys();
-
-        for (var y = 0; y < map.height; ++y) {
-            for (var x = 0; x < map.width; ++x) {
-                var tile = map.getTile(x, y, drawLayer);
-                if (tile) {
-                    tilestodraw.push({
-                        x: x,
-                        y: y,
-                        id: tile.index
-                    });
-                }
-            }
-        }
-
+        TopDownGame.game.camera.flash(0x000000, 500);
+        
     },
 
     update: function() {
@@ -115,26 +101,64 @@ TopDownGame.Lesson31.prototype = {
         }
 
         if (fireButton.isDown) {
-            drawLayer.destroy();
-            drawLayer = null;
-            drawLayer = map.createLayer('drawLayer');
+
+            
+            // sublevel = 6;
+            // change_map('lesson3' + sublevel);
+            // Pegman.reset2();
 
         }
-        /*
-                if (this.cursors.up.isDown) {
-                    this.game.camera.y -= 4;
-                } else if (this.cursors.down.isDown) {
-                    this.game.camera.y += 4;
-                }
-                if (this.cursors.left.isDown) {
-                    this.game.camera.x -= 4;
-                } else if (this.cursors.right.isDown) {
-                    this.game.camera.x += 4;
-                }
-        */
         // this.game.debug.body(player);
         // this.game.debug.physicsGroup(barrels);
         // this.game.debug.bodyInfo(player, 32, 50);
+    },
+    flash: function () {
+
+    //  You can set your own flash color and duration
+    this.game.camera.flash(0x000000, 500);
+
+}
+};
+
+
+
+function change_map(name) {
+    try {
+        map.destroy();
+        flour.destroy();
+        blockLayer.destroy();
+        onBlockLayer.destroy();
+        drawLayer.destroy();
+    } catch {
 
     }
-};
+
+    map = TopDownGame.game.add.tilemap(name); //add tileset image     
+    map.addTilesetImage('tileSheets01-10', 'gameTiles');
+    flour = map.createLayer('flour');
+    blockLayer = map.createLayer('blockLayer');
+    onBlockLayer = map.createLayer('onBlockLayer');
+    drawLayer = map.createLayer('drawLayer');
+    try {
+        TopDownGame.game.world.bringToTop(player);
+    } catch {
+
+    }
+
+    tilestodraw = [];
+    for (var y = 0; y < map.height; ++y) {
+        for (var x = 0; x < map.width; ++x) {
+            var tile = map.getTile(x, y, drawLayer);
+            if (tile) {
+                tilestodraw.push({
+                    x: x,
+                    y: y,
+                    id: tile.index
+                });
+            }
+        }
+    }
+lastSuccessfullPosition.x = Maze.SQUARE_SIZE * (startPositions[name][0] + 0.5);
+lastSuccessfullPosition.y = Maze.SQUARE_SIZE * (startPositions[name][1] + 0.5);
+
+}
