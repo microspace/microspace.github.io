@@ -2,7 +2,7 @@ var TopDownGame = TopDownGame || {};
 
 
 var player;
-
+var cp;
 var flag = false;
 var setblocks;
 var tilestodraw = [];
@@ -43,11 +43,13 @@ var lastSuccessfullPosition = {
 TopDownGame.Lesson3 = function() {};
 TopDownGame.Lesson3.prototype = {
     create: function() {
-        // data = this.game.cache.getJSON('data');
+
+        
 
 
         fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
         sublevel = 1;
+
 
         change_map('lesson3' + sublevel);
 
@@ -71,6 +73,7 @@ TopDownGame.Lesson3.prototype = {
         //move player with cursor keys
         this.cursors = this.game.input.keyboard.createCursorKeys();
         TopDownGame.game.camera.flash(0x000000, 500);
+        
 
     },
 
@@ -99,9 +102,9 @@ TopDownGame.Lesson3.prototype = {
         if (fireButton.isDown) {
 
 
-            // sublevel = 6;
-            // change_map('lesson3' + sublevel);
-            // Pegman.reset2();
+            sublevel = 3;
+            change_map('lesson3' + sublevel);
+            Pegman.reset2();
 
         }
         // this.game.debug.body(player);
@@ -113,6 +116,9 @@ TopDownGame.Lesson3.prototype = {
 
 
 function change_map(name) {
+    Blockly.mainWorkspace.clear();
+ Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
+
     try {
         map.destroy();
         flour.destroy();
@@ -129,12 +135,13 @@ function change_map(name) {
     blockLayer = map.createLayer('blockLayer');
     onBlockLayer = map.createLayer('onBlockLayer');
     drawLayer = map.createLayer('drawLayer');
+
     try {
         TopDownGame.game.world.bringToTop(player);
     } catch {
 
     }
-
+    cp = TopDownGame.game.add.sprite(0, 0, 'coordinateplane');
     tilestodraw = [];
     for (var y = 0; y < map.height; ++y) {
         for (var x = 0; x < map.width; ++x) {
@@ -156,4 +163,36 @@ function change_map(name) {
     document.getElementById('resetButton').style.display = 'none';
     // Prevent double-clicks or double-taps.
     runButton.disabled = false;
+
+
+    if (sublevel == 1 || sublevel == 2) {
+        cp.visible = false;
+
+        var newTree = `
+    <xml id="toolbox" style="display: none; background-color: #4d90fe;">
+        <block type="changex"></block>
+        <block type="changey"></block>
+        <block type="changeskin"></block>
+        <block type="build"></block>
+    </xml>`;
+    } else if (sublevel == 3 || sublevel == 4) {
+        cp.visible = true;
+        var newTree = `
+    <xml id="toolbox" style="display: none; background-color: #4d90fe;">
+        <block type="setx"></block>
+        <block type="sety"></block>
+        <block type="changeskin"></block>
+        <block type="build"></block>
+    </xml>`;
+    } else if (sublevel == 5 || sublevel == 6) {
+        cp.visible = true;
+        var newTree = `
+    <xml id="toolbox" style="display: none; background-color: #4d90fe;">
+        <block type="setxy"></block>
+        <block type="changeskin"></block>
+        <block type="build"></block>
+    </xml>`;
+    }
+
+    workspace.updateToolbox(newTree);
 }

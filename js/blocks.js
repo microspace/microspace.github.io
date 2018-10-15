@@ -405,3 +405,101 @@ Blockly.JavaScript['build'] = function(block) {
     // Generate JavaScript for moving forward.
     return 'Pegman.nextAction("build");\n';
 };
+
+
+Blockly.Blocks['setx'] = {
+    /**
+     * Block for moving forward.
+     * @this Blockly.Block
+     */
+    init: function() {
+        this.jsonInit({
+            "message0": 'Установить x в %1',
+            "previousStatement": null,
+            "nextStatement": null,
+            "tooltip": 'Перейти в х координату',
+            "colour": 60,
+            "args0": [{
+                "type": "field_number",
+                "name": "setx",
+                "value": 1,
+                "min": -20,
+                "max": 20
+            }]
+        });
+    }
+};
+
+Blockly.JavaScript['setx'] = function(block) {
+    // Generate JavaScript for moving forward.
+    var setx = block.getFieldValue('setx');
+    return 'Pegman.nextAction("setx", ' + 1 + ', ' + setx + ', ' + Pegman.dposY + ');\n';
+};
+
+
+Blockly.Blocks['sety'] = {
+    /**
+     * Block for moving forward.
+     * @this Blockly.Block
+     */
+    init: function() {
+        this.jsonInit({
+            "message0": 'Установить y в %1',
+            "previousStatement": null,
+            "nextStatement": null,
+            "tooltip": 'Перейти в х координату',
+            "colour": 60,
+            "args0": [{
+                "type": "field_number",
+                "name": "sety",
+                "value": 1,
+                "min": -20,
+                "max": 20
+            }]
+        });
+    }
+};
+
+Blockly.JavaScript['sety'] = function(block) {
+    // Generate JavaScript for moving forward.
+    var sety = block.getFieldValue('sety');
+    return 'Pegman.nextAction("sety", ' + 1 + ', ' + Pegman.dposX + ', ' + sety + ');\n';
+};
+
+
+
+Blockly.Blocks['setxy'] = {
+    /**
+     * Block for moving forward.
+     * @this Blockly.Block
+     */
+    init: function() {
+        this.jsonInit({
+            "message0": 'перейти в х: %1 у: %2',
+            "previousStatement": null,
+            "nextStatement": null,
+            "tooltip": 'Перейти в х координату',
+            "colour": 60,
+            "args0": [{
+                "type": "field_number",
+                "name": "setx",
+                "value": 1,
+                "min": -20,
+                "max": 20
+            }, {
+                "type": "field_number",
+                "name": "sety",
+                "value": 1,
+                "min": -20,
+                "max": 20
+            }]
+        });
+    }
+};
+
+Blockly.JavaScript['setxy'] = function(block) {
+    // Generate JavaScript for moving forward.
+    var setx = block.getFieldValue('setx');
+    var sety = block.getFieldValue('sety');
+    return 'Pegman.nextAction("setxy", ' + 1 + ', ' + setx + ', ' + sety + ');\n';
+};

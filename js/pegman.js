@@ -139,7 +139,7 @@ var Pegman = {
         if (TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson3") {
             // map.replace(tile.id, tileid_pairs[tile.id-1]+1, 0, 0, 20, 20, drawLayer); 
             tilestodraw.forEach(function(tile) {
-                map.replace(tileid_pairs[tile.id - 1] + 1, tile.id, 0, 0, 20, 20, drawLayer);
+                map.replace(tileid_pairs[tile.id - 1] + 1, tile.id, 0, 0, 40, 40, drawLayer);
             });
 
             setblocks = 0;
@@ -212,6 +212,7 @@ var Pegman = {
                     weapon.fireAngle = Phaser.ANGLE_RIGHT
                 } catch {};
                 // нужно вычислить в пикселях куда должен попасть игрок.
+
                 var goalx = Maze.SQUARE_SIZE * (tox - Maze.coordoffset_x) + Maze.SQUARE_SIZE / 2;
                 var goaly = Maze.SQUARE_SIZE * (-1 * toy + Maze.coordoffset_y) + 14;
                 if (goalx < player.x) {
@@ -248,9 +249,9 @@ var Pegman = {
                 this.playNextAction();
                 break;
             case "build":
-                //console.log(Pegman.dposX, Pegman.dposY, Pegman.selected_tileid);
+                console.log(Pegman.dposX, Pegman.dposY, Pegman.selected_tileid);
                 tilestodraw.forEach(function(tile) {
-                    //console.log(tile.x, tile.y, tileid_pairs[tile.id - 1]);
+                    console.log(tile.x, tile.y, tileid_pairs[tile.id - 1]);
                     if (tile.x == Pegman.dposX && tile.y == Pegman.dposY && tileid_pairs[tile.id - 1] == Pegman.selected_tileid) {
                         map.replace(tile.id, tileid_pairs[tile.id - 1] + 1, tile.x, tile.y, 1, 1, drawLayer);
                         //TopDownGame.game.make.particleEffect(player.x, player.y, data);
@@ -262,6 +263,46 @@ var Pegman = {
 
                     }
                 });
+                this.playNextAction();
+                break;
+
+            case "setx":
+                var goalx = Maze.SQUARE_SIZE * (tox - Maze.coordoffset_x) + Maze.SQUARE_SIZE / 2;
+                Pegman.dposX = tox - Maze.coordoffset_x;
+                Pegman.posX = goalx;
+                var goaly = Maze.SQUARE_SIZE * toy;
+                Pegman.pegmanSprite.visible = false;
+                player.x = goalx;
+                player.y = Pegman.posY + Maze.SQUARE_SIZE / 2;
+                Pegman.pegmanSprite.visible = true;
+                this.playNextAction();
+                break;
+
+            case "sety":
+                var goaly = Maze.SQUARE_SIZE * (-1 * toy + Maze.coordoffset_y) + Maze.SQUARE_SIZE / 2;
+                Pegman.posY = goaly;
+                Pegman.dposY = -1 * toy + Maze.coordoffset_y;
+                // console.log(goalx, goaly);
+                Pegman.pegmanSprite.visible = false;
+                player.x = Pegman.posX;
+                player.y = goaly;
+                Pegman.pegmanSprite.visible = true;
+                this.playNextAction();
+                break;
+            case "setxy":
+                var goalx = Maze.SQUARE_SIZE * (tox - Maze.coordoffset_x) + Maze.SQUARE_SIZE / 2;
+                var goaly = Maze.SQUARE_SIZE * (-1 * toy + Maze.coordoffset_y) + Maze.SQUARE_SIZE / 2;
+                // var goalx = Maze.SQUARE_SIZE * tox;
+                // var goaly = Maze.SQUARE_SIZE * toy;
+                Pegman.dposX = tox - Maze.coordoffset_x;
+                Pegman.posX = goalx;               
+                Pegman.posY = goaly;
+                Pegman.dposY = -1 * toy + Maze.coordoffset_y;
+
+                Pegman.pegmanSprite.visible = false;
+                player.x = goalx;
+                player.y = goaly;
+                Pegman.pegmanSprite.visible = true;
                 this.playNextAction();
                 break;
         }
@@ -309,7 +350,6 @@ Pegman.moveNSWE = function(x, y, stepcount = 1) {
         }, this);
         this.tween.start();
     },
-
     Pegman.Shoot = function() {
         this.anim = this.pegmanSprite.animations.play("SHOOT");
         weapon.fire();
