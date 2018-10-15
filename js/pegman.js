@@ -249,21 +249,32 @@ var Pegman = {
                 this.playNextAction();
                 break;
             case "build":
-                console.log(Pegman.dposX, Pegman.dposY, Pegman.selected_tileid);
+                var tileIDToReplace;
+                var tileToReplaceX;
+                var tileToReplaceY;
+                //console.log(Pegman.dposX, Pegman.dposY, Pegman.selected_tileid);
                 tilestodraw.forEach(function(tile) {
-                    console.log(tile.x, tile.y, tileid_pairs[tile.id - 1]);
+                    //console.log(tile.x, tile.y, tileid_pairs[tile.id - 1]);
                     if (tile.x == Pegman.dposX && tile.y == Pegman.dposY && tileid_pairs[tile.id - 1] == Pegman.selected_tileid) {
-                        map.replace(tile.id, tileid_pairs[tile.id - 1] + 1, tile.x, tile.y, 1, 1, drawLayer);
-                        //TopDownGame.game.make.particleEffect(player.x, player.y, data);
-                        setblocks += 1;
-                        var shake = TopDownGame.game.camera.shake(0.003, 100);
-                        // TopDownGame.game.camera.onShakeComplete.addOnce(function() {
-                        //     Pegman.playNextAction();
-                        // }, this);
-
+                        tileIDToReplace = tile.id;
+                        tileToReplaceX = tile.x;
+                        tileToReplaceY = tile.y;
                     }
                 });
-                this.playNextAction();
+                if (tileIDToReplace) {
+
+                    map.replace(tileIDToReplace, tileid_pairs[tileIDToReplace - 1] + 1, tileToReplaceX, tileToReplaceY, 1, 1, drawLayer);
+                    //TopDownGame.game.make.particleEffect(player.x, player.y, data);
+                    setblocks += 1;
+                    var shake = TopDownGame.game.camera.shake(0.003, 100);
+                    this.playNextAction();
+                    // TopDownGame.game.camera.onShakeComplete.addOnce(function() {
+                    //     Pegman.playNextAction();
+                    // }, this);
+                } else {
+                    this.playNextAction();
+                }
+
                 break;
 
             case "setx":
@@ -273,7 +284,7 @@ var Pegman = {
                 var goaly = Maze.SQUARE_SIZE * toy;
                 Pegman.pegmanSprite.visible = false;
                 player.x = goalx;
-                player.y = Pegman.posY + Maze.SQUARE_SIZE / 2;
+                player.y = Pegman.posY;
                 Pegman.pegmanSprite.visible = true;
                 this.playNextAction();
                 break;
@@ -295,7 +306,7 @@ var Pegman = {
                 // var goalx = Maze.SQUARE_SIZE * tox;
                 // var goaly = Maze.SQUARE_SIZE * toy;
                 Pegman.dposX = tox - Maze.coordoffset_x;
-                Pegman.posX = goalx;               
+                Pegman.posX = goalx;
                 Pegman.posY = goaly;
                 Pegman.dposY = -1 * toy + Maze.coordoffset_y;
 

@@ -102,9 +102,9 @@ TopDownGame.Lesson3.prototype = {
         if (fireButton.isDown) {
 
 
-            sublevel = 3;
-            change_map('lesson3' + sublevel);
-            Pegman.reset2();
+            // sublevel = 3;
+            // change_map('lesson3' + sublevel);
+            // Pegman.reset2();
 
         }
         // this.game.debug.body(player);
@@ -117,6 +117,7 @@ TopDownGame.Lesson3.prototype = {
 
 function change_map(name) {
     Blockly.mainWorkspace.clear();
+    Blockly.mainWorkspace.clearUndo();
  Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
 
     try {
