@@ -27,6 +27,7 @@ function resizeGame() {
 var init = function() {
     Maze.bindClick('runButton', runProgram);
     Maze.bindClick('resetButton', resetProgram);
+    $("#nextButton").hide();
 };
 
 

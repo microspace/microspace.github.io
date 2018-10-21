@@ -545,9 +545,28 @@ Pegman.moveNSWE = function(x, y, stepcount = 1) {
         }
         if (TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson3") {
 
-            if (setblocks == tilestodraw.length) {
+            if (setblocks == 1) {
+                $("#nextButton").show();
+                $('#nextButton').on('click', function() {
+                    sublevel += 1;
+                    if (sublevel == 7) {
+                        $("#nextButton").hide();
+                        $("#modaltext").text("Поздравляю! Ты закончил уровень №3");
+                        $("#exampleModal").modal();
+                        sublevel = 1
+                    };
+                    change_map('lesson3' + sublevel);
+                    Pegman.reset2();
+                    TopDownGame.game.camera.flash(0x000000, 500);
+
+
+
+
+                });
+                //
+                /*
                 sublevel += 1;
-                if (sublevel == 7) {
+            if (sublevel == 7) {
                     $("#modaltext").text("Поздравляю! Ты закончил уровень №3");
                     $("#exampleModal").modal();
                     sublevel = 1
@@ -555,7 +574,7 @@ Pegman.moveNSWE = function(x, y, stepcount = 1) {
                 change_map('lesson3' + sublevel);
                 Pegman.reset2();
                 TopDownGame.game.camera.flash(0x000000, 500);
-
+                */
             }
 
         }

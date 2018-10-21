@@ -42,12 +42,21 @@
         <div class="canvas" id="blocklyDiv" style="position: absolute"></div>
     </div>
     <div id="resstart" style="position: absolute; left: 0px; top: 552px;z-index: 2 ">
+
+        <div class="btn-group-vertical">
+
+
         <button id="runButton" class="primary" title="Run">
-            <img src="./assets/1x1.gif" class="run icon21">&nbsp;&nbsp;&nbsp;&nbsp;Run Program&nbsp;&nbsp;&nbsp;&nbsp;
+            <img src="./assets/1x1.gif" class="run icon21">&nbsp;&nbsp;&nbsp;&nbsp;Запуск&nbsp;&nbsp;&nbsp;&nbsp;
                 </button>
             <button id="resetButton" class="primary" style="display: none;" title="Reset">
-                <img src="./assets/1x1.gif" class="stop icon21"> Reset
+                <img src="./assets/1x1.gif" class="stop icon21"> Сброс
                 </button>
+            <button type="button" id="nextButton" class="btn btn-success" style="display: none; title="Next">
+               Следущий
+                </button>
+
+                </div>
     </div>
     <xml id="toolbox" style="display: none; background-color: #4d90fe;">
         <block type="changex"></block>

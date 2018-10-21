@@ -63,9 +63,9 @@ var runProgram = function() {
     } catch (e) {
         alert(e);
     }
-    TopDownGame.game.stage.updateTransform();﻿
+    
     Pegman.play();
-    TopDownGame.game.stage.updateTransform();﻿
+    
 };
 
 var resetProgram = function() {
@@ -79,11 +79,5 @@ var resetProgram = function() {
     } catch {
 
     }
-
-
-    TopDownGame.game.stage.updateTransform();﻿
     Pegman.reset2();
-    TopDownGame.game.stage.updateTransform();﻿
-
-    //TopDownGame.game.camera.follow(player);
 }

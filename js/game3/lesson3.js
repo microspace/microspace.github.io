@@ -44,7 +44,7 @@ TopDownGame.Lesson3 = function() {};
 TopDownGame.Lesson3.prototype = {
     create: function() {
 
-        
+
 
 
         fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
@@ -73,7 +73,7 @@ TopDownGame.Lesson3.prototype = {
         //move player with cursor keys
         this.cursors = this.game.input.keyboard.createCursorKeys();
         TopDownGame.game.camera.flash(0x000000, 500);
-        
+
 
     },
 
@@ -118,7 +118,7 @@ TopDownGame.Lesson3.prototype = {
 function change_map(name) {
     Blockly.mainWorkspace.clear();
     Blockly.mainWorkspace.clearUndo();
- Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
+    Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
 
     try {
         map.destroy();
@@ -139,6 +139,8 @@ function change_map(name) {
 
     try {
         TopDownGame.game.world.bringToTop(player);
+        Pegman.selected_tileid = 1;
+        Pegman.pegmanSprite.frame = Pegman.selected_tileid;
     } catch {
 
     }
@@ -167,7 +169,7 @@ function change_map(name) {
 
 
     if (sublevel == 1 || sublevel == 2) {
-        cp.visible = false;
+        //cp.visible = true;
 
         var newTree = `
     <xml id="toolbox" style="display: none; background-color: #4d90fe;">
@@ -177,7 +179,7 @@ function change_map(name) {
         <block type="build"></block>
     </xml>`;
     } else if (sublevel == 3 || sublevel == 4) {
-        cp.visible = true;
+        //cp.visible = true;
         var newTree = `
     <xml id="toolbox" style="display: none; background-color: #4d90fe;">
         <block type="setx"></block>
@@ -186,7 +188,7 @@ function change_map(name) {
         <block type="build"></block>
     </xml>`;
     } else if (sublevel == 5 || sublevel == 6) {
-        cp.visible = true;
+        //cp.visible = true;
         var newTree = `
     <xml id="toolbox" style="display: none; background-color: #4d90fe;">
         <block type="setxy"></block>
@@ -196,4 +198,6 @@ function change_map(name) {
     }
 
     workspace.updateToolbox(newTree);
+    $("#nextButton").hide();
+
 }
