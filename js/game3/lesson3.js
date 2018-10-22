@@ -61,7 +61,7 @@ TopDownGame.Lesson3.prototype = {
         player.body.setSize(60, 13, 40, 73);
         flour.resizeWorld();
         Pegman.init(player);
-        change_map('lesson3' + sublevel);
+
 
         player.alpha = 0;
         this.game.add.tween(player).to({
@@ -116,6 +116,7 @@ TopDownGame.Lesson3.prototype = {
 
 
 function change_map(name) {
+
     Blockly.mainWorkspace.clear();
     Blockly.mainWorkspace.clearUndo();
     Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
@@ -199,5 +200,7 @@ function change_map(name) {
 
     workspace.updateToolbox(newTree);
     $("#nextButton").hide();
+
+    console.log(sublevel);
 
 }

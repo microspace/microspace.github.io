@@ -143,6 +143,8 @@ var Pegman = {
             });
 
             setblocks = 0;
+            this.selected_tileid = 1;
+            this.pegmanSprite.frame = this.selected_tileid;
         }
         this.pegmanSprite.animations.play('STAND');
     },
@@ -545,37 +547,30 @@ Pegman.moveNSWE = function(x, y, stepcount = 1) {
         }
         if (TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson3") {
 
-            if (setblocks == 1) {
-                $("#nextButton").show();
-                $('#nextButton').on('click', function() {
-                    sublevel += 1;
-                    if (sublevel == 7) {
-                        $("#nextButton").hide();
-                        $("#modaltext").text("Поздравляю! Ты закончил уровень №3");
-                        $("#exampleModal").modal();
-                        sublevel = 1
-                    };
-                    change_map('lesson3' + sublevel);
-                    Pegman.reset2();
-                    TopDownGame.game.camera.flash(0x000000, 500);
+            if (setblocks == tilestodraw.length) {
+                // if (setblocks == 1) {
 
-
-
-
-                });
-                //
-                /*
-                sublevel += 1;
-            if (sublevel == 7) {
+                if (sublevel == 6) {
+                    //$("#nextButton").hide();
                     $("#modaltext").text("Поздравляю! Ты закончил уровень №3");
                     $("#exampleModal").modal();
-                    sublevel = 1
-                };
-                change_map('lesson3' + sublevel);
-                Pegman.reset2();
-                TopDownGame.game.camera.flash(0x000000, 500);
-                */
-            }
+                    sublevel = 1;
+                    change_map('lesson3' + sublevel);
+                } else {
+                    $("#nextButton").show();
+                    $('#nextButton').one('click', function() {
+                        sublevel += 1;
 
+                        change_map('lesson3' + sublevel);
+                        Pegman.reset2();
+                        TopDownGame.game.camera.flash(0x000000, 500);
+                    });
+
+                }
+
+
+
+
+            }
         }
     };
