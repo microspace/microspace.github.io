@@ -265,7 +265,7 @@ var Pegman = {
                             tileToReplaceX = tile.x;
                             tileToReplaceY = tile.y;
                         } else {
-                            console.log("cross!!", tile.x * Maze.SQUARE_SIZE, tile.y * Maze.SQUARE_SIZE);
+                            //console.log("cross!!", tile.x * Maze.SQUARE_SIZE, tile.y * Maze.SQUARE_SIZE);
                             crosses.create(tile.x * Maze.SQUARE_SIZE, tile.y * Maze.SQUARE_SIZE, 'totalsheet', 0);
 
                         }
@@ -278,7 +278,18 @@ var Pegman = {
                     //TopDownGame.game.make.particleEffect(player.x, player.y, data);
                     setblocks += 1;
                     var shake = TopDownGame.game.camera.shake(0.003, 100);
-                    this.playNextAction();
+                    
+
+                    builddust.x = tileToReplaceX * Maze.SQUARE_SIZE - 16;
+                    builddust.y = tileToReplaceY * Maze.SQUARE_SIZE - 18;
+                    builddust.visible = true;
+                    this.anim = builddust.animations.play("BUILD");
+                    this.anim.onComplete.addOnce(function() {
+                        builddust.visible = false;
+                        //console.log(builddust.x, builddust.y, builddust.visible);
+                        this.playNextAction();
+                    }, this);
+
                     // TopDownGame.game.camera.onShakeComplete.addOnce(function() {
                     //     Pegman.playNextAction();
                     // }, this);

@@ -1,6 +1,6 @@
 var TopDownGame = TopDownGame || {};
 
-
+var builddust;
 var player;
 var cp;
 var flag = false;
@@ -48,17 +48,17 @@ TopDownGame.Lesson3.prototype = {
 
 
         fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
-        sl1 = this.input.keyboard.addKey(Phaser.KeyCode.ONE);
-        sl2 = this.input.keyboard.addKey(Phaser.KeyCode.TWO);
-        sl3 = this.input.keyboard.addKey(Phaser.KeyCode.THREE);
-        sl4 = this.input.keyboard.addKey(Phaser.KeyCode.FOUR);
-        sl5 = this.input.keyboard.addKey(Phaser.KeyCode.FIVE);
-        sl6 = this.input.keyboard.addKey(Phaser.KeyCode.SIX);
+        sl1 = this.input.keyboard.addKey(Phaser.KeyCode.Q);
+        sl2 = this.input.keyboard.addKey(Phaser.KeyCode.W);
+        sl3 = this.input.keyboard.addKey(Phaser.KeyCode.E);
+        sl4 = this.input.keyboard.addKey(Phaser.KeyCode.R);
+        sl5 = this.input.keyboard.addKey(Phaser.KeyCode.T);
+        sl6 = this.input.keyboard.addKey(Phaser.KeyCode.Y);
 
         sublevel = 1;
 
 
-
+        //buildAnimation
 
         change_map('lesson3' + sublevel);
 
@@ -71,6 +71,11 @@ TopDownGame.Lesson3.prototype = {
         flour.resizeWorld();
         crosses = this.game.add.group();
         Pegman.init(player);
+
+        builddust = this.game.add.sprite(0, 0, 'build');
+        builddust.visible = false;
+        builddust.animations.add('BUILD', [0, 1, 2, 3, 4, 5], 20, false);
+        //built_anim.onComplete.add(this.animationStopped, this);
 
 
         player.alpha = 0;
@@ -108,7 +113,15 @@ TopDownGame.Lesson3.prototype = {
         } else if (this.cursors.right.isDown) {
             player.body.velocity.x += velocity;
         }
+        if (fireButton.isDown) {
+            builddust.x = Pegman.dposX * Maze.SQUARE_SIZE - 16;
+            builddust.y = Pegman.dposY * Maze.SQUARE_SIZE - 18;
+            builddust.visible = true;
+            builddust.animations.play("BUILD");
+            
 
+
+        }
         if (sl1.isDown) {
             sublevel = 1;
             change_map('lesson3' + sublevel);
@@ -139,10 +152,13 @@ TopDownGame.Lesson3.prototype = {
             change_map('lesson3' + sublevel);
             Pegman.reset2();
         }
-        // this.game.debug.body(player);
+        //  this.game.debug.body(player);
         // this.game.debug.physicsGroup(barrels);
         // this.game.debug.bodyInfo(player, 32, 50);
-    }
+    },
+    /*    animationStopped: function(sprite, animation) {
+            builddust.visible = false;
+        },*/
 };
 
 
@@ -171,10 +187,11 @@ function change_map(name) {
     drawLayer = map.createLayer('drawLayer');
 
     try {
+        TopDownGame.game.world.bringToTop(builddust);
         TopDownGame.game.world.bringToTop(crosses);
         TopDownGame.game.world.bringToTop(player);
 
-        
+
         Pegman.selected_tileid = 1;
         Pegman.pegmanSprite.frame = Pegman.selected_tileid;
     } catch {
@@ -236,6 +253,6 @@ function change_map(name) {
     workspace.updateToolbox(newTree);
     $("#nextButton").hide();
 
-    console.log(sublevel);
+
 
 }
