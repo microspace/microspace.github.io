@@ -12,7 +12,7 @@ var drawLayer;
 Pegman.dposX = 11;
 Pegman.dposY = 7;
 //var data;
-
+var crosses;
 var tileid_pairs = {
     260: 13,
     261: 26,
@@ -58,6 +58,8 @@ TopDownGame.Lesson3.prototype = {
         sublevel = 1;
 
 
+
+
         change_map('lesson3' + sublevel);
 
 
@@ -67,6 +69,7 @@ TopDownGame.Lesson3.prototype = {
         this.game.physics.arcade.enable(player);
         player.body.setSize(60, 13, 40, 73);
         flour.resizeWorld();
+        crosses = this.game.add.group();
         Pegman.init(player);
 
 
@@ -168,7 +171,10 @@ function change_map(name) {
     drawLayer = map.createLayer('drawLayer');
 
     try {
+        TopDownGame.game.world.bringToTop(crosses);
         TopDownGame.game.world.bringToTop(player);
+
+        
         Pegman.selected_tileid = 1;
         Pegman.pegmanSprite.frame = Pegman.selected_tileid;
     } catch {

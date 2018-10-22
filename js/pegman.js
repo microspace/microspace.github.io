@@ -145,6 +145,7 @@ var Pegman = {
             setblocks = 0;
             this.selected_tileid = 1;
             this.pegmanSprite.frame = this.selected_tileid;
+            crosses.callAll('kill');
         }
         this.pegmanSprite.animations.play('STAND');
     },
@@ -257,10 +258,18 @@ var Pegman = {
                 //console.log(Pegman.dposX, Pegman.dposY, Pegman.selected_tileid);
                 tilestodraw.forEach(function(tile) {
                     //console.log(tile.x, tile.y, tileid_pairs[tile.id - 1]);
-                    if (tile.x == Pegman.dposX && tile.y == Pegman.dposY && tileid_pairs[tile.id - 1] == Pegman.selected_tileid) {
-                        tileIDToReplace = tile.id;
-                        tileToReplaceX = tile.x;
-                        tileToReplaceY = tile.y;
+                    if (tile.x == Pegman.dposX && tile.y == Pegman.dposY) {
+
+                        if (tileid_pairs[tile.id - 1] == Pegman.selected_tileid) {
+                            tileIDToReplace = tile.id;
+                            tileToReplaceX = tile.x;
+                            tileToReplaceY = tile.y;
+                        } else {
+                            console.log("cross!!", tile.x * Maze.SQUARE_SIZE, tile.y * Maze.SQUARE_SIZE);
+                            crosses.create(tile.x * Maze.SQUARE_SIZE, tile.y * Maze.SQUARE_SIZE, 'totalsheet', 0);
+
+                        }
+
                     }
                 });
                 if (tileIDToReplace) {
