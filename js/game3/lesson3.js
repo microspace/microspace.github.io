@@ -48,6 +48,13 @@ TopDownGame.Lesson3.prototype = {
 
 
         fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
+        sl1 = this.input.keyboard.addKey(Phaser.KeyCode.ONE);
+        sl2 = this.input.keyboard.addKey(Phaser.KeyCode.TWO);
+        sl3 = this.input.keyboard.addKey(Phaser.KeyCode.THREE);
+        sl4 = this.input.keyboard.addKey(Phaser.KeyCode.FOUR);
+        sl5 = this.input.keyboard.addKey(Phaser.KeyCode.FIVE);
+        sl6 = this.input.keyboard.addKey(Phaser.KeyCode.SIX);
+
         sublevel = 1;
 
 
@@ -99,13 +106,35 @@ TopDownGame.Lesson3.prototype = {
             player.body.velocity.x += velocity;
         }
 
-        if (fireButton.isDown) {
-
-
-            // sublevel = 3;
-            // change_map('lesson3' + sublevel);
-            // Pegman.reset2();
-
+        if (sl1.isDown) {
+            sublevel = 1;
+            change_map('lesson3' + sublevel);
+            Pegman.reset2();
+        }
+        if (sl2.isDown) {
+            sublevel = 2;
+            change_map('lesson3' + sublevel);
+            Pegman.reset2();
+        }
+        if (sl3.isDown) {
+            sublevel = 3;
+            change_map('lesson3' + sublevel);
+            Pegman.reset2();
+        }
+        if (sl4.isDown) {
+            sublevel = 4;
+            change_map('lesson3' + sublevel);
+            Pegman.reset2();
+        }
+        if (sl5.isDown) {
+            sublevel = 5;
+            change_map('lesson3' + sublevel);
+            Pegman.reset2();
+        }
+        if (sl6.isDown) {
+            sublevel = 6;
+            change_map('lesson3' + sublevel);
+            Pegman.reset2();
         }
         // this.game.debug.body(player);
         // this.game.debug.physicsGroup(barrels);
