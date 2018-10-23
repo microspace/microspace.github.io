@@ -258,45 +258,29 @@ var Pegman = {
                 //console.log(Pegman.dposX, Pegman.dposY, Pegman.selected_tileid);
                 tilestodraw.forEach(function(tile) {
                     //console.log(tile.x, tile.y, tileid_pairs[tile.id - 1]);
-                    if (tile.x == Pegman.dposX && tile.y == Pegman.dposY) {
-
-                        if (tileid_pairs[tile.id - 1] == Pegman.selected_tileid) {
-                            tileIDToReplace = tile.id;
-                            tileToReplaceX = tile.x;
-                            tileToReplaceY = tile.y;
-                        } else {
-                            //console.log("cross!!", tile.x * Maze.SQUARE_SIZE, tile.y * Maze.SQUARE_SIZE);
-                            crosses.create(tile.x * Maze.SQUARE_SIZE, tile.y * Maze.SQUARE_SIZE, 'totalsheet', 0);
-
-                        }
-
+                    if (tile.x == Pegman.dposX && tile.y == Pegman.dposY && tileid_pairs[tile.id - 1] == Pegman.selected_tileid) {
+                        tileIDToReplace = tile.id;
+                        tileToReplaceX = tile.x;
+                        tileToReplaceY = tile.y;
                     }
                 });
+                TopDownGame.game.camera.shake(0.003, 100);
                 if (tileIDToReplace) {
-
                     map.replace(tileIDToReplace, tileid_pairs[tileIDToReplace - 1] + 1, tileToReplaceX, tileToReplaceY, 1, 1, drawLayer);
-                    //TopDownGame.game.make.particleEffect(player.x, player.y, data);
                     setblocks += 1;
-                    var shake = TopDownGame.game.camera.shake(0.003, 100);
-                    
-
-                    builddust.x = tileToReplaceX * Maze.SQUARE_SIZE - 16;
-                    builddust.y = tileToReplaceY * Maze.SQUARE_SIZE - 18;
-                    builddust.visible = true;
-                    this.anim = builddust.animations.play("BUILD");
-                    this.anim.onComplete.addOnce(function() {
-                        builddust.visible = false;
-                        //console.log(builddust.x, builddust.y, builddust.visible);
-                        this.playNextAction();
-                    }, this);
-
-                    // TopDownGame.game.camera.onShakeComplete.addOnce(function() {
-                    //     Pegman.playNextAction();
-                    // }, this);
                 } else {
-                    this.playNextAction();
+                    crosses.create(Pegman.dposX * Maze.SQUARE_SIZE, Pegman.dposY * Maze.SQUARE_SIZE, 'totalsheet', 0);
                 }
 
+                builddust.x = Pegman.dposX * Maze.SQUARE_SIZE - 16;
+                builddust.y = Pegman.dposY * Maze.SQUARE_SIZE - 16;
+                builddust.visible = true;
+                this.anim = builddust.animations.play("BUILD");
+                this.anim.onComplete.addOnce(function() {
+                    builddust.visible = false;
+                    //console.log(builddust.x, builddust.y, builddust.visible);
+                    this.playNextAction();
+                }, this);
                 break;
 
             case "setx":
@@ -587,10 +571,6 @@ Pegman.moveNSWE = function(x, y, stepcount = 1) {
                     });
 
                 }
-
-
-
-
             }
         }
     };

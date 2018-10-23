@@ -48,12 +48,12 @@ TopDownGame.Lesson3.prototype = {
 
 
         fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
-        sl1 = this.input.keyboard.addKey(Phaser.KeyCode.Q);
-        sl2 = this.input.keyboard.addKey(Phaser.KeyCode.W);
-        sl3 = this.input.keyboard.addKey(Phaser.KeyCode.E);
-        sl4 = this.input.keyboard.addKey(Phaser.KeyCode.R);
-        sl5 = this.input.keyboard.addKey(Phaser.KeyCode.T);
-        sl6 = this.input.keyboard.addKey(Phaser.KeyCode.Y);
+        sl1 = this.input.keyboard.addKey(Phaser.KeyCode.A);
+        sl2 = this.input.keyboard.addKey(Phaser.KeyCode.S);
+        sl3 = this.input.keyboard.addKey(Phaser.KeyCode.D);
+        sl4 = this.input.keyboard.addKey(Phaser.KeyCode.F);
+        sl5 = this.input.keyboard.addKey(Phaser.KeyCode.G);
+        sl6 = this.input.keyboard.addKey(Phaser.KeyCode.H);
 
         sublevel = 1;
 
@@ -63,13 +63,15 @@ TopDownGame.Lesson3.prototype = {
         change_map('lesson3' + sublevel);
 
 
+        crosses = this.game.add.group();
+
         player = this.game.add.sprite(0, 0, 'totalsheet', Pegman.selected_tileid);
         player.tint = 0xAADDDD;
         player.anchor.setTo(0.5, 0.5);
         this.game.physics.arcade.enable(player);
         player.body.setSize(60, 13, 40, 73);
         flour.resizeWorld();
-        crosses = this.game.add.group();
+        
         Pegman.init(player);
 
         builddust = this.game.add.sprite(0, 0, 'build');
