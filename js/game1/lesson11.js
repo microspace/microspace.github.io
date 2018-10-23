@@ -88,7 +88,7 @@ TopDownGame.Lesson11.prototype = {
 
         weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
         weapon.bulletAngleOffset = 0;
-        weapon.bulletSpeed = 400;
+        weapon.bulletSpeed = 1200;
         weapon.fireAngle = Phaser.ANGLE_RIGHT; // shoot at right direcion by default
         weapon.trackSprite(player, 0, -9, false); //-65 выведено экспериментальным путём
         //weapon.addBulletAnimation("fly", [0, 1, 2, 3, 4, 5, 6, 7], 40, true);

@@ -188,12 +188,10 @@ var Pegman = {
 
         switch (action) {
             case "up":
-                weapon.fireAngle = Phaser.ANGLE_RIGHT;
                 var step = Maze.getStepInDirection["NORTH"];
                 this.moveNSWE(this.posX + Maze.SQUARE_SIZE * step[0] * stepcount, this.posY + Maze.SQUARE_SIZE * step[1] * stepcount, stepcount);
                 break;
             case "down":
-                weapon.fireAngle = Phaser.ANGLE_RIGHT;
                 var step = Maze.getStepInDirection["SOUTH"];
                 this.moveNSWE(this.posX + Maze.SQUARE_SIZE * step[0] * stepcount, this.posY + Maze.SQUARE_SIZE * step[1] * stepcount, stepcount);
                 break;
