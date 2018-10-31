@@ -34,7 +34,7 @@ var Pegman = {
     },
 
     reset2: function() {
-        TopDownGame.game.stage.updateTransform();﻿
+        TopDownGame.game.stage.updateTransform();
         this.posX = lastSuccessfullPosition.x;
         this.posY = lastSuccessfullPosition.y;
         try {
@@ -78,7 +78,7 @@ var Pegman = {
 
         flag = false;
 
-        if (TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson11") {
+        if (TopDownGame.game.state.getCurrentState().key == "lesson11") {
 
             barrels.forEach(function(c) {
                 if (c["scene"] - 1 == scene) { //оживляем только те бочки, которые относятся к данной сцене.
