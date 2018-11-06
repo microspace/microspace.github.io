@@ -17,6 +17,7 @@ var lastSuccessfullPosition = {
 TopDownGame.Lesson25 = function() {};
 TopDownGame.Lesson25.prototype = {
     create: function() {
+        this.game.forceSingleUpdate=false;
         this.map = this.game.add.tilemap('lesson25');
         //the first parameter is the tileset name as specified in Tiled, the second is the key to the asset
         this.map.addTilesetImage('tileSheet04-01', 'gameTiles');
@@ -106,7 +107,8 @@ TopDownGame.Lesson25.prototype = {
         weapon.fireAngle = Phaser.ANGLE_RIGHT; // shoot at right direcion by default
         weapon.trackSprite(player, 0, -9, false); //-65 выведено экспериментальным путём
         //the camera will follow the player in the world
-        this.game.camera.follow(player);
+
+        //this.game.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1);
         //move player with cursor keys
         this.cursors = this.game.input.keyboard.createCursorKeys();
         //this.game.physics.arcade.overlap(bullets, aliens, collisionHandler, null, this);
@@ -126,6 +128,8 @@ TopDownGame.Lesson25.prototype = {
 
 
     update: function() {
+
+        this.game.camera.focusOnXY(player.x, player.y);
 
         var xtext = Math.floor(player.x / Maze.SQUARE_SIZE) + Maze.coordoffset_x;
         var ytext = -1 * Math.floor(player.y / Maze.SQUARE_SIZE) + Maze.coordoffset_y;

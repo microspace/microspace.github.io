@@ -13,34 +13,34 @@ var Pegman = {
     anim: null,
     tween: null,
 
-    init: function(pegmanSprite) {
+    init: function (pegmanSprite) {
         //TopDownGame.game.camera.follow(player);
 
         this.pegmanSprite = pegmanSprite;
         // сделать так чтобы это сообщение не выходило когда игрок начинает со второго уровня
-        if (TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson11" && scene == 0) {
+        if (TopDownGame.game.state.getCurrentState().key == "lesson11" && scene == 0) {
             $("#modaltext").text("Приветствую тебя рекрут! Я научу тебя пользоваться твоим экзокостюмом. Для начала попробуй просто сдвинуться с места!");
             $("#exampleModal").modal();
         }
-        if (TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson21") {
+        if (TopDownGame.game.state.getCurrentState().key == "lesson21") {
             $("#modaltext").text("Рекрут, тебе нужно собрать все сундуки с золотом. Управляй экзокостюмом с помощью галактической системы координат.");
             $("#exampleModal").modal();
         }
-        if (TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson3") {
+        if (TopDownGame.game.state.getCurrentState().key == "lesson3") {
             $("#modaltext").text("На этом этапе необходимо достроить недостающую часть карты.");
             $("#exampleModal").modal();
         }
         this.reset2();
     },
 
-    reset2: function() {
+    reset2: function () {
         TopDownGame.game.stage.updateTransform();
         this.posX = lastSuccessfullPosition.x;
         this.posY = lastSuccessfullPosition.y;
         try {
             this.dposX = startPositions['lesson3' + sublevel][0];
             this.dposY = startPositions['lesson3' + sublevel][1];
-        } catch {}
+        } catch { }
 
         this.preReset();
         this.tween = null;
@@ -51,12 +51,12 @@ var Pegman = {
         this.pegmanSprite.scale.y = 1;
         try {
             b.visible = true;
-        } catch {};
+        } catch { };
         this.pegmanActions = [];
         this.postReset();
     },
 
-    preReset: function() {
+    preReset: function () {
         if (this.tween) {
             this.tween.stop();
         }
@@ -71,7 +71,7 @@ var Pegman = {
         }
     },
 
-    postReset: function() {
+    postReset: function () {
 
         this.pegmanSprite.reset(lastSuccessfullPosition.x, lastSuccessfullPosition.y);
         this.pegmanSprite.fresh = false;
@@ -80,7 +80,7 @@ var Pegman = {
 
         if (TopDownGame.game.state.getCurrentState().key == "lesson11") {
 
-            barrels.forEach(function(c) {
+            barrels.forEach(function (c) {
                 if (c["scene"] - 1 == scene) { //оживляем только те бочки, которые относятся к данной сцене.
 
                     c.revive();
@@ -104,9 +104,9 @@ var Pegman = {
             });
         }
 
-        if (TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson24" || TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson25") {
+        if (TopDownGame.game.state.getCurrentState().key == "lesson24" || TopDownGame.game.state.getCurrentState().key == "lesson25") {
 
-            barrels.forEach(function(c) {
+            barrels.forEach(function (c) {
 
                 c.revive();
                 if (c["sprite"] == "allowedToHit") {
@@ -129,16 +129,16 @@ var Pegman = {
             });
         }
 
-        if (TopDownGame.game.state.getCurrentState().key﻿﻿[6] == "2") { // это значит второй уровень (((
-            chests.forEach(function(c) {
+        if (TopDownGame.game.state.getCurrentState().key[6] == "2") { // это значит второй уровень (((
+            chests.forEach(function (c) {
                 c.revive();
             });
 
         }
 
-        if (TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson3") {
+        if (TopDownGame.game.state.getCurrentState().key == "lesson3") {
             // map.replace(tile.id, tileid_pairs[tile.id-1]+1, 0, 0, 20, 20, drawLayer); 
-            tilestodraw.forEach(function(tile) {
+            tilestodraw.forEach(function (tile) {
                 map.replace(tileid_pairs[tile.id - 1] + 1, tile.id, 0, 0, 40, 40, drawLayer);
             });
 
@@ -148,9 +148,10 @@ var Pegman = {
             crosses.callAll('kill');
         }
         this.pegmanSprite.animations.play('STAND');
+
     },
 
-    nextAction: function(action, step = 1, tox = 0, toy = 0) {
+    nextAction: function (action, step = 1, tox = 0, toy = 0) {
         var actionobject = {
             action: action,
             tox: tox,
@@ -160,11 +161,11 @@ var Pegman = {
         this.pegmanActions.push(actionobject);
     },
 
-    play: function() {
+    play: function () {
         this.playNextAction();
     },
 
-    playNextAction: function() {
+    playNextAction: function () {
         if (this.pegmanActions.length <= 0) {
             Pegman.checkFinal();
             return;
@@ -211,7 +212,7 @@ var Pegman = {
                 this.pegmanSprite.scale.x = 1;
                 try {
                     weapon.fireAngle = Phaser.ANGLE_RIGHT
-                } catch {};
+                } catch { };
                 // нужно вычислить в пикселях куда должен попасть игрок.
 
                 var goalx = Maze.SQUARE_SIZE * (tox - Maze.coordoffset_x) + Maze.SQUARE_SIZE / 2;
@@ -220,12 +221,12 @@ var Pegman = {
                     this.pegmanSprite.scale.x = -1;
                     try {
                         weapon.fireAngle = Phaser.ANGLE_LEFT
-                    } catch {};
+                    } catch { };
                 } else {
                     this.pegmanSprite.scale.x = 1;
                     try {
                         weapon.fireAngle = Phaser.ANGLE_RIGHT
-                    } catch {};
+                    } catch { };
                 }
                 this.moveNSWE(goalx, goaly, stepcount);
                 break;
@@ -254,7 +255,7 @@ var Pegman = {
                 var tileToReplaceX;
                 var tileToReplaceY;
                 //console.log(Pegman.dposX, Pegman.dposY, Pegman.selected_tileid);
-                tilestodraw.forEach(function(tile) {
+                tilestodraw.forEach(function (tile) {
                     //console.log(tile.x, tile.y, tileid_pairs[tile.id - 1]);
                     if (tile.x == Pegman.dposX && tile.y == Pegman.dposY && tileid_pairs[tile.id - 1] == Pegman.selected_tileid) {
                         tileIDToReplace = tile.id;
@@ -274,7 +275,7 @@ var Pegman = {
                 builddust.y = Pegman.dposY * Maze.SQUARE_SIZE - 16;
                 builddust.visible = true;
                 this.anim = builddust.animations.play("BUILD");
-                this.anim.onComplete.addOnce(function() {
+                this.anim.onComplete.addOnce(function () {
                     builddust.visible = false;
                     //console.log(builddust.x, builddust.y, builddust.visible);
                     this.playNextAction();
@@ -323,7 +324,7 @@ var Pegman = {
         }
     },
 
-    turnToInternal: function(newDirection) {
+    turnToInternal: function (newDirection) {
         var d = Maze.directionToString(this.direction);
         this.direction = newDirection;
         d += "_" + Maze.directionToString(this.direction);
@@ -338,7 +339,7 @@ Pegman.textoffset_y = 45;
 Pegman.bulletSpeed = 1000;
 Pegman.selected_tileid = 1;
 
-Pegman.preReset = function() {
+Pegman.preReset = function () {
     if (this.tween) {
         this.tween.stop();
     }
@@ -347,38 +348,53 @@ Pegman.preReset = function() {
     }
 };
 
-Pegman.finishPreviousAction = function() {};
+Pegman.finishPreviousAction = function () { };
 
-Pegman.moveNSWE = function(x, y, stepcount = 1) {
-        this.animSpeedByStep = 500;
-        this.posX = x;
-        this.posY = y;
-        this.anim = this.pegmanSprite.animations.play("NORTH");
-        this.tween = TopDownGame.game.add.tween(this.pegmanSprite);
-        this.tween.to({
-            x: this.posX,
-            y: this.posY,
-        }, this.animSpeedByStep * stepcount, Phaser.Easing.Linear.In);
-        this.tween.onComplete.addOnce(function() {
-            this.pegmanSprite.animations.play("STAND");
-            this.playNextAction();
-        }, this);
-        this.tween.start();
-    },
-    Pegman.Shoot = function() {
-        this.anim = this.pegmanSprite.animations.play("SHOOT");
-        weapon.fire();
-        weapon.onKill.addOnce(function() {
-            player.animations.play('STAND');
-            this.playNextAction();
-        }, this);
-        this.anim.onComplete.addOnce(function() {
-            player.animations.play('STAND');
-        }, this);
+Pegman.moveNSWE = function (x, y, stepcount = 1) {
+    TopDownGame.game.stage.updateTransform();
+    this.pegmanSprite.fresh = false;
+    this.animSpeedByStep = 500;
+    this.posX = x;
+    this.posY = y;
+    this.anim = this.pegmanSprite.animations.play("NORTH");
+    this.tween = TopDownGame.game.add.tween(this.pegmanSprite);
+    this.tween.to({
+        x: this.posX,
+        y: this.posY,
+    }, this.animSpeedByStep * stepcount, Phaser.Easing.Linear.In);
+    this.tween.onComplete.addOnce(function () {
+        this.pegmanSprite.animations.play("STAND");
+        TopDownGame.game.stage.updateTransform();
+        this.pegmanSprite.fresh = false;
+        this.playNextAction();
+    }, this);
+    this.tween.start();
+},
+    Pegman.Shoot = function () {
+
+
+        TopDownGame.game.time.events.add(200, fadePicture, this);
+
+
+        function fadePicture() {
+
+            this.anim = this.pegmanSprite.animations.play("SHOOT");
+            weapon.fire();
+            weapon.onKill.addOnce(function () {
+                player.animations.play('STAND');
+                this.playNextAction();
+            }, this);
+            this.anim.onComplete.addOnce(function () {
+                player.animations.play('STAND');
+            }, this);
+
+        }
+
+
     },
 
-    Pegman.checkFinal = function() {
-        if (TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson11") {
+    Pegman.checkFinal = function () {
+        if (TopDownGame.game.state.getCurrentState().key == "lesson11") {
             var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
             if (isOverlapping == true) {
                 console.log("scene complete!");
@@ -412,7 +428,7 @@ Pegman.moveNSWE = function(x, y, stepcount = 1) {
                 //show modal unsuccessful
                 if (scene == 4) {
                     var aliveBarrelsCount = 0;
-                    barrels.forEach(function(c) {
+                    barrels.forEach(function (c) {
                         if (c["sprite"] == "needToHit" && c.health > 60) {
                             aliveBarrelsCount += 1;
                         }
@@ -430,13 +446,13 @@ Pegman.moveNSWE = function(x, y, stepcount = 1) {
                 }
             }
 
-            //TopDownGame.game.state.getCurrentState().key﻿﻿ == "Game" 
+            //TopDownGame.game.state.getCurrentState().key == "Game" 
         }
 
-        if (TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson21") {
+        if (TopDownGame.game.state.getCurrentState().key == "lesson21") {
 
             var aliveChestsCount = 0;
-            chests.forEach(function(c) {
+            chests.forEach(function (c) {
                 if (c.visible == true) {
                     aliveChestsCount += 1;
                 }
@@ -456,12 +472,12 @@ Pegman.moveNSWE = function(x, y, stepcount = 1) {
                 $("#exampleModal").modal();
             }
 
-            //TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson21"
+            //TopDownGame.game.state.getCurrentState().key == "lesson21"
         }
-        if (TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson22") {
+        if (TopDownGame.game.state.getCurrentState().key == "lesson22") {
 
             var aliveChestsCount = 0;
-            chests.forEach(function(c) {
+            chests.forEach(function (c) {
                 if (c.visible == true) {
                     aliveChestsCount += 1;
                 }
@@ -480,12 +496,12 @@ Pegman.moveNSWE = function(x, y, stepcount = 1) {
                 $("#exampleModal").modal();
             }
 
-            //TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson21"
+            //TopDownGame.game.state.getCurrentState().key == "lesson21"
         }
 
-        if (TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson23") {
+        if (TopDownGame.game.state.getCurrentState().key == "lesson23") {
             var aliveChestsCount = 0;
-            chests.forEach(function(c) {
+            chests.forEach(function (c) {
                 if (c.visible == true) {
                     aliveChestsCount += 1;
                 }
@@ -504,12 +520,12 @@ Pegman.moveNSWE = function(x, y, stepcount = 1) {
                 $("#exampleModal").modal();
             }
         }
-        if (TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson24") {
+        if (TopDownGame.game.state.getCurrentState().key == "lesson24") {
             //тут уже более сложная логика, так как там две бочки
 
 
             var aliveChestsCount = 0;
-            chests.forEach(function(c) {
+            chests.forEach(function (c) {
                 if (c.visible == true) {
                     aliveChestsCount += 1;
                 }
@@ -528,12 +544,12 @@ Pegman.moveNSWE = function(x, y, stepcount = 1) {
                 $("#exampleModal").modal();
             }
         }
-        if (TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson25") {
+        if (TopDownGame.game.state.getCurrentState().key == "lesson25") {
             //тут уже более сложная логика, так как там две бочки
 
 
             var aliveChestsCount = 0;
-            chests.forEach(function(c) {
+            chests.forEach(function (c) {
                 if (c.visible == true) {
                     aliveChestsCount += 1;
                 }
@@ -547,7 +563,7 @@ Pegman.moveNSWE = function(x, y, stepcount = 1) {
                 $("#exampleModal").modal();
             }
         }
-        if (TopDownGame.game.state.getCurrentState().key﻿﻿ == "lesson3") {
+        if (TopDownGame.game.state.getCurrentState().key == "lesson3") {
 
             if (setblocks == tilestodraw.length) {
                 // if (setblocks == 1) {
@@ -560,7 +576,7 @@ Pegman.moveNSWE = function(x, y, stepcount = 1) {
                     change_map('lesson3' + sublevel);
                 } else {
                     $("#nextButton").show();
-                    $('#nextButton').one('click', function() {
+                    $('#nextButton').one('click', function () {
                         sublevel += 1;
 
                         change_map('lesson3' + sublevel);
