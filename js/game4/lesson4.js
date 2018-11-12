@@ -5,13 +5,16 @@ var player;
 var cp;
 
 var flag = false;
-
+var scene = 1;
 var map;
 var drawLayer;
+var showflag = true;
 Pegman.dposX = 11;
 Pegman.dposY = 7;
 //var data;
-
+var capacity = 100;
+var maxcaps2;
+var myHealthBar;
 
 var lastSuccessfullPosition = {
     x: Maze.SQUARE_SIZE * (4 + 0.5),
@@ -38,20 +41,70 @@ TopDownGame.Lesson4.prototype = {
         //this.collision1 = this.map.createLayer('collision1');
         //this.collision2 = this.map.createLayer('collision2');
         this.railing = this.map.createLayer('railing');
+        this.upperLayer = this.map.createLayer('upperLayer');
+        this.onBlockLayer = this.map.createLayer('onBlockLayer');
+        this.blockLayer = this.map.createLayer('blockLayer');
+        this.sinkLayer = this.map.createLayer('sinkLayer');
+        this.onFlour = this.map.createLayer('onFlour');
 
 
 
 
 
-        player = this.game.add.sprite(0, 0, 'totalsheet', Pegman.selected_tileid);
-        player.tint = 0xAADDDD;
+        this.createItems();
+        weapon = this.game.add.weapon(20, 'bullet');
+        var result = this.findObjectsByType('playerStartPosition', this.map, 'playerLayer');
+        lastSuccessfullPosition = {
+            x: result[0].x,
+            y: result[0].y
+        };
+        player = this.game.add.sprite(result[0].x, result[0].y, 'pegman');
+
+
         player.anchor.setTo(0.5, 0.5);
         this.game.physics.arcade.enable(player);
-        player.body.setSize(32, 32, 16, 16);
+        player.body.setSize(60, 13, 40, 73);
         this.flour.resizeWorld();
         Pegman.init(player);
 
+        //bullets
 
+
+        weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
+        weapon.bulletAngleOffset = 0;
+        weapon.bulletSpeed = 500;
+        weapon.fireAngle = Phaser.ANGLE_RIGHT; // shoot at right direcion by default
+        weapon.trackSprite(player, 0, -9, false); //-65 выведено экспериментальным путём
+        //weapon.addBulletAnimation("fly", [0, 1, 2, 3, 4, 5, 6, 7], 40, true);
+
+        //explosion
+        explosion = this.game.add.sprite(0, 0, 'explosion');
+        explosion.visible = false;
+        explanim = explosion.animations.add('EXPL', [0, 1, 2, 3, 4, 5], 20, /*loop*/ false);
+        explanim.onComplete.add(this.animationStopped, this);
+
+
+
+
+
+
+        var fps = 7;
+        player.animations.add('NORTH', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], fps, /*loop*/ true);
+        player.animations.add('EAST', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], fps, /*loop*/ true);
+        player.animations.add('SOUTH', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], fps, /*loop*/ true);
+        player.animations.add('WEST', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], fps, /*loop*/ true);
+        player.animations.add('WEST_SOUTH', [14], fps, /*loop*/ false);
+        player.animations.add('SOUTH_WEST', [14], fps, /*loop*/ false);
+        player.animations.add('WEST_NORTH', [14], fps, /*loop*/ false);
+        player.animations.add('NORTH_WEST', [14], fps, /*loop*/ false);
+        player.animations.add('EAST_SOUTH', [14], fps, /*loop*/ false);
+        player.animations.add('SOUTH_EAST', [14], fps, /*loop*/ false);
+        player.animations.add('EAST_NORTH', [14], fps, /*loop*/ false);
+        player.animations.add('NORTH_EAST', [14], fps, /*loop*/ false);
+        player.animations.add('STAND', [10, 11, 12, 13, 14, 15, 16, 17, 18, 19], fps, /*loop*/ true);
+        player.animations.add('HIT', [25, 26, 27, 28, 29], fps, /*loop*/ false);
+        player.animations.add('SHOOT', [20, 21, 22, 23, 24], fps, /*loop*/ false);
+        player.animations.play('STAND');
 
 
         //the camera will follow the player in the world
@@ -62,6 +115,9 @@ TopDownGame.Lesson4.prototype = {
         //this.map.setTileIndexCallback([...Array(500).keys()], this.hitWall1, this, this.collision1);
         //this.map.setTileIndexCallback([...Array(500).keys()], this.hitWall2, this, this.collision2);
         railingGroup = this.game.add.group();
+
+
+
 
 
         for (var y = 0; y < this.map.height; ++y) {
@@ -147,11 +203,15 @@ TopDownGame.Lesson4.prototype = {
 
 
     },
-
+    animationStopped: function (sprite, animation) {
+        explosion.visible = false;
+    },
     update: function () {
+
         //this.game.physics.arcade.collide(player, this.collision1);
         //this.game.physics.arcade.collide(player, this.collision2);
-        this.game.physics.arcade.collide(player, railingGroup, null, null, this);
+        //this.game.physics.arcade.collide(player, railingGroup, null, null, this);
+        this.game.physics.arcade.overlap(barrels, weapon.bullets, this.bulletHitBarrel, null, this);
 
         player.body.velocity.x = 0;
         var velocity = 400;
@@ -163,7 +223,6 @@ TopDownGame.Lesson4.prototype = {
         } else if (this.cursors.down.isDown) {
             if (player.body.velocity.y == 0)
                 player.body.velocity.y += velocity;
-
         } else {
             player.body.velocity.y = 0;
         }
@@ -172,25 +231,75 @@ TopDownGame.Lesson4.prototype = {
         } else if (this.cursors.right.isDown) {
             player.body.velocity.x += velocity;
         }
-
         if (fireButton.isDown) {
-
-
-            // sublevel = 3;
-            // change_map('lesson3' + sublevel);
-            // Pegman.reset2();
-
         }
-        this.game.debug.body(player);
-        // this.game.debug.physicsGroup(barrels);
-        // this.game.debug.bodyInfo(player, 32, 50);
+
+        try { myHealthBar.setPercent(workspace.remainingCapacity() / maxcaps2 * 100); } catch { };
     },
     hitWall1: function () {
         console.log("hit1");
     },
     hitWall2: function () {
         console.log("hit2");
-    }
+    },
+    createItems: function () {
+        //create items
+        barrels = this.game.add.group();
+        barrels.enableBody = true;
+        result = this.findObjectsByType('barrel', this.map, 'objectLayer');
+        result.forEach(function (element) {
+            this.createFromTiledObject(element, barrels);
+        }, this);
+    },
+
+    //find objects in a Tiled layer that containt a property called "type" equal to a certain value
+    findObjectsByType: function (type, map, layer) {
+        var result = new Array();
+        map.objects[layer].forEach(function (element) {
+            if (element.properties.type === type) {
+                //Phaser uses top left, Tiled bottom left so we have to adjust
+                //also keep in mind that the cup images are a bit smaller than the tile which is 16x16
+                //so they might not be placed in the exact position as in Tiled
+                element.y -= map.tileHeight;
+                result.push(element);
+            }
+        });
+        return result;
+    },
+    //create a sprite from an object
+    createFromTiledObject: function (element, group) {
+        var sprite = group.create(element.x, element.y, 'totalsheet', 234);
+        //copy all properties to the sprite
+        Object.keys(element.properties).forEach(function (key) {
+            sprite[key] = element.properties[key];
+        });
+        sprite.health = 100;
+        sprite.body.immovable = true;
+        //sprite.scale.set(2 , 2 );
+        if (sprite["sprite"] === "needToHit") {
+            sprite.frame = 195;
+        }
+        if (sprite["scene"] < scene) {
+            sprite.frame = 197
+        } else if (sprite["scene"] > scene) {
+            sprite.kill();
+        }
+    },
+    bulletHitBarrel: function (sprite, bullet) {
+        var damage = 48;
+        sprite.damage(damage);
+        if (sprite.health > 50) {
+            sprite.frame = 196;
+        } else if (sprite.health < 20) {
+            sprite.frame = 197;
+            sprite.body.enable = false; // отключаем физику чтобы пули пролетали сквозь остатки бочки
+        }
+        explosion.x = sprite.x;
+        explosion.y = sprite.y - 30;
+        explosion.visible = true;
+        explosion.animations.play('EXPL');
+        bullet.kill();
+    },
 };
 
 

@@ -30,6 +30,10 @@ var Pegman = {
             $("#modaltext").text("На этом этапе необходимо достроить недостающую часть карты.");
             $("#exampleModal").modal();
         }
+        if (TopDownGame.game.state.getCurrentState().key == "lesson4" && scene == 1) {
+            $("#modaltext").text("Только что с учебки, а уже сразу на такое опасное задание?!! Сначала докажи, что умеешь стрелять!");
+            $("#exampleModal").modal();
+        } else 
         this.reset2();
     },
 
@@ -75,14 +79,11 @@ var Pegman = {
 
         this.pegmanSprite.reset(lastSuccessfullPosition.x, lastSuccessfullPosition.y);
         this.pegmanSprite.fresh = false;
-
         flag = false;
 
         if (TopDownGame.game.state.getCurrentState().key == "lesson11") {
-
             barrels.forEach(function (c) {
                 if (c["scene"] - 1 == scene) { //оживляем только те бочки, которые относятся к данной сцене.
-
                     c.revive();
                     if (c["sprite"] == "allowedToHit") {
                         c.frame = 234;
@@ -97,8 +98,6 @@ var Pegman = {
                         c.frame = 235;
                     }
                     c.body.immovable = true;
-
-
                     c.body.enable = true;
                 }
             });
@@ -147,6 +146,38 @@ var Pegman = {
             this.pegmanSprite.frame = this.selected_tileid;
             crosses.callAll('kill');
         }
+        if (TopDownGame.game.state.getCurrentState().key == "lesson4") {
+
+            barrels.forEach(function (c) {
+                if (c.scene == scene) {
+                    c.revive();
+                    c.frame = 195;
+                    c.body.immovable = true;
+                    c.body.enable = true;
+                } else {
+                    c.kill();
+                }
+            });
+
+            if (showflag && scene == 2) {
+                $("#modaltext").text("Я так и знал! У нас тут на планете каждый патрон, каждая энергетическая ячейка не счету! Для экономии энергии используй команду 'Повтори'!");
+                $("#exampleModal").modal();
+                showflag = false;
+            } else if (showflag && scene == 3) {
+                $("#modaltext").text("Тебе нужно потренироваться еще больше. Подстрели вот эти бочки.");
+                $("#exampleModal").modal();
+                showflag = false;
+            } else if (showflag && scene == 4) {
+                $("#modaltext").text("Отлично справляешься! Теперь я понимаю почему тебе доверили такое важное задание!");
+                $("#exampleModal").modal();
+                showflag = false;
+            } else if (showflag && scene == 5) {
+                $("#modaltext").text("Мы почти закончили! Для тебя новое испытание.");
+                $("#exampleModal").modal();
+                showflag = false;
+            }
+        }
+
         this.pegmanSprite.animations.play('STAND');
 
     },
@@ -585,6 +616,89 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     });
 
                 }
+            }
+        }
+
+        if (TopDownGame.game.state.getCurrentState().key == "lesson4") {
+          
+
+
+            var aliveBarrelsCount = 0;
+            barrels.forEach(function (c) {
+                if (c.health > 50 && c.scene == scene) {
+                    aliveBarrelsCount += 1;
+                }
+            });
+            if (aliveBarrelsCount == 0) {
+
+                scene += 1;
+                showflag = true;
+
+                var runButton = document.getElementById('runButton');
+                runButton.style.display = 'inline';
+                document.getElementById('resetButton').style.display = 'none';
+                // Prevent double-clicks or double-taps.
+                runButton.disabled = false;
+
+                Blockly.mainWorkspace.clear();
+                Blockly.mainWorkspace.clearUndo();
+                Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
+                
+                
+                if (scene == 2) {
+
+                    var newTree = `
+                    <xml id="toolbox" style="display: none; background-color: #4d90fe;">
+                    <block type="fire"></block>
+                    <block type="controls_repeat_ext">
+                    <value name="TIMES">
+                      <block type="math_number">
+                        <field name="NUM">10</field>
+                      </block>
+                    </value>
+                  </block>
+                    </xml>`;
+                    
+                
+                    workspace.updateToolbox(newTree);
+    
+                    var barConfig = {
+                        width: 100,
+                        height: 20,
+                        x: 450,
+                        y: 30,
+                        bg: {
+                          color: '#651828'
+                        },
+                        bar: {
+                          color: '#FEFF03'
+                        },
+                        animationDuration: 200,
+                        flipped: false
+                      };
+                    
+                    myHealthBar = new HealthBar(TopDownGame.game, barConfig);
+                    myHealthBar.setFixedToCamera(true);
+                    myHealthBar.setPercent(capacity); 
+                    
+                    maxcaps2 = 4;
+                    workspace.options.maxBlocks = maxcaps2;
+
+                }
+                
+
+
+
+                
+                barrels.forEach(function (c) {
+                    if (c.scene == scene) {
+                        c.revive();
+                    } else {
+                        c.kill();
+                    }
+                });
+                Pegman.reset2();
+
             }
         }
     };
