@@ -22,9 +22,9 @@ var lastSuccessfullPosition = {
 };
 
 //title screen
-TopDownGame.Lesson4 = function() {};
+TopDownGame.Lesson4 = function () { };
 TopDownGame.Lesson4.prototype = {
-    create: function() {
+    create: function () {
 
         Blockly.mainWorkspace.clear();
         Blockly.mainWorkspace.clearUndo();
@@ -65,7 +65,29 @@ TopDownGame.Lesson4.prototype = {
         this.game.physics.arcade.enable(player);
         player.body.setSize(60, 13, 40, 73);
         this.flour.resizeWorld();
+
+        var barConfig = {
+            width: 150,
+            height: 20,
+            x: 600,
+            y: 30,
+            bg: {
+                color: '#651828'
+            },
+            bar: {
+                color: '#FEFF03'
+            },
+            animationDuration: 200,
+            flipped: false
+        };
+
+        myHealthBar = new HealthBar(TopDownGame.game, barConfig);
+        myHealthBar.setFixedToCamera(true);
+        myHealthBar.setPercent(capacity);
+
         Pegman.init(player);
+        scene = 5;
+        load_scene();
 
         //bullets
 
@@ -114,81 +136,83 @@ TopDownGame.Lesson4.prototype = {
         TopDownGame.game.camera.flash(0x000000, 500);
         //this.map.setTileIndexCallback([...Array(500).keys()], this.hitWall1, this, this.collision1);
         //this.map.setTileIndexCallback([...Array(500).keys()], this.hitWall2, this, this.collision2);
-        railingGroup = this.game.add.group();
+        //railingGroup = this.game.add.group();
 
 
 
 
 
-        for (var y = 0; y < this.map.height; ++y) {
-            for (var x = 0; x < this.map.width; ++x) {
-                var tile = this.map.getTile(x, y, this.railing);
-                if (tile) {
-                    //console.log(tile);
-                    if (tile.index == 166) { //upper
-                        var graphics = this.game.add.graphics(0, 0);
-                        graphics.lineStyle(1, 0xffff00, 1);
-                        graphics.moveTo(tile.worldX, tile.worldY + Maze.SQUARE_SIZE);
-                        graphics.lineTo(tile.worldX + Maze.SQUARE_SIZE, tile.worldY + Maze.SQUARE_SIZE);
-                        // graphics.moveTo(50,50);
-                        var sprite = this.game.add.sprite(tile.worldX, tile.worldY + Maze.SQUARE_SIZE, graphics.generateTexture());
-                        this.game.physics.arcade.enable(sprite);
-                        sprite.body.immovable = true;
-                        sprite.body.moves = false;
-                        //console.log(sprite.x, sprite.y);
-                        railingGroup.add(sprite);
-                        graphics.destroy();
-                    }
-                    if (tile.index == 167) { //lower
-                        var graphics = this.game.add.graphics(0, 0);
-                        graphics.lineStyle(1, 0xff00ff, 1);
-                        graphics.moveTo(tile.worldX, tile.worldY);
-                        graphics.lineTo(tile.worldX + Maze.SQUARE_SIZE, tile.worldY);
-                        // graphics.moveTo(50,50);
-                        var sprite = this.game.add.sprite(tile.worldX, tile.worldY, graphics.generateTexture());
-                        this.game.physics.arcade.enable(sprite);
-                        sprite.body.immovable = true;
-                        sprite.body.moves = false;
-                        //console.log(sprite.x, sprite.y);
-                        railingGroup.add(sprite);
-                        graphics.destroy();
-                    }
-                    if (tile.index == 154) { //left
-                        var graphics = this.game.add.graphics(0, 0);
-                        graphics.lineStyle(1, 0x0000ff, 1);
-                        graphics.moveTo(tile.worldX + Maze.SQUARE_SIZE, tile.worldY + Maze.SQUARE_SIZE);
-                        graphics.lineTo(tile.worldX + Maze.SQUARE_SIZE, tile.worldY);
-                        // graphics.moveTo(50,50);
-                        var sprite = this.game.add.sprite(tile.worldX + Maze.SQUARE_SIZE, tile.worldY, graphics.generateTexture());
-                        this.game.physics.arcade.enable(sprite);
-                        sprite.body.immovable = true;
-                        sprite.body.moves = false;
-                        railingGroup.add(sprite);
-                        graphics.destroy();
-                    }
-                    if (tile.index == 153) { //right
-                        var graphics = this.game.add.graphics(0, 0);
-                        graphics.lineStyle(1, 0x000000, 1);
-                        graphics.moveTo(tile.worldX + Maze.SQUARE_SIZE, tile.worldY + Maze.SQUARE_SIZE);
-                        graphics.lineTo(tile.worldX + Maze.SQUARE_SIZE, tile.worldY);
-                        // graphics.moveTo(50,50);
-                        var sprite = this.game.add.sprite(tile.worldX, tile.worldY, graphics.generateTexture());
-                        this.game.physics.arcade.enable(sprite);
 
-                        sprite.body.immovable = true;
-                        sprite.body.moves = false;
-                        //console.log(sprite.x, sprite.y);
-                        railingGroup.add(sprite);
-                        graphics.destroy();
-                    }
-                    railingGroup.enableBody = true;
-                    railingGroup.physicsBodyType = Phaser.Physics.ARCADE;
-                    // railingGroup.forEach(function(c) {
-                    //    c.immovable = true;
-                    //      });
-                }
-            }
-        }
+
+        // for (var y = 0; y < this.map.height; ++y) {
+        //     for (var x = 0; x < this.map.width; ++x) {
+        //         var tile = this.map.getTile(x, y, this.railing);
+        //         if (tile) {
+        //             //console.log(tile);
+        //             if (tile.index == 166) { //upper
+        //                 var graphics = this.game.add.graphics(0, 0);
+        //                 graphics.lineStyle(1, 0xffff00, 1);
+        //                 graphics.moveTo(tile.worldX, tile.worldY + Maze.SQUARE_SIZE);
+        //                 graphics.lineTo(tile.worldX + Maze.SQUARE_SIZE, tile.worldY + Maze.SQUARE_SIZE);
+        //                 // graphics.moveTo(50,50);
+        //                 var sprite = this.game.add.sprite(tile.worldX, tile.worldY + Maze.SQUARE_SIZE, graphics.generateTexture());
+        //                 this.game.physics.arcade.enable(sprite);
+        //                 sprite.body.immovable = true;
+        //                 sprite.body.moves = false;
+        //                 //console.log(sprite.x, sprite.y);
+        //                 railingGroup.add(sprite);
+        //                 graphics.destroy();
+        //             }
+        //             if (tile.index == 167) { //lower
+        //                 var graphics = this.game.add.graphics(0, 0);
+        //                 graphics.lineStyle(1, 0xff00ff, 1);
+        //                 graphics.moveTo(tile.worldX, tile.worldY);
+        //                 graphics.lineTo(tile.worldX + Maze.SQUARE_SIZE, tile.worldY);
+        //                 // graphics.moveTo(50,50);
+        //                 var sprite = this.game.add.sprite(tile.worldX, tile.worldY, graphics.generateTexture());
+        //                 this.game.physics.arcade.enable(sprite);
+        //                 sprite.body.immovable = true;
+        //                 sprite.body.moves = false;
+        //                 //console.log(sprite.x, sprite.y);
+        //                 railingGroup.add(sprite);
+        //                 graphics.destroy();
+        //             }
+        //             if (tile.index == 154) { //left
+        //                 var graphics = this.game.add.graphics(0, 0);
+        //                 graphics.lineStyle(1, 0x0000ff, 1);
+        //                 graphics.moveTo(tile.worldX + Maze.SQUARE_SIZE, tile.worldY + Maze.SQUARE_SIZE);
+        //                 graphics.lineTo(tile.worldX + Maze.SQUARE_SIZE, tile.worldY);
+        //                 // graphics.moveTo(50,50);
+        //                 var sprite = this.game.add.sprite(tile.worldX + Maze.SQUARE_SIZE, tile.worldY, graphics.generateTexture());
+        //                 this.game.physics.arcade.enable(sprite);
+        //                 sprite.body.immovable = true;
+        //                 sprite.body.moves = false;
+        //                 railingGroup.add(sprite);
+        //                 graphics.destroy();
+        //             }
+        //             if (tile.index == 153) { //right
+        //                 var graphics = this.game.add.graphics(0, 0);
+        //                 graphics.lineStyle(1, 0x000000, 1);
+        //                 graphics.moveTo(tile.worldX + Maze.SQUARE_SIZE, tile.worldY + Maze.SQUARE_SIZE);
+        //                 graphics.lineTo(tile.worldX + Maze.SQUARE_SIZE, tile.worldY);
+        //                 // graphics.moveTo(50,50);
+        //                 var sprite = this.game.add.sprite(tile.worldX, tile.worldY, graphics.generateTexture());
+        //                 this.game.physics.arcade.enable(sprite);
+
+        //                 sprite.body.immovable = true;
+        //                 sprite.body.moves = false;
+        //                 //console.log(sprite.x, sprite.y);
+        //                 railingGroup.add(sprite);
+        //                 graphics.destroy();
+        //             }
+        //             railingGroup.enableBody = true;
+        //             railingGroup.physicsBodyType = Phaser.Physics.ARCADE;
+        //             // railingGroup.forEach(function(c) {
+        //             //    c.immovable = true;
+        //             //      });
+        //         }
+        //     }
+        // }
         // railingGroup.forEach(function(c) {
         //     console.log(c.x);
         // });
@@ -200,14 +224,13 @@ TopDownGame.Lesson4.prototype = {
         //sprite.anchor.set(0.5);
         //  And destroy the original graphics object
         ////graphics.destroy();
-        scene = 1;
-        load_scene();
+
 
     },
-    animationStopped: function(sprite, animation) {
+    animationStopped: function (sprite, animation) {
         explosion.visible = false;
     },
-    update: function() {
+    update: function () {
 
         //this.game.physics.arcade.collide(player, this.collision1);
         //this.game.physics.arcade.collide(player, this.collision2);
@@ -232,33 +255,33 @@ TopDownGame.Lesson4.prototype = {
         } else if (this.cursors.right.isDown) {
             player.body.velocity.x += velocity;
         }
-        if (fireButton.isDown) {}
+        if (fireButton.isDown) { }
 
         try {
             myHealthBar.setPercent(workspace.remainingCapacity() / (maxcaps2 - 1) * 100);
-            
-        } catch {};
+
+        } catch { };
     },
-    hitWall1: function() {
+    hitWall1: function () {
         console.log("hit1");
     },
-    hitWall2: function() {
+    hitWall2: function () {
         console.log("hit2");
     },
-    createItems: function() {
+    createItems: function () {
         //create items
         barrels = this.game.add.group();
         barrels.enableBody = true;
         result = this.findObjectsByType('barrel', this.map, 'objectLayer');
-        result.forEach(function(element) {
+        result.forEach(function (element) {
             this.createFromTiledObject(element, barrels);
         }, this);
     },
 
     //find objects in a Tiled layer that containt a property called "type" equal to a certain value
-    findObjectsByType: function(type, map, layer) {
+    findObjectsByType: function (type, map, layer) {
         var result = new Array();
-        map.objects[layer].forEach(function(element) {
+        map.objects[layer].forEach(function (element) {
             if (element.properties.type === type) {
                 //Phaser uses top left, Tiled bottom left so we have to adjust
                 //also keep in mind that the cup images are a bit smaller than the tile which is 16x16
@@ -270,10 +293,10 @@ TopDownGame.Lesson4.prototype = {
         return result;
     },
     //create a sprite from an object
-    createFromTiledObject: function(element, group) {
+    createFromTiledObject: function (element, group) {
         var sprite = group.create(element.x, element.y, 'totalsheet', 234);
         //copy all properties to the sprite
-        Object.keys(element.properties).forEach(function(key) {
+        Object.keys(element.properties).forEach(function (key) {
             sprite[key] = element.properties[key];
         });
         sprite.health = 100;
@@ -288,7 +311,7 @@ TopDownGame.Lesson4.prototype = {
             sprite.kill();
         }
     },
-    bulletHitBarrel: function(sprite, bullet) {
+    bulletHitBarrel: function (sprite, bullet) {
         var damage = 48;
         sprite.damage(damage);
         if (sprite.health > 50) {
@@ -320,42 +343,27 @@ function load_scene() {
     Blockly.mainWorkspace.clearUndo();
     Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
     
-    
-    if (scene == 2) {
+    if (scene == 1) {
+        myHealthBar.barSprite.visible = false;
+        myHealthBar.bgSprite.visible = false;
+        myHealthBar.borderSprite.visible = false;
+    }
+
+    else if (scene == 2) {
 
         var newTree = `
         <xml id="toolbox" style="display: none; background-color: #4d90fe;">
         <block type="fire"></block>
         <block type="repeat_n_times"></block>
         </xml>`;
-        
-    
         workspace.updateToolbox(newTree);
-
-        var barConfig = {
-            width: 150,
-            height: 20,
-            x: 600,
-            y: 30,
-            bg: {
-              color: '#651828'
-            },
-            bar: {
-              color: '#FEFF03'
-            },
-            animationDuration: 200,
-            flipped: false
-          };
-        
-        myHealthBar = new HealthBar(TopDownGame.game, barConfig);
-        myHealthBar.setFixedToCamera(true);
-        myHealthBar.setPercent(capacity); 
-        myHealthBar.alpha = 0;
-        
-        maxcaps2 = 2+1;
+        maxcaps2 = 2 + 1;
         workspace.options.maxBlocks = maxcaps2;
+        myHealthBar.barSprite.visible = true;
+        myHealthBar.bgSprite.visible = true;
+        myHealthBar.borderSprite.visible = true;
 
-    } else if (scene == 3) { 
+    } else if (scene == 3) {
         var newTree = `
         <xml id="toolbox" style="display: none; background-color: #4d90fe;">
         <block type="maze_up"></block>
@@ -366,10 +374,11 @@ function load_scene() {
         <block type="repeat_n_times"></block>
         </xml>`;
         workspace.updateToolbox(newTree);
-        maxcaps2 = 11+1;
+        maxcaps2 = 11 + 1;
         workspace.options.maxBlocks = maxcaps2;
 
-    } else if (scene == 4) { 
+    } else if (scene == 4) {
+        console.log(scene);
         var newTree = `
         <xml id="toolbox" style="display: none; background-color: #4d90fe;">
         <block type="maze_up"></block>
@@ -380,10 +389,10 @@ function load_scene() {
         <block type="repeat_n_times"></block>
         </xml>`;
         workspace.updateToolbox(newTree);
-        maxcaps2 = 5+1;
+        maxcaps2 = 5 + 1;
         workspace.options.maxBlocks = maxcaps2;
 
-    } else if (scene == 5) { 
+    } else if (scene == 5) {
         var newTree = `
         <xml id="toolbox" style="display: none; background-color: #4d90fe;">
         <block type="maze_up"></block>
@@ -394,7 +403,7 @@ function load_scene() {
         <block type="repeat_n_times"></block>
         </xml>`;
         workspace.updateToolbox(newTree);
-        maxcaps2 = 5+1;
+        maxcaps2 = 12 + 1;
         workspace.options.maxBlocks = maxcaps2;
 
     }

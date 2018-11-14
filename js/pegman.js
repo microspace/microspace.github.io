@@ -30,7 +30,7 @@ var Pegman = {
             $("#modaltext").text("На этом этапе необходимо достроить недостающую часть карты.");
             $("#exampleModal").modal();
         }
-        if (TopDownGame.game.state.getCurrentState().key == "lesson4" && scene == 1) {
+        if (TopDownGame.game.state.getCurrentState().key == "lesson4") {
             $("#modaltext").text("Только что с учебки, а уже сразу на такое опасное задание?!! Сначала докажи, что умеешь стрелять!");
             $("#exampleModal").modal();
         } else
@@ -44,7 +44,9 @@ var Pegman = {
         try {
             this.dposX = startPositions['lesson3' + sublevel][0];
             this.dposY = startPositions['lesson3' + sublevel][1];
-        } catch { }
+        } catch { 
+            
+        }
 
         this.preReset();
         this.tween = null;
@@ -204,7 +206,7 @@ var Pegman = {
             function delayBeforeCheck() {
                 Pegman.checkFinal();
             }
-            
+
             return;
         }
 
@@ -622,8 +624,14 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 }
             });
             if (aliveBarrelsCount == 0) {
-                scene += 1;
-                load_scene();
+                if (scene != 5) {
+                    scene += 1;
+                    load_scene();
+                } else {
+                    $("#modaltext").text("Поздравляю! Ты закончил уровень №4");
+                    $("#exampleModal").modal();
+                }
+
             }
         }
     };
