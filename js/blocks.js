@@ -503,3 +503,48 @@ Blockly.JavaScript['setxy'] = function(block) {
     var sety = block.getFieldValue('sety');
     return 'Pegman.nextAction("setxy", ' + 1 + ', ' + setx + ', ' + sety + ');\n';
 };
+
+
+
+Blockly.Blocks['repeat_n_times'] = {
+    /**
+     * Block for moving forward.
+     * @this Blockly.Block
+     */
+    init: function() {
+        this.jsonInit({
+           
+            "message0": "Повтори %1 раз",
+            "args0": [
+                {
+                    "type": "field_number",
+                    "name": "times",
+                    "value": 4
+                  }
+            ],
+            "message1": "выполнить %1",
+            "args1": [
+              {"type": "input_statement", "name": "DO"}
+            ],
+            "previousStatement": null,
+            "nextStatement": null,
+            "colour": 120
+          });
+    }
+};
+
+Blockly.JavaScript['repeat_n_times'] = function(block) {
+    // Generate JavaScript for moving forward.
+    var stc = Blockly.JavaScript.statementToCode(block, 'DO');
+    var times = block.getFieldValue('times');
+
+    return 'for (var ip = 0; ip <' + times + '; ip++){\n'+ stc +'\n}\n';
+};
+
+
+
+
+
+
+
+

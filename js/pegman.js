@@ -33,8 +33,8 @@ var Pegman = {
         if (TopDownGame.game.state.getCurrentState().key == "lesson4" && scene == 1) {
             $("#modaltext").text("Только что с учебки, а уже сразу на такое опасное задание?!! Сначала докажи, что умеешь стрелять!");
             $("#exampleModal").modal();
-        } else 
-        this.reset2();
+        } else
+            this.reset2();
     },
 
     reset2: function () {
@@ -198,7 +198,13 @@ var Pegman = {
 
     playNextAction: function () {
         if (this.pegmanActions.length <= 0) {
-            Pegman.checkFinal();
+            TopDownGame.game.time.events.add(500, delayBeforeCheck, this);
+
+
+            function delayBeforeCheck() {
+                Pegman.checkFinal();
+            }
+            
             return;
         }
 
@@ -576,9 +582,6 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
             }
         }
         if (TopDownGame.game.state.getCurrentState().key == "lesson25") {
-            //тут уже более сложная логика, так как там две бочки
-
-
             var aliveChestsCount = 0;
             chests.forEach(function (c) {
                 if (c.visible == true) {
@@ -586,8 +589,6 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 }
             });
             if (aliveChestsCount == 0) {
-                // $("#modaltext").text("Победа!!!");
-                // $("#exampleModal").modal();
                 TopDownGame.game.state.start('lesson11');
             } else {
                 $("#modaltext").text("Ты собрал не все сундуки!");
@@ -595,12 +596,8 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
             }
         }
         if (TopDownGame.game.state.getCurrentState().key == "lesson3") {
-
             if (setblocks == tilestodraw.length) {
-                // if (setblocks == 1) {
-
                 if (sublevel == 6) {
-                    //$("#nextButton").hide();
                     $("#modaltext").text("Поздравляю! Ты закончил уровень №3");
                     $("#exampleModal").modal();
                     sublevel = 1;
@@ -609,20 +606,15 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     $("#nextButton").show();
                     $('#nextButton').one('click', function () {
                         sublevel += 1;
-
                         change_map('lesson3' + sublevel);
                         Pegman.reset2();
                         TopDownGame.game.camera.flash(0x000000, 500);
                     });
-
                 }
             }
         }
 
         if (TopDownGame.game.state.getCurrentState().key == "lesson4") {
-          
-
-
             var aliveBarrelsCount = 0;
             barrels.forEach(function (c) {
                 if (c.health > 50 && c.scene == scene) {
@@ -630,75 +622,8 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 }
             });
             if (aliveBarrelsCount == 0) {
-
                 scene += 1;
-                showflag = true;
-
-                var runButton = document.getElementById('runButton');
-                runButton.style.display = 'inline';
-                document.getElementById('resetButton').style.display = 'none';
-                // Prevent double-clicks or double-taps.
-                runButton.disabled = false;
-
-                Blockly.mainWorkspace.clear();
-                Blockly.mainWorkspace.clearUndo();
-                Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
-                
-                
-                if (scene == 2) {
-
-                    var newTree = `
-                    <xml id="toolbox" style="display: none; background-color: #4d90fe;">
-                    <block type="fire"></block>
-                    <block type="controls_repeat_ext">
-                    <value name="TIMES">
-                      <block type="math_number">
-                        <field name="NUM">10</field>
-                      </block>
-                    </value>
-                  </block>
-                    </xml>`;
-                    
-                
-                    workspace.updateToolbox(newTree);
-    
-                    var barConfig = {
-                        width: 100,
-                        height: 20,
-                        x: 450,
-                        y: 30,
-                        bg: {
-                          color: '#651828'
-                        },
-                        bar: {
-                          color: '#FEFF03'
-                        },
-                        animationDuration: 200,
-                        flipped: false
-                      };
-                    
-                    myHealthBar = new HealthBar(TopDownGame.game, barConfig);
-                    myHealthBar.setFixedToCamera(true);
-                    myHealthBar.setPercent(capacity); 
-                    
-                    maxcaps2 = 4;
-                    workspace.options.maxBlocks = maxcaps2;
-
-                }
-                
-
-
-
-                
-                barrels.forEach(function (c) {
-                    if (c.scene == scene) {
-                        c.revive();
-                    } else {
-                        c.kill();
-                    }
-                });
-                Pegman.reset2();
-
+                load_scene();
             }
         }
     };

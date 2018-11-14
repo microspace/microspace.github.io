@@ -5,7 +5,7 @@ var player;
 var cp;
 
 var flag = false;
-var scene = 1;
+var scene;
 var map;
 var drawLayer;
 var showflag = true;
@@ -22,9 +22,9 @@ var lastSuccessfullPosition = {
 };
 
 //title screen
-TopDownGame.Lesson4 = function () { };
+TopDownGame.Lesson4 = function() {};
 TopDownGame.Lesson4.prototype = {
-    create: function () {
+    create: function() {
 
         Blockly.mainWorkspace.clear();
         Blockly.mainWorkspace.clearUndo();
@@ -200,13 +200,14 @@ TopDownGame.Lesson4.prototype = {
         //sprite.anchor.set(0.5);
         //  And destroy the original graphics object
         ////graphics.destroy();
-
+        scene = 1;
+        load_scene();
 
     },
-    animationStopped: function (sprite, animation) {
+    animationStopped: function(sprite, animation) {
         explosion.visible = false;
     },
-    update: function () {
+    update: function() {
 
         //this.game.physics.arcade.collide(player, this.collision1);
         //this.game.physics.arcade.collide(player, this.collision2);
@@ -231,31 +232,33 @@ TopDownGame.Lesson4.prototype = {
         } else if (this.cursors.right.isDown) {
             player.body.velocity.x += velocity;
         }
-        if (fireButton.isDown) {
-        }
+        if (fireButton.isDown) {}
 
-        try { myHealthBar.setPercent(workspace.remainingCapacity() / maxcaps2 * 100); } catch { };
+        try {
+            myHealthBar.setPercent(workspace.remainingCapacity() / (maxcaps2 - 1) * 100);
+            
+        } catch {};
     },
-    hitWall1: function () {
+    hitWall1: function() {
         console.log("hit1");
     },
-    hitWall2: function () {
+    hitWall2: function() {
         console.log("hit2");
     },
-    createItems: function () {
+    createItems: function() {
         //create items
         barrels = this.game.add.group();
         barrels.enableBody = true;
         result = this.findObjectsByType('barrel', this.map, 'objectLayer');
-        result.forEach(function (element) {
+        result.forEach(function(element) {
             this.createFromTiledObject(element, barrels);
         }, this);
     },
 
     //find objects in a Tiled layer that containt a property called "type" equal to a certain value
-    findObjectsByType: function (type, map, layer) {
+    findObjectsByType: function(type, map, layer) {
         var result = new Array();
-        map.objects[layer].forEach(function (element) {
+        map.objects[layer].forEach(function(element) {
             if (element.properties.type === type) {
                 //Phaser uses top left, Tiled bottom left so we have to adjust
                 //also keep in mind that the cup images are a bit smaller than the tile which is 16x16
@@ -267,10 +270,10 @@ TopDownGame.Lesson4.prototype = {
         return result;
     },
     //create a sprite from an object
-    createFromTiledObject: function (element, group) {
+    createFromTiledObject: function(element, group) {
         var sprite = group.create(element.x, element.y, 'totalsheet', 234);
         //copy all properties to the sprite
-        Object.keys(element.properties).forEach(function (key) {
+        Object.keys(element.properties).forEach(function(key) {
             sprite[key] = element.properties[key];
         });
         sprite.health = 100;
@@ -285,7 +288,7 @@ TopDownGame.Lesson4.prototype = {
             sprite.kill();
         }
     },
-    bulletHitBarrel: function (sprite, bullet) {
+    bulletHitBarrel: function(sprite, bullet) {
         var damage = 48;
         sprite.damage(damage);
         if (sprite.health > 50) {
@@ -303,5 +306,105 @@ TopDownGame.Lesson4.prototype = {
 };
 
 
+function load_scene() {
 
+    showflag = true;
 
+    var runButton = document.getElementById('runButton');
+    runButton.style.display = 'inline';
+    document.getElementById('resetButton').style.display = 'none';
+    // Prevent double-clicks or double-taps.
+    runButton.disabled = false;
+
+    Blockly.mainWorkspace.clear();
+    Blockly.mainWorkspace.clearUndo();
+    Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
+    
+    
+    if (scene == 2) {
+
+        var newTree = `
+        <xml id="toolbox" style="display: none; background-color: #4d90fe;">
+        <block type="fire"></block>
+        <block type="repeat_n_times"></block>
+        </xml>`;
+        
+    
+        workspace.updateToolbox(newTree);
+
+        var barConfig = {
+            width: 150,
+            height: 20,
+            x: 600,
+            y: 30,
+            bg: {
+              color: '#651828'
+            },
+            bar: {
+              color: '#FEFF03'
+            },
+            animationDuration: 200,
+            flipped: false
+          };
+        
+        myHealthBar = new HealthBar(TopDownGame.game, barConfig);
+        myHealthBar.setFixedToCamera(true);
+        myHealthBar.setPercent(capacity); 
+        myHealthBar.alpha = 0;
+        
+        maxcaps2 = 2+1;
+        workspace.options.maxBlocks = maxcaps2;
+
+    } else if (scene == 3) { 
+        var newTree = `
+        <xml id="toolbox" style="display: none; background-color: #4d90fe;">
+        <block type="maze_up"></block>
+        <block type="maze_down"></block>
+        <block type="maze_left"></block>
+        <block type="maze_right"></block>
+        <block type="fire"></block>
+        <block type="repeat_n_times"></block>
+        </xml>`;
+        workspace.updateToolbox(newTree);
+        maxcaps2 = 11+1;
+        workspace.options.maxBlocks = maxcaps2;
+
+    } else if (scene == 4) { 
+        var newTree = `
+        <xml id="toolbox" style="display: none; background-color: #4d90fe;">
+        <block type="maze_up"></block>
+        <block type="maze_down"></block>
+        <block type="maze_left"></block>
+        <block type="maze_right"></block>
+        <block type="fire"></block>
+        <block type="repeat_n_times"></block>
+        </xml>`;
+        workspace.updateToolbox(newTree);
+        maxcaps2 = 5+1;
+        workspace.options.maxBlocks = maxcaps2;
+
+    } else if (scene == 5) { 
+        var newTree = `
+        <xml id="toolbox" style="display: none; background-color: #4d90fe;">
+        <block type="maze_up"></block>
+        <block type="maze_down"></block>
+        <block type="maze_left"></block>
+        <block type="maze_right"></block>
+        <block type="fire"></block>
+        <block type="repeat_n_times"></block>
+        </xml>`;
+        workspace.updateToolbox(newTree);
+        maxcaps2 = 5+1;
+        workspace.options.maxBlocks = maxcaps2;
+
+    }
+
+    barrels.forEach(function (c) {
+        if (c.scene == scene) {
+            c.revive();
+        } else {
+            c.kill();
+        }
+    });
+    Pegman.reset2();
+}

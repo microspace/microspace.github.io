@@ -59,7 +59,7 @@
 
                 </div>
     </div>
-    <xml id="toolbox" style="display: none; background-color: #4d90fe;">
+    <xml id="toolbox" style="display: none; background-color: #4d90fe;">       
         <block type="maze_up"></block>
         <block type="maze_down"></block>
         <block type="maze_left"></block>
@@ -67,7 +67,7 @@
         <block type="fire"></block>
     </xml>
     <xml id="startBlocks" style="display: none">
-        <block type="factory_base" deletable="false" x="20" y="20"></block>
+        <block type="factory_base" deletable="false" x="100" y="20"></block>
     </xml>
     <div class="modal" tabindex="-1" role="dialog" id="exampleModal">
         <div class="modal-dialog" role="document">
@@ -96,7 +96,7 @@
     var blocklyArea = document.getElementById('full-size');
     var blocklyDiv = document.getElementById('blocklyDiv');
     var workspace = Blockly.inject(blocklyDiv, 
-    {   maxBlocks: 100,
+    {   maxBlocks: 20,
         toolbox: document.getElementById('toolbox') });
 
     Blockly.BlockSvg.START_HAT = true;
@@ -128,12 +128,6 @@
 $("#resstart").css({"z-index": 20});
 $("#resstart").css({"top": buttonh + 'px'});
 
-
-    function onchange(event) {
-      capacity = workspace.remainingCapacity();
-    }
-    workspace.addChangeListener(onchange);
-    onchange();
 
 
     </script>
