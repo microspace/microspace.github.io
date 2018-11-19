@@ -15,7 +15,7 @@ TopDownGame.Preload.prototype = {
 
         //load game assets
         this.load.tilemap('lesson41', 'assets/maps/game4/4 игра 1-5.json', null, Phaser.Tilemap.TILED_JSON);
-
+        this.load.tilemap('lesson42', 'assets/maps/game4/4 игра 6.json', null, Phaser.Tilemap.TILED_JSON);
         
         this.load.spritesheet('totalsheet', 'assets/maps/game4/tileSheetWinter03-11.png', 64, 64);
 

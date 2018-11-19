@@ -112,11 +112,7 @@ TopDownGame.Lesson11.prototype = {
         explosion.visible = false;
     },
 
-
-
     update: function() {
-
-
         if (xyqueue.length <= 9) {
             xyqueue.push({
                 x: player.x,
@@ -130,10 +126,6 @@ TopDownGame.Lesson11.prototype = {
                 });
             }
         }
-
-
-
-
 
         //collision
         this.game.physics.arcade.collide(player, this.blockLayer);
@@ -165,27 +157,8 @@ TopDownGame.Lesson11.prototype = {
         }
 
         if (fireButton.isDown) {
-            //weapon.fire();
-
             this.game.state.start('lesson21');
-            
         }
-        /*
-                if (this.cursors.up.isDown) {
-                    this.game.camera.y -= 4;
-                } else if (this.cursors.down.isDown) {
-                    this.game.camera.y += 4;
-                }
-                if (this.cursors.left.isDown) {
-                    this.game.camera.x -= 4;
-                } else if (this.cursors.right.isDown) {
-                    this.game.camera.x += 4;
-                }
-        */
-        //this.game.debug.body(player);
-        //this.game.debug.physicsGroup(barrels);
-        //this.game.debug.bodyInfo(player, 32, 50);
-
     },
     hitWall: function() {
 

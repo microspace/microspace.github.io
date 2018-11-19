@@ -108,8 +108,8 @@
                  "type":"",
                  "visible":true,
                  "width":64,
-                 "x":1440,
-                 "y":989
+                 "x":1494,
+                 "y":1055
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -143,7 +143,7 @@
                  "visible":true,
                  "width":64,
                  "x":1402.33,
-                 "y":248.166833333333
+                 "y":248.167
                 }, 
                 {
                  "gid":196,
@@ -167,7 +167,7 @@
                  "visible":true,
                  "width":64,
                  "x":1402,
-                 "y":510.499833333333
+                 "y":510.5
                 }, 
                 {
                  "gid":196,
@@ -191,7 +191,7 @@
                  "visible":true,
                  "width":64,
                  "x":1462,
-                 "y":770.499833333333
+                 "y":770.5
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -219,7 +219,7 @@
         {
          "columns":13,
          "firstgid":1,
-         "image":"..\/..\/\u0413\u0420\u0410\u0424\u0418\u041a\u0410\/SHEETS\/winter\/tileSheetWinter03-11.png",
+         "image":"tileSheetWinter03-11.png",
          "imageheight":1216,
          "imagewidth":832,
          "margin":0,

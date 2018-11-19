@@ -14,8 +14,6 @@ var Pegman = {
     tween: null,
 
     init: function (pegmanSprite) {
-        //TopDownGame.game.camera.follow(player);
-
         this.pegmanSprite = pegmanSprite;
         // сделать так чтобы это сообщение не выходило когда игрок начинает со второго уровня
         if (TopDownGame.game.state.getCurrentState().key == "lesson11" && scene == 0) {
@@ -38,21 +36,24 @@ var Pegman = {
     },
 
     reset2: function () {
+        TopDownGame.game.tweens.removeAll();
         TopDownGame.game.stage.updateTransform();
         this.posX = lastSuccessfullPosition.x;
         this.posY = lastSuccessfullPosition.y;
         try {
             this.dposX = startPositions['lesson3' + sublevel][0];
             this.dposY = startPositions['lesson3' + sublevel][1];
-        } catch { 
-            
-        }
+        } catch {
 
+        }
         this.preReset();
         this.tween = null;
         this.tween1 = null;
         this.tween2 = null;
         this.anim = null;
+        sinkflag = false;
+        hitflag = false;
+
         this.pegmanSprite.scale.x = 1;
         this.pegmanSprite.scale.y = 1;
         try {
@@ -63,6 +64,7 @@ var Pegman = {
     },
 
     preReset: function () {
+
         if (this.tween) {
             this.tween.stop();
         }
@@ -78,7 +80,6 @@ var Pegman = {
     },
 
     postReset: function () {
-
         this.pegmanSprite.reset(lastSuccessfullPosition.x, lastSuccessfullPosition.y);
         this.pegmanSprite.fresh = false;
         flag = false;
@@ -106,9 +107,7 @@ var Pegman = {
         }
 
         if (TopDownGame.game.state.getCurrentState().key == "lesson24" || TopDownGame.game.state.getCurrentState().key == "lesson25") {
-
             barrels.forEach(function (c) {
-
                 c.revive();
                 if (c["sprite"] == "allowedToHit") {
                     c.frame = 234;
@@ -149,17 +148,30 @@ var Pegman = {
             crosses.callAll('kill');
         }
         if (TopDownGame.game.state.getCurrentState().key == "lesson4") {
+            if (scene == 42) {
+                barrels.forEach(function (c) {
 
-            barrels.forEach(function (c) {
-                if (c.scene == scene) {
                     c.revive();
                     c.frame = 195;
                     c.body.immovable = true;
                     c.body.enable = true;
-                } else {
-                    c.kill();
-                }
-            });
+
+                });
+            } else {
+
+                barrels.forEach(function (c) {
+                    if (c.scene == scene) {
+                        c.revive();
+                        c.frame = 195;
+                        c.body.immovable = true;
+                        c.body.enable = true;
+                    } else {
+                        c.kill();
+                    }
+                });
+            }
+
+
 
             if (showflag && scene == 2) {
                 $("#modaltext").text("Я так и знал! У нас тут на планете каждый патрон, каждая энергетическая ячейка не счету! Для экономии энергии используй команду 'Повтори'!");
@@ -178,6 +190,18 @@ var Pegman = {
                 $("#exampleModal").modal();
                 showflag = false;
             }
+        }
+
+        if (TopDownGame.game.state.getCurrentState().key == "lesson42") {
+
+            barrels.forEach(function (c) {
+
+                c.revive();
+                c.frame = 195;
+                c.body.immovable = true;
+                c.body.enable = true;
+
+            });
         }
 
         this.pegmanSprite.animations.play('STAND');
@@ -201,12 +225,9 @@ var Pegman = {
     playNextAction: function () {
         if (this.pegmanActions.length <= 0) {
             TopDownGame.game.time.events.add(500, delayBeforeCheck, this);
-
-
             function delayBeforeCheck() {
                 Pegman.checkFinal();
             }
-
             return;
         }
 
@@ -218,30 +239,32 @@ var Pegman = {
             this.anim = null;
         }
 
-
         var actionobject = this.pegmanActions.shift();
         var action = actionobject.action;
         var stepcount = actionobject.stepcount;
         var tox = actionobject.tox;
         var toy = actionobject.toy;
 
-
         switch (action) {
             case "up":
+                this.direction = Maze.DirectionType.NORTH;
                 var step = Maze.getStepInDirection["NORTH"];
                 this.moveNSWE(this.posX + Maze.SQUARE_SIZE * step[0] * stepcount, this.posY + Maze.SQUARE_SIZE * step[1] * stepcount, stepcount);
                 break;
             case "down":
+                this.direction = Maze.DirectionType.SOUTH;
                 var step = Maze.getStepInDirection["SOUTH"];
                 this.moveNSWE(this.posX + Maze.SQUARE_SIZE * step[0] * stepcount, this.posY + Maze.SQUARE_SIZE * step[1] * stepcount, stepcount);
                 break;
             case "left":
+                this.direction = Maze.DirectionType.WEST;
                 var step = Maze.getStepInDirection["WEST"];
                 this.pegmanSprite.scale.x = -1;
                 weapon.fireAngle = Phaser.ANGLE_LEFT;
                 this.moveNSWE(this.posX + Maze.SQUARE_SIZE * step[0] * stepcount, this.posY + Maze.SQUARE_SIZE * step[1] * stepcount, stepcount);
                 break;
             case "right":
+                this.direction = Maze.DirectionType.EAST;
                 var step = Maze.getStepInDirection["EAST"];
                 this.pegmanSprite.scale.x = 1;
                 weapon.fireAngle = Phaser.ANGLE_RIGHT;
@@ -436,7 +459,6 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
         if (TopDownGame.game.state.getCurrentState().key == "lesson11") {
             var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
             if (isOverlapping == true) {
-                console.log("scene complete!");
                 if (scene == 0) {
                     var messagetext = "Отлично получилось! Теперь попробуй дойди до конца коридора!";
                 } else if (scene == 1) {
@@ -624,14 +646,23 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 }
             });
             if (aliveBarrelsCount == 0) {
-                if (scene != 5) {
+                if (scene < 5) {
                     scene += 1;
                     load_scene();
-                } else {
-                    $("#modaltext").text("Поздравляю! Ты закончил уровень №4");
-                    $("#exampleModal").modal();
-                }
+                } else if (scene == 5) {
+                    scene = 42;
+                    load_map("lesson42");
+                } else if (scene == 42) {
+                    console.log("scene = ", scene);
+                    var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
+                    console.log("isOverlapping = ", isOverlapping);
+                    if (isOverlapping == true) {
+                        $("#modaltext").text("Поздравляю! Ты закончил уровень №4");
+                        $("#exampleModal").modal();
+                    }
 
+
+                }
             }
         }
     };
