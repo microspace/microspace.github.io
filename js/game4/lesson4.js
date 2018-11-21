@@ -362,7 +362,7 @@ function load_scene() {
         <block type="repeat_n_times"></block>
         </xml>`;
         workspace.updateToolbox(newTree);
-        maxcaps2 = 11 + 1;
+        maxcaps2 = 11 + 1 + 1;
         workspace.options.maxBlocks = maxcaps2;
     } else if (scene == 4) {
         console.log(scene);
@@ -376,7 +376,7 @@ function load_scene() {
         <block type="repeat_n_times"></block>
         </xml>`;
         workspace.updateToolbox(newTree);
-        maxcaps2 = 5 + 1 + 3;
+        maxcaps2 = 5 + 1 + 6;
         workspace.options.maxBlocks = maxcaps2;
     } else if (scene == 5) {
         var newTree = `
