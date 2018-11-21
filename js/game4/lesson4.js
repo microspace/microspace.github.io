@@ -16,7 +16,7 @@ Pegman.dposY = 7;
 var capacity = 100;
 var maxcaps2;
 var myHealthBar;
-
+var velocity = 400;
 var sinkflag = false;
 var lastSuccessfullPosition = {
     x: Maze.SQUARE_SIZE * (4 + 0.5),
@@ -95,7 +95,7 @@ TopDownGame.Lesson4.prototype = {
 
         weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
         weapon.bulletAngleOffset = 0;
-        weapon.bulletSpeed = 500;
+        weapon.bulletSpeed = 250;
         weapon.fireAngle = Phaser.ANGLE_RIGHT; // shoot at right direcion by default
         weapon.trackSprite(player, 0, -9, false); //-65 выведено экспериментальным путём
         //weapon.addBulletAnimation("fly", [0, 1, 2, 3, 4, 5, 6, 7], 40, true);
@@ -125,17 +125,52 @@ TopDownGame.Lesson4.prototype = {
         player.animations.play('STAND');
 
         //the camera will follow the player in the world
-        this.game.camera.follow(player);
+        //this.game.camera.follow(player);
         //move player with cursor keys
         this.cursors = this.game.input.keyboard.createCursorKeys();
         map.setTileIndexCallback([...Array(500).keys()], sinkInWater, this, sinkLayer);
         map.setTileIndexCallback([...Array(500).keys()], hitEvent, this, blockLayer);
         TopDownGame.game.camera.flash(0x000000, 500);
+        h = this.game.input.keyboard.addKey(Phaser.Keyboard.H);
+        h.onDown.add(this.h_down, this);
+        h.onUp.add(this.h_up, this);
+        j = this.game.input.keyboard.addKey(Phaser.Keyboard.J);
+        j.onDown.add(this.j_down, this);
+        j.onUp.add(this.j_up, this);
+        k = this.game.input.keyboard.addKey(Phaser.Keyboard.K);
+        k.onDown.add(this.k_down, this);
+        k.onUp.add(this.k_up, this);
+        l = this.game.input.keyboard.addKey(Phaser.Keyboard.L);
+        l.onDown.add(this.l_down, this);
+        l.onUp.add(this.l_up, this);
     },
     animationStopped: function (sprite, animation) {
         explosion.visible = false;
     },
-
+    h_down: function () {
+        player.body.velocity.x = -1 * velocity;
+    },
+    h_up: function () {
+        player.body.velocity.x = 0;
+    },
+    j_down: function () {
+        player.body.velocity.y = -1 * velocity;
+    },
+    j_up: function () {
+        player.body.velocity.y = 0;
+    },
+    k_down: function () {
+        player.body.velocity.y =  velocity;
+    },
+    k_up: function () {
+        player.body.velocity.y = 0;
+    },
+    l_down: function () {
+        player.body.velocity.x = velocity;
+    },
+    l_up: function () {
+        player.body.velocity.x = 0;
+    },
 
     update: function () {
         this.game.physics.arcade.overlap(barrels, weapon.bullets, this.bulletHitBarrel, null, this);
@@ -143,26 +178,44 @@ TopDownGame.Lesson4.prototype = {
         this.game.physics.arcade.collide(player, blockLayer);
         this.game.physics.arcade.collide(player, barrels, hitEvent, null, this);
 
-        player.body.velocity.x = 0;
-        var velocity = 400;
+        //player.body.velocity.x = 0;
+        // var velocity = 400;
+        // if (this.cursors.up.isDown) {
+        //     if (player.body.velocity.y == 0)
+        //         player.body.velocity.y -= velocity;
+
+        // } else if (this.cursors.down.isDown) {
+        //     if (player.body.velocity.y == 0)
+        //         player.body.velocity.y += velocity;
+        // } else {
+        //     player.body.velocity.y = 0;
+        // }
+        // if (this.cursors.left.isDown) {
+        //     player.body.velocity.x -= velocity;
+        // } else if (this.cursors.right.isDown) {
+        //     player.body.velocity.x += velocity;
+        // }
+        //camera start
         if (this.cursors.up.isDown) {
-            if (player.body.velocity.y == 0)
-                player.body.velocity.y -= velocity;
-
-        } else if (this.cursors.down.isDown) {
-            if (player.body.velocity.y == 0)
-                player.body.velocity.y += velocity;
-        } else {
-            player.body.velocity.y = 0;
+            this.game.camera.unfollow();
+            this.game.camera.y -= 10;
         }
+        else if (this.cursors.down.isDown) {
+            this.game.camera.unfollow();
+            this.game.camera.y += 10;
+        }
+
         if (this.cursors.left.isDown) {
-            player.body.velocity.x -= velocity;
-        } else if (this.cursors.right.isDown) {
-            player.body.velocity.x += velocity;
+            this.game.camera.unfollow();
+            this.game.camera.x -= 10;
         }
-        if (fireButton.isDown) {
+        else if (this.cursors.right.isDown) {
+            this.game.camera.unfollow();
+            this.game.camera.x += 10;
+        }
+        //camera end
 
-        }
+
         try {
             myHealthBar.setPercent(workspace.remainingCapacity() / (maxcaps2 - 1) * 100);
         } catch { };
@@ -297,6 +350,7 @@ function load_scene() {
         myHealthBar.barSprite.visible = true;
         myHealthBar.bgSprite.visible = true;
         myHealthBar.borderSprite.visible = true;
+        
     } else if (scene == 3) {
         var newTree = `
         <xml id="toolbox" style="display: none; background-color: #4d90fe;">
@@ -322,7 +376,7 @@ function load_scene() {
         <block type="repeat_n_times"></block>
         </xml>`;
         workspace.updateToolbox(newTree);
-        maxcaps2 = 5 + 1;
+        maxcaps2 = 5 + 1 + 3;
         workspace.options.maxBlocks = maxcaps2;
     } else if (scene == 5) {
         var newTree = `
@@ -335,7 +389,7 @@ function load_scene() {
         <block type="repeat_n_times"></block>
         </xml>`;
         workspace.updateToolbox(newTree);
-        maxcaps2 = 12 + 1;
+        maxcaps2 = 12 + 1 + 3;
         workspace.options.maxBlocks = maxcaps2;
     }
     barrels.forEach(function (c) {
@@ -391,7 +445,7 @@ function load_map(name) {
     pointer.scale.setTo(0.8, 0.8);
     pointer.animations.add('ANIM', [0, 1], 2, /*loop*/ true);
     pointer.animations.play('ANIM');
-    
+
     TopDownGame.game.physics.arcade.enable(pointer);
     pointer.anchor.setTo(0.5, 0.5);
     pointer.body.setSize(10, 65, 48, 10);

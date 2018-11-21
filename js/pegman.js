@@ -15,6 +15,7 @@ var Pegman = {
 
     init: function (pegmanSprite) {
         this.pegmanSprite = pegmanSprite;
+        TopDownGame.game.camera.follow(player);
         // сделать так чтобы это сообщение не выходило когда игрок начинает со второго уровня
         if (TopDownGame.game.state.getCurrentState().key == "lesson11" && scene == 0) {
             $("#modaltext").text("Приветствую тебя рекрут! Я научу тебя пользоваться твоим экзокостюмом. Для начала попробуй просто сдвинуться с места!");
@@ -38,6 +39,7 @@ var Pegman = {
     reset2: function () {
         TopDownGame.game.tweens.removeAll();
         TopDownGame.game.stage.updateTransform();
+        
         this.posX = lastSuccessfullPosition.x;
         this.posY = lastSuccessfullPosition.y;
         try {
@@ -647,8 +649,11 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
             });
             if (aliveBarrelsCount == 0) {
                 if (scene < 5) {
+                    lastSuccessfullPosition.x = player.x;
+                    lastSuccessfullPosition.y = player.y;
                     scene += 1;
                     load_scene();
+                    
                 } else if (scene == 5) {
                     scene = 42;
                     load_map("lesson42");
