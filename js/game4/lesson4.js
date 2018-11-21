@@ -14,7 +14,7 @@ Pegman.dposX = 11;
 Pegman.dposY = 7;
 //var data;
 var capacity = 100;
-var maxcaps2;
+var maxcaps2 = 100;
 var myHealthBar;
 var velocity = 400;
 var sinkflag = false;
@@ -49,7 +49,15 @@ TopDownGame.Lesson4.prototype = {
         sinkLayer = map.createLayer('sinkLayer');
         onFlour = map.createLayer('onFlour');
 
-
+        pointer = this.game.add.sprite(0, 0, 'pointer');
+        pointer.scale.setTo(0.8, 0.8);
+        pointer.animations.add('ANIM', [0, 1], 2, /*loop*/ true);
+        pointer.visible = false;
+        //pointer.animations.play('ANIM');
+    
+        this.game.physics.arcade.enable(pointer);
+        pointer.anchor.setTo(0.5, 0.5);
+        pointer.body.setSize(10, 65, 48, 10);
 
         this.createItems();
         weapon = this.game.add.weapon(20, 'bullet');
@@ -345,7 +353,7 @@ function load_scene() {
         <block type="repeat_n_times"></block>
         </xml>`;
         workspace.updateToolbox(newTree);
-        maxcaps2 = 2 + 1;
+        //maxcaps2 = 2 + 1;
         workspace.options.maxBlocks = maxcaps2;
         myHealthBar.barSprite.visible = true;
         myHealthBar.bgSprite.visible = true;
@@ -362,7 +370,7 @@ function load_scene() {
         <block type="repeat_n_times"></block>
         </xml>`;
         workspace.updateToolbox(newTree);
-        maxcaps2 = 11 + 1 + 1;
+        //maxcaps2 = 11 + 1 + 1;
         workspace.options.maxBlocks = maxcaps2;
     } else if (scene == 4) {
         console.log(scene);
@@ -376,7 +384,7 @@ function load_scene() {
         <block type="repeat_n_times"></block>
         </xml>`;
         workspace.updateToolbox(newTree);
-        maxcaps2 = 5 + 1 + 10;
+        //maxcaps2 = 5 + 1 + 10;
         workspace.options.maxBlocks = maxcaps2;
     } else if (scene == 5) {
         var newTree = `
@@ -389,8 +397,15 @@ function load_scene() {
         <block type="repeat_n_times"></block>
         </xml>`;
         workspace.updateToolbox(newTree);
-        maxcaps2 = 12 + 1 + 3;
+        //maxcaps2 = 12 + 1 + 3;
         workspace.options.maxBlocks = maxcaps2;
+
+        var result = findObjectsByType('scene5Goal', map, 'playerLayer');
+        pointer.x = result[0].x;
+        pointer.y = result[0].y;
+        pointer.visible = true;
+        pointer.animations.play('ANIM');
+    
     }
     barrels.forEach(function (c) {
         if (c.scene == scene) {
@@ -404,7 +419,7 @@ function load_scene() {
 
 
 function load_map(name) {
-    TopDownGame.game.camera.flash(0x000000, 500);
+    TopDownGame.game.camera.flash(0x000000, 750);
 
     try {
         map.destroy();
@@ -441,14 +456,10 @@ function load_map(name) {
 
 
     var result = findObjectsByType('scene1Goal', map, 'playerLayer');
-    pointer = TopDownGame.game.add.sprite(result[0].x, result[0].y, 'pointer');
-    pointer.scale.setTo(0.8, 0.8);
-    pointer.animations.add('ANIM', [0, 1], 2, /*loop*/ true);
-    pointer.animations.play('ANIM');
 
-    TopDownGame.game.physics.arcade.enable(pointer);
-    pointer.anchor.setTo(0.5, 0.5);
-    pointer.body.setSize(10, 65, 48, 10);
+    pointer.x = result[0].x;
+    pointer.y = result[0].y;
+    pointer.visible = true;
 
     TopDownGame.game.time.events.add(100, fadePicture, this);
     barrels.removeAll();
@@ -466,6 +477,7 @@ function load_map(name) {
         map.setTileIndexCallback([...Array(500).keys()], sinkInWater, this, sinkLayer);
         map.setTileIndexCallback([...Array(500).keys()], hitEvent, this, blockLayer);
         try {
+            TopDownGame.game.world.bringToTop(pointer);
             TopDownGame.game.world.bringToTop(barrels);
             TopDownGame.game.world.bringToTop(weapon.bullets);
             TopDownGame.game.world.bringToTop(player);

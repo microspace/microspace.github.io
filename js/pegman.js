@@ -648,7 +648,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     aliveBarrelsCount += 1;
                 }
             });
-            if (aliveBarrelsCount == 0) {
+            if (aliveBarrelsCount <= 6) {
                 if (scene < 5) {
                     lastSuccessfullPosition.x = player.x;
                     lastSuccessfullPosition.y = player.y;
@@ -656,12 +656,18 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     load_scene();
 
                 } else if (scene == 5) {
-                    scene = 42;
-                    load_map("lesson42");
+                    var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
+                    console.log("isOverlapping5 = ", isOverlapping);
+                    if (isOverlapping == true) {
+                        pointer.visible = false;
+                        scene = 42;
+                        load_map("lesson42");
+                    }
+
                 } else if (scene == 42) {
                     console.log("scene = ", scene);
                     var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
-                    console.log("isOverlapping = ", isOverlapping);
+                    console.log("isOverlapping42 = ", isOverlapping);
                     if (isOverlapping == true) {
                         $("#modaltext").text("Поздравляю! Ты закончил уровень №4");
                         $("#exampleModal").modal();
