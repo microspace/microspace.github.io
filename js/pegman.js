@@ -39,7 +39,7 @@ var Pegman = {
     reset2: function () {
         TopDownGame.game.tweens.removeAll();
         TopDownGame.game.stage.updateTransform();
-        
+
         this.posX = lastSuccessfullPosition.x;
         this.posY = lastSuccessfullPosition.y;
         try {
@@ -53,12 +53,13 @@ var Pegman = {
         this.tween1 = null;
         this.tween2 = null;
         this.anim = null;
-        sinkflag = false;
-        hitflag = false;
+
 
         this.pegmanSprite.scale.x = 1;
         this.pegmanSprite.scale.y = 1;
         try {
+            sinkflag = false;
+            hitflag = false;
             b.visible = true;
         } catch { };
         this.pegmanActions = [];
@@ -653,7 +654,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     lastSuccessfullPosition.y = player.y;
                     scene += 1;
                     load_scene();
-                    
+
                 } else if (scene == 5) {
                     scene = 42;
                     load_map("lesson42");
