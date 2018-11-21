@@ -532,13 +532,15 @@ Blockly.Blocks['repeat_n_times'] = {
           });
     }
 };
-
+var i = 0;
 Blockly.JavaScript['repeat_n_times'] = function(block) {
     // Generate JavaScript for moving forward.
     var stc = Blockly.JavaScript.statementToCode(block, 'DO');
     var times = block.getFieldValue('times');
+    i++;
+    var vn = 'ip' + i;
 
-    return 'for (var ip = 0; ip <' + times + '; ip++){\n'+ stc +'\n}\n';
+    return 'for (var ' + vn + ' = 0; ' + vn + ' < ' + times + ';  ' + vn + '++){\n'+ stc +'\n}\n';
 };
 
 

@@ -46,6 +46,7 @@ var runProgram = function() {
     //var statements_stack = Blockly.JavaScript.statementToCode(Blockly.Blocks['factory_base'], 'STACK');
     TopDownGame.game.stage.updateTransform();
     var code = Blockly.JavaScript.workspaceToCode(workspace);
+    console.log(code);
     try {
         eval(code);
     } catch (e) {
