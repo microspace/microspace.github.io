@@ -419,7 +419,7 @@ function load_scene() {
 
 
 function load_map(name) {
-    TopDownGame.game.camera.flash(0x000000, 750);
+    TopDownGame.game.camera.flash(0x000000, 1000);
 
     try {
         map.destroy();
@@ -461,7 +461,7 @@ function load_map(name) {
     pointer.y = result[0].y;
     pointer.visible = true;
 
-    TopDownGame.game.time.events.add(100, fadePicture, this);
+    TopDownGame.game.time.events.add(500, fadePicture, this);
     barrels.removeAll();
 
     result = findObjectsByType('barrel', map, 'objectLayer');
