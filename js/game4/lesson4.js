@@ -2,6 +2,7 @@ var TopDownGame = TopDownGame || {};
 
 
 var player;
+var explosion;
 var cp;
 
 var flag = false;
@@ -61,7 +62,8 @@ TopDownGame.Lesson4.prototype = {
 
         this.createItems();
         weapon = this.game.add.weapon(20, 'bullet');
-        var result = this.findObjectsByType('playerStartPosition', map, 'playerLayer');
+        var result = findObjectsByType('playerStartPosition', map, 'playerLayer');
+        
         lastSuccessfullPosition = {
             x: result[0].x,
             y: result[0].y
@@ -95,7 +97,7 @@ TopDownGame.Lesson4.prototype = {
         myHealthBar.setPercent(capacity);
 
         Pegman.init(player);
-        scene = 3;
+        scene = 1;
         load_scene();
 
         //bullets
@@ -105,7 +107,7 @@ TopDownGame.Lesson4.prototype = {
         weapon.bulletAngleOffset = 0;
         weapon.bulletSpeed = 250;
         weapon.fireAngle = Phaser.ANGLE_RIGHT; // shoot at right direcion by default
-        weapon.trackSprite(player, 0, -9, false); //-65 выведено экспериментальным путём
+        weapon.trackSprite(player, 0, -13, false); //-65 выведено экспериментальным путём
         //weapon.addBulletAnimation("fly", [0, 1, 2, 3, 4, 5, 6, 7], 40, true);
 
         //explosion
@@ -242,23 +244,39 @@ TopDownGame.Lesson4.prototype = {
     //find objects in a Tiled layer that containt a property called "type" equal to a certain value
     findObjectsByType: function (type, map, layer) {
         var result = new Array();
+        var elemid;
         map.objects[layer].forEach(function (element) {
-            if (element.properties.type === type) {
-                //Phaser uses top left, Tiled bottom left so we have to adjust
-                //also keep in mind that the cup images are a bit smaller than the tile which is 16x16
-                //so they might not be placed in the exact position as in Tiled
-                element.y -= map.tileHeight;
-                result.push(element);
+            var i;
+            
+            for (i = 0; i < element.properties.length; i++) {
+                
+                if (element.properties[i].value === type) {
+                    elemid = i;
+                    element.y -= map.tileHeight;
+                    result.push(element);
+                }
             }
+
+            if (element.properties[elemid].value === type) {
+                
+                
+            
+            }
+
         });
+        
         return result;
     },
     //create a sprite from an object
     createFromTiledObject: function (element, group) {
         var sprite = group.create(element.x, element.y, 'totalsheet', 234);
         //copy all properties to the sprite
-        Object.keys(element.properties).forEach(function (key) {
-            sprite[key] = element.properties[key];
+        element.properties.forEach(function (element) {
+            
+
+            
+
+            sprite[element.name] = element.value;
         });
         sprite.health = 100;
         sprite.body.immovable = true;
@@ -350,6 +368,11 @@ function load_scene() {
         var newTree = `
         <xml id="toolbox" style="display: none; background-color: #4d90fe;">
         <block type="fire"></block>
+        <block type="maze_up"></block>
+        <block type="maze_down"></block>
+        <block type="maze_left"></block>
+        <block type="maze_right"></block>
+        <block type="uturn"></block>
         <block type="repeat_n_times"></block>
         </xml>`;
         workspace.updateToolbox(newTree);
@@ -479,6 +502,8 @@ function load_map(name) {
         try {
             TopDownGame.game.world.bringToTop(pointer);
             TopDownGame.game.world.bringToTop(barrels);
+            TopDownGame.game.world.bringToTop(explosion);
+            
             TopDownGame.game.world.bringToTop(weapon.bullets);
             TopDownGame.game.world.bringToTop(player);
         } catch { }
@@ -494,7 +519,8 @@ function load_map(name) {
 function findObjectsByType(type, map, layer) {
     var result = new Array();
     map.objects[layer].forEach(function (element) {
-        if (element.properties.type === type) {
+        
+        if (element.properties[0].value === type) {
             //Phaser uses top left, Tiled bottom left so we have to adjust
             //also keep in mind that the cup images are a bit smaller than the tile which is 16x16
             //so they might not be placed in the exact position as in Tiled
@@ -502,6 +528,7 @@ function findObjectsByType(type, map, layer) {
             result.push(element);
         }
     });
+
     return result;
 }
 

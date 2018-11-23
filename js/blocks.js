@@ -550,3 +550,23 @@ Blockly.JavaScript['repeat_n_times'] = function(block) {
 
 
 
+Blockly.Blocks['uturn'] = {
+    /**
+     * Block for moving forward.
+     * @this Blockly.Block
+     */
+    init: function() {
+        this.jsonInit({
+            "message0": 'Разворот',
+            "previousStatement": null,
+            "nextStatement": null,
+            "colour": 100,
+            "tooltip": 'Развернуться на месте кругом!'
+        });
+    }
+};
+
+Blockly.JavaScript['uturn'] = function(block) {
+    // Generate JavaScript for moving forward.
+    return 'Pegman.nextAction("uturn");\n';
+};

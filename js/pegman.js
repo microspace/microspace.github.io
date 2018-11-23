@@ -39,6 +39,7 @@ var Pegman = {
     reset2: function () {
         TopDownGame.game.tweens.removeAll();
         TopDownGame.game.stage.updateTransform();
+        this.direction = Maze.DirectionType.EAST
 
         this.posX = lastSuccessfullPosition.x;
         this.posY = lastSuccessfullPosition.y;
@@ -273,6 +274,21 @@ var Pegman = {
                 weapon.fireAngle = Phaser.ANGLE_RIGHT;
                 this.moveNSWE(this.posX + Maze.SQUARE_SIZE * step[0] * stepcount, this.posY + Maze.SQUARE_SIZE * step[1] * stepcount, stepcount);
                 break;
+            case "uturn":
+                if (weapon.fireAngle == Phaser.ANGLE_RIGHT) {
+                    this.direction = Maze.DirectionType.WEST;
+                    var step = Maze.getStepInDirection["WEST"];
+                    this.pegmanSprite.scale.x = -1;
+                    weapon.fireAngle = Phaser.ANGLE_LEFT;  
+                } else if (weapon.fireAngle == Phaser.ANGLE_LEFT){
+                    this.direction = Maze.DirectionType.EAST;
+                    var step = Maze.getStepInDirection["EAST"];
+                    this.pegmanSprite.scale.x = 1;
+                    weapon.fireAngle = Phaser.ANGLE_RIGHT;
+                }
+             
+                this.playNextAction();
+                break;
             case "nswe":
                 this.pegmanSprite.scale.x = 1;
                 try {
@@ -386,6 +402,8 @@ var Pegman = {
                 Pegman.pegmanSprite.visible = true;
                 this.playNextAction();
                 break;
+
+                
         }
     },
 
