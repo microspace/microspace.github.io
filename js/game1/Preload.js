@@ -11,7 +11,7 @@ TopDownGame.Preload.prototype = {
         this.load.setPreloadSprite(this.preloadBar);
 
         //load game assets
-        this.load.tilemap('lesson11', 'assets/maps/lesson1-1.json', null, Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('lesson11', 'assets/maps/game1/lesson1-1.json', null, Phaser.Tilemap.TILED_JSON);
 
 
         
