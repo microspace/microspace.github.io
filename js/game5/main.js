@@ -8,7 +8,7 @@ $(window).resize(function() {
 TopDownGame.game = new Phaser.Game($(window).width(), $(window).height(), Phaser.CANVAS, 'canvasContainer', null, false, true);
 TopDownGame.game.state.add('Boot', TopDownGame.Boot);
 TopDownGame.game.state.add('Preload', TopDownGame.Preload);
-TopDownGame.game.state.add('lesson4', TopDownGame.Lesson4);
+TopDownGame.game.state.add('lesson5', TopDownGame.Lesson5);
 TopDownGame.game.state.start('Boot');
 
 function resizeGame() {
@@ -46,6 +46,10 @@ var runProgram = function() {
     //var statements_stack = Blockly.JavaScript.statementToCode(Blockly.Blocks['factory_base'], 'STACK');
     TopDownGame.game.stage.updateTransform();
     var code = Blockly.JavaScript.workspaceToCode(workspace);
+    //console.log(code);
+    Pegman.vdposX = Pegman.dposX;
+    Pegman.vdposY = Pegman.dposY;
+    console.log(Pegman.vdposX, Pegman.vdposY);
     try {
         eval(code);
     } catch (e) {

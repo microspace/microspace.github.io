@@ -5,7 +5,7 @@ Blockly.Blocks['maze_up'] = {
      * Block for moving forward.
      * @this Blockly.Block
      */
-    init: function() {
+    init: function () {
         this.jsonInit({
             "message0": 'Вверх %1',
             "previousStatement": null,
@@ -22,10 +22,30 @@ Blockly.Blocks['maze_up'] = {
     }
 };
 
-Blockly.JavaScript['maze_up'] = function(block) {
+Blockly.JavaScript['maze_up'] = function (block) {
     // Generate JavaScript for moving forward.
     var operator = block.getFieldValue('STEPCOUNT');
-    return 'Pegman.nextAction("up", ' + operator + ');\n';
+    var code = `
+    Pegman.isGladeAbove = Pegman.isGladeBelow = Pegman.isGladeToRight = Pegman.isGladeToLeft = false;
+    var operator = ` + operator + `;
+
+    Pegman.nextAction("up",  operator);
+    
+
+
+    if (TopDownGame.game.state.getCurrentState().key == "lesson5") {
+        Pegman.vdposY += operator; 
+        console.log(Pegman.vdposX, Pegman.vdposY);
+        var tileLeft = map.getTile(Pegman.vdposX - 1, Pegman.vdposY, map.getLayer());
+        var tileRight = map.getTile(Pegman.vdposX + 1, Pegman.vdposY, map.getLayer());
+        var tileAbove = map.getTile(Pegman.vdposX, Pegman.vdposY - 1, map.getLayer());
+        Pegman.isGladeToLeft = tileLeft.index == 235;
+        Pegman.isGladeToRight = tileRight.index == 235;
+        Pegman.isGladeAbove = tileAbove.index == 235;
+        console.log(Pegman.isGladeAbove, Pegman.isGladeBelow, Pegman.isGladeToRight, Pegman.isGladeToLeft);
+    }
+    `
+    return code;
 };
 
 
@@ -36,7 +56,7 @@ Blockly.Blocks['maze_down'] = {
      * Block for moving forward.
      * @this Blockly.Block
      */
-    init: function() {
+    init: function () {
         this.jsonInit({
             "message0": 'Вниз %1',
             "previousStatement": null,
@@ -52,10 +72,28 @@ Blockly.Blocks['maze_down'] = {
     }
 };
 
-Blockly.JavaScript['maze_down'] = function(block) {
+Blockly.JavaScript['maze_down'] = function (block) {
     // Generate JavaScript for moving forward.
     var operator = block.getFieldValue('STEPCOUNT');
-    return 'Pegman.nextAction("down", ' + operator + ');\n';
+    var code = `
+    Pegman.isGladeAbove = Pegman.isGladeBelow = Pegman.isGladeToRight = Pegman.isGladeToLeft = false;
+    var operator = ` + operator + `;
+
+    Pegman.nextAction("down",  operator);
+     
+    if (TopDownGame.game.state.getCurrentState().key == "lesson5") {
+        Pegman.vdposY += operator;
+        console.log(Pegman.vdposX, Pegman.vdposY);
+        var tileLeft = map.getTile(Pegman.vdposX - 1, Pegman.vdposY, map.getLayer());
+        var tileRight = map.getTile(Pegman.vdposX + 1, Pegman.vdposY, map.getLayer());
+        var tileDown = map.getTile(Pegman.vdposX, Pegman.vdposY + 1, map.getLayer());
+        Pegman.isGladeToLeft = tileLeft.index == 235;
+        Pegman.isGladeToRight = tileRight.index == 235;
+        Pegman.isGladeToDown = tileDown.index == 235;
+        console.log(Pegman.isGladeAbove, Pegman.isGladeBelow, Pegman.isGladeToRight, Pegman.isGladeToLeft);
+    }
+    `
+    return code;
 };
 
 
@@ -67,7 +105,7 @@ Blockly.Blocks['maze_right'] = {
      * Block for moving forward.
      * @this Blockly.Block
      */
-    init: function() {
+    init: function () {
         this.jsonInit({
             "message0": 'Направо %1',
             "previousStatement": null,
@@ -83,10 +121,31 @@ Blockly.Blocks['maze_right'] = {
     }
 };
 
-Blockly.JavaScript['maze_right'] = function(block) {
+Blockly.JavaScript['maze_right'] = function (block) {
     // Generate JavaScript for moving forward.
     var operator = block.getFieldValue('STEPCOUNT');
-    return 'Pegman.nextAction("right", ' + operator + ');\n';
+    
+
+    var code = `
+    Pegman.isGladeAbove = Pegman.isGladeBelow = Pegman.isGladeToRight = Pegman.isGladeToLeft = false;
+    var operator = ` + operator + `;
+
+    Pegman.nextAction("right",  operator);
+    
+    if (TopDownGame.game.state.getCurrentState().key == "lesson5") {
+        Pegman.vdposX += operator; 
+        console.log(Pegman.vdposX, Pegman.vdposY);
+        var tileAbove = map.getTile(Pegman.vdposX, Pegman.vdposY - 1, map.getLayer());
+        var tileBelow = map.getTile(Pegman.vdposX, Pegman.vdposY + 1, map.getLayer());
+        var tileRight = map.getTile(Pegman.vdposX + 1, Pegman.vdposY, map.getLayer());
+        console.log(Pegman.vdposX + Number(operator) + 1);
+        Pegman.isGladeAbove = tileAbove.index == 235;
+        Pegman.isGladeBelow = tileBelow.index == 235;
+        Pegman.isGladeToRight = tileRight.index == 235;
+        console.log(Pegman.isGladeAbove, Pegman.isGladeBelow, Pegman.isGladeToRight, Pegman.isGladeToLeft);
+    }
+    `
+    return code;
 };
 
 
@@ -96,7 +155,7 @@ Blockly.Blocks['maze_left'] = {
      * Block for moving forward.
      * @this Blockly.Block
      */
-    init: function() {
+    init: function () {
         this.jsonInit({
             "message0": 'Налево %1',
             "previousStatement": null,
@@ -112,10 +171,28 @@ Blockly.Blocks['maze_left'] = {
     }
 };
 
-Blockly.JavaScript['maze_left'] = function(block) {
+Blockly.JavaScript['maze_left'] = function (block) {
     // Generate JavaScript for moving forward.
     var operator = block.getFieldValue('STEPCOUNT');
-    return 'Pegman.nextAction("left", ' + operator + ');\n';
+    var code = `
+    Pegman.isGladeAbove = Pegman.isGladeBelow = Pegman.isGladeToRight = Pegman.isGladeToLeft = false;
+    var operator = ` + operator + `;
+
+    Pegman.nextAction("left",  operator);
+    
+    if (TopDownGame.game.state.getCurrentState().key == "lesson5") {
+        Pegman.vdposX += operator; 
+        console.log(Pegman.vdposX, Pegman.vdposY);
+        var tileAbove = map.getTile(Pegman.vdposX, Pegman.vdposY - 1, map.getLayer());
+        var tileBelow = map.getTile(Pegman.vdposX, Pegman.vdposY + 1, map.getLayer());
+        var tileLeft = map.getTile(Pegman.vdposX - 1, Pegman.vdposY, map.getLayer());
+        Pegman.isGladeAbove = tileAbove.index == 235;
+        Pegman.isGladeBelow = tileBelow.index == 235;
+        Pegman.isGladeToLeft = tileLeft.index == 235;
+        console.log(Pegman.isGladeAbove, Pegman.isGladeBelow, Pegman.isGladeToRight, Pegman.isGladeToLeft);
+    }
+    `
+    return code;
 };
 
 
@@ -124,7 +201,7 @@ Blockly.Blocks['fire'] = {
      * Block for moving forward.
      * @this Blockly.Block
      */
-    init: function() {
+    init: function () {
         this.jsonInit({
             "message0": 'Огонь!',
             "previousStatement": null,
@@ -135,7 +212,7 @@ Blockly.Blocks['fire'] = {
     }
 };
 
-Blockly.JavaScript['fire'] = function(block) {
+Blockly.JavaScript['fire'] = function (block) {
     // Generate JavaScript for moving forward.
     return 'Pegman.nextAction("fire");\n';
 };
@@ -144,7 +221,7 @@ Blockly.JavaScript['fire'] = function(block) {
 
 Blockly.Blocks['factory_base'] = {
 
-    init: function() {
+    init: function () {
         this.jsonInit({
             "type": "block_type",
             "message0": "Нажмите %1",
@@ -168,7 +245,7 @@ Blockly.Blocks['factory_base'] = {
 };
 
 
-Blockly.JavaScript['factory_base'] = function(block) {
+Blockly.JavaScript['factory_base'] = function (block) {
     var statements_stack = Blockly.JavaScript.statementToCode(block, 'STACK');
     return statements_stack;
 };
@@ -181,33 +258,33 @@ Blockly.Blocks['floatto'] = {
      * Block for moving forward.
      * @this Blockly.Block
      */
-    init: function() {
+    init: function () {
         this.jsonInit({
             "type": "floatto",
             "message0": "Плыть%1 секунду в точку x:%2 y:%3",
             "args0": [{
-                    "type": "field_number",
-                    "name": "seconds",
-                    "value": 3,
-                    "min": 2,
-                    "max": 20
-                },
+                "type": "field_number",
+                "name": "seconds",
+                "value": 3,
+                "min": 2,
+                "max": 20
+            },
 
-                {
-                    "type": "field_number",
-                    "name": "tox",
-                    "value": 0,
-                    "min": -20,
-                    "max": 20
-                },
+            {
+                "type": "field_number",
+                "name": "tox",
+                "value": 0,
+                "min": -20,
+                "max": 20
+            },
 
-                {
-                    "type": "field_number",
-                    "name": "toy",
-                    "value": 0,
-                    "min": -20,
-                    "max": 20
-                }
+            {
+                "type": "field_number",
+                "name": "toy",
+                "value": 0,
+                "min": -20,
+                "max": 20
+            }
             ],
             "inputsInline": true,
             "previousStatement": null,
@@ -219,7 +296,7 @@ Blockly.Blocks['floatto'] = {
     }
 };
 
-Blockly.JavaScript['floatto'] = function(block) {
+Blockly.JavaScript['floatto'] = function (block) {
     var number_seconds = block.getFieldValue('seconds');
     var number_tox = block.getFieldValue('tox');
     var number_toy = block.getFieldValue('toy');
@@ -233,7 +310,7 @@ Blockly.Blocks['changeskin'] = {
      * Block for moving forward.
      * @this Blockly.Block
      */
-    init: function() {
+    init: function () {
         this.jsonInit({
             "message0": 'сменить костюм на %1',
             "previousStatement": null,
@@ -311,7 +388,7 @@ Blockly.Blocks['changeskin'] = {
     }
 };
 
-Blockly.JavaScript['changeskin'] = function(block) {
+Blockly.JavaScript['changeskin'] = function (block) {
     // Сгенерировать код для смены костюма
     var tile_id = block.getFieldValue('TILES');
     return 'Pegman.nextAction("changeskin", ' + tile_id + ');\n';
@@ -326,7 +403,7 @@ Blockly.Blocks['changex'] = {
      * Block for moving forward.
      * @this Blockly.Block
      */
-    init: function() {
+    init: function () {
         this.jsonInit({
             "message0": 'Изменить х на %1',
             "previousStatement": null,
@@ -344,7 +421,7 @@ Blockly.Blocks['changex'] = {
     }
 };
 
-Blockly.JavaScript['changex'] = function(block) {
+Blockly.JavaScript['changex'] = function (block) {
     // Generate JavaScript for moving forward.
     var dx = block.getFieldValue('dx');
     var number_seconds = Math.abs(dx);
@@ -357,7 +434,7 @@ Blockly.Blocks['changey'] = {
      * Block for moving forward.
      * @this Blockly.Block
      */
-    init: function() {
+    init: function () {
         this.jsonInit({
             "message0": 'Изменить y на %1',
             "previousStatement": null,
@@ -375,7 +452,7 @@ Blockly.Blocks['changey'] = {
     }
 };
 
-Blockly.JavaScript['changey'] = function(block) {
+Blockly.JavaScript['changey'] = function (block) {
     // Generate JavaScript for moving forward.
     var dy = block.getFieldValue('dy');
     var number_seconds = Math.abs(dy);
@@ -390,7 +467,7 @@ Blockly.Blocks['build'] = {
      * Block for moving forward.
      * @this Blockly.Block
      */
-    init: function() {
+    init: function () {
         this.jsonInit({
             "message0": 'Построить',
             "previousStatement": null,
@@ -401,7 +478,7 @@ Blockly.Blocks['build'] = {
     }
 };
 
-Blockly.JavaScript['build'] = function(block) {
+Blockly.JavaScript['build'] = function (block) {
     // Generate JavaScript for moving forward.
     return 'Pegman.nextAction("build");\n';
 };
@@ -412,7 +489,7 @@ Blockly.Blocks['setx'] = {
      * Block for moving forward.
      * @this Blockly.Block
      */
-    init: function() {
+    init: function () {
         this.jsonInit({
             "message0": 'Установить x в %1',
             "previousStatement": null,
@@ -430,7 +507,7 @@ Blockly.Blocks['setx'] = {
     }
 };
 
-Blockly.JavaScript['setx'] = function(block) {
+Blockly.JavaScript['setx'] = function (block) {
     // Generate JavaScript for moving forward.
     var setx = block.getFieldValue('setx');
     return 'Pegman.nextAction("setx", ' + 1 + ', ' + setx + ', ' + Pegman.dposY + ');\n';
@@ -442,7 +519,7 @@ Blockly.Blocks['sety'] = {
      * Block for moving forward.
      * @this Blockly.Block
      */
-    init: function() {
+    init: function () {
         this.jsonInit({
             "message0": 'Установить y в %1',
             "previousStatement": null,
@@ -460,7 +537,7 @@ Blockly.Blocks['sety'] = {
     }
 };
 
-Blockly.JavaScript['sety'] = function(block) {
+Blockly.JavaScript['sety'] = function (block) {
     // Generate JavaScript for moving forward.
     var sety = block.getFieldValue('sety');
     return 'Pegman.nextAction("sety", ' + 1 + ', ' + Pegman.dposX + ', ' + sety + ');\n';
@@ -473,7 +550,7 @@ Blockly.Blocks['setxy'] = {
      * Block for moving forward.
      * @this Blockly.Block
      */
-    init: function() {
+    init: function () {
         this.jsonInit({
             "message0": 'перейти в х: %1 у: %2',
             "previousStatement": null,
@@ -497,7 +574,7 @@ Blockly.Blocks['setxy'] = {
     }
 };
 
-Blockly.JavaScript['setxy'] = function(block) {
+Blockly.JavaScript['setxy'] = function (block) {
     // Generate JavaScript for moving forward.
     var setx = block.getFieldValue('setx');
     var sety = block.getFieldValue('sety');
@@ -511,36 +588,36 @@ Blockly.Blocks['repeat_n_times'] = {
      * Block for moving forward.
      * @this Blockly.Block
      */
-    init: function() {
+    init: function () {
         this.jsonInit({
-           
+
             "message0": "Повтори %1 раз",
             "args0": [
                 {
                     "type": "field_number",
                     "name": "times",
                     "value": 4
-                  }
+                }
             ],
             "message1": "выполнить %1",
             "args1": [
-              {"type": "input_statement", "name": "DO"}
+                { "type": "input_statement", "name": "DO" }
             ],
             "previousStatement": null,
             "nextStatement": null,
             "colour": 120
-          });
+        });
     }
 };
 var i = 0;
-Blockly.JavaScript['repeat_n_times'] = function(block) {
+Blockly.JavaScript['repeat_n_times'] = function (block) {
     // Generate JavaScript for moving forward.
     var stc = Blockly.JavaScript.statementToCode(block, 'DO');
     var times = block.getFieldValue('times');
     i++;
     var vn = 'ip' + i;
 
-    return 'for (var ' + vn + ' = 0; ' + vn + ' < ' + times + ';  ' + vn + '++){\n'+ stc +'\n}\n';
+    return 'for (var ' + vn + ' = 0; ' + vn + ' < ' + times + ';  ' + vn + '++){\n' + stc + '\n}\n';
 };
 
 
@@ -555,7 +632,7 @@ Blockly.Blocks['uturn'] = {
      * Block for moving forward.
      * @this Blockly.Block
      */
-    init: function() {
+    init: function () {
         this.jsonInit({
             "message0": 'Разворот',
             "previousStatement": null,
@@ -566,7 +643,45 @@ Blockly.Blocks['uturn'] = {
     }
 };
 
-Blockly.JavaScript['uturn'] = function(block) {
+Blockly.JavaScript['uturn'] = function (block) {
     // Generate JavaScript for moving forward.
     return 'Pegman.nextAction("uturn");\n';
 };
+
+
+
+Blockly.Blocks['obstacle'] = {
+    /**
+     * Block for moving forward.
+     * @this Blockly.Block
+     */
+    init: function () {
+        this.jsonInit({
+            "message0": "%1 полынья",
+            "output": "Boolean",
+            "colour": 215,
+            "args0": [
+                {
+                    "type": "field_dropdown",
+                    "name": "DIRECTION",
+                    "options": [["слева", "LEFT"], ["справа", "RIGHT"], ["сверху", "ABOVE"], ["снизу", "BELOW"]]
+                }
+            ]
+        });
+    }
+};
+
+Blockly.JavaScript['obstacle'] = function (block) {
+    // Generate JavaScript for moving forward.
+    var direct = block.getFieldValue('DIRECTION');
+    if (direct == "LEFT") {
+        return ['Pegman.isGladeToLeft'];
+    } else if (direct == "RIGHT") {
+        return ['Pegman.isGladeToRight'];
+    } else if (direct == "ABOVE") {
+        return ['Pegman.isGladeAbove'];
+    } else if (direct == "BELOW") {
+        return ['Pegman.isGladeBelow'];
+    }
+
+}

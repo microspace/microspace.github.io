@@ -7,11 +7,18 @@ var Pegman = {
     posY: null,
     dposX: null,
     dposY: null,
+    vdposX: null,
+    vdposY: null,
     direction: Maze.DirectionType.EAST,
     pegmanActions: [],
     pegmanSprite: null,
     anim: null,
     tween: null,
+    isGladeToRight: false,
+    isGladeToLeft: false,
+    isGladeAbove: false,
+    isGladeBelow: false,
+
 
     init: function (pegmanSprite) {
         this.pegmanSprite = pegmanSprite;
@@ -46,6 +53,14 @@ var Pegman = {
         try {
             this.dposX = startPositions['lesson3' + sublevel][0];
             this.dposY = startPositions['lesson3' + sublevel][1];
+        } catch {
+
+        }
+       
+
+        try {
+            this.dposX = dlastSuccessfullPosition.x;
+            this.dposY = dlastSuccessfullPosition.y;
         } catch {
 
         }
@@ -207,6 +222,13 @@ var Pegman = {
 
             });
         }
+        if (TopDownGame.game.state.getCurrentState().key == "lesson5") {
+            map.replace(235, 15, 8, 4, 5, 2, map.getLayer());
+            map.replace(15, 235, 8 + getRandomInt(0, 4), 4, 1, 1, map.getLayer());
+            map.replace(15, 235, 8 + getRandomInt(0, 4), 5, 1, 1, map.getLayer());
+        }
+
+
 
         this.pegmanSprite.animations.play('STAND');
 
@@ -279,14 +301,14 @@ var Pegman = {
                     this.direction = Maze.DirectionType.WEST;
                     var step = Maze.getStepInDirection["WEST"];
                     this.pegmanSprite.scale.x = -1;
-                    weapon.fireAngle = Phaser.ANGLE_LEFT;  
-                } else if (weapon.fireAngle == Phaser.ANGLE_LEFT){
+                    weapon.fireAngle = Phaser.ANGLE_LEFT;
+                } else if (weapon.fireAngle == Phaser.ANGLE_LEFT) {
                     this.direction = Maze.DirectionType.EAST;
                     var step = Maze.getStepInDirection["EAST"];
                     this.pegmanSprite.scale.x = 1;
                     weapon.fireAngle = Phaser.ANGLE_RIGHT;
                 }
-             
+
                 this.playNextAction();
                 break;
             case "nswe":
@@ -403,7 +425,7 @@ var Pegman = {
                 this.playNextAction();
                 break;
 
-                
+
         }
     },
 
@@ -439,6 +461,8 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
     this.animSpeedByStep = 500;
     this.posX = x;
     this.posY = y;
+    this.dposX = Math.floor(x / 64);
+    this.dposY = Math.floor(y / 64);
     this.anim = this.pegmanSprite.animations.play("NORTH");
     this.tween = TopDownGame.game.add.tween(this.pegmanSprite);
     this.tween.to({

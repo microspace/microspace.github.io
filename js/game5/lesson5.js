@@ -4,15 +4,13 @@ var TopDownGame = TopDownGame || {};
 var player;
 var explosion;
 var cp;
-
 var flag = false;
 var hitflag = false;
 var scene;
 var map;
 var drawLayer;
 var showflag = true;
-Pegman.dposX = 11;
-Pegman.dposY = 7;
+
 //var data;
 var capacity = 100;
 var maxcaps2 = 100;
@@ -29,10 +27,14 @@ var lastSuccessfullPosition = {
     x: Maze.SQUARE_SIZE * (4 + 0.5),
     y: Maze.SQUARE_SIZE * (3 + 0.5)
 };
+var dlastSuccessfullPosition = {
+    x: null,
+    y: null
+};
 var timeSinceLastIncrement = 0;
 //title screen
-TopDownGame.Lesson4 = function () { };
-TopDownGame.Lesson4.prototype = {
+TopDownGame.Lesson5 = function () { };
+TopDownGame.Lesson5.prototype = {
     create: function () {
 
         Blockly.mainWorkspace.clear();
@@ -42,7 +44,7 @@ TopDownGame.Lesson4.prototype = {
 
         fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
 
-        map = this.game.add.tilemap('lesson41');
+        map = this.game.add.tilemap('lesson51');
         //the first parameter is the tileset name as specified in Tiled, the second is the key to the asset
         map.addTilesetImage('tileSheetWinter', 'gameTiles');
         //create layer
@@ -59,24 +61,45 @@ TopDownGame.Lesson4.prototype = {
         pointer = this.game.add.sprite(0, 0, 'pointer');
         pointer.scale.setTo(0.8, 0.8);
         pointer.animations.add('ANIM', [0, 1], 2, /*loop*/ true);
-        pointer.visible = false;
-        //pointer.animations.play('ANIM');
+
+        pointer.animations.play('ANIM');
     
         this.game.physics.arcade.enable(pointer);
         pointer.anchor.setTo(0.5, 0.5);
         pointer.body.setSize(10, 65, 48, 10);
+        var result = findObjectsByType('scene1Goal', map, 'playerLayer');
+
+        pointer.x = result[0].x;
+        pointer.y = result[0].y;
 
         this.createItems();
         weapon = this.game.add.weapon(20, 'bullet');
+        
+
+        // var glades = this.game.add.group();
+        // glades.create((7 + getRandomInt(0, 4)) * 64, 3 * 64, 'water');
+        // glades.create((7 + getRandomInt(0, 4)) * 64, 4 * 64, 'water');
+
+        // map.replace(15, 154, 8 + getRandomInt(0, 4), 4, 1, 1, map.getLayer());
+        // map.replace(15, 154, 8 + getRandomInt(0, 4), 5, 1, 1, map.getLayer());
+
         var result = findObjectsByType('playerStartPosition', map, 'playerLayer');
+        
         
         lastSuccessfullPosition = {
             x: result[0].x,
             y: result[0].y
         };
+        dlastSuccessfullPosition = {
+            x: Math.floor(result[0].x / 64),
+            y: Math.floor(result[0].y / 64)
+        };        
+        Pegman.dposX = dlastSuccessfullPosition.x;
+        Pegman.dposY = dlastSuccessfullPosition.y;
         player = this.game.add.sprite(result[0].x, result[0].y, 'pegman');
+
         upperLayer = map.createLayer('upperLayer');
-        fog = map.createLayer('fog');
+        //fog = map.createLayer('fog');
 
         
         //map.setLayer(fog);
@@ -151,6 +174,7 @@ TopDownGame.Lesson4.prototype = {
         //move player with cursor keys
         this.cursors = this.game.input.keyboard.createCursorKeys();
         map.setTileIndexCallback([...Array(500).keys()], sinkInWater, this, sinkLayer);
+        map.setTileIndexCallback(235, sinkInWater, this, flour);
         map.setTileIndexCallback([...Array(500).keys()], hitEvent, this, blockLayer);
         TopDownGame.game.camera.flash(0x000000, 500);
         h = this.game.input.keyboard.addKey(Phaser.Keyboard.H);
@@ -188,26 +212,28 @@ TopDownGame.Lesson4.prototype = {
         player.body.velocity.y = 0;
     },
     l_down: function () {
-        player.body.velocity.x = velocity;
+        console.log(map.getTileRight(map.getLayer(), Pegman.dposX, Pegman.dposY));
     },
     l_up: function () {
         player.body.velocity.x = 0;
     },
 
     update: function () {
-        map.removeTileWorldXY(player.x, player.y, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
-        map.removeTileWorldXY(player.x - 64, player.y - 64, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
-        map.removeTileWorldXY(player.x + 64, player.y + 64, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
-        map.removeTileWorldXY(player.x - 64, player.y + 64, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
-        map.removeTileWorldXY(player.x + 64, player.y - 64, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
+        
+        // map.removeTileWorldXY(player.x, player.y, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
+        // map.removeTileWorldXY(player.x - 64, player.y - 64, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
+        // map.removeTileWorldXY(player.x + 64, player.y + 64, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
+        // map.removeTileWorldXY(player.x - 64, player.y + 64, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
+        // map.removeTileWorldXY(player.x + 64, player.y - 64, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
 
-        map.removeTileWorldXY(player.x - 64, player.y, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
-        map.removeTileWorldXY(player.x + 64, player.y, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
-        map.removeTileWorldXY(player.x, player.y - 64, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
-        map.removeTileWorldXY(player.x, player.y + 64, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
+        // map.removeTileWorldXY(player.x - 64, player.y, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
+        // map.removeTileWorldXY(player.x + 64, player.y, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
+        // map.removeTileWorldXY(player.x, player.y - 64, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
+        // map.removeTileWorldXY(player.x, player.y + 64, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
 
         this.game.physics.arcade.overlap(barrels, weapon.bullets, this.bulletHitBarrel, null, this);
         this.game.physics.arcade.collide(player, sinkLayer);
+        this.game.physics.arcade.collide(player, flour);
         this.game.physics.arcade.collide(player, blockLayer);
         this.game.physics.arcade.collide(player, barrels, hitEvent, null, this);
 
@@ -281,9 +307,7 @@ TopDownGame.Lesson4.prototype = {
             }
 
             if (element.properties[elemid].value === type) {
-                
-                
-            
+
             }
 
         });
@@ -342,6 +366,7 @@ function hitEvent() {
 };
 
 function sinkInWater() {
+    console.log("s");
     if (sinkflag == false) {
         sinkflag = true;
         var step = Maze.getStepInDirection[Maze.directionToString(Pegman.direction)];
@@ -570,3 +595,8 @@ function createFromTiledObject2(element, group) {
 
 }
 
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
