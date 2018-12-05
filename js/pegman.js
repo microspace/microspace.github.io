@@ -165,6 +165,11 @@ var Pegman = {
             this.selected_tileid = 1;
             this.pegmanSprite.frame = this.selected_tileid;
             crosses.callAll('kill');
+
+            player.alpha = 0;
+            TopDownGame.game.add.tween(player).to({
+                alpha: 1
+            }, 500, Phaser.Easing.Cubic.InOut, true, 0, -1, true);
         }
         if (TopDownGame.game.state.getCurrentState().key == "lesson4") {
             if (scene == 42) {
@@ -224,8 +229,8 @@ var Pegman = {
         }
         if (TopDownGame.game.state.getCurrentState().key == "lesson5") {
             map.replace(235, 15, 8, 4, 5, 2, map.getLayer());
-            map.replace(15, 235, 8 + getRandomInt(0, 4), 4, 1, 1, map.getLayer());
-            map.replace(15, 235, 8 + getRandomInt(0, 4), 5, 1, 1, map.getLayer());
+            map.replace(15, 235, 8 + getRandomInt(0, 0), 4, 1, 1, map.getLayer());
+            map.replace(15, 235, 9 + getRandomInt(0, 0), 5, 1, 1, map.getLayer());
         }
 
 
