@@ -10,7 +10,7 @@ var scene;
 var map;
 var drawLayer;
 var showflag = true;
-
+var fog;
 //var data;
 var capacity = 100;
 var maxcaps2 = 100;
@@ -99,7 +99,7 @@ TopDownGame.Lesson5.prototype = {
         player = this.game.add.sprite(result[0].x, result[0].y, 'pegman');
 
         upperLayer = map.createLayer('upperLayer');
-        //fog = map.createLayer('fog');
+        fog = map.createLayer('fog');
 
         
         //map.setLayer(fog);
@@ -111,30 +111,15 @@ TopDownGame.Lesson5.prototype = {
         player.body.setSize(60, 13, 40, 73);
         flour.resizeWorld();
 
-        var barConfig = {
-            width: 150,
-            height: 20,
-            x: 600,
-            y: 30,
-            bg: {
-                color: '#651828'
-            },
-            bar: {
-                color: '#FEFF03'
-            },
-            animationDuration: 200,
-            flipped: false
-        };
 
-        myHealthBar = new HealthBar(TopDownGame.game, barConfig);
-        myHealthBar.setFixedToCamera(true);
-        myHealthBar.setPercent(capacity);
 
         Pegman.init(player);
         scene = 1;
         load_scene();
 
-
+        builddust = this.game.add.sprite(0, 0, 'build');
+        builddust.visible = false;
+        builddust.animations.add('BUILD', [0, 1, 2, 3, 4, 5], 20, false);
         //bullets
 
 
@@ -220,16 +205,15 @@ TopDownGame.Lesson5.prototype = {
 
     update: function () {
         
-        // map.removeTileWorldXY(player.x, player.y, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
-        // map.removeTileWorldXY(player.x - 64, player.y - 64, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
-        // map.removeTileWorldXY(player.x + 64, player.y + 64, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
-        // map.removeTileWorldXY(player.x - 64, player.y + 64, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
-        // map.removeTileWorldXY(player.x + 64, player.y - 64, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
-
-        // map.removeTileWorldXY(player.x - 64, player.y, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
-        // map.removeTileWorldXY(player.x + 64, player.y, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
-        // map.removeTileWorldXY(player.x, player.y - 64, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
-        // map.removeTileWorldXY(player.x, player.y + 64, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
+         map.removeTileWorldXY(player.x, player.y, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
+         map.removeTileWorldXY(player.x - 64, player.y - 64, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
+         map.removeTileWorldXY(player.x + 64, player.y + 64, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
+         map.removeTileWorldXY(player.x - 64, player.y + 64, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
+         map.removeTileWorldXY(player.x + 64, player.y - 64, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
+         map.removeTileWorldXY(player.x - 64, player.y, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
+         map.removeTileWorldXY(player.x + 64, player.y, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
+         map.removeTileWorldXY(player.x, player.y - 64, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
+         map.removeTileWorldXY(player.x, player.y + 64, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
 
         this.game.physics.arcade.overlap(barrels, weapon.bullets, this.bulletHitBarrel, null, this);
         this.game.physics.arcade.collide(player, sinkLayer);
@@ -408,9 +392,7 @@ function load_scene() {
     Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
 
     if (scene == 1) {
-        myHealthBar.barSprite.visible = false;
-        myHealthBar.bgSprite.visible = false;
-        myHealthBar.borderSprite.visible = false;
+
     }
     else if (scene == 2) {
         var newTree = `

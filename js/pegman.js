@@ -228,7 +228,10 @@ var Pegman = {
             });
         }
         if (TopDownGame.game.state.getCurrentState().key == "lesson5") {
+            fog.destroy();
+            fog = map.createLayer('fog');
             map.replace(235, 15, 8, 4, 5, 2, map.getLayer());
+            map.replace(236, 15, 8, 4, 5, 2, map.getLayer());
             map.replace(15, 235, 8 + getRandomInt(0, 0), 4, 1, 1, map.getLayer());
             map.replace(15, 235, 9 + getRandomInt(0, 0), 5, 1, 1, map.getLayer());
         }
@@ -358,6 +361,35 @@ var Pegman = {
                 this.pegmanSprite.frame = this.selected_tileid; // в будущем надо сделать по нормальному, сейчас айди фрейма передается как stepcount. Не бейте меня за это
                 this.playNextAction();
                 break;
+            case "fillpit":
+                var direction_to_put = stepcount;
+                TopDownGame.game.camera.shake(0.003, 100);
+                var putx, puty;
+                if (direction_to_put == 0) {
+                    putx = Pegman.dposX - 1;
+                    puty = Pegman.dposY;
+                } else if (direction_to_put == 1) {
+                    putx = Pegman.dposX + 1;
+                    puty = Pegman.dposY;
+                } else if (direction_to_put == 2) {
+                    putx = Pegman.dposX;
+                    puty = Pegman.dposY - 1;
+                } else if (direction_to_put == 3) {
+                    putx = Pegman.dposX;
+                    puty = Pegman.dposY + 1;
+                }
+                map.replace(235, 236, putx, puty, 1, 1, map.getLayer());
+                builddust.x = putx * Maze.SQUARE_SIZE - 16;
+                builddust.y = puty * Maze.SQUARE_SIZE - 16;
+                builddust.visible = true;
+                this.anim = builddust.animations.play("BUILD");
+                this.anim.onComplete.addOnce(function () {
+                    builddust.visible = false;
+                    //console.log(builddust.x, builddust.y, builddust.visible);
+                    this.playNextAction();
+                }, this);
+                break;
+                break;                
             case "build":
                 var tileIDToReplace;
                 var tileToReplaceX;
@@ -722,4 +754,16 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 }
             }
         }
+        if (TopDownGame.game.state.getCurrentState().key == "lesson5") {
+            var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
+                    if (isOverlapping == true) {
+                       
+                        $("#modaltext").text("Поздравляю! Ты закончил уровень №5");
+                        $("#exampleModal").modal();
+
+                    }
+            
+        }
+
+
     };
