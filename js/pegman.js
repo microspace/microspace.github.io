@@ -39,7 +39,7 @@ var Pegman = {
         if (TopDownGame.game.state.getCurrentState().key == "lesson4") {
             $("#modaltext").text("Только что с учебки, а уже сразу на такое опасное задание?!! Сначала докажи, что умеешь стрелять!");
             $("#exampleModal").modal();
-        } else
+        } 
             this.reset2();
     },
 
@@ -228,12 +228,34 @@ var Pegman = {
             });
         }
         if (TopDownGame.game.state.getCurrentState().key == "lesson5") {
-            fog.destroy();
-            fog = map.createLayer('fog');
+            //TopDownGame.game.state.start(TopDownGame.game.state.current);
+            
+            //TopDownGame.game.state.restart();
+
+            for (var y = 0; y < map.height; ++y) {
+                for (var x = 0; x < map.width; ++x) {
+                  //  if (map.getTile(x, y, 'fog')) {
+                        map.putTile(66, x, y, fog);
+                  //  }
+                }
+            }
+/*             map.putTile(237, Pegman.dposX, Pegman.dposY-1, fog);
+            map.putTile(238, Pegman.dposX-1, Pegman.dposY, fog);
+            map.putTile(239, Pegman.dposX, Pegman.dposY+1, fog);
+            map.putTile(240, Pegman.dposX+1, Pegman.dposY, fog);
+            map.putTile(241, Pegman.dposX-1, Pegman.dposY-1, fog);
+            map.putTile(242, Pegman.dposX+1, Pegman.dposY-1, fog);
+            map.putTile(243, Pegman.dposX-1, Pegman.dposY+1,  fog);
+            map.putTile(244, Pegman.dposX+1, Pegman.dposY+1,  fog);
+            */
+
+
+
+ map.putTile(245, Pegman.dposX, Pegman.dposY, fog);
             map.replace(235, 15, 8, 4, 5, 2, map.getLayer());
             map.replace(236, 15, 8, 4, 5, 2, map.getLayer());
-            map.replace(15, 235, 8 + getRandomInt(0, 0), 4, 1, 1, map.getLayer());
-            map.replace(15, 235, 9 + getRandomInt(0, 0), 5, 1, 1, map.getLayer());
+            map.replace(15, 235, 8 + getRandomInt(0, 4), 4, 1, 1, map.getLayer());
+            map.replace(15, 235, 8 + getRandomInt(0, 4), 5, 1, 1, map.getLayer());
         }
 
 

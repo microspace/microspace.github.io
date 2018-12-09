@@ -21,7 +21,7 @@ var sinkflag = false;
 var bmd;
 var fringe;
 var fogCircle;
-
+var ccellx, xcelly;
 
 var lastSuccessfullPosition = {
     x: Maze.SQUARE_SIZE * (4 + 0.5),
@@ -63,7 +63,7 @@ TopDownGame.Lesson5.prototype = {
         pointer.animations.add('ANIM', [0, 1], 2, /*loop*/ true);
 
         pointer.animations.play('ANIM');
-    
+
         this.game.physics.arcade.enable(pointer);
         pointer.anchor.setTo(0.5, 0.5);
         pointer.body.setSize(10, 65, 48, 10);
@@ -74,7 +74,7 @@ TopDownGame.Lesson5.prototype = {
 
         this.createItems();
         weapon = this.game.add.weapon(20, 'bullet');
-        
+
 
         // var glades = this.game.add.group();
         // glades.create((7 + getRandomInt(0, 4)) * 64, 3 * 64, 'water');
@@ -84,8 +84,8 @@ TopDownGame.Lesson5.prototype = {
         // map.replace(15, 154, 8 + getRandomInt(0, 4), 5, 1, 1, map.getLayer());
 
         var result = findObjectsByType('playerStartPosition', map, 'playerLayer');
-        
-        
+
+
         lastSuccessfullPosition = {
             x: result[0].x,
             y: result[0].y
@@ -93,25 +93,25 @@ TopDownGame.Lesson5.prototype = {
         dlastSuccessfullPosition = {
             x: Math.floor(result[0].x / 64),
             y: Math.floor(result[0].y / 64)
-        };        
+        };
         Pegman.dposX = dlastSuccessfullPosition.x;
         Pegman.dposY = dlastSuccessfullPosition.y;
         player = this.game.add.sprite(result[0].x, result[0].y, 'pegman');
 
-        upperLayer = map.createLayer('upperLayer');
-        fog = map.createLayer('fog');
 
-        
+
+
         //map.setLayer(fog);
         //map.removeTile(9, 5, fog);
-        
+
 
         player.anchor.setTo(0.5, 0.5);
         this.game.physics.arcade.enable(player);
         player.body.setSize(60, 13, 40, 73);
         flour.resizeWorld();
-
-
+        upperLayer = map.createLayer('upperLayer');
+        fog = map.createLayer('fog');
+        //fog.resizeWorld();
 
         Pegman.init(player);
         scene = 1;
@@ -174,6 +174,10 @@ TopDownGame.Lesson5.prototype = {
         l = this.game.input.keyboard.addKey(Phaser.Keyboard.L);
         l.onDown.add(this.l_down, this);
         l.onUp.add(this.l_up, this);
+
+        map.putTile(245, Pegman.dposX, Pegman.dposY, fog);
+
+
     },
     animationStopped: function (sprite, animation) {
         explosion.visible = false;
@@ -191,7 +195,7 @@ TopDownGame.Lesson5.prototype = {
         player.body.velocity.y = 0;
     },
     k_down: function () {
-        player.body.velocity.y =  velocity;
+        player.body.velocity.y = velocity;
     },
     k_up: function () {
         player.body.velocity.y = 0;
@@ -204,16 +208,157 @@ TopDownGame.Lesson5.prototype = {
     },
 
     update: function () {
-        
-         map.removeTileWorldXY(player.x, player.y, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
-         map.removeTileWorldXY(player.x - 64, player.y - 64, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
-         map.removeTileWorldXY(player.x + 64, player.y + 64, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
-         map.removeTileWorldXY(player.x - 64, player.y + 64, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
-         map.removeTileWorldXY(player.x + 64, player.y - 64, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
-         map.removeTileWorldXY(player.x - 64, player.y, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
-         map.removeTileWorldXY(player.x + 64, player.y, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
-         map.removeTileWorldXY(player.x, player.y - 64, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
-         map.removeTileWorldXY(player.x, player.y + 64, Maze.SQUARE_SIZE, Maze.SQUARE_SIZE, fog);
+        map.putTile(245, Pegman.dposX, Pegman.dposY, fog);
+        for (var y = Pegman.dposY - 1; y <= Pegman.dposY + 1; ++y) {
+            for (var x = Pegman.dposX - 1; x <= Pegman.dposX + 1; ++x) {
+                var t_id = normalize(x, y);
+                   console.log(x,y,t_id);
+                
+                
+                map.putTile(t_id, x, y, fog);
+
+
+            }
+        }
+
+        /*   try {
+             for (var y = Pegman.dposY-1; y <= Pegman.dposY+1; ++y) {
+                 for (var x = Pegman.dposX-1; x <= Pegman.dposX+1; ++x) {
+                     var cTile = map.getTile(x,y,fog);
+                     if (x == Pegman.dposX && y == Pegman.dposY ) {
+                         map.putTile(245, x, y, fog);
+                     }
+ 
+                     if (x == Pegman.dposX && y == Pegman.dposY - 1) {
+                         var cTile = map.getTile(x,y,fog);
+                         if (cTile.index == 242 || cTile.index == 241 || cTile.index == 66){
+                             map.putTile(237, x, y, fog);
+                         }
+                         if (cTile.index == 240){
+                             map.putTile(230, x, y, fog);
+                         }
+                         if (cTile.index == 238){
+                             map.putTile(231, x, y, fog);
+                         }
+                         if (cTile.index == 218 || cTile.index ==217){
+                             map.putTile(245, x, y, fog);
+                         }
+                     }
+ 
+                     if (x == Pegman.dposX - 1 && y == Pegman.dposY ) {
+                         var cTile = map.getTile(x,y,fog);
+                         if (cTile.index == 243 || cTile.index == 241 || cTile.index == 66){
+                             map.putTile(238, x, y, fog);
+                         }
+                         if (cTile.index == 239){
+                             map.putTile(218, x, y, fog);
+                         }
+                         if (cTile.index == 237){
+                             map.putTile(231, x, y, fog);
+                         }
+                         if (cTile.index == 230 || cTile.index == 217){
+                             map.putTile(245, x, y, fog);
+                         }
+                         
+                         
+                     }
+ 
+                     if (x == Pegman.dposX && y == Pegman.dposY + 1) {
+                         var cTile = map.getTile(x,y,fog);
+                         if (cTile.index == 244 || cTile.index == 243 || cTile.index == 66){
+                             map.putTile(239, x, y, fog);
+                         }
+                         if (cTile.index == 238){
+                             map.putTile(218, x, y, fog);
+                         }
+                         if (cTile.index == 240){
+                             map.putTile(217, x, y, fog);
+                         }
+                         if (cTile.index == 231 || cTile.index == 230){
+                             map.putTile(245, x, y, fog);
+                         }
+                     }      
+ 
+                     if (x == Pegman.dposX + 1 && y == Pegman.dposY) {
+                         var cTile = map.getTile(x,y,fog);
+                         if (cTile.index == 66 || cTile.index == 242 || cTile.index == 244){
+                             map.putTile(240, x, y, fog);
+                         }
+                         if (cTile.index == 237){
+                             map.putTile(230, x, y, fog);
+                         }
+                         if (cTile.index == 239){
+                             map.putTile(217, x, y, fog);
+                         }
+                         if (cTile.index == 231 || cTile.index == 218){
+                             map.putTile(245, x, y, fog);
+                         }
+                     } 
+ 
+                     
+                     if (x == Pegman.dposX + 1 && y == Pegman.dposY - 1) {
+                         var cTile = map.getTile(x,y,fog);
+                         if (cTile.index == 66){
+                             map.putTile(242, x, y, fog);
+                         }
+                         if (cTile.index == 241){
+                             map.putTile(237, x, y, fog);
+                         }
+                         if (cTile.index == 244){
+                             map.putTile(240, x, y, fog);
+                         }
+ 
+                     } 
+ 
+                     if (x == Pegman.dposX + 1 && y == Pegman.dposY + 1) {
+                         var cTile = map.getTile(x,y,fog);
+                         if (cTile.index == 66){
+                             map.putTile(244, x, y, fog);
+                         }
+                         if (cTile.index == 242){
+                             map.putTile(240, x, y, fog);
+                         }
+                         if (cTile.index == 243){
+                             map.putTile(239, x, y, fog);
+                         }
+                     }     
+ 
+                     if (x == Pegman.dposX - 1 && y == Pegman.dposY + 1) {
+                         var cTile = map.getTile(x,y,fog);
+                         if (cTile.index == 66){
+                             map.putTile(243, x, y, fog);
+                         }
+                         if (cTile.index == 244){
+                             map.putTile(239, x, y, fog);
+                         }
+                         if (cTile.index == 241){
+                             map.putTile(238, x, y, fog);
+                         }
+ 
+                     }   
+ 
+                     if (x == Pegman.dposX - 1 && y == Pegman.dposY - 1) {
+                         var cTile = map.getTile(x,y,fog);
+                         if (cTile.index == 66){
+                             map.putTile(241, x, y, fog);
+                         }
+                         if (cTile.index == 242){
+                             map.putTile(237, x, y, fog);
+                         }
+                         if (cTile.index == 243){
+                             map.putTile(238, x, y, fog);
+                         }
+                     }   
+ 
+ 
+                 }
+             }
+ 
+ 
+         } catch(e) {
+             console.log(e);
+         }
+  */
 
         this.game.physics.arcade.overlap(barrels, weapon.bullets, this.bulletHitBarrel, null, this);
         this.game.physics.arcade.collide(player, sinkLayer);
@@ -259,10 +404,8 @@ TopDownGame.Lesson5.prototype = {
         //camera end
 
 
-        try {
-            myHealthBar.setPercent(workspace.remainingCapacity() / (maxcaps2 - 1) * 100);
-        } catch { };
-         
+
+
     },
     createItems: function () {
         //create items
@@ -280,9 +423,9 @@ TopDownGame.Lesson5.prototype = {
         var elemid;
         map.objects[layer].forEach(function (element) {
             var i;
-            
+
             for (i = 0; i < element.properties.length; i++) {
-                
+
                 if (element.properties[i].value === type) {
                     elemid = i;
                     element.y -= map.tileHeight;
@@ -295,7 +438,7 @@ TopDownGame.Lesson5.prototype = {
             }
 
         });
-        
+
         return result;
     },
     //create a sprite from an object
@@ -303,9 +446,9 @@ TopDownGame.Lesson5.prototype = {
         var sprite = group.create(element.x, element.y, 'totalsheet', 234);
         //copy all properties to the sprite
         element.properties.forEach(function (element) {
-            
 
-            
+
+
 
             sprite[element.name] = element.value;
         });
@@ -411,7 +554,7 @@ function load_scene() {
         myHealthBar.barSprite.visible = true;
         myHealthBar.bgSprite.visible = true;
         myHealthBar.borderSprite.visible = true;
-        
+
     } else if (scene == 3) {
         var newTree = `
         <xml id="toolbox" style="display: none; background-color: #4d90fe;">
@@ -458,7 +601,7 @@ function load_scene() {
         pointer.y = result[0].y;
         pointer.visible = true;
         pointer.animations.play('ANIM');
-    
+
     }
     barrels.forEach(function (c) {
         if (c.scene == scene) {
@@ -533,7 +676,7 @@ function load_map(name) {
             TopDownGame.game.world.bringToTop(pointer);
             TopDownGame.game.world.bringToTop(barrels);
             TopDownGame.game.world.bringToTop(explosion);
-            
+
             TopDownGame.game.world.bringToTop(weapon.bullets);
             TopDownGame.game.world.bringToTop(player);
         } catch { }
@@ -549,7 +692,7 @@ function load_map(name) {
 function findObjectsByType(type, map, layer) {
     var result = new Array();
     map.objects[layer].forEach(function (element) {
-        
+
         if (element.properties[0].value === type) {
             //Phaser uses top left, Tiled bottom left so we have to adjust
             //also keep in mind that the cup images are a bit smaller than the tile which is 16x16
@@ -581,4 +724,72 @@ function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function normalize(x, y) {
+    var cTile;
+    cTile = map.getTile(x - 1, y - 1, fog);
+    if (cTile) {
+        a11 = cTile.index != 245 ? '1' : '0'
+    } else {
+        a11 = '7'
+    }
+    cTile = map.getTile(x, y - 1, fog);
+    if (cTile) {
+        a12 = cTile.index != 245 ? '1' : '0'
+    } else {
+        a12 = '7'
+    }
+    cTile = map.getTile(x + 1, y - 1, fog);
+    if (cTile) {
+        a13 = cTile.index != 245 ? '1' : '0'
+    } else {
+        a13 = '7'
+    }
+
+    cTile = map.getTile(x - 1, y, fog);
+    if (cTile) {
+        a21 = cTile.index != 245 ? '1' : '0'
+    } else {
+        a21 = '7'
+    }
+    cTile = map.getTile(x, y, fog);
+    if (cTile) {
+        a22 = cTile.index != 245 ? '1' : '0'
+    } else {
+        a22 = '7'
+    }
+    cTile = map.getTile(x + 1, y, fog);
+    if (cTile) {
+        a23 = cTile.index != 245 ? '1' : '0'
+    } else {
+        a23 = '7'
+    }
+
+    cTile = map.getTile(x - 1, y + 1, fog);
+    if (cTile) {
+        a31 = cTile.index != 245 ? '1' : '0'
+    } else {
+        a31 = '7'
+    }
+    cTile = map.getTile(x, y + 1, fog);
+    if (cTile) {
+        a32 = cTile.index != 245 ? '1' : '0'
+    } else {
+        a32 = '7'
+    }
+    cTile = map.getTile(x + 1, y + 1, fog);
+    if (cTile) {
+        a33 = cTile.index != 245 ? '1' : '0'
+    } else {
+        a33 = '7'
+    }
+    if (a22 == '0'){
+        return 245;
+    } else if (parseInt(a11) + parseInt(a12) + parseInt(a13) + parseInt(a21) + parseInt(a23) + parseInt(a31) + parseInt(a32) + parseInt(a33) <= 2){
+        return 245;
+    }   else {
+        console.log(a11 + a12 + a13 + a21 + a22 + a23 + a31 + a32 + a33);
+        return Maze.tile_SHAPES[a11 + a12 + a13 + a21 + a22 + a23 + a31 + a32 + a33];
+    }
 }

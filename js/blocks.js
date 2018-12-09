@@ -138,7 +138,6 @@ Blockly.JavaScript['maze_right'] = function (block) {
         var tileAbove = map.getTile(Pegman.vdposX, Pegman.vdposY - 1, map.getLayer());
         var tileBelow = map.getTile(Pegman.vdposX, Pegman.vdposY + 1, map.getLayer());
         var tileRight = map.getTile(Pegman.vdposX + 1, Pegman.vdposY, map.getLayer());
-        console.log(Pegman.vdposX + Number(operator) + 1);
         Pegman.isGladeAbove = tileAbove.index == 235;
         Pegman.isGladeBelow = tileBelow.index == 235;
         Pegman.isGladeToRight = tileRight.index == 235;

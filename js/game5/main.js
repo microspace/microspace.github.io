@@ -49,7 +49,6 @@ var runProgram = function() {
     //console.log(code);
     Pegman.vdposX = Pegman.dposX;
     Pegman.vdposY = Pegman.dposY;
-    console.log(Pegman.vdposX, Pegman.vdposY);
     try {
         eval(code);
     } catch (e) {
