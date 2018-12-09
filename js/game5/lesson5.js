@@ -17,7 +17,7 @@ var maxcaps2 = 100;
 var myHealthBar;
 var velocity = 400;
 var sinkflag = false;
-
+var updateFog;
 var bmd;
 var fringe;
 var fogCircle;
@@ -177,6 +177,20 @@ TopDownGame.Lesson5.prototype = {
 
         map.putTile(245, Pegman.dposX, Pegman.dposY, fog);
 
+       updateFog = new Phaser.Signal();
+
+        updateFog.add(function () {
+            
+            map.putTile(245, Pegman.dposX, Pegman.dposY, fog);
+            for (var y = Pegman.dposY - 1; y <= Pegman.dposY + 1; ++y) {
+                for (var x = Pegman.dposX - 1; x <= Pegman.dposX + 1; ++x) {
+                    var t_id = normalize(x, y);
+                    map.putTile(t_id, x, y, fog);
+                }
+            }
+        }, this.game);
+
+        updateFog.dispatch();
 
     },
     animationStopped: function (sprite, animation) {
@@ -208,157 +222,19 @@ TopDownGame.Lesson5.prototype = {
     },
 
     update: function () {
-        map.putTile(245, Pegman.dposX, Pegman.dposY, fog);
-        for (var y = Pegman.dposY - 1; y <= Pegman.dposY + 1; ++y) {
-            for (var x = Pegman.dposX - 1; x <= Pegman.dposX + 1; ++x) {
-                var t_id = normalize(x, y);
-                   console.log(x,y,t_id);
-                
-                
-                map.putTile(t_id, x, y, fog);
 
 
-            }
+
+        var cposx = Math.floor(player.x / 64);
+        var cposy = Math.floor(player.y / 64);
+        if (cposx != Pegman.dposX || cposy != Pegman.dposY) {
+            Pegman.dposX = cposx;
+            Pegman.dposY = cposy;
+            updateFog.dispatch();
         }
 
-        /*   try {
-             for (var y = Pegman.dposY-1; y <= Pegman.dposY+1; ++y) {
-                 for (var x = Pegman.dposX-1; x <= Pegman.dposX+1; ++x) {
-                     var cTile = map.getTile(x,y,fog);
-                     if (x == Pegman.dposX && y == Pegman.dposY ) {
-                         map.putTile(245, x, y, fog);
-                     }
- 
-                     if (x == Pegman.dposX && y == Pegman.dposY - 1) {
-                         var cTile = map.getTile(x,y,fog);
-                         if (cTile.index == 242 || cTile.index == 241 || cTile.index == 66){
-                             map.putTile(237, x, y, fog);
-                         }
-                         if (cTile.index == 240){
-                             map.putTile(230, x, y, fog);
-                         }
-                         if (cTile.index == 238){
-                             map.putTile(231, x, y, fog);
-                         }
-                         if (cTile.index == 218 || cTile.index ==217){
-                             map.putTile(245, x, y, fog);
-                         }
-                     }
- 
-                     if (x == Pegman.dposX - 1 && y == Pegman.dposY ) {
-                         var cTile = map.getTile(x,y,fog);
-                         if (cTile.index == 243 || cTile.index == 241 || cTile.index == 66){
-                             map.putTile(238, x, y, fog);
-                         }
-                         if (cTile.index == 239){
-                             map.putTile(218, x, y, fog);
-                         }
-                         if (cTile.index == 237){
-                             map.putTile(231, x, y, fog);
-                         }
-                         if (cTile.index == 230 || cTile.index == 217){
-                             map.putTile(245, x, y, fog);
-                         }
-                         
-                         
-                     }
- 
-                     if (x == Pegman.dposX && y == Pegman.dposY + 1) {
-                         var cTile = map.getTile(x,y,fog);
-                         if (cTile.index == 244 || cTile.index == 243 || cTile.index == 66){
-                             map.putTile(239, x, y, fog);
-                         }
-                         if (cTile.index == 238){
-                             map.putTile(218, x, y, fog);
-                         }
-                         if (cTile.index == 240){
-                             map.putTile(217, x, y, fog);
-                         }
-                         if (cTile.index == 231 || cTile.index == 230){
-                             map.putTile(245, x, y, fog);
-                         }
-                     }      
- 
-                     if (x == Pegman.dposX + 1 && y == Pegman.dposY) {
-                         var cTile = map.getTile(x,y,fog);
-                         if (cTile.index == 66 || cTile.index == 242 || cTile.index == 244){
-                             map.putTile(240, x, y, fog);
-                         }
-                         if (cTile.index == 237){
-                             map.putTile(230, x, y, fog);
-                         }
-                         if (cTile.index == 239){
-                             map.putTile(217, x, y, fog);
-                         }
-                         if (cTile.index == 231 || cTile.index == 218){
-                             map.putTile(245, x, y, fog);
-                         }
-                     } 
- 
-                     
-                     if (x == Pegman.dposX + 1 && y == Pegman.dposY - 1) {
-                         var cTile = map.getTile(x,y,fog);
-                         if (cTile.index == 66){
-                             map.putTile(242, x, y, fog);
-                         }
-                         if (cTile.index == 241){
-                             map.putTile(237, x, y, fog);
-                         }
-                         if (cTile.index == 244){
-                             map.putTile(240, x, y, fog);
-                         }
- 
-                     } 
- 
-                     if (x == Pegman.dposX + 1 && y == Pegman.dposY + 1) {
-                         var cTile = map.getTile(x,y,fog);
-                         if (cTile.index == 66){
-                             map.putTile(244, x, y, fog);
-                         }
-                         if (cTile.index == 242){
-                             map.putTile(240, x, y, fog);
-                         }
-                         if (cTile.index == 243){
-                             map.putTile(239, x, y, fog);
-                         }
-                     }     
- 
-                     if (x == Pegman.dposX - 1 && y == Pegman.dposY + 1) {
-                         var cTile = map.getTile(x,y,fog);
-                         if (cTile.index == 66){
-                             map.putTile(243, x, y, fog);
-                         }
-                         if (cTile.index == 244){
-                             map.putTile(239, x, y, fog);
-                         }
-                         if (cTile.index == 241){
-                             map.putTile(238, x, y, fog);
-                         }
- 
-                     }   
- 
-                     if (x == Pegman.dposX - 1 && y == Pegman.dposY - 1) {
-                         var cTile = map.getTile(x,y,fog);
-                         if (cTile.index == 66){
-                             map.putTile(241, x, y, fog);
-                         }
-                         if (cTile.index == 242){
-                             map.putTile(237, x, y, fog);
-                         }
-                         if (cTile.index == 243){
-                             map.putTile(238, x, y, fog);
-                         }
-                     }   
- 
- 
-                 }
-             }
- 
- 
-         } catch(e) {
-             console.log(e);
-         }
-  */
+
+
 
         this.game.physics.arcade.overlap(barrels, weapon.bullets, this.bulletHitBarrel, null, this);
         this.game.physics.arcade.collide(player, sinkLayer);
@@ -493,7 +369,7 @@ function hitEvent() {
 };
 
 function sinkInWater() {
-    console.log("s");
+
     if (sinkflag == false) {
         sinkflag = true;
         var step = Maze.getStepInDirection[Maze.directionToString(Pegman.direction)];
@@ -730,66 +606,109 @@ function normalize(x, y) {
     var cTile;
     cTile = map.getTile(x - 1, y - 1, fog);
     if (cTile) {
-        a11 = cTile.index != 245 ? '1' : '0'
+        a11 = cTile.index == 245 ? 0 : 1
     } else {
-        a11 = '7'
+        a11 = 'e'
     }
     cTile = map.getTile(x, y - 1, fog);
     if (cTile) {
-        a12 = cTile.index != 245 ? '1' : '0'
+        a12 = cTile.index == 245 ? 0 : 1
     } else {
-        a12 = '7'
+        a12 = 'e'
     }
     cTile = map.getTile(x + 1, y - 1, fog);
     if (cTile) {
-        a13 = cTile.index != 245 ? '1' : '0'
+        a13 = cTile.index == 245 ? 0 : 1
     } else {
-        a13 = '7'
+        a13 = 'e'
     }
 
     cTile = map.getTile(x - 1, y, fog);
     if (cTile) {
-        a21 = cTile.index != 245 ? '1' : '0'
+        a21 = cTile.index == 245 ? 0 : 1
     } else {
-        a21 = '7'
+        a21 = 'e'
     }
     cTile = map.getTile(x, y, fog);
     if (cTile) {
-        a22 = cTile.index != 245 ? '1' : '0'
+        a22 = cTile.index == 245 ? 0 : 1
     } else {
-        a22 = '7'
+        a22 = 'e'
     }
     cTile = map.getTile(x + 1, y, fog);
     if (cTile) {
-        a23 = cTile.index != 245 ? '1' : '0'
+        a23 = cTile.index == 245 ? 0 : 1
     } else {
-        a23 = '7'
+        a23 = 'e'
     }
 
     cTile = map.getTile(x - 1, y + 1, fog);
     if (cTile) {
-        a31 = cTile.index != 245 ? '1' : '0'
+        a31 = cTile.index == 245 ? 0 : 1
     } else {
-        a31 = '7'
+        a31 = 'e'
     }
     cTile = map.getTile(x, y + 1, fog);
     if (cTile) {
-        a32 = cTile.index != 245 ? '1' : '0'
+        a32 = cTile.index == 245 ? 0 : 1
     } else {
-        a32 = '7'
+        a32 = 'e'
     }
     cTile = map.getTile(x + 1, y + 1, fog);
     if (cTile) {
-        a33 = cTile.index != 245 ? '1' : '0'
+        a33 = cTile.index == 245 ? 0 : 1
     } else {
-        a33 = '7'
+        a33 = 'e'
     }
-    if (a22 == '0'){
+    if (a22 == '0' || a11 + a12 + a13 + a21 + a23 + a31 + a32 + a33 <= 2 || (!a12 && !a32) || (!a21 && !a23)) {
         return 245;
-    } else if (parseInt(a11) + parseInt(a12) + parseInt(a13) + parseInt(a21) + parseInt(a23) + parseInt(a31) + parseInt(a32) + parseInt(a33) <= 2){
-        return 245;
-    }   else {
-        console.log(a11 + a12 + a13 + a21 + a22 + a23 + a31 + a32 + a33);
-        return Maze.tile_SHAPES[a11 + a12 + a13 + a21 + a22 + a23 + a31 + a32 + a33];
+    } else if (a11 + a12 + a21 + a22 == 4 && (!a13 || !a23) && (!a31 || !a32)) {
+        return 231;
+    } else if (a12 + a13 + a22 + a23 == 4 && (!a11 || !a21) && (!a32 || !a33)) {
+        return 230;
+    } else if (a22 + a23 + a32 + a33 == 4 && (!a12 || !a13) && (!a21 || !a31)) {
+        return 217;
+    } else if (a21 + a22 + a31 + a32 == 4 && (!a11 || !a12) && (!a23 || !a33)) {
+        return 218;
+    } else {
+
+        return Maze.tile_SHAPES[String(a11) + String(a12) + String(a13) + String(a21) + String(a22) + String(a23) + String(a31) + String(a32) + String(a33)];
     }
 }
+
+
+Maze.tile_SHAPES = {
+    '111111110': 241,
+    '111111011': 242,
+    '011111111': 244,
+    '110111111': 243,
+
+    '111111101': 237,
+    '111111100': 237,
+    '111111001': 237,
+    '111111000': 237,
+    '111111010': 237,
+
+    '111011111': 240,
+    '111011011': 240,
+    '011011111': 240,
+    '011011011': 240,
+    '011111011': 240,
+
+    '101111111': 239,
+    '100111111': 239,
+    '001111111': 239,
+    '000111111': 239,
+    '010111111': 239,
+
+    '111110111': 238,
+    '110110111': 238,
+    '111110110': 238,
+    '110110110': 238,
+    '110111110': 238,
+
+    '110111011': 219,
+    '011111110': 232,
+
+};
+

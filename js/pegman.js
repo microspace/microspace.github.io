@@ -239,7 +239,7 @@ var Pegman = {
                   //  }
                 }
             }
-/*             map.putTile(237, Pegman.dposX, Pegman.dposY-1, fog);
+            map.putTile(237, Pegman.dposX, Pegman.dposY-1, fog);
             map.putTile(238, Pegman.dposX-1, Pegman.dposY, fog);
             map.putTile(239, Pegman.dposX, Pegman.dposY+1, fog);
             map.putTile(240, Pegman.dposX+1, Pegman.dposY, fog);
@@ -247,7 +247,7 @@ var Pegman = {
             map.putTile(242, Pegman.dposX+1, Pegman.dposY-1, fog);
             map.putTile(243, Pegman.dposX-1, Pegman.dposY+1,  fog);
             map.putTile(244, Pegman.dposX+1, Pegman.dposY+1,  fog);
-            */
+            
 
 
 
