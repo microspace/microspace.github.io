@@ -5,7 +5,7 @@ $(window).resize(function() {
     window.resizeGame();
 });
 
-TopDownGame.game = new Phaser.Game($(window).width(), $(window).height(), Phaser.CANVAS, 'canvasContainer', null, false, true);
+TopDownGame.game = new Phaser.Game($(window).width(), $(window).height(), Phaser.AUTO, 'canvasContainer', null, false, true);
 TopDownGame.game.state.add('Boot', TopDownGame.Boot);
 TopDownGame.game.state.add('Preload', TopDownGame.Preload);
 TopDownGame.game.state.add('lesson5', TopDownGame.Lesson5);
@@ -24,25 +24,16 @@ function resizeGame() {
 }
 
 
-var init = function() {
+/* var init = function() {
     Maze.bindClick('runButton', runProgram);
     Maze.bindClick('resetButton', resetProgram);
     $("#nextButton").hide();
-};
+}; */
 
 
 
 var runProgram = function() {
-    var runButton = document.getElementById('runButton');
-    var resetButton = document.getElementById('resetButton');
-    // Ensure that Reset button is at least as wide as Run button.
-    if (!resetButton.style.minWidth) {
-        resetButton.style.minWidth = runButton.offsetWidth + 'px';
-    }
-    runButton.style.display = 'none';
-    resetButton.style.display = 'inline';
-    // Prevent double-clicks or double-taps.
-    resetButton.disabled = false;
+
     //var statements_stack = Blockly.JavaScript.statementToCode(Blockly.Blocks['factory_base'], 'STACK');
     TopDownGame.game.stage.updateTransform();
     var code = Blockly.JavaScript.workspaceToCode(workspace);
@@ -61,11 +52,7 @@ var runProgram = function() {
 };
 
 var resetProgram = function() {
-    var runButton = document.getElementById('runButton');
-    runButton.style.display = 'inline';
-    document.getElementById('resetButton').style.display = 'none';
-    // Prevent double-clicks or double-taps.
-    runButton.disabled = false;
+
     try {
         weapon.fireAngle = Phaser.ANGLE_RIGHT;
     } catch {

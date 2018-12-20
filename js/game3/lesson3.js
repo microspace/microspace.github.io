@@ -215,12 +215,7 @@ function change_map(name) {
     }
     lastSuccessfullPosition.x = Maze.SQUARE_SIZE * (startPositions[name][0] + 0.5);
     lastSuccessfullPosition.y = Maze.SQUARE_SIZE * (startPositions[name][1] + 0.5);
-    //Copied from reset button code. Resets html button
-    var runButton = document.getElementById('runButton');
-    runButton.style.display = 'inline';
-    document.getElementById('resetButton').style.display = 'none';
-    // Prevent double-clicks or double-taps.
-    runButton.disabled = false;
+
 
 
     if (sublevel == 1 || sublevel == 2) {

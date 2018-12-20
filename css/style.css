@@ -103,3 +103,31 @@ button.notext {
 .blocklyFlyoutBackground {
 background-color: #4d90fe;
 }
+
+
+.blocklySvg {
+  background-color: transparent;
+}
+
+
+
+button.play {
+background: rgb(255, 164, 0);
+cursor: pointer;
+border-top: solid 0px #eaeaea;
+border-left: solid 0px #eaeaea;
+border-bottom: solid 0px #777;
+border-right: solid 0px #777;
+padding: 5px 5px;
+width: 150px;
+}
+button.reset {
+background: #0094ca;
+cursor: pointer;
+border-top: solid 0px #eaeaea;
+border-left: solid 0px #eaeaea;
+border-bottom: solid 0px #777;
+border-right: solid 0px #777;
+padding: 5px 5px;
+width: 150px;
+}

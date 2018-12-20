@@ -34,7 +34,8 @@ Blockly.JavaScript['maze_up'] = function (block) {
 
 
     if (TopDownGame.game.state.getCurrentState().key == "lesson5") {
-        Pegman.vdposY += operator; 
+        var step = Maze.getStepInDirection["NORTH"];
+        Pegman.vdposY = Pegman.vdposY + step[1] * operator; 
         //console.log(Pegman.vdposX, Pegman.vdposY);
         var tileLeft = map.getTile(Pegman.vdposX - 1, Pegman.vdposY, map.getLayer());
         var tileRight = map.getTile(Pegman.vdposX + 1, Pegman.vdposY, map.getLayer());
@@ -82,8 +83,8 @@ Blockly.JavaScript['maze_down'] = function (block) {
     Pegman.nextAction("down",  operator);
      
     if (TopDownGame.game.state.getCurrentState().key == "lesson5") {
-        Pegman.vdposY += operator;
-        //console.log(Pegman.vdposX, Pegman.vdposY);
+        var step = Maze.getStepInDirection["SOUTH"];
+        Pegman.vdposY = Pegman.vdposY + step[1] * operator; 
         var tileLeft = map.getTile(Pegman.vdposX - 1, Pegman.vdposY, map.getLayer());
         var tileRight = map.getTile(Pegman.vdposX + 1, Pegman.vdposY, map.getLayer());
         var tileDown = map.getTile(Pegman.vdposX, Pegman.vdposY + 1, map.getLayer());
@@ -133,7 +134,8 @@ Blockly.JavaScript['maze_right'] = function (block) {
     Pegman.nextAction("right",  operator);
     
     if (TopDownGame.game.state.getCurrentState().key == "lesson5") {
-        Pegman.vdposX += operator; 
+        var step = Maze.getStepInDirection["EAST"];
+        Pegman.vdposX = Pegman.vdposX + step[0] * operator; 
         //console.log(Pegman.vdposX, Pegman.vdposY);
         var tileAbove = map.getTile(Pegman.vdposX, Pegman.vdposY - 1, map.getLayer());
         var tileBelow = map.getTile(Pegman.vdposX, Pegman.vdposY + 1, map.getLayer());
@@ -180,7 +182,8 @@ Blockly.JavaScript['maze_left'] = function (block) {
     Pegman.nextAction("left",  operator);
     
     if (TopDownGame.game.state.getCurrentState().key == "lesson5") {
-        Pegman.vdposX += operator; 
+        var step = Maze.getStepInDirection["WEST"];
+        Pegman.vdposX = Pegman.vdposX + step[0] * operator; 
         //console.log(Pegman.vdposX, Pegman.vdposY);
         var tileAbove = map.getTile(Pegman.vdposX, Pegman.vdposY - 1, map.getLayer());
         var tileBelow = map.getTile(Pegman.vdposX, Pegman.vdposY + 1, map.getLayer());

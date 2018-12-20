@@ -401,11 +401,6 @@ function sinkInWater() {
 };
 function load_scene() {
     showflag = true;
-    var runButton = document.getElementById('runButton');
-    runButton.style.display = 'inline';
-    document.getElementById('resetButton').style.display = 'none';
-    // Prevent double-clicks or double-taps.
-    runButton.disabled = false;
     Blockly.mainWorkspace.clear();
     Blockly.mainWorkspace.clearUndo();
     Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);

@@ -107,12 +107,14 @@ TopDownGame.Lesson11.prototype = {
         //this.game.physics.arcade.overlap(bullets, aliens, collisionHandler, null, this);
         //this.blockLayer.debug = true;
 
+
     },
     animationStopped: function(sprite, animation) {
         explosion.visible = false;
     },
 
     update: function() {
+        
         if (xyqueue.length <= 9) {
             xyqueue.push({
                 x: player.x,
@@ -159,6 +161,9 @@ TopDownGame.Lesson11.prototype = {
         if (fireButton.isDown) {
             this.game.state.start('lesson21');
         }
+    },
+    render: function() {
+        this.game.debug.text('FPS: ' + this.game.time.fps || 'FPS: --', 150, 150, "#00ff00");
     },
     hitWall: function() {
 

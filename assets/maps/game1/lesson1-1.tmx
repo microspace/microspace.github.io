@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.6" orientation="orthogonal" renderorder="right-down" width="35" height="26" tilewidth="64" tileheight="64" infinite="0" nextobjectid="35">
+<map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="35" height="26" tilewidth="64" tileheight="64" infinite="0" nextlayerid="9" nextobjectid="35">
  <tileset firstgid="1" name="tileSheet04-01" tilewidth="64" tileheight="64" tilecount="260" columns="13">
-  <image source="tileSheet2.png" width="832" height="1280"/>
+  <image source="../tileSheet2.png" width="832" height="1280"/>
  </tileset>
- <layer name="flour" width="35" height="26">
+ <layer id="1" name="flour" width="35" height="26">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -33,7 +33,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer name="onFlour" width="35" height="26">
+ <layer id="2" name="onFlour" width="35" height="26">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -63,7 +63,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer name="sinkLayer" width="35" height="26">
+ <layer id="3" name="sinkLayer" width="35" height="26">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -93,7 +93,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer name="blockLayer" width="35" height="26">
+ <layer id="4" name="blockLayer" width="35" height="26">
   <data encoding="csv">
 70,70,70,70,70,70,70,70,70,70,70,70,70,70,70,70,72,56,22,24,56,56,56,22,24,33,81,133,134,134,134,134,134,134,134,
 83,83,83,83,83,83,83,83,83,83,83,83,83,83,83,84,85,56,22,24,56,56,56,22,24,33,81,133,134,134,134,134,134,134,134,
@@ -123,7 +123,7 @@
 32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32,32
 </data>
  </layer>
- <layer name="onBlockLayer" width="35" height="26">
+ <layer id="5" name="onBlockLayer" width="35" height="26">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -153,7 +153,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup name="playerLayer">
+ <objectgroup id="6" name="playerLayer">
   <object id="2" gid="178" x="287" y="590" width="64" height="64">
    <properties>
     <property name="type" value="playerStartPosition"/>
@@ -180,7 +180,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup name="objectLayer">
+ <objectgroup id="7" name="objectLayer">
   <object id="5" gid="235" x="1143.66" y="692.667" width="64" height="64">
    <properties>
     <property name="scene" type="int" value="4"/>
@@ -287,7 +287,7 @@
    </properties>
   </object>
  </objectgroup>
- <layer name="upperLayer" width="35" height="26">
+ <layer id="8" name="upperLayer" width="35" height="26">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

@@ -581,12 +581,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 pointer.y = Maze.scenes[scene].endPos[1];
                 this.pegmanSprite.body.enable = true;
 
-                //Copied from reset button code. Resets html button
-                var runButton = document.getElementById('runButton');
-                runButton.style.display = 'inline';
-                document.getElementById('resetButton').style.display = 'none';
-                // Prevent double-clicks or double-taps.
-                runButton.disabled = false;
+
                 lastSuccessfullPosition.x = player.x;
                 lastSuccessfullPosition.y = player.y;
             } else {
@@ -789,3 +784,32 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
 
 
     };
+
+
+
+    var runProgram = function() {
+
+        //var statements_stack = Blockly.JavaScript.statementToCode(Blockly.Blocks['factory_base'], 'STACK');
+        TopDownGame.game.stage.updateTransform();﻿
+        var code = Blockly.JavaScript.workspaceToCode(workspace);
+        try {
+            Pegman.vdposX = Pegman.dposX;
+    Pegman.vdposY = Pegman.dposY;
+            eval(code);
+        } catch (e) {
+            alert(e);
+        }
+        
+        Pegman.play();
+        
+    };
+    
+    var resetProgram = function() {
+
+        try {
+            weapon.fireAngle = Phaser.ANGLE_RIGHT;
+        } catch {
+    
+        }
+        Pegman.reset2();
+    }

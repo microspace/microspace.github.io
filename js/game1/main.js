@@ -10,7 +10,7 @@ $(window).resize(function() {
 
 
 
-TopDownGame.game = new Phaser.Game($(window).width(), $(window).height(), Phaser.CANVAS, 'canvasContainer', null, false, true);
+TopDownGame.game = new Phaser.Game($(window).width(), $(window).height(), Phaser.AUTO, 'canvasContainer', null, false, true);
 TopDownGame.game.state.add('Boot', TopDownGame.Boot);
 TopDownGame.game.state.add('Preload', TopDownGame.Preload);
 
@@ -32,44 +32,24 @@ function resizeGame() {
 }
 
 
-var init = function() {
-    Maze.bindClick('runButton', runProgram);
-    Maze.bindClick('resetButton', resetProgram);
-
-};
-
-
 
 var runProgram = function() {
-    var runButton = document.getElementById('runButton');
-    var resetButton = document.getElementById('resetButton');
-    // Ensure that Reset button is at least as wide as Run button.
-    if (!resetButton.style.minWidth) {
-        resetButton.style.minWidth = runButton.offsetWidth + 'px';
-    }
-    runButton.style.display = 'none';
-    resetButton.style.display = 'inline';
-    // Prevent double-clicks or double-taps.
-    resetButton.disabled = false;
+
     //var statements_stack = Blockly.JavaScript.statementToCode(Blockly.Blocks['factory_base'], 'STACK');
-    TopDownGame.game.stage.updateTransform();﻿
+    TopDownGame.game.stage.updateTransform();
     var code = Blockly.JavaScript.workspaceToCode(workspace);
     try {
         eval(code);
     } catch (e) {
         alert(e);
     }
-    TopDownGame.game.stage.updateTransform();﻿
+    TopDownGame.game.stage.updateTransform();
     Pegman.play();
-    TopDownGame.game.stage.updateTransform();﻿
+    TopDownGame.game.stage.updateTransform();
 };
 
 var resetProgram = function() {
-    var runButton = document.getElementById('runButton');
-    runButton.style.display = 'inline';
-    document.getElementById('resetButton').style.display = 'none';
-    // Prevent double-clicks or double-taps.
-    runButton.disabled = false;
+
     try {
         weapon.fireAngle = Phaser.ANGLE_RIGHT;
     } catch {

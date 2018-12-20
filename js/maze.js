@@ -6,6 +6,8 @@ var Maze = Maze || {};
  * @param {!Element|string} el Button element or ID thereof.
  * @param {!Function} func Event handler to bind.
  */
+
+ /*
 Maze.bindClick = function(el, func) {
   if (typeof el == 'string') {
     el = document.getElementById(el);
@@ -14,7 +16,7 @@ Maze.bindClick = function(el, func) {
   el.addEventListener('touchend', func, true);
 };
 
-
+*/
 Maze.DirectionType = {
   NORTH: 0,
   EAST: 1,
@@ -113,3 +115,29 @@ Maze.scenes = [{
         500
     ]
 }];
+
+$(function(){
+    $('#play').click(function() {
+       // if the play button value is 'play', call the play function
+       // otherwise call the pause function
+       $(this).val() == "play" ? play_int() : play_pause();
+       $(this).find('i:first').toggleClass('fa-play fa-refresh');
+       $(this).toggleClass('play reset');
+    });
+});
+
+function play_int() {
+    $('#play').val("pause");
+    // $('#play').text("Сброс");
+    $('#play').find('span').text("Сбросить");
+    runProgram();
+    // do play
+}
+
+function play_pause() {
+    $('#play').val("play");
+    $('#play').find('span').text("Запуск");
+    resetProgram();
+    //$('#play').text("Запуск");
+    // do pause
+}

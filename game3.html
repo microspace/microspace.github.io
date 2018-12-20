@@ -5,11 +5,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Game</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
+
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script type="text/javascript" src="js/lib/phaser.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="js/lib/plugin.min.js"></script> 
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript" src="js/lib/plugin.min.js"></script>
     <script type="text/javascript" src="js/lib/blockly/blockly_compressed.js"></script>
     <script type="text/javascript" src="js/lib/blockly/blocks_compressed.js"></script>
     <script type="text/javascript" src="js/lib/blockly/javascript_compressed.js"></script>
@@ -18,12 +22,12 @@
 
     <script type="text/javascript" src="js/maze.js"></script>
     <script type="text/javascript" src="js/pegman.js"></script>
-    
+
     <script type="text/javascript" src="js/game3/Boot.js"></script>
     <script type="text/javascript" src="js/game3/Preload.js"></script>
     <script type="text/javascript" src="js/game3/lesson3.js"></script>
 
-    
+
     <script type="text/javascript" src="js/game3/main.js"></script>
     <style>
         .blocklySvg {
@@ -46,17 +50,13 @@
         <div class="btn-group-vertical">
 
 
-        <button id="runButton" class="primary" title="Run">
-            <img src="./assets/1x1.gif" class="run icon21">&nbsp;&nbsp;&nbsp;&nbsp;Запуск&nbsp;&nbsp;&nbsp;&nbsp;
-                </button>
-            <button id="resetButton" class="primary" style="display: none;" title="Reset">
-                <img src="./assets/1x1.gif" class="stop icon21"> Сброс
-                </button>
-            <button type="button" id="nextButton" class="btn btn-success" style="display: none; title="Next">
-               Следущий
-                </button>
+            <button class="play" id="play" value="play"><i id="play" class="fa fa-play" aria-hidden="true"></i>&nbsp;<span>Запуск</span></button>
 
-                </div>
+            <button type="button" id="nextButton" class="btn btn-success" style="display: none; title=" Next">
+                Следущий
+            </button>
+
+        </div>
     </div>
     <xml id="toolbox" style="display: none; background-color: #4d90fe;">
         <block type="changex"></block>
@@ -88,41 +88,43 @@
     <script type="text/javascript">
     //var workspace = Blockly.inject('blockly_editor', { toolbox: document.getElementById('toolbox') });
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
     <script>
-    var blocklyArea = document.getElementById('full-size');
-    var blocklyDiv = document.getElementById('blocklyDiv');
-    var workspace = Blockly.inject(blocklyDiv, { toolbox: document.getElementById('toolbox') });
+        var blocklyArea = document.getElementById('full-size');
+        var blocklyDiv = document.getElementById('blocklyDiv');
+        var workspace = Blockly.inject(blocklyDiv, { toolbox: document.getElementById('toolbox') });
 
-    Blockly.BlockSvg.START_HAT = true;
-    //Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'),  workspace);
-    workspace.addChangeListener(Blockly.Events.disableOrphans);
-    var onresize = function(e) {
-        // Compute the absolute coordinates and dimensions of blocklyArea.
-        var element = blocklyArea;
-        var x = 0;
-        var y = 0;
-        do {
-            x += element.offsetLeft;
-            y += element.offsetTop;
-            element = element.offsetParent;
-        } while (element);
-        // Position blocklyDiv over blocklyArea.
-        blocklyDiv.style.left = x + 'px';
-        blocklyDiv.style.top = y + 'px';
-        blocklyDiv.style.width = blocklyArea.offsetWidth + 'px';
-        blocklyDiv.style.height = blocklyArea.offsetHeight + 'px';
+        Blockly.BlockSvg.START_HAT = true;
+        //Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'),  workspace);
+        workspace.addChangeListener(Blockly.Events.disableOrphans);
+        var onresize = function (e) {
+            // Compute the absolute coordinates and dimensions of blocklyArea.
+            var element = blocklyArea;
+            var x = 0;
+            var y = 0;
+            do {
+                x += element.offsetLeft;
+                y += element.offsetTop;
+                element = element.offsetParent;
+            } while (element);
+            // Position blocklyDiv over blocklyArea.
+            blocklyDiv.style.left = x + 'px';
+            blocklyDiv.style.top = y + 'px';
+            blocklyDiv.style.width = blocklyArea.offsetWidth + 'px';
+            blocklyDiv.style.height = blocklyArea.offsetHeight + 'px';
+            Blockly.svgResize(workspace);
+        };
+        window.addEventListener('resize', onresize, false);
+        onresize();
         Blockly.svgResize(workspace);
-    };
-    window.addEventListener('resize', onresize, false);
-    onresize();
-    Blockly.svgResize(workspace);
 
-    $("#resstart").css({ "z-index": 20 });
-    var buttonh = blocklyArea.offsetHeight - 200;
-$("#resstart").css({"z-index": 20});
-$("#resstart").css({"top": buttonh + 'px'});
+        $("#resstart").css({ "z-index": 20 });
+        var buttonh = blocklyArea.offsetHeight - 200;
+        $("#resstart").css({ "z-index": 20 });
+        $("#resstart").css({ "top": buttonh + 'px' });
     </script>
 </body>
 

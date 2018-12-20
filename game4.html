@@ -7,6 +7,8 @@
     <title>Game</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
+    <link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
+
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script type="text/javascript" src="js/lib/phaser.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -49,12 +51,8 @@
         <div class="btn-group-vertical">
 
 
-            <button id="runButton" class="primary" title="Run">
-                <img src="./assets/1x1.gif" class="run icon21">&nbsp;&nbsp;&nbsp;&nbsp;Запуск&nbsp;&nbsp;&nbsp;&nbsp;
-            </button>
-            <button id="resetButton" class="primary" style="display: none;" title="Reset">
-                <img src="./assets/1x1.gif" class="stop icon21"> Сброс
-            </button>
+            <button class="play" id="play" value="play"><i id="play" class="fa fa-play" aria-hidden="true"></i>&nbsp;<span>Запуск</span></button>
+
             <button type="button" id="nextButton" class="btn btn-success" style="display: none; title=" Next">
                 Следущий
             </button>
