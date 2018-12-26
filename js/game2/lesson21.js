@@ -102,7 +102,7 @@ TopDownGame.Lesson21.prototype = {
         weapon.fireAngle = Phaser.ANGLE_RIGHT; // shoot at right direcion by default
         weapon.trackSprite(player, 0, -9, false); //-9 выведено экспериментальным путём
         
-        this.game.time.events.repeat(Phaser.Timer.SECOND * 60, 1000, this.savetoServer, this);
+        this.game.time.events.repeat(Phaser.Timer.SECOND * 60, 1000, savetoServer, this);
 
     },
 
@@ -158,10 +158,7 @@ TopDownGame.Lesson21.prototype = {
             TopDownGame.game.state.start('lesson22');
         }
     },
-    savetoServer: function(){
-         saveWorkspace();
-         console.log("saved");
-    },
+    
     animationStopped: function(sprite, animation) {
         explosion.visible = false;
     },

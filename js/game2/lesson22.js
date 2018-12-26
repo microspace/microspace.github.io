@@ -122,6 +122,9 @@ TopDownGame.Lesson22.prototype = {
         weapon.bulletSpeed = Pegman.bulletSpeed;
         weapon.fireAngle = Phaser.ANGLE_RIGHT; // shoot at right direcion by default
         weapon.trackSprite(player, 0, -9, false); //-65 выведено экспериментальным путём
+
+        this.game.time.events.repeat(Phaser.Timer.SECOND * 60, 1000, savetoServer, this);
+
     },
 
 

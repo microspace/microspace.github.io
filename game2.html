@@ -35,8 +35,8 @@
 </head>
 
 <body>
-    <button type="button" class="btn btn-primary" id="loaddata">LOAD</button>
-    <button type="button" class="btn btn-secondary" id="savedata">SAVE</button>
+    <!-- <button type="button" class="btn btn-primary" id="loaddata">LOAD</button>
+    <button type="button" class="btn btn-secondary" id="savedata">SAVE</button> -->
     <div id="full-size">
         <div id="layer1" style="z-index: 0;">
             <div class="canvas" id="canvasContainer"></div>
@@ -84,8 +84,8 @@
         var scene;
         $.ajaxSetup({
             headers: {
-                //  'Authorization': 'Bearer ' + localStorage.getItem('token')
-                'Authorization': 'JWT eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiU1RVREVOVCIsImxvZ2luIjoi0YPRh9C10L3QuNC6X9C90L7QstGL0LkiLCJzdWIiOiIxNSIsImV4cCI6MTU0NjgzNzg2NX0.4NN2QI3pRHCJEPsRIXdTitg9nJ47dku3SbUWv-eb6BAeVM9QlNFlbI-YZU-jdlmjnjVdUfl8Ymt0gjHEBgfsEA'
+                'Authorization': localStorage.getItem('token')
+                //'Authorization': 'JWT eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiU1RVREVOVCIsImxvZ2luIjoi0YPRh9C10L3QuNC6X9C90L7QstGL0LkiLCJzdWIiOiIxNSIsImV4cCI6MTU0NzAzOTMwOH0.nii7ByRsGA5AXN8f3PMdSQ6Psb0F3LNrkhu_EAn7rOot5vQ13tf1WQgjpo7xtmpfeh4Ax9DUNsM73fYkVXNaIQ'
             }
         });
 
@@ -101,7 +101,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "http://198.23.152.169:8080/api/save",
+                url: "https://backend.it.robooky.ru/api/save",
                 // The key needs to match your method's input parameter (case-sensitive).
                 data: JSON.stringify({ "data": JSON.stringify(datatoStore), "lessonId": 23 }),
                 contentType: "application/json; charset=utf-8",
@@ -118,7 +118,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: 'http://198.23.152.169:8080/api/save?lesson-id=23&user-id=15',
+                url: 'https://backend.it.robooky.ru/api/save?lesson-id=23&user-id=15',
                 success: function (data) {
                     console.log(JSON.parse(data.data));
                     if (data) {

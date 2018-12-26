@@ -48,8 +48,8 @@ var Pegman = {
         TopDownGame.game.time.events.add(500, delayEnBody, this);
         this.pegmanSprite.angle = 0;
         function delayEnBody (){
+            console.log("delay");
             this.pegmanSprite.body.enable = true;
-            
         }
 
         
@@ -547,13 +547,8 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
     this.tween.start();
 },
     Pegman.Shoot = function () {
-
-
-        TopDownGame.game.time.events.add(200, fadePicture, this);
-
-
-        function fadePicture() {
-
+        TopDownGame.game.time.events.add(200, delayBeforeShoot, this);
+        function delayBeforeShoot() {
             this.anim = this.pegmanSprite.animations.play("SHOOT");
             weapon.fire();
             weapon.onKill.addOnce(function () {

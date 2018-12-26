@@ -124,6 +124,13 @@ TopDownGame.Lesson25.prototype = {
             align: "center"
         });
         b.anchor.set(0.5);
+        explosion = this.game.add.sprite(0, 0, 'explosion');
+        explosion.visible = false;
+        explanim = explosion.animations.add('EXPL', [0, 1, 2, 3, 4, 5], 20, /*loop*/ false);
+        explanim.onComplete.add(this.animationStopped, this);
+
+        this.game.time.events.repeat(Phaser.Timer.SECOND * 60, 1000, savetoServer, this);
+
     },
 
 
@@ -154,22 +161,12 @@ TopDownGame.Lesson25.prototype = {
             }
         }
 
-
-
-
-
         //collision
         this.game.physics.arcade.collide(player, this.blockLayer);
         this.game.physics.arcade.collide(player, this.sinkLayer);
         this.game.physics.arcade.collide(player, barrels, this.hitWall, null, this);
         this.game.physics.arcade.overlap(player, chests, this.chestCallback, null, this);
         this.game.physics.arcade.overlap(barrels, weapon.bullets, this.bulletHitBarrel, null, this);
-
-        //this.game.physics.arcade.collide(player, barrels, this.hitWall, null, this);
-        //this.game.physics.arcade.overlap(barrels, weapon.bullets, this.bulletHitBarrel, null, this);
-        //this.game.physics.arcade.overlap(player, pointer, this.scene2CompeteHandler, null, this);
-        //this.game.physics.arcade.overlap(this.blockLayer, weapon.bullets, this.bulletHitWall, null, this);
-        //player movement
 
         player.body.velocity.x = 0;
         var velocity = 400;
@@ -190,33 +187,9 @@ TopDownGame.Lesson25.prototype = {
         } else if (this.cursors.right.isDown) {
             player.body.velocity.x += velocity;
         }
-
-        
-        /*if (fireButton.isDown) {
-            //TopDownGame.game.state.start('lesson25');
-        }
-                if (this.cursors.up.isDown) {
-                    this.game.camera.y -= 4;
-                } else if (this.cursors.down.isDown) {
-                    this.game.camera.y += 4;
-                }
-                if (this.cursors.left.isDown) {
-                    this.game.camera.x -= 4;
-                } else if (this.cursors.right.isDown) {
-                    this.game.camera.x += 4;
-                }
-        */
-        // this.game.debug.body(player);
-        // this.game.debug.physicsGroup(barrels);
-        // this.game.debug.bodyInfo(player, 32, 50);
-
     },
     hitWall: function() {
-
         if (!flag) {
-
-            console.log("hitWall1");
-            //Pegman.pegmanSprite.body.enable = false;
             player.y = xyqueue[7].y;
             player.x = xyqueue[7].x;
             Pegman.pegmanActions = [];
@@ -224,15 +197,16 @@ TopDownGame.Lesson25.prototype = {
                 Pegman.tween.stop();
             }
             player.animations.play('HIT');
-
             flag = true;
-
-
         }
+    },
+    animationStopped: function(sprite, animation) {
+        explosion.visible = false;
     },
     sinkInWater: function() {
         if (!flag) {
             console.log("sinkInWater");
+            player.body.enable = false;
             b.visible = false;
 
             Pegman.pegmanActions = [];

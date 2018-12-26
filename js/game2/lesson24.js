@@ -128,6 +128,9 @@ TopDownGame.Lesson24.prototype = {
         explosion.visible = false;
         explanim = explosion.animations.add('EXPL', [0, 1, 2, 3, 4, 5], 20, /*loop*/ false);
         explanim.onComplete.add(this.animationStopped, this);
+
+        this.game.time.events.repeat(Phaser.Timer.SECOND * 60, 1000, savetoServer, this);
+
     },
 
 
@@ -238,6 +241,7 @@ TopDownGame.Lesson24.prototype = {
     sinkInWater: function() {
         if (!flag) {
             console.log("sinkInWater");
+            player.body.enable = false;
             b.visible = false;
 
             Pegman.pegmanActions = [];

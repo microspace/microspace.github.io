@@ -39,3 +39,7 @@ function resizeGame() {
 
 
 
+function savetoServer(){
+    saveWorkspace();
+    console.log("saved");
+}
