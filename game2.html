@@ -106,7 +106,7 @@
             $.ajax({
                 type: "POST",
                 url: "https://backend.it.robooky.ru/api/save",
-                headers: { "Authorization": data.token },
+                headers: { "Authorization": urldata.token },
                 // The key needs to match your method's input parameter (case-sensitive).
                 data: JSON.stringify({ "data": JSON.stringify(datatoStore), "lessonId": 23 }),
                 contentType: "application/json; charset=utf-8",
@@ -145,7 +145,7 @@
                         } catch {
 
                             TopDownGame.game.state.start('lesson21');
-                            
+
                         }
 
 
