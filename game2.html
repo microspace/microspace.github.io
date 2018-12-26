@@ -119,18 +119,19 @@
 
         function loadWorkspace() {
             var params = location.href.split('?')[1].split('&');
-            data = {};
-            console.log(params);
+            urldata = {};
+            
             for (x in params) {
                 
-                data[params[x].split('=')[0]] = params[x].split('=')[1];
+                urldata[params[x].split('=')[0]] = params[x].split('=')[1];
             }
-
+            console.log(urldata);
             $.ajax({
                 type: 'GET',
                 url: 'https://backend.it.robooky.ru/api/save?lesson-id=23&user-id=15',
                 headers: { "Authorization": data.token },
                 success: function (data) {
+                    console.log("urldata" +  urldata);
                     console.log(JSON.parse(data.data));
                     if (data) {
                         var code = JSON.parse(data.data).code;
