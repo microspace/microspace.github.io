@@ -129,7 +129,7 @@
             $.ajax({
                 type: 'GET',
                 url: 'https://backend.it.robooky.ru/api/save?lesson-id=23&user-id=15',
-                headers: { "Authorization": data.token },
+                headers: { "Authorization": urldata.token },
                 success: function (data) {
                     console.log("urldata" +  urldata);
                     console.log(JSON.parse(data.data));
