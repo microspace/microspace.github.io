@@ -6,7 +6,7 @@ var weapon;
 var explosion;
 var items;
 var barrels;
-var scene2 = 3; // 0 is start scene2 of the level
+
 var goalbarrelcount;
 var xyqueue = getArrayWithLimitedLength(10);
 var lastSuccessfullPosition = {
@@ -17,6 +17,7 @@ var lastSuccessfullPosition = {
 TopDownGame.Lesson21 = function() {};
 TopDownGame.Lesson21.prototype = {
     create: function() {
+        scene = 1; // 0 is start scene2 of the level
         fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
         this.map = this.game.add.tilemap('lesson21');
         //the first parameter is the tileset name as specified in Tiled, the second is the key to the asset
@@ -100,7 +101,8 @@ TopDownGame.Lesson21.prototype = {
         weapon.bulletSpeed = Pegman.bulletSpeed;
         weapon.fireAngle = Phaser.ANGLE_RIGHT; // shoot at right direcion by default
         weapon.trackSprite(player, 0, -9, false); //-9 выведено экспериментальным путём
-
+        
+        this.game.time.events.repeat(Phaser.Timer.SECOND * 60, 1000, this.savetoServer, this);
 
     },
 
@@ -129,18 +131,8 @@ TopDownGame.Lesson21.prototype = {
             }
         }
 
-
-
-
-
-        //collision
         this.game.physics.arcade.collide(player, this.blockLayer);
         this.game.physics.arcade.overlap(player, chests, this.chestCallback, null, this);
-        //this.game.physics.arcade.collide(player, barrels, this.hitWall, null, this);
-        //this.game.physics.arcade.overlap(barrels, weapon.bullets, this.bulletHitBarrel, null, this);
-        //this.game.physics.arcade.overlap(player, pointer, this.scene2CompeteHandler, null, this);
-        //this.game.physics.arcade.overlap(this.blockLayer, weapon.bullets, this.bulletHitWall, null, this);
-        //player movement
 
         player.body.velocity.x = 0;
         var velocity = 400;
@@ -165,31 +157,17 @@ TopDownGame.Lesson21.prototype = {
         if (fireButton.isDown) {
             TopDownGame.game.state.start('lesson22');
         }
-        /*
-                if (this.cursors.up.isDown) {
-                    this.game.camera.y -= 4;
-                } else if (this.cursors.down.isDown) {
-                    this.game.camera.y += 4;
-                }
-                if (this.cursors.left.isDown) {
-                    this.game.camera.x -= 4;
-                } else if (this.cursors.right.isDown) {
-                    this.game.camera.x += 4;
-                }
-        */
-        // this.game.debug.body(player);
-        // this.game.debug.physicsGroup(barrels);
-        // this.game.debug.bodyInfo(player, 32, 50);
-
+    },
+    savetoServer: function(){
+         saveWorkspace();
+         console.log("saved");
     },
     animationStopped: function(sprite, animation) {
         explosion.visible = false;
     },
 
     hitWall: function() {
-
         if (!flag) {
-
             console.log("hitWall1");
             //Pegman.pegmanSprite.body.enable = false;
             player.y = xyqueue[7].y;
@@ -199,10 +177,7 @@ TopDownGame.Lesson21.prototype = {
                 Pegman.tween.stop();
             }
             player.animations.play('HIT');
-
             flag = true;
-
-
         }
     },
     chestCallback: function(sprite, chest) {

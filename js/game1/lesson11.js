@@ -163,7 +163,7 @@ TopDownGame.Lesson11.prototype = {
         }
     },
     render: function() {
-        this.game.debug.text('FPS: ' + this.game.time.fps || 'FPS: --', 150, 150, "#00ff00");
+
     },
     hitWall: function() {
 

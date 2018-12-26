@@ -6,7 +6,7 @@ var weapon;
 var explosion;
 var items;
 var barrels;
-var scene2 = 3; // 0 is start scene2 of the level
+
 var goalbarrelcount;
 var xyqueue = getArrayWithLimitedLength(10);
 var lastSuccessfullPosition = {
@@ -17,6 +17,7 @@ var lastSuccessfullPosition = {
 TopDownGame.Lesson25 = function() {};
 TopDownGame.Lesson25.prototype = {
     create: function() {
+        scene = 5; // 0 is start scene2 of the level
         this.game.forceSingleUpdate=false;
         this.map = this.game.add.tilemap('lesson25');
         //the first parameter is the tileset name as specified in Tiled, the second is the key to the asset
@@ -190,10 +191,10 @@ TopDownGame.Lesson25.prototype = {
             player.body.velocity.x += velocity;
         }
 
-        if (fireButton.isDown) {
+        
+        /*if (fireButton.isDown) {
             //TopDownGame.game.state.start('lesson25');
         }
-        /*
                 if (this.cursors.up.isDown) {
                     this.game.camera.y -= 4;
                 } else if (this.cursors.down.isDown) {

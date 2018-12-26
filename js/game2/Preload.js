@@ -1,3 +1,4 @@
+var scene;
 var TopDownGame = TopDownGame || {};
 
 //loading the game assets
@@ -29,6 +30,7 @@ TopDownGame.Preload.prototype = {
 
     },
     create: function() {
-        this.state.start('lesson21');
+        loadWorkspace();
+        //this.state.start('lesson2' + scene);
     }
 };

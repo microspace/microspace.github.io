@@ -53,7 +53,7 @@
 
             <button class="play" id="play" value="play"><i id="play" class="fa fa-play" aria-hidden="true"></i>&nbsp;<span>Запуск</span></button>
 
-            <button type="button" id="nextButton" class="btn btn-success" style="display: none; title=" Next">
+            <button type="button" id="nextButton" class="btn btn-success" style="display: none;" title=" Next">
                 Следущий
             </button>
 
@@ -129,7 +129,7 @@
         $("#resstart").css({ "z-index": 20 });
         $("#resstart").css({ "top": buttonh + 'px' });
 
-        function onFirstComment(event) {
+        function onHideHat(event) {
             if (event.type == Blockly.Events.MOVE) {
                 try {
                     bl = workspace.getBlockById(event.blockId);
@@ -142,7 +142,7 @@
                 }
             }
         }
-        workspace.addChangeListener(onFirstComment);
+        workspace.addChangeListener(onHideHat);
 
     </script>
 </body>

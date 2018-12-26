@@ -6,7 +6,7 @@ var weapon;
 var explosion;
 var items;
 var barrels;
-var scene2 = 3; // 0 is start scene2 of the level
+
 var goalbarrelcount;
 var xyqueue = getArrayWithLimitedLength(10);
 var lastSuccessfullPosition = {
@@ -17,6 +17,7 @@ var lastSuccessfullPosition = {
 TopDownGame.Lesson24 = function() {};
 TopDownGame.Lesson24.prototype = {
     create: function() {
+        scene = 4; // 0 is start scene2 of the level
         this.map = this.game.add.tilemap('lesson24');
         //the first parameter is the tileset name as specified in Tiled, the second is the key to the asset
         this.map.addTilesetImage('tileSheet04-01', 'gameTiles');
@@ -121,6 +122,12 @@ TopDownGame.Lesson24.prototype = {
             align: "center"
         });
         b.anchor.set(0.5);
+
+
+        explosion = this.game.add.sprite(0, 0, 'explosion');
+        explosion.visible = false;
+        explanim = explosion.animations.add('EXPL', [0, 1, 2, 3, 4, 5], 20, /*loop*/ false);
+        explanim.onComplete.add(this.animationStopped, this);
     },
 
 
@@ -186,10 +193,10 @@ TopDownGame.Lesson24.prototype = {
             player.body.velocity.x += velocity;
         }
 
-        if (fireButton.isDown) {
+        
+        /*if (fireButton.isDown) {
             TopDownGame.game.state.start('lesson25');
         }
-        /*
                 if (this.cursors.up.isDown) {
                     this.game.camera.y -= 4;
                 } else if (this.cursors.down.isDown) {
@@ -205,6 +212,9 @@ TopDownGame.Lesson24.prototype = {
         // this.game.debug.physicsGroup(barrels);
         // this.game.debug.bodyInfo(player, 32, 50);
 
+    },
+    animationStopped: function(sprite, animation) {
+        explosion.visible = false;
     },
     hitWall: function() {
 

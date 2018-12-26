@@ -141,3 +141,5 @@ function play_pause() {
     //$('#play').text("Запуск");
     // do pause
 }
+
+

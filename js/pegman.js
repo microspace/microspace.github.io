@@ -44,6 +44,15 @@ var Pegman = {
     },
 
     reset2: function () {
+
+        TopDownGame.game.time.events.add(500, delayEnBody, this);
+        this.pegmanSprite.angle = 0;
+        function delayEnBody (){
+            this.pegmanSprite.body.enable = true;
+            
+        }
+
+        
         TopDownGame.game.tweens.removeAll();
         TopDownGame.game.stage.updateTransform();
         this.direction = Maze.DirectionType.EAST
@@ -101,6 +110,7 @@ var Pegman = {
     postReset: function () {
         this.pegmanSprite.reset(lastSuccessfullPosition.x, lastSuccessfullPosition.y);
         this.pegmanSprite.fresh = false;
+        
         flag = false;
 
         if (TopDownGame.game.state.getCurrentState().key == "lesson11") {
@@ -621,12 +631,11 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
             if (aliveChestsCount == 0) {
                 // $("#modaltext").text("Задание выполнено! Переходим на уровень 2.2!");
                 // $("#exampleModal").modal();
+                
                 TopDownGame.game.state.start('lesson22');
-                var runButton = document.getElementById('runButton');
-                runButton.style.display = 'inline';
-                document.getElementById('resetButton').style.display = 'none';
-                // Prevent double-clicks or double-taps.
-                runButton.disabled = false;
+                scene = 2;
+                saveWorkspace();
+
             } else {
                 $("#modaltext").text("Ты подобрал не все сундуки!");
                 $("#exampleModal").modal();
@@ -645,12 +654,11 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
             if (aliveChestsCount == 0) {
                 // $("#modaltext").text("Задание выполнено! Переходим на уровень 2.3!");
                 // $("#exampleModal").modal();
+                
                 TopDownGame.game.state.start('lesson23');
-                var runButton = document.getElementById('runButton');
-                runButton.style.display = 'inline';
-                document.getElementById('resetButton').style.display = 'none';
-                // Prevent double-clicks or double-taps.
-                runButton.disabled = false;
+                scene = 3;
+                saveWorkspace();
+
             } else {
                 $("#modaltext").text("Ты подобрал не все сундуки!");
                 $("#exampleModal").modal();
@@ -670,11 +678,9 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 // $("#modaltext").text("Задание выполнено! Переходим на уровень 2.4!");
                 // $("#exampleModal").modal();
                 TopDownGame.game.state.start('lesson24');
-                var runButton = document.getElementById('runButton');
-                runButton.style.display = 'inline';
-                document.getElementById('resetButton').style.display = 'none';
-                // Prevent double-clicks or double-taps.
-                runButton.disabled = false;
+                scene = 4;
+                saveWorkspace();
+
             } else {
                 $("#modaltext").text("Ты подобрал не все сундуки!");
                 $("#exampleModal").modal();
@@ -691,14 +697,10 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 }
             });
             if (aliveChestsCount == 0) {
-                $("#modaltext").text("Победа!!!");
-                $("#exampleModal").modal();
+                scene = 5;
                 TopDownGame.game.state.start('lesson25');
-                var runButton = document.getElementById('runButton');
-                runButton.style.display = 'inline';
-                document.getElementById('resetButton').style.display = 'none';
-                // Prevent double-clicks or double-taps.
-                runButton.disabled = false;
+                saveWorkspace();
+
             } else {
                 $("#modaltext").text("Ты подобрал не все сундуки!");
                 $("#exampleModal").modal();
@@ -713,6 +715,8 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
             });
             if (aliveChestsCount == 0) {
                 TopDownGame.game.state.start('lesson11');
+                window.open("http://unibtc.store:4200/student/courses","_self")
+            
             } else {
                 $("#modaltext").text("Ты собрал не все сундуки!");
                 $("#exampleModal").modal();
