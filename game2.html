@@ -120,8 +120,9 @@
         function loadWorkspace() {
             var params = location.href.split('?')[1].split('&');
             data = {};
+            console.log(params);
             for (x in params) {
-                console.log(x);
+                
                 data[params[x].split('=')[0]] = params[x].split('=')[1];
             }
 
