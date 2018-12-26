@@ -100,6 +100,12 @@
 
 
             $.ajax({
+                $.ajaxSetup({
+            headers: {
+                'Authorization': localStorage.getItem('token')
+                //'Authorization': 'JWT eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiU1RVREVOVCIsImxvZ2luIjoi0YPRh9C10L3QuNC6X9C90L7QstGL0LkiLCJzdWIiOiIxNSIsImV4cCI6MTU0NzAzOTMwOH0.nii7ByRsGA5AXN8f3PMdSQ6Psb0F3LNrkhu_EAn7rOot5vQ13tf1WQgjpo7xtmpfeh4Ax9DUNsM73fYkVXNaIQ'
+            }
+        });
                 type: "POST",
                 url: "https://backend.it.robooky.ru/api/save",
                 // The key needs to match your method's input parameter (case-sensitive).
@@ -114,7 +120,12 @@
         }
 
         function loadWorkspace() {
-
+            $.ajaxSetup({
+            headers: {
+                'Authorization': localStorage.getItem('token')
+                //'Authorization': 'JWT eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiU1RVREVOVCIsImxvZ2luIjoi0YPRh9C10L3QuNC6X9C90L7QstGL0LkiLCJzdWIiOiIxNSIsImV4cCI6MTU0NzAzOTMwOH0.nii7ByRsGA5AXN8f3PMdSQ6Psb0F3LNrkhu_EAn7rOot5vQ13tf1WQgjpo7xtmpfeh4Ax9DUNsM73fYkVXNaIQ'
+            }
+        });
 
             $.ajax({
                 type: 'GET',
