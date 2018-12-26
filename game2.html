@@ -121,9 +121,9 @@
         function loadWorkspace() {
             var params = location.href.split('?')[1].split('&');
             urldata = {};
-            
+
             for (x in params) {
-                
+
                 urldata[params[x].split('=')[0]] = params[x].split('=')[1];
             }
             urldata.token = decodeURIComponent(urldata.token);
@@ -133,16 +133,23 @@
                 url: 'https://backend.it.robooky.ru/api/save?lesson-id=23&user-id=15',
                 headers: { "Authorization": urldata.token },
                 success: function (data) {
-                    console.log("urldata" +  urldata);
-                    console.log(JSON.parse(data.data));
-                    if (data) {
-                        var code = JSON.parse(data.data).code;
-                        var scene = JSON.parse(data.data).scene;
-                        TopDownGame.game.state.start('lesson2' + scene);
 
-                        Blockly.mainWorkspace.clear();
-                        xmlDom = Blockly.Xml.textToDom(JSON.parse(data.data).code);
-                        Blockly.Xml.domToWorkspace(xmlDom, Blockly.mainWorkspace);
+                    if (data) {
+                        try {
+                            var code = JSON.parse(data.data).code;
+                            var scene = JSON.parse(data.data).scene;
+                            TopDownGame.game.state.start('lesson2' + scene);
+                            Blockly.mainWorkspace.clear();
+                            xmlDom = Blockly.Xml.textToDom(JSON.parse(data.data).code);
+                            Blockly.Xml.domToWorkspace(xmlDom, Blockly.mainWorkspace);
+                        } catch {
+
+                            TopDownGame.game.state.start('lesson21');
+                            
+                        }
+
+
+
                     }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
