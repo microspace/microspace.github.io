@@ -143,3 +143,72 @@ function play_pause() {
 }
 
 
+var scene;
+
+
+function saveWorkspace() {
+    var params = location.href.split('?')[1].split('&');
+    data = {};
+    for (x in params) {
+        console.log(x);
+        data[params[x].split('=')[0]] = params[x].split('=')[1];
+    }
+    urldata.token = decodeURIComponent(urldata.token);
+
+    var xmlDom = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
+    var xmlText = Blockly.Xml.domToPrettyText(xmlDom);
+
+    var newTemp = xmlText.replace(/"/g, "'");
+    var datatoStore = {};
+    datatoStore.code = newTemp;
+    datatoStore.scene = scene;
+
+
+    $.ajax({
+        type: "POST",
+        url: "https://backend.it.robooky.ru/api/save",
+        headers: { "Authorization": urldata.token },
+        // The key needs to match your method's input parameter (case-sensitive).
+        data: JSON.stringify({ "data": JSON.stringify(datatoStore), "lessonId": 23 }),
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) { console.log(data); },
+        failure: function (errMsg) {
+            alert(errMsg);
+        }
+    });
+}
+
+function loadWorkspace() {
+    var params = location.href.split('?')[1].split('&');
+    urldata = {};
+    for (x in params) {
+        urldata[params[x].split('=')[0]] = params[x].split('=')[1];
+    }
+    urldata.token = decodeURIComponent(urldata.token);
+    console.log(urldata);
+    $.ajax({
+        type: 'GET',
+        url: 'https://backend.it.robooky.ru/api/save?lesson-id={0}&user-id={1}'.f(urldata.lesson-id, user-id),
+        headers: { "Authorization": urldata.token },
+        success: function (data) {
+            if (data) {
+                try {
+                    var code = JSON.parse(data.data).code;
+                    var scene = JSON.parse(data.data).scene;
+                    TopDownGame.game.state.start('lesson2' + scene);
+                    Blockly.mainWorkspace.clear();
+                    xmlDom = Blockly.Xml.textToDom(JSON.parse(data.data).code);
+                    Blockly.Xml.domToWorkspace(xmlDom, Blockly.mainWorkspace);
+                } catch {
+                    TopDownGame.game.state.start('lesson21');
+                }
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert(xhr.status);
+            alert(thrownError);
+        }
+    });
+
+}
