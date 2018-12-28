@@ -55,7 +55,7 @@ TopDownGame.Lesson3.prototype = {
         sl5 = this.input.keyboard.addKey(Phaser.KeyCode.G);
         sl6 = this.input.keyboard.addKey(Phaser.KeyCode.H);
 
-        
+        scene = 1;
 
 
         //buildAnimation
