@@ -868,6 +868,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
             urldata[params[x].split('=')[0]] = params[x].split('=')[1];
         }
         urldata.token = decodeURIComponent(urldata.token);
+        console.log(urldata);
         
         $.ajax({
             type: 'GET',
