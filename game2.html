@@ -81,9 +81,6 @@
     <script src="//stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
     <script>
-
-
-
         var blocklyArea = document.getElementById('full-size');
         var blocklyDiv = document.getElementById('blocklyDiv');
         var workspace = Blockly.inject(blocklyDiv, { toolbox: document.getElementById('toolbox') });
@@ -117,7 +114,20 @@
         var buttonh = blocklyArea.offsetHeight - 200;
         $("#resstart").css({ "z-index": 20 });
         $("#resstart").css({ "top": buttonh + 'px' });
+        function onHideHat(event) {
+      if (event.type == Blockly.Events.MOVE) {
+        try {
+          bl = workspace.getBlockById(event.blockId);
+          var dx = Math.abs(event.newCoordinate.x - event.oldCoordinate.x);
+          if (event.newCoordinate.x < 0 && bl.type == "factory_base") {
+            bl.moveBy(dx, 0);
+          }
+        } catch {
 
+        }
+      }
+    }
+    workspace.addChangeListener(onHideHat);
     </script>
 </body>
 

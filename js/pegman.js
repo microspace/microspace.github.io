@@ -48,7 +48,7 @@ var Pegman = {
         TopDownGame.game.time.events.add(500, delayEnBody, this);
         this.pegmanSprite.angle = 0;
         function delayEnBody (){
-            console.log("delay");
+            // включаем физику с задержкой, из-за переходных процессов в игре
             this.pegmanSprite.body.enable = true;
         }
 
@@ -784,12 +784,10 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
 
     };
 
-
-
     var runProgram = function() {
 
         //var statements_stack = Blockly.JavaScript.statementToCode(Blockly.Blocks['factory_base'], 'STACK');
-        TopDownGame.game.stage.updateTransform();﻿
+        TopDownGame.game.stage.updateTransform();
         var code = Blockly.JavaScript.workspaceToCode(workspace);
         try {
             Pegman.vdposX = Pegman.dposX;
@@ -811,4 +809,88 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
     
         }
         Pegman.reset2();
+    }
+
+
+var scene;
+
+    function saveWorkspace() {
+        var params = location.href.split('?')[1].split('&');
+        var urldata = {};
+        for (var x in params) {
+            urldata[params[x].split('=')[0]] = params[x].split('=')[1];
+        }
+        urldata.token = decodeURIComponent(urldata.token);
+
+        var xmlDom = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
+        var xmlText = Blockly.Xml.domToPrettyText(xmlDom);
+
+        var newTemp = xmlText.replace(/"/g, "'");
+        var datatoStore = {};
+        datatoStore.code = newTemp;
+        datatoStore.scene = scene;
+        datatoStore.position[0] = lastSuccessfullPosition.x;
+        datatoStore.position[1] = lastSuccessfullPosition.y;
+
+
+
+        $.ajax({
+            type: "POST",
+            url: "https://backend.it.robooky.ru/api/save",
+            headers: { "Authorization": urldata.token },
+            // The key needs to match your method's input parameter (case-sensitive).
+            data: JSON.stringify({ "data": JSON.stringify(datatoStore), "lessonId": urldata["lesson-id"] }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) { },
+            failure: function (errMsg) {
+                console.log(errMsg);
+            }
+        });
+    }
+
+    function loadWorkspace(clesson) {
+        var params = location.href.split('?')[1].split('&');
+        var urldata = {};
+        for (var x in params) {
+            urldata[params[x].split('=')[0]] = params[x].split('=')[1];
+        }
+        urldata.token = decodeURIComponent(urldata.token);
+        
+        $.ajax({
+            type: 'GET',
+            url: 'https://backend.it.robooky.ru/api/save?lesson-id=' + urldata["lesson-id"] + '&user-id=' + urldata["student-id"],
+            headers: { "Authorization": urldata.token },
+            success: function (data) {
+                if (data) {
+                    try {
+                        var code = JSON.parse(data.data).code;
+                        var scene = JSON.parse(data.data).scene;
+                        if (clesson == 'lesson1') {
+
+                            TopDownGame.game.state.start(clesson + "1");
+                            lastSuccessfullPosition = {
+                                x: JSON.parse(data.data).position[0],
+                                y: JSON.parse(data.data).position[1]
+                            };
+
+                        } else if (clesson == 'lesson2') {
+                            TopDownGame.game.state.start(clesson + scene);
+                        }
+                        
+                        Blockly.mainWorkspace.clear();
+                        var xmlDom = Blockly.Xml.textToDom(code);
+                        Blockly.Xml.domToWorkspace(xmlDom, Blockly.mainWorkspace);
+                    } catch(e) {
+                        console.log(e.message);
+                        TopDownGame.game.state.start(clesson + "1");
+                    }
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(xhr.status);
+                console.log(thrownError);
+            }
+        });
+
     }

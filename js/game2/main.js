@@ -5,16 +5,10 @@ $(window).resize(function() {
     window.resizeGame();
 });
 
-
-
-
-
-
 TopDownGame.game = new Phaser.Game($(window).width(), $(window).height(), Phaser.CANVAS, 'canvasContainer', null, false, true);
+
 TopDownGame.game.state.add('Boot', TopDownGame.Boot);
-
 TopDownGame.game.state.add('Preload', TopDownGame.Preload);
-
 TopDownGame.game.state.add('lesson21', TopDownGame.Lesson21);
 TopDownGame.game.state.add('lesson22', TopDownGame.Lesson22);
 TopDownGame.game.state.add('lesson23', TopDownGame.Lesson23);
@@ -41,5 +35,4 @@ function resizeGame() {
 
 function savetoServer(){
     saveWorkspace();
-    console.log("saved");
 }

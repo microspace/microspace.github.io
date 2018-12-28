@@ -106,8 +106,6 @@ TopDownGame.Lesson21.prototype = {
 
     },
 
-
-
     update: function() {
         var xtext = Math.floor(player.x / Maze.SQUARE_SIZE) + Maze.coordoffset_x;
         var ytext = -1 * Math.floor(player.y / Maze.SQUARE_SIZE) + Maze.coordoffset_y;

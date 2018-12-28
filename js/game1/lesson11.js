@@ -9,14 +9,11 @@ var barrels;
 var scene = 0; // 0 is start scene of the level
 var goalbarrelcount;
 var xyqueue = getArrayWithLimitedLength(10);
-var lastSuccessfullPosition = {
-    x: null,
-    y: null
-}; //хранит положение какое было у спрайта когда он в последний раз соверлаппился с целью
+var lastSuccessfullPosition = {}; //хранит положение какое было у спрайта когда он в последний раз соверлаппился с целью
 //title screen
-TopDownGame.Lesson11 = function() {};
+TopDownGame.Lesson11 = function () { };
 TopDownGame.Lesson11.prototype = {
-    create: function() {
+    create: function () {
         this.map = this.game.add.tilemap('lesson11');
         //the first parameter is the tileset name as specified in Tiled, the second is the key to the asset
         this.map.addTilesetImage('tileSheet04-01', 'gameTiles');
@@ -29,10 +26,18 @@ TopDownGame.Lesson11.prototype = {
         //create player
         // load all data from map json, populate the structure.
         this.loadSceneData();
-        lastSuccessfullPosition = {
-            x: Maze.scenes[scene].startPos[0],
-            y: Maze.scenes[scene].startPos[1]
-        };
+
+        if (lastSuccessfullPosition === {}) {
+            var result = this.findObjectsByType('playerStartPosition', this.map, 'playerLayer');
+
+            lastSuccessfullPosition = {
+                x: result[0].x,
+                y: result[0].y
+            };
+        }
+
+
+
         //var result = this.findObjectsByType('playerStartPosition', this.map, 'playerLayer');
         this.createItems();
 
@@ -109,12 +114,12 @@ TopDownGame.Lesson11.prototype = {
 
 
     },
-    animationStopped: function(sprite, animation) {
+    animationStopped: function (sprite, animation) {
         explosion.visible = false;
     },
 
-    update: function() {
-        
+    update: function () {
+
         if (xyqueue.length <= 9) {
             xyqueue.push({
                 x: player.x,
@@ -162,10 +167,10 @@ TopDownGame.Lesson11.prototype = {
             this.game.state.start('lesson21');
         }
     },
-    render: function() {
+    render: function () {
 
     },
-    hitWall: function() {
+    hitWall: function () {
 
         if (!flag) {
             player.y = xyqueue[7].y;
@@ -178,7 +183,7 @@ TopDownGame.Lesson11.prototype = {
             flag = true;
         }
     },
-    bulletHitBarrel: function(sprite, bullet) {
+    bulletHitBarrel: function (sprite, bullet) {
         var damage = 48;
         sprite.damage(damage);
         if (sprite["sprite"] == "restrictedToHit") {
@@ -212,7 +217,7 @@ TopDownGame.Lesson11.prototype = {
         explosion.animations.play('EXPL');
         bullet.kill();
     },
-    sinkInWater: function() {
+    sinkInWater: function () {
         if (!flag) {
             Pegman.pegmanActions = [];
             if (Pegman.tween) {
@@ -236,26 +241,26 @@ TopDownGame.Lesson11.prototype = {
                 y: 0.1
             }, 1000, Phaser.Easing.Linear.None, true);
 
-            this.tween.onComplete.addOnce(function() {
+            this.tween.onComplete.addOnce(function () {
                 player.kill();
             }, this);
             flag = true;
         }
     },
-    createItems: function() {
+    createItems: function () {
         //create items
         barrels = this.game.add.group();
         barrels.enableBody = true;
         result = this.findObjectsByType('barrel', this.map, 'objectLayer');
-        result.forEach(function(element) {
+        result.forEach(function (element) {
             this.createFromTiledObject(element, barrels);
         }, this);
     },
 
     //find objects in a Tiled layer that containt a property called "type" equal to a certain value
-    findObjectsByType: function(type, map, layer) {
+    findObjectsByType: function (type, map, layer) {
         var result = new Array();
-        map.objects[layer].forEach(function(element) {
+        map.objects[layer].forEach(function (element) {
             if (element.properties.type === type) {
                 //Phaser uses top left, Tiled bottom left so we have to adjust
                 //also keep in mind that the cup images are a bit smaller than the tile which is 16x16
@@ -267,10 +272,10 @@ TopDownGame.Lesson11.prototype = {
         return result;
     },
     //create a sprite from an object
-    createFromTiledObject: function(element, group) {
+    createFromTiledObject: function (element, group) {
         var sprite = group.create(element.x, element.y, 'totalsheet', 234);
         //copy all properties to the sprite
-        Object.keys(element.properties).forEach(function(key) {
+        Object.keys(element.properties).forEach(function (key) {
             sprite[key] = element.properties[key];
         });
 
@@ -296,7 +301,7 @@ TopDownGame.Lesson11.prototype = {
         sprite.health = 100;
         sprite.body.immovable = true;
     },
-    loadSceneData: function() {
+    loadSceneData: function () {
         var result = this.findObjectsByType('playerStartPosition', this.map, 'playerLayer');
         Maze.scenes[0].startPos[0] = result[0].x;
         Maze.scenes[0].startPos[1] = result[0].y;
@@ -333,7 +338,7 @@ TopDownGame.Lesson11.prototype = {
 function getArrayWithLimitedLength(length) {
     var array = new Array();
 
-    array.push = function() {
+    array.push = function () {
         if (this.length >= length) {
             this.shift();
         }
