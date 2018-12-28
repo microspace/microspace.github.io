@@ -14,7 +14,7 @@ TopDownGame.game = new Phaser.Game($(window).width(), $(window).height(), Phaser
 TopDownGame.game.state.add('Boot', TopDownGame.Boot);
 TopDownGame.game.state.add('Preload', TopDownGame.Preload);
 
-TopDownGame.game.state.add('lesson11', TopDownGame.Lesson11);
+TopDownGame.game.state.add('lesson1', TopDownGame.Lesson1);
 
 TopDownGame.game.state.start('Boot');
 

@@ -22,6 +22,13 @@ var Pegman = {
 
     init: function (pegmanSprite) {
         this.pegmanSprite = pegmanSprite;
+        TopDownGame.game.time.events.add(500, delayEnBody, this);
+
+        function delayEnBody (){
+            console.log("delayed init")
+            // включаем физику с задержкой, из-за переходных процессов в игре
+            this.pegmanSprite.body.enable = true;
+        }
         TopDownGame.game.camera.follow(player);
         // сделать так чтобы это сообщение не выходило когда игрок начинает со второго уровня
         if (TopDownGame.game.state.getCurrentState().key == "lesson11" && scene == 0) {
@@ -581,6 +588,8 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 $("#modaltext").text(messagetext);
                 $("#exampleModal").modal();
                 scene += 1;
+
+                
                 this.pegmanSprite.body.enable = false;
                 pointer.x = Maze.scenes[scene].endPos[0];
                 pointer.y = Maze.scenes[scene].endPos[1];
@@ -589,6 +598,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
 
                 lastSuccessfullPosition.x = player.x;
                 lastSuccessfullPosition.y = player.y;
+                saveWorkspace();
             } else {
                 //show modal unsuccessful
                 if (scene == 4) {
@@ -812,7 +822,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
     }
 
 
-var scene;
+
 
     function saveWorkspace() {
         var params = location.href.split('?')[1].split('&');
@@ -829,8 +839,10 @@ var scene;
         var datatoStore = {};
         datatoStore.code = newTemp;
         datatoStore.scene = scene;
-        datatoStore.position[0] = lastSuccessfullPosition.x;
-        datatoStore.position[1] = lastSuccessfullPosition.y;
+        datatoStore.positionX = lastSuccessfullPosition.x;
+        datatoStore.positionY = lastSuccessfullPosition.y;
+
+        console.log(datatoStore);
 
 
 
@@ -862,17 +874,19 @@ var scene;
             url: 'https://backend.it.robooky.ru/api/save?lesson-id=' + urldata["lesson-id"] + '&user-id=' + urldata["student-id"],
             headers: { "Authorization": urldata.token },
             success: function (data) {
+
                 if (data) {
                     try {
+                        
                         var code = JSON.parse(data.data).code;
-                        var scene = JSON.parse(data.data).scene;
+                        scene = JSON.parse(data.data).scene;
                         if (clesson == 'lesson1') {
-
-                            TopDownGame.game.state.start(clesson + "1");
                             lastSuccessfullPosition = {
-                                x: JSON.parse(data.data).position[0],
-                                y: JSON.parse(data.data).position[1]
+                                x: JSON.parse(data.data).positionX,
+                                y: JSON.parse(data.data).positionY
                             };
+                            TopDownGame.game.state.start(clesson);
+                            
 
                         } else if (clesson == 'lesson2') {
                             TopDownGame.game.state.start(clesson + scene);
@@ -883,13 +897,25 @@ var scene;
                         Blockly.Xml.domToWorkspace(xmlDom, Blockly.mainWorkspace);
                     } catch(e) {
                         console.log(e.message);
-                        TopDownGame.game.state.start(clesson + "1");
+                        if (clesson == 'lesson2') {
+                            TopDownGame.game.state.start('lesson21');
+                        } else {
+                            TopDownGame.game.state.start(clesson);
+                        }
+                        
+                    }
+                } else {
+                    if (clesson == 'lesson2') {
+                        TopDownGame.game.state.start('lesson21');
+                    } else {
+                        TopDownGame.game.state.start(clesson);
                     }
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(xhr.status);
                 console.log(thrownError);
+                console.log("thrownError");
             }
         });
 

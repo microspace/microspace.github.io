@@ -6,15 +6,15 @@ var weapon;
 var explosion;
 var items;
 var barrels;
-var scene = 0; // 0 is start scene of the level
+ // 0 is start scene of the level
 var goalbarrelcount;
 var xyqueue = getArrayWithLimitedLength(10);
 var lastSuccessfullPosition = {}; //хранит положение какое было у спрайта когда он в последний раз соверлаппился с целью
 //title screen
-TopDownGame.Lesson11 = function () { };
-TopDownGame.Lesson11.prototype = {
+TopDownGame.Lesson1 = function () { };
+TopDownGame.Lesson1.prototype = {
     create: function () {
-        this.map = this.game.add.tilemap('lesson11');
+        this.map = this.game.add.tilemap('lesson1');
         //the first parameter is the tileset name as specified in Tiled, the second is the key to the asset
         this.map.addTilesetImage('tileSheet04-01', 'gameTiles');
         //create layer
@@ -26,14 +26,20 @@ TopDownGame.Lesson11.prototype = {
         //create player
         // load all data from map json, populate the structure.
         this.loadSceneData();
+        console.log("locaded");
 
-        if (lastSuccessfullPosition === {}) {
+        if (jQuery.isEmptyObject(lastSuccessfullPosition)) {
+            if (scene === undefined || variable === null) {
+               scene = 0
+           }
             var result = this.findObjectsByType('playerStartPosition', this.map, 'playerLayer');
-
+            console.log(result);
             lastSuccessfullPosition = {
                 x: result[0].x,
-                y: result[0].y
+                y: result[0].y 
             };
+
+            console.log(lastSuccessfullPosition);
         }
 
 
@@ -74,6 +80,7 @@ TopDownGame.Lesson11.prototype = {
 
         this.upperLayer = this.map.createLayer('upperLayer');
         this.game.physics.arcade.enable(player);
+        player.body.enable = false;
         this.game.physics.arcade.enable(pointer);
         player.body.setSize(60, 13, 40, 73);
         pointer.body.setSize(10, 65, 48, 10);
@@ -265,6 +272,7 @@ TopDownGame.Lesson11.prototype = {
                 //Phaser uses top left, Tiled bottom left so we have to adjust
                 //also keep in mind that the cup images are a bit smaller than the tile which is 16x16
                 //so they might not be placed in the exact position as in Tiled
+                
                 element.y -= map.tileHeight;
                 result.push(element);
             }
@@ -302,9 +310,9 @@ TopDownGame.Lesson11.prototype = {
         sprite.body.immovable = true;
     },
     loadSceneData: function () {
-        var result = this.findObjectsByType('playerStartPosition', this.map, 'playerLayer');
+/*          var result = this.findObjectsByType('playerStartPosition', this.map, 'playerLayer');
         Maze.scenes[0].startPos[0] = result[0].x;
-        Maze.scenes[0].startPos[1] = result[0].y;
+        Maze.scenes[0].startPos[1] = result[0].y;  */
         var result = this.findObjectsByType('scene1Goal', this.map, 'playerLayer');
         Maze.scenes[0].endPos[0] = result[0].x;
         Maze.scenes[0].endPos[1] = result[0].y;

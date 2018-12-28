@@ -31,8 +31,8 @@ TopDownGame.Preload.prototype = {
     },
     create: function() {
 
-        var lessonstring = 'lesson2'
-        loadWorkspace(lessonstring.substring(0,7));
+        
+        loadWorkspace('lesson2');
         //this.state.start('lesson2' + scene);
     }
 };
