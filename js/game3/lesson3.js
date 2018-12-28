@@ -6,7 +6,7 @@ var cp;
 var flag = false;
 var setblocks;
 var tilestodraw = [];
-var sublevel;
+var scene;
 var map;
 var drawLayer;
 Pegman.dposX = 11;
@@ -55,12 +55,12 @@ TopDownGame.Lesson3.prototype = {
         sl5 = this.input.keyboard.addKey(Phaser.KeyCode.G);
         sl6 = this.input.keyboard.addKey(Phaser.KeyCode.H);
 
-        sublevel = 1;
+        
 
 
         //buildAnimation
 
-        change_map('lesson3' + sublevel);
+        change_map('lesson3' + scene);
 
 
         crosses = this.game.add.group();
@@ -125,33 +125,33 @@ TopDownGame.Lesson3.prototype = {
 
         }
         if (sl1.isDown) {
-            sublevel = 1;
-            change_map('lesson3' + sublevel);
+            scene = 1;
+            change_map('lesson3' + scene);
             Pegman.reset2();
         }
         if (sl2.isDown) {
-            sublevel = 2;
-            change_map('lesson3' + sublevel);
+            scene = 2;
+            change_map('lesson3' + scene);
             Pegman.reset2();
         }
         if (sl3.isDown) {
-            sublevel = 3;
-            change_map('lesson3' + sublevel);
+            scene = 3;
+            change_map('lesson3' + scene);
             Pegman.reset2();
         }
         if (sl4.isDown) {
-            sublevel = 4;
-            change_map('lesson3' + sublevel);
+            scene = 4;
+            change_map('lesson3' + scene);
             Pegman.reset2();
         }
         if (sl5.isDown) {
-            sublevel = 5;
-            change_map('lesson3' + sublevel);
+            scene = 5;
+            change_map('lesson3' + scene);
             Pegman.reset2();
         }
         if (sl6.isDown) {
-            sublevel = 6;
-            change_map('lesson3' + sublevel);
+            scene = 6;
+            change_map('lesson3' + scene);
             Pegman.reset2();
         }
         //  this.game.debug.body(player);
@@ -218,7 +218,7 @@ function change_map(name) {
 
 
 
-    if (sublevel == 1 || sublevel == 2) {
+    if (scene == 1 || scene == 2) {
         //cp.visible = true;
 
         var newTree = `
@@ -228,7 +228,7 @@ function change_map(name) {
         <block type="changeskin"></block>
         <block type="build"></block>
     </xml>`;
-    } else if (sublevel == 3 || sublevel == 4) {
+    } else if (scene == 3 || scene == 4) {
         //cp.visible = true;
         var newTree = `
     <xml id="toolbox" style="display: none; background-color: #4d90fe;">
@@ -237,7 +237,7 @@ function change_map(name) {
         <block type="changeskin"></block>
         <block type="build"></block>
     </xml>`;
-    } else if (sublevel == 5 || sublevel == 6) {
+    } else if (scene == 5 || scene == 6) {
         //cp.visible = true;
         var newTree = `
     <xml id="toolbox" style="display: none; background-color: #4d90fe;">
