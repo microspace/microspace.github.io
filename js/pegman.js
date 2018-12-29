@@ -31,7 +31,7 @@ var Pegman = {
         }
         TopDownGame.game.camera.follow(player);
         // сделать так чтобы это сообщение не выходило когда игрок начинает со второго уровня
-        if (TopDownGame.game.state.getCurrentState().key == "lesson11" && scene == 0) {
+        if (TopDownGame.game.state.getCurrentState().key == "lesson1" && scene == 0) {
             $("#modaltext").text("Приветствую тебя рекрут! Я научу тебя пользоваться твоим экзокостюмом. Для начала попробуй просто сдвинуться с места!");
             $("#exampleModal").modal();
         }
