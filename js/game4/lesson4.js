@@ -97,7 +97,10 @@ TopDownGame.Lesson4.prototype = {
         myHealthBar.setPercent(capacity);
 
         Pegman.init(player);
-        scene = 1;
+        if (scene === undefined || scene === null) {
+            scene = 1;
+        }
+        
         load_scene();
 
         //bullets

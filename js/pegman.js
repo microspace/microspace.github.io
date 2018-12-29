@@ -765,6 +765,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     lastSuccessfullPosition.x = player.x;
                     lastSuccessfullPosition.y = player.y;
                     scene += 1;
+                    saveWorkspace();
                     load_scene();
 
                 } else if (scene == 5) {
@@ -772,6 +773,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     if (isOverlapping == true) {
                         pointer.visible = false;
                         scene = 42;
+                        saveWorkspace();
                         load_map("lesson42");
                     }
 

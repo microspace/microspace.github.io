@@ -29,6 +29,7 @@ TopDownGame.Preload.prototype = {
 
     },
     create: function() {
-        this.state.start('lesson4');
+        // this.state.start('lesson4');
+        loadWorkspace('lesson4');
     }
 };
