@@ -29,7 +29,7 @@ TopDownGame.Lesson1.prototype = {
         console.log("locaded");
 
         if (jQuery.isEmptyObject(lastSuccessfullPosition)) {
-            if (scene === undefined || variable === null) {
+            if (scene === undefined || scene === null) {
                scene = 0
            }
             var result = this.findObjectsByType('playerStartPosition', this.map, 'playerLayer');
