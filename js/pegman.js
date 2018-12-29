@@ -870,7 +870,7 @@ function loadWorkspace(clesson) {
         urldata[params[x].split('=')[0]] = params[x].split('=')[1];
     }
     urldata.token = decodeURIComponent(urldata.token);
-    console.log(urldata);
+   
 
     $.ajax({
         type: 'GET',
@@ -879,10 +879,12 @@ function loadWorkspace(clesson) {
         success: function (data) {
 
             if (data) {
+                console.log(data);
                 try {
 
                     var code = JSON.parse(data.data).code;
                     scene = JSON.parse(data.data).scene;
+                    console.log("scene "+scene );
 
 
                     if (clesson == 'lesson2') {
