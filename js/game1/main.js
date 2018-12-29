@@ -34,7 +34,7 @@ function resizeGame() {
 
 
 var runProgram = function() {
-
+    getSelfInfo();
     //var statements_stack = Blockly.JavaScript.statementToCode(Blockly.Blocks['factory_base'], 'STACK');
     TopDownGame.game.stage.updateTransform();
     var code = Blockly.JavaScript.workspaceToCode(workspace);

@@ -26,20 +26,20 @@ TopDownGame.Lesson1.prototype = {
         //create player
         // load all data from map json, populate the structure.
         this.loadSceneData();
-        console.log("locaded");
+        
 
         if (jQuery.isEmptyObject(lastSuccessfullPosition)) {
             if (scene === undefined || scene === null) {
                scene = 0
            }
             var result = this.findObjectsByType('playerStartPosition', this.map, 'playerLayer');
-            console.log(result);
+            
             lastSuccessfullPosition = {
                 x: result[0].x,
                 y: result[0].y 
             };
 
-            console.log(lastSuccessfullPosition);
+            
         }
 
 

@@ -18,23 +18,28 @@ var Pegman = {
     isGladeToLeft: false,
     isGladeAbove: false,
     isGladeBelow: false,
+    firstName: "рекрутd",
 
 
     init: function (pegmanSprite) {
         this.pegmanSprite = pegmanSprite;
         TopDownGame.game.time.events.add(500, delayEnBody, this);
+        getSelfInfo();
 
         function delayEnBody() {
-            console.log("delayed init")
+            
             // включаем физику с задержкой, из-за переходных процессов в игре
             this.pegmanSprite.body.enable = true;
+            if (TopDownGame.game.state.getCurrentState().key == "lesson1" && scene == 0) {
+            
+
+                $("#modaltext").text("Приветствую тебя " + Pegman.firstName + "! Я научу тебя пользоваться твоим экзокостюмом. Для начала попробуй просто сдвинуться с места!");
+                $("#exampleModal").modal();
+            }
         }
         TopDownGame.game.camera.follow(player);
         // сделать так чтобы это сообщение не выходило когда игрок начинает со второго уровня
-        if (TopDownGame.game.state.getCurrentState().key == "lesson1" && scene == 0) {
-            $("#modaltext").text("Приветствую тебя рекрут! Я научу тебя пользоваться твоим экзокостюмом. Для начала попробуй просто сдвинуться с места!");
-            $("#exampleModal").modal();
-        }
+
         if (TopDownGame.game.state.getCurrentState().key == "lesson21") {
             $("#modaltext").text("Рекрут, тебе нужно собрать все сундуки с золотом. Управляй экзокостюмом с помощью галактической системы координат.");
             $("#exampleModal").modal();
@@ -719,7 +724,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 }
             });
             if (aliveChestsCount == 0) {
-                
+
                 window.open("http://unibtc.store:4200/student/courses", "_self")
 
             } else {
@@ -738,7 +743,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     $("#nextButton").show();
                     $('#nextButton').one('click', function () {
                         scene += 1;
-                        
+
                         change_map('lesson3' + scene);
                         saveWorkspace();
                         Pegman.reset2();
@@ -870,7 +875,7 @@ function loadWorkspace(clesson) {
         urldata[params[x].split('=')[0]] = params[x].split('=')[1];
     }
     urldata.token = decodeURIComponent(urldata.token);
-   
+
 
     $.ajax({
         type: 'GET',
@@ -879,12 +884,12 @@ function loadWorkspace(clesson) {
         success: function (data) {
 
             if (data) {
-                console.log(data);
+
                 try {
 
                     var code = JSON.parse(data.data).code;
                     scene = JSON.parse(data.data).scene;
-                    console.log("scene "+scene );
+                    console.log("scene " + scene);
 
 
                     if (clesson == 'lesson2') {
@@ -920,8 +925,38 @@ function loadWorkspace(clesson) {
         error: function (xhr, ajaxOptions, thrownError) {
             console.log(xhr.status);
             console.log(thrownError);
-            console.log("thrownError");
+
         }
     });
 
+}
+
+function getSelfInfo() {
+
+    var params = location.href.split('?')[1].split('&');
+    var urldata = {};
+    for (var x in params) {
+        urldata[params[x].split('=')[0]] = params[x].split('=')[1];
+    }
+    urldata.token = decodeURIComponent(urldata.token);
+    $.ajax({
+        type: 'GET',
+        url: 'https://backend.it.robooky.ru/api/users/self',
+        headers: { "Authorization": urldata.token },
+        success: function (data) {
+
+            if (data) {
+
+                Pegman.firstName = data.firstName;
+                // var code = JSON.parse(data.data).code;
+                // scene = JSON.parse(data.data).scene;
+
+            } 
+
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log(xhr.status);
+            console.log(thrownError);
+        }
+    });
 }
