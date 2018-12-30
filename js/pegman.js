@@ -18,7 +18,7 @@ var Pegman = {
     isGladeToLeft: false,
     isGladeAbove: false,
     isGladeBelow: false,
-    firstName: "рекрутd",
+    firstName: "рекрут",
 
 
     init: function (pegmanSprite) {
@@ -41,7 +41,7 @@ var Pegman = {
         // сделать так чтобы это сообщение не выходило когда игрок начинает со второго уровня
 
         if (TopDownGame.game.state.getCurrentState().key == "lesson21") {
-            $("#modaltext").text("Рекрут, тебе нужно собрать все сундуки с золотом. Управляй экзокостюмом с помощью галактической системы координат.");
+            $("#modaltext").text(Pegman.firstName + ", тебе нужно собрать все сундуки с золотом. Управляй экзокостюмом с помощью галактической системы координат.");
             $("#exampleModal").modal();
         }
         if (TopDownGame.game.state.getCurrentState().key == "lesson3") {
@@ -49,7 +49,7 @@ var Pegman = {
             $("#exampleModal").modal();
         }
         if (TopDownGame.game.state.getCurrentState().key == "lesson4") {
-            $("#modaltext").text("Только что с учебки, а уже сразу на такое опасное задание?!! Сначала докажи, что умеешь стрелять!");
+            $("#modaltext").text(Pegman.firstName + ", только что с учебки, а уже сразу на такое опасное задание?!! Сначала докажи, что умеешь стрелять!");
             $("#exampleModal").modal();
         }
         this.reset2();
@@ -577,7 +577,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
     },
 
     Pegman.checkFinal = function () {
-        if (TopDownGame.game.state.getCurrentState().key == "lesson11") {
+        if (TopDownGame.game.state.getCurrentState().key == "lesson1") {
             var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
             if (isOverlapping == true) {
                 if (scene == 0) {
@@ -803,32 +803,9 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
 
     };
 
-var runProgram = function () {
 
-    //var statements_stack = Blockly.JavaScript.statementToCode(Blockly.Blocks['factory_base'], 'STACK');
-    TopDownGame.game.stage.updateTransform();
-    var code = Blockly.JavaScript.workspaceToCode(workspace);
-    try {
-        Pegman.vdposX = Pegman.dposX;
-        Pegman.vdposY = Pegman.dposY;
-        eval(code);
-    } catch (e) {
-        alert(e);
-    }
 
-    Pegman.play();
 
-};
-
-var resetProgram = function () {
-
-    try {
-        weapon.fireAngle = Phaser.ANGLE_RIGHT;
-    } catch {
-
-    }
-    Pegman.reset2();
-}
 
 
 
@@ -961,4 +938,38 @@ function getSelfInfo() {
             console.log(thrownError);
         }
     });
+}
+
+
+
+var runProgram = function() {
+
+    //var statements_stack = Blockly.JavaScript.statementToCode(Blockly.Blocks['factory_base'], 'STACK');
+
+    var code = Blockly.JavaScript.workspaceToCode(workspace);
+    //console.log(code);
+    Pegman.vdposX = Pegman.dposX;
+    Pegman.vdposY = Pegman.dposY;
+    try {
+        eval(code);
+    } catch (e) {
+        alert(e);
+    }
+    
+    Pegman.play();
+ 
+    TopDownGame.game.camera.follow(player);
+}
+
+
+
+var resetProgram = function () {
+
+    try {
+        weapon.fireAngle = Phaser.ANGLE_RIGHT;
+    } catch {
+
+    }
+    Pegman.reset2();
+    TopDownGame.game.camera.follow(player);
 }

@@ -33,7 +33,7 @@ function resizeGame() {
 
 
 
-var runProgram = function() {
+/* var runProgram_ = function() {
     getSelfInfo();
     //var statements_stack = Blockly.JavaScript.statementToCode(Blockly.Blocks['factory_base'], 'STACK');
     TopDownGame.game.stage.updateTransform();
@@ -48,7 +48,7 @@ var runProgram = function() {
     TopDownGame.game.stage.updateTransform();
 };
 
-var resetProgram = function() {
+var resetProgram_ = function() {
 
     try {
         weapon.fireAngle = Phaser.ANGLE_RIGHT;
@@ -62,4 +62,4 @@ var resetProgram = function() {
     TopDownGame.game.stage.updateTransform();﻿
 
     //TopDownGame.game.camera.follow(player);
-}
+} */

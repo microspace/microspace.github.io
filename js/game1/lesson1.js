@@ -150,28 +150,22 @@ TopDownGame.Lesson1.prototype = {
         //this.game.physics.arcade.overlap(this.blockLayer, weapon.bullets, this.bulletHitWall, null, this);
         //player movement
 
-        player.body.velocity.x = 0;
-        var velocity = 400;
-
         if (this.cursors.up.isDown) {
-            if (player.body.velocity.y == 0)
-                player.body.velocity.y -= velocity;
-
-        } else if (this.cursors.down.isDown) {
-            if (player.body.velocity.y == 0)
-                player.body.velocity.y += velocity;
-
-        } else {
-            player.body.velocity.y = 0;
+            this.game.camera.unfollow();
+            this.game.camera.y -= 50;
         }
+        else if (this.cursors.down.isDown) {
+            this.game.camera.unfollow();
+            this.game.camera.y += 50;
+        }
+
         if (this.cursors.left.isDown) {
-            player.body.velocity.x -= velocity;
-        } else if (this.cursors.right.isDown) {
-            player.body.velocity.x += velocity;
+            this.game.camera.unfollow();
+            this.game.camera.x -= 50;
         }
-
-        if (fireButton.isDown) {
-            this.game.state.start('lesson21');
+        else if (this.cursors.right.isDown) {
+            this.game.camera.unfollow();
+            this.game.camera.x += 50;
         }
     },
     render: function () {
