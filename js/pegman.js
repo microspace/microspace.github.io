@@ -24,7 +24,7 @@ var Pegman = {
     init: function (pegmanSprite) {
         this.pegmanSprite = pegmanSprite;
         TopDownGame.game.time.events.add(500, delayEnBody, this);
-        getSelfInfo();
+        // getSelfInfo();
 
         function delayEnBody() {
             
@@ -257,23 +257,31 @@ var Pegman = {
             for (var y = 0; y < map.height; ++y) {
                 for (var x = 0; x < map.width; ++x) {
                     //  if (map.getTile(x, y, 'fog')) {
-                    map.putTile(66, x, y, fog);
+                    map.putTile(232, x, y, fog);
                     //  }
                 }
             }
-            map.putTile(237, Pegman.dposX, Pegman.dposY - 1, fog);
+            
+/*             map.putTile(237, Pegman.dposX, Pegman.dposY - 1, fog);
             map.putTile(238, Pegman.dposX - 1, Pegman.dposY, fog);
             map.putTile(239, Pegman.dposX, Pegman.dposY + 1, fog);
             map.putTile(240, Pegman.dposX + 1, Pegman.dposY, fog);
             map.putTile(241, Pegman.dposX - 1, Pegman.dposY - 1, fog);
             map.putTile(242, Pegman.dposX + 1, Pegman.dposY - 1, fog);
             map.putTile(243, Pegman.dposX - 1, Pegman.dposY + 1, fog);
-            map.putTile(244, Pegman.dposX + 1, Pegman.dposY + 1, fog);
+            map.putTile(244, Pegman.dposX + 1, Pegman.dposY + 1, fog); 
 
 
+*/
 
+            map.putTile(244, Pegman.dposX, Pegman.dposY, fog);
+            for (var y = Pegman.dposY - 1; y <= Pegman.dposY + 1; ++y) {
+                for (var x = Pegman.dposX - 1; x <= Pegman.dposX + 1; ++x) {
+                    var t_id = normalize(x, y);
+                    map.putTile(t_id, x, y, fog);
+                }
+            }
 
-            map.putTile(245, Pegman.dposX, Pegman.dposY, fog);
             map.replace(235, 15, 8, 4, 5, 2, map.getLayer());
             map.replace(236, 15, 8, 4, 5, 2, map.getLayer());
             map.replace(15, 235, 8 + getRandomInt(0, 4), 4, 1, 1, map.getLayer());

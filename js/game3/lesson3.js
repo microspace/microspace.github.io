@@ -99,35 +99,25 @@ TopDownGame.Lesson3.prototype = {
 
     update: function() {
 
-        player.body.velocity.x = 0;
-        var velocity = 400;
-
         if (this.cursors.up.isDown) {
-            if (player.body.velocity.y == 0)
-                player.body.velocity.y -= velocity;
-
-        } else if (this.cursors.down.isDown) {
-            if (player.body.velocity.y == 0)
-                player.body.velocity.y += velocity;
-
-        } else {
-            player.body.velocity.y = 0;
+            this.game.camera.unfollow();
+            this.game.camera.y -= 50;
         }
+        else if (this.cursors.down.isDown) {
+            this.game.camera.unfollow();
+            this.game.camera.y += 50;
+        }
+
         if (this.cursors.left.isDown) {
-            player.body.velocity.x -= velocity;
-        } else if (this.cursors.right.isDown) {
-            player.body.velocity.x += velocity;
+            this.game.camera.unfollow();
+            this.game.camera.x -= 50;
         }
-        if (fireButton.isDown) {
-            builddust.x = Pegman.dposX * Maze.SQUARE_SIZE - 16;
-            builddust.y = Pegman.dposY * Maze.SQUARE_SIZE - 18;
-            builddust.visible = true;
-            builddust.animations.play("BUILD");
-            
-
-
+        else if (this.cursors.right.isDown) {
+            this.game.camera.unfollow();
+            this.game.camera.x += 50;
         }
-        if (sl1.isDown) {
+
+/*         if (sl1.isDown) {
             scene = 1;
             change_map('lesson3' + scene);
             Pegman.reset2();
@@ -156,7 +146,7 @@ TopDownGame.Lesson3.prototype = {
             scene = 6;
             change_map('lesson3' + scene);
             Pegman.reset2();
-        }
+        } */
         //  this.game.debug.body(player);
         // this.game.debug.physicsGroup(barrels);
         // this.game.debug.bodyInfo(player, 32, 50);

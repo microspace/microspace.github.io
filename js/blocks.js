@@ -37,12 +37,21 @@ Blockly.JavaScript['maze_up'] = function (block) {
         var step = Maze.getStepInDirection["NORTH"];
         Pegman.vdposY = Pegman.vdposY + step[1] * operator; 
         //console.log(Pegman.vdposX, Pegman.vdposY);
+        try {
         var tileLeft = map.getTile(Pegman.vdposX - 1, Pegman.vdposY, map.getLayer());
-        var tileRight = map.getTile(Pegman.vdposX + 1, Pegman.vdposY, map.getLayer());
-        var tileAbove = map.getTile(Pegman.vdposX, Pegman.vdposY - 1, map.getLayer());
         Pegman.isGladeToLeft = tileLeft.index == 235;
+        } catch {}
+        try {
+        var tileRight = map.getTile(Pegman.vdposX + 1, Pegman.vdposY, map.getLayer());
         Pegman.isGladeToRight = tileRight.index == 235;
+        } catch {}
+        try {
+        var tileAbove = map.getTile(Pegman.vdposX, Pegman.vdposY - 1, map.getLayer());
         Pegman.isGladeAbove = tileAbove.index == 235;
+        } catch {}
+        
+        
+        
         //console.log(Pegman.isGladeAbove, Pegman.isGladeBelow, Pegman.isGladeToRight, Pegman.isGladeToLeft);
     }
     `
@@ -85,13 +94,23 @@ Blockly.JavaScript['maze_down'] = function (block) {
     if (TopDownGame.game.state.getCurrentState().key == "lesson5") {
         var step = Maze.getStepInDirection["SOUTH"];
         Pegman.vdposY = Pegman.vdposY + step[1] * operator; 
-        var tileLeft = map.getTile(Pegman.vdposX - 1, Pegman.vdposY, map.getLayer());
+
+        try {
+            var tileLeft = map.getTile(Pegman.vdposX - 1, Pegman.vdposY, map.getLayer());
+            Pegman.isGladeToLeft = tileLeft.index == 235;
+        } catch {}
+
+        try {
         var tileRight = map.getTile(Pegman.vdposX + 1, Pegman.vdposY, map.getLayer());
-        var tileDown = map.getTile(Pegman.vdposX, Pegman.vdposY + 1, map.getLayer());
-        Pegman.isGladeToLeft = tileLeft.index == 235;
         Pegman.isGladeToRight = tileRight.index == 235;
+        } catch {}
+
+        try {
+        var tileDown = map.getTile(Pegman.vdposX, Pegman.vdposY + 1, map.getLayer());
         Pegman.isGladeToDown = tileDown.index == 235;
-        //console.log(Pegman.isGladeAbove, Pegman.isGladeBelow, Pegman.isGladeToRight, Pegman.isGladeToLeft);
+        } catch {}
+
+        
     }
     `
     return code;
@@ -125,7 +144,7 @@ Blockly.Blocks['maze_right'] = {
 Blockly.JavaScript['maze_right'] = function (block) {
     // Generate JavaScript for moving forward.
     var operator = block.getFieldValue('STEPCOUNT');
-    
+
 
     var code = `
     Pegman.isGladeAbove = Pegman.isGladeBelow = Pegman.isGladeToRight = Pegman.isGladeToLeft = false;
@@ -137,12 +156,24 @@ Blockly.JavaScript['maze_right'] = function (block) {
         var step = Maze.getStepInDirection["EAST"];
         Pegman.vdposX = Pegman.vdposX + step[0] * operator; 
         //console.log(Pegman.vdposX, Pegman.vdposY);
+
+
+    try {
         var tileAbove = map.getTile(Pegman.vdposX, Pegman.vdposY - 1, map.getLayer());
-        var tileBelow = map.getTile(Pegman.vdposX, Pegman.vdposY + 1, map.getLayer());
-        var tileRight = map.getTile(Pegman.vdposX + 1, Pegman.vdposY, map.getLayer());
         Pegman.isGladeAbove = tileAbove.index == 235;
+    } catch {}
+    try {
+        var tileBelow = map.getTile(Pegman.vdposX, Pegman.vdposY + 1, map.getLayer());
         Pegman.isGladeBelow = tileBelow.index == 235;
+    } catch {}
+    try {
+        var tileRight = map.getTile(Pegman.vdposX + 1, Pegman.vdposY, map.getLayer());
         Pegman.isGladeToRight = tileRight.index == 235;
+    } catch {}
+
+        
+        
+        
         //console.log(Pegman.isGladeAbove, Pegman.isGladeBelow, Pegman.isGladeToRight, Pegman.isGladeToLeft);
     }
     `
@@ -185,12 +216,23 @@ Blockly.JavaScript['maze_left'] = function (block) {
         var step = Maze.getStepInDirection["WEST"];
         Pegman.vdposX = Pegman.vdposX + step[0] * operator; 
         //console.log(Pegman.vdposX, Pegman.vdposY);
+
+    try {
         var tileAbove = map.getTile(Pegman.vdposX, Pegman.vdposY - 1, map.getLayer());
-        var tileBelow = map.getTile(Pegman.vdposX, Pegman.vdposY + 1, map.getLayer());
-        var tileLeft = map.getTile(Pegman.vdposX - 1, Pegman.vdposY, map.getLayer());
         Pegman.isGladeAbove = tileAbove.index == 235;
+    } catch {}
+    try {
+        var tileBelow = map.getTile(Pegman.vdposX, Pegman.vdposY + 1, map.getLayer());
         Pegman.isGladeBelow = tileBelow.index == 235;
+    } catch {}
+    try {
+        var tileLeft = map.getTile(Pegman.vdposX - 1, Pegman.vdposY, map.getLayer());
         Pegman.isGladeToLeft = tileLeft.index == 235;
+    } catch {}
+
+        
+        
+        
         //console.log(Pegman.isGladeAbove, Pegman.isGladeBelow, Pegman.isGladeToRight, Pegman.isGladeToLeft);
     }
     `

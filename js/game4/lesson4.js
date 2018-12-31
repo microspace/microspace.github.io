@@ -211,20 +211,20 @@ TopDownGame.Lesson4.prototype = {
         //camera start
         if (this.cursors.up.isDown) {
             this.game.camera.unfollow();
-            this.game.camera.y -= 10;
+            this.game.camera.y -= 50;
         }
         else if (this.cursors.down.isDown) {
             this.game.camera.unfollow();
-            this.game.camera.y += 10;
+            this.game.camera.y += 50;
         }
 
         if (this.cursors.left.isDown) {
             this.game.camera.unfollow();
-            this.game.camera.x -= 10;
+            this.game.camera.x -= 50;
         }
         else if (this.cursors.right.isDown) {
             this.game.camera.unfollow();
-            this.game.camera.x += 10;
+            this.game.camera.x += 50;
         }
         //camera end
 

@@ -32,7 +32,7 @@ function resizeGame() {
 
 
 
-var runProgram = function() {
+/* var runProgram = function() {
 
     //var statements_stack = Blockly.JavaScript.statementToCode(Blockly.Blocks['factory_base'], 'STACK');
     TopDownGame.game.stage.updateTransform();
@@ -61,4 +61,4 @@ var resetProgram = function() {
     TopDownGame.game.stage.updateTransform();
     Pegman.reset2();
     TopDownGame.game.stage.updateTransform();
-}
+} */

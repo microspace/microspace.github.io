@@ -137,7 +137,7 @@ TopDownGame.Lesson25.prototype = {
 
     update: function() {
 
-        this.game.camera.focusOnXY(player.x, player.y);
+        // this.game.camera.focusOnXY(player.x, player.y);
 
         var xtext = Math.floor(player.x / Maze.SQUARE_SIZE) + Maze.coordoffset_x;
         var ytext = -1 * Math.floor(player.y / Maze.SQUARE_SIZE) + Maze.coordoffset_y;

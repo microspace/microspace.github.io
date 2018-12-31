@@ -175,13 +175,13 @@ TopDownGame.Lesson5.prototype = {
         l.onDown.add(this.l_down, this);
         l.onUp.add(this.l_up, this);
 
-        map.putTile(245, Pegman.dposX, Pegman.dposY, fog);
+        map.putTile(244, Pegman.dposX, Pegman.dposY, fog);
 
        updateFog = new Phaser.Signal();
 
         updateFog.add(function () {
             
-            map.putTile(245, Pegman.dposX, Pegman.dposY, fog);
+            map.putTile(244, Pegman.dposX, Pegman.dposY, fog);
             for (var y = Pegman.dposY - 1; y <= Pegman.dposY + 1; ++y) {
                 for (var x = Pegman.dposX - 1; x <= Pegman.dposX + 1; ++x) {
                     var t_id = normalize(x, y);
@@ -359,6 +359,7 @@ TopDownGame.Lesson5.prototype = {
 
 function hitEvent() {
     if (!hitflag) {
+        player.body.enable = false;
         Pegman.pegmanActions = [];
         if (Pegman.tween) {
             Pegman.tween.stop();
@@ -371,6 +372,7 @@ function hitEvent() {
 function sinkInWater() {
 
     if (sinkflag == false) {
+        player.body.enable = false;
         sinkflag = true;
         var step = Maze.getStepInDirection[Maze.directionToString(Pegman.direction)];
         //убейте меня!
@@ -601,68 +603,68 @@ function normalize(x, y) {
     var cTile;
     cTile = map.getTile(x - 1, y - 1, fog);
     if (cTile) {
-        a11 = cTile.index == 245 ? 0 : 1
+        a11 = cTile.index == 244 ? 0 : 1
     } else {
         a11 = 'e'
     }
     cTile = map.getTile(x, y - 1, fog);
     if (cTile) {
-        a12 = cTile.index == 245 ? 0 : 1
+        a12 = cTile.index == 244 ? 0 : 1
     } else {
         a12 = 'e'
     }
     cTile = map.getTile(x + 1, y - 1, fog);
     if (cTile) {
-        a13 = cTile.index == 245 ? 0 : 1
+        a13 = cTile.index == 244 ? 0 : 1
     } else {
         a13 = 'e'
     }
 
     cTile = map.getTile(x - 1, y, fog);
     if (cTile) {
-        a21 = cTile.index == 245 ? 0 : 1
+        a21 = cTile.index == 244 ? 0 : 1
     } else {
         a21 = 'e'
     }
     cTile = map.getTile(x, y, fog);
     if (cTile) {
-        a22 = cTile.index == 245 ? 0 : 1
+        a22 = cTile.index == 244 ? 0 : 1
     } else {
         a22 = 'e'
     }
     cTile = map.getTile(x + 1, y, fog);
     if (cTile) {
-        a23 = cTile.index == 245 ? 0 : 1
+        a23 = cTile.index == 244 ? 0 : 1
     } else {
         a23 = 'e'
     }
 
     cTile = map.getTile(x - 1, y + 1, fog);
     if (cTile) {
-        a31 = cTile.index == 245 ? 0 : 1
+        a31 = cTile.index == 244 ? 0 : 1
     } else {
         a31 = 'e'
     }
     cTile = map.getTile(x, y + 1, fog);
     if (cTile) {
-        a32 = cTile.index == 245 ? 0 : 1
+        a32 = cTile.index == 244 ? 0 : 1
     } else {
         a32 = 'e'
     }
     cTile = map.getTile(x + 1, y + 1, fog);
     if (cTile) {
-        a33 = cTile.index == 245 ? 0 : 1
+        a33 = cTile.index == 244 ? 0 : 1
     } else {
         a33 = 'e'
     }
     if (a22 == '0' || a11 + a12 + a13 + a21 + a23 + a31 + a32 + a33 <= 2 || (!a12 && !a32) || (!a21 && !a23)) {
-        return 245;
+        return 244;
     } else if (a11 + a12 + a21 + a22 == 4 && (!a13 || !a23) && (!a31 || !a32)) {
-        return 231;
+        return 218;
     } else if (a12 + a13 + a22 + a23 == 4 && (!a11 || !a21) && (!a32 || !a33)) {
-        return 230;
+        return 218;
     } else if (a22 + a23 + a32 + a33 == 4 && (!a12 || !a13) && (!a21 || !a31)) {
-        return 217;
+        return 218;
     } else if (a21 + a22 + a31 + a32 == 4 && (!a11 || !a12) && (!a23 || !a33)) {
         return 218;
     } else {
@@ -673,37 +675,37 @@ function normalize(x, y) {
 
 
 Maze.tile_SHAPES = {
-    '111111110': 241,
-    '111111011': 242,
-    '011111111': 244,
-    '110111111': 243,
+    '111111110': 229,
+    '111111011': 230,
+    '011111111': 243,
+    '110111111': 242,
 
-    '111111101': 237,
-    '111111100': 237,
-    '111111001': 237,
-    '111111000': 237,
-    '111111010': 237,
+    '111111101': 245,
+    '111111100': 245,
+    '111111001': 245,
+    '111111000': 245,
+    '111111010': 245,
 
-    '111011111': 240,
-    '111011011': 240,
-    '011011111': 240,
-    '011011011': 240,
-    '011111011': 240,
+    '111011111': 231,
+    '111011011': 231,
+    '011011111': 231,
+    '011011011': 231,
+    '011111011': 231,
 
-    '101111111': 239,
-    '100111111': 239,
-    '001111111': 239,
-    '000111111': 239,
-    '010111111': 239,
+    '101111111': 219,
+    '100111111': 219,
+    '001111111': 219,
+    '000111111': 219,
+    '010111111': 219,
 
-    '111110111': 238,
-    '110110111': 238,
-    '111110110': 238,
-    '110110110': 238,
-    '110111110': 238,
+    '111110111': 233,
+    '110110111': 233,
+    '111110110': 233,
+    '110110110': 233,
+    '110111110': 233,
 
-    '110111011': 219,
-    '011111110': 232,
+    '110111011': 218,
+    '011111110': 218,
 
 };
 

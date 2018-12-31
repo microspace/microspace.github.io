@@ -16,7 +16,7 @@ TopDownGame.Preload.prototype = {
         //load game assets
         this.load.tilemap('lesson51', 'assets/maps/game5/5 игра 1.json', null, Phaser.Tilemap.TILED_JSON);
         
-        this.load.spritesheet('totalsheet', 'assets/maps/game5/tileSheetWinter5.png', 64, 64);
+        this.load.spritesheet('totalsheet', 'assets/maps/game5/tileSheetWinter30-12.png', 64, 64);
 
         this.load.spritesheet('pegman', 'assets/sprites/player.png', 141, 100);
         this.load.spritesheet('explosion', 'assets/sprites/explosion.png', 99, 87);
@@ -24,7 +24,7 @@ TopDownGame.Preload.prototype = {
         this.load.spritesheet("build", "assets/sprites/buildAnimation.png", 100, 100);
         
         this.load.image('bullet', 'assets/images/bullet2.png');
-        this.load.image('gameTiles', 'assets/maps/game5/tileSheetWinter5.png');
+        this.load.image('gameTiles', 'assets/maps/game5/tileSheetWinter30-12.png');
         this.load.image('coordinateplane', 'assets/images/coordinatePlane.png');
         this.load.image('water', 'assets/images/water.png');
 
