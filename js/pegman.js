@@ -36,8 +36,15 @@ var Pegman = {
                 $("#modaltext").text("Приветствую тебя " + Pegman.firstName + "! Я научу тебя пользоваться твоим экзокостюмом. Для начала попробуй просто сдвинуться с места!");
                 $("#exampleModal").modal();
             }
+            if (TopDownGame.game.state.getCurrentState().key == "lesson5") {
+                TopDownGame.game.world.bringToTop(pointer);
+                TopDownGame.game.world.bringToTop(explosion);
+                TopDownGame.game.world.bringToTop(player);
+            }
+
+
         }
-        TopDownGame.game.camera.follow(player);
+
         // сделать так чтобы это сообщение не выходило когда игрок начинает со второго уровня
 
         if (TopDownGame.game.state.getCurrentState().key == "lesson21") {
@@ -53,7 +60,7 @@ var Pegman = {
             $("#exampleModal").modal();
         }
 
-        if (TopDownGame.game.state.getCurrentState().key == "lesson5"  && scene == 0  && map.key == "lesson51") {
+        if (TopDownGame.game.state.getCurrentState().key == "lesson5" && scene == 0 && map.key == "lesson51") {
             $("#modaltext").text("Вокруг много подтаявшего льда, сквозь который можно проавлиться. Давай проверим как ты умеешь засыпать полынью снегом. Используй блок засыпать");
             $("#exampleModal").modal();
         }
@@ -65,16 +72,26 @@ var Pegman = {
         TopDownGame.game.time.events.add(500, delayEnBody, this);
         try {
             this.pegmanSprite.angle = 0;
-        } catch {}
+        } catch { }
         function delayEnBody() {
             // включаем физику с задержкой, из-за переходных процессов в игре
             this.pegmanSprite.body.enable = true;
         }
 
 
-     TopDownGame.game.tweens.removeAll(); 
+        try {
+            TopDownGame.game.world.bringToTop(pointer);
+            TopDownGame.game.world.bringToTop(player);
+        } catch { }
 
-        this.direction = Maze.DirectionType.EAST
+
+
+
+
+
+        TopDownGame.game.tweens.removeAll();
+
+        this.direction = Maze.DirectionType.EAST;
 
         this.posX = lastSuccessfullPosition.x;
         this.posY = lastSuccessfullPosition.y;
@@ -127,11 +144,11 @@ var Pegman = {
     },
 
     postReset: function () {
-        
+
         this.pegmanSprite.reset(lastSuccessfullPosition.x, lastSuccessfullPosition.y);
         this.pegmanSprite.fresh = false;
         flag = false;
-
+        TopDownGame.game.camera.follow(player);
         if (TopDownGame.game.state.getCurrentState().key == "lesson1") {
             barrels.forEach(function (c) {
                 if (c["scene"] - 1 == scene) { //оживляем только те бочки, которые относятся к данной сцене.
@@ -260,45 +277,48 @@ var Pegman = {
             //TopDownGame.game.state.start(TopDownGame.game.state.current);
 
             //TopDownGame.game.state.restart();
+            if (map.key != "lesson53") {
 
-            for (var y = 0; y < map.height; ++y) {
-                for (var x = 0; x < map.width; ++x) {
-                    //  if (map.getTile(x, y, 'fog')) {
-                    map.putTile(232, x, y, fog);
-                    //  }
+
+                for (var y = 0; y < map.height; ++y) {
+                    for (var x = 0; x < map.width; ++x) {
+                        //  if (map.getTile(x, y, 'fog')) {
+                        map.putTile(232, x, y, "fog");
+                        //  }
+                    }
                 }
-            }
 
 
-            /*             map.putTile(237, Pegman.dposX, Pegman.dposY - 1, fog);
-                        map.putTile(238, Pegman.dposX - 1, Pegman.dposY, fog);
-                        map.putTile(239, Pegman.dposX, Pegman.dposY + 1, fog);
-                        map.putTile(240, Pegman.dposX + 1, Pegman.dposY, fog);
-                        map.putTile(241, Pegman.dposX - 1, Pegman.dposY - 1, fog);
-                        map.putTile(242, Pegman.dposX + 1, Pegman.dposY - 1, fog);
-                        map.putTile(243, Pegman.dposX - 1, Pegman.dposY + 1, fog);
-                        map.putTile(244, Pegman.dposX + 1, Pegman.dposY + 1, fog); 
-            
-            
-            */
-            Pegman.dposX = Math.floor(player.x / 64);
-            Pegman.dposY = Math.floor(player.y / 64);
-            map.putTile(244, Pegman.dposX, Pegman.dposY, fog);
-            for (var y = Pegman.dposY - 1; y <= Pegman.dposY + 1; ++y) {
-                for (var x = Pegman.dposX - 1; x <= Pegman.dposX + 1; ++x) {
-                    var t_id = normalize(x, y);
-                    map.putTile(t_id, x, y, fog);
-                }
-            }
-
-            if (scene == 0 && map.key == "lesson51") {
-                map.putTile(244, Pegman.dposX+1, Pegman.dposY, fog);
+                Pegman.dposX = Math.floor(player.x / 64);
+                Pegman.dposY = Math.floor(player.y / 64);
+                map.putTile(244, Pegman.dposX, Pegman.dposY, fog);
                 for (var y = Pegman.dposY - 1; y <= Pegman.dposY + 1; ++y) {
-                    for (var x = Pegman.dposX +1 - 1; x <= Pegman.dposX +1 + 1; ++x) {
+                    for (var x = Pegman.dposX - 1; x <= Pegman.dposX + 1; ++x) {
                         var t_id = normalize(x, y);
                         map.putTile(t_id, x, y, fog);
                     }
                 }
+
+
+
+                /*             map.putTile(237, Pegman.dposX, Pegman.dposY - 1, fog);
+                            map.putTile(238, Pegman.dposX - 1, Pegman.dposY, fog);
+                            map.putTile(239, Pegman.dposX, Pegman.dposY + 1, fog);
+                            map.putTile(240, Pegman.dposX + 1, Pegman.dposY, fog);
+                            map.putTile(241, Pegman.dposX - 1, Pegman.dposY - 1, fog);
+                            map.putTile(242, Pegman.dposX + 1, Pegman.dposY - 1, fog);
+                            map.putTile(243, Pegman.dposX - 1, Pegman.dposY + 1, fog);
+                            map.putTile(244, Pegman.dposX + 1, Pegman.dposY + 1, fog); 
+                
+                
+                */
+
+            } else {
+                map.replace(236, 235, 9, 6, 6, 2, flour);
+
+            }
+            if (scene == 0 && map.key == "lesson51") {
+
 
             } else if (scene == 1 && map.key == "lesson51") {
                 map.replace(235, 15, 6, 4, 6, 2, map.getLayer());
@@ -314,7 +334,7 @@ var Pegman = {
             } else if (scene == 2 && map.key == "lesson52") {
                 this.refillarea(12, 10, 18, 12);
                 this.refillarea(16, 3, 19, 9);
-                this.revealArea();
+                revealArea();
             }
 
         }
@@ -322,7 +342,7 @@ var Pegman = {
         this.pegmanSprite.animations.play('STAND');
 
     },
-    refillarea: function (x1,y1, x2,y2){
+    refillarea: function (x1, y1, x2, y2) {
         map.replace(235, 15, x1, y1, x2 - x1 + 1, y2 - y1 + 1, flour);
         map.replace(236, 15, x1, y1, x2 - x1 + 1, y2 - y1 + 1, flour);
 
@@ -389,14 +409,14 @@ var Pegman = {
                 this.direction = Maze.DirectionType.WEST;
                 var step = Maze.getStepInDirection["WEST"];
                 this.pegmanSprite.scale.x = -1;
-                weapon.fireAngle = Phaser.ANGLE_LEFT;
+                try { weapon.fireAngle = Phaser.ANGLE_LEFT; } catch { }
                 this.moveNSWE(this.posX + Maze.SQUARE_SIZE * step[0] * stepcount, this.posY + Maze.SQUARE_SIZE * step[1] * stepcount, stepcount);
                 break;
             case "right":
                 this.direction = Maze.DirectionType.EAST;
                 var step = Maze.getStepInDirection["EAST"];
                 this.pegmanSprite.scale.x = 1;
-                weapon.fireAngle = Phaser.ANGLE_RIGHT;
+                try { weapon.fireAngle = Phaser.ANGLE_RIGHT; } catch { }
                 this.moveNSWE(this.posX + Maze.SQUARE_SIZE * step[0] * stepcount, this.posY + Maze.SQUARE_SIZE * step[1] * stepcount, stepcount);
                 break;
             case "uturn":
@@ -484,7 +504,7 @@ var Pegman = {
                     this.playNextAction();
                 }, this);
                 break;
-               
+
             case "build":
                 var tileIDToReplace;
                 var tileToReplaceX;
@@ -841,44 +861,104 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
         }
         if (TopDownGame.game.state.getCurrentState().key == "lesson5") {
 
-            if (scene == 0) {
-                 if (map.getTile(5, 4, flour).index == 236) {
-                    scene += 1;
+            if (scene == 0 && map.key == 'lesson51') {
+                if (map.getTile(5, 4, flour).index == 236) {
+                    scene = 1;
                     load_scene(scene);
+
+                    toogleRunButton();
+
+
+                    
                     $("#modaltext").text("Теперь доберись до указателя");
                     $("#exampleModal").modal();
-                
-                 }
+
+                }
 
             } else {
 
+                var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
+                if (isOverlapping == true) {
+                    if (scene == 1 && map.key == 'lesson51') {
+                        lastSuccessfullPosition.x = player.x;
+                        lastSuccessfullPosition.y = player.y;
+                        scene = 2;
+                        toogleRunButton();
+                        load_scene(scene);
+                    } else if (scene == 2 && map.key == 'lesson51') {
+                        lastSuccessfullPosition.x = player.x;
+                        lastSuccessfullPosition.y = player.y;
+                        scene = 3;
+                        toogleRunButton();
+                        load_scene(scene);
+
+                    } else if (scene == 3 && map.key == 'lesson51') {
+                        loadmap('lesson52');
+                        scene = 1;
+                        toogleRunButton();
+                        load_scene(scene);
+                        $("#modaltext").text(" Тут повсюду трупы. Что тут произошло? Надеюсь с отрядом все в порядке.");
+                        $("#exampleModal").modal();
+                    } else if (scene == 1 && map.key == 'lesson52') {
+                        lastSuccessfullPosition.x = player.x;
+                        lastSuccessfullPosition.y = player.y;
+                        
+                        $("#modaltext").text("Наконец-то пришла помощь! Мы нашли важный след Агносто. Но нас атаковали и мы не можем вернуться. Есть раненные. Помоги нам доставить следы Агносто на базу альянса!");
+                        $("#exampleModal").modal();
+                        revealArea();
+                        scene = 2;
+                        toogleRunButton();
+                        load_scene(scene);
+
+                    } else if (scene == 2 && map.key == 'lesson52') {
+
+                        loadmap('lesson53');
+                        
+                        $("#modaltext").text("Путь к точке эвакуации проходит через реку. Нужно засыпать дорогу для отряда.");
+                        $("#exampleModal").modal();
+                        scene = 1;
+                        toogleRunButton();
+                        load_scene(scene);
+                    } else if (scene == 1 && map.key == 'lesson53') {
+                        var notfilledblocks = 0;
+                        for (var y = 6; y <= 7; ++y) {
+                            for (var x = 9; x <= 14; ++x) {
+                                if (map.getTile(x, y, 'flour').index == 235) {
+                                    notfilledblocks += 1;
+
+                                }
+                            }
+                        }
+                        if (notfilledblocks > 0) {
+
+                            $("#modaltext").text("Нужно засыпать все блоки на мосту");
+                            $("#exampleModal").modal();
+                        } else {
+                            lastSuccessfullPosition.x = player.x;
+                            lastSuccessfullPosition.y = player.y;
+                            $("#modaltext").text("Поздравляю! Следующий урок разблокирован!");
+                            $("#exampleModal").modal();
+                        }
+                    }
+
+                }
 
             }
-            var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
-            if (isOverlapping == true) {
-                lastSuccessfullPosition.x = player.x;
-                lastSuccessfullPosition.y = player.y;
-                if (scene < 3) {
-                    scene += 1;
-                    if (scene == 2 && map.key == 'lesson52') {
-                        revealArea();
-                    }
-                    load_scene(scene);
-                } else if (scene == 3 && map.key == 'lesson51') {
-                    loadmap('lesson52');
-                    scene = 1;
-                } else if (scene == 3 && map.key == 'lesson52') {
-                    loadmap('lesson53');
-                    scene = 1;
-                }
-                // saveWorkspace();
-            }
+
+
+
+
+
         }
     };
-
+function toogleRunButton() {
+    $('#play').val() == "play" ? play_int() : play_pause();
+    $('#play').find('i:first').toggleClass('fa-play fa-refresh');
+    $('#play').toggleClass('play reset');
+}
 function revealArea() {
- var replaceFill = [ [7, 3], [8, 3], [9, 3], [10, 3], [11, 3], [7, 4], [8, 4], [9, 4], [10, 4], [11, 4], [12, 4], [13, 4], [7, 5], [8, 5], [9, 5], [10, 5], [11, 5], [12, 5], [13, 5], [7, 6], [8, 6], [9, 6], [10, 6], [11, 6], [12, 6], [13, 6], [8, 7], [9, 7], [10, 7], [11, 7], [12, 7], [13, 7], [8, 8], [9, 8], [10, 8], [11, 8], [12, 8], ];
- var replaceContour = [ [6, 2], [7, 2], [8, 2], [9, 2], [10, 2], [11, 2], [12, 2], [13, 3], [14, 3], [14, 4], [14, 5], [14, 6], [14, 7], [14, 8], [13, 8], [13, 9], [12, 9], [11, 9], [10, 9], [9, 9], [8, 9], [7, 9], [7, 8], [7, 7], [6, 7], [6, 6], [6, 5], [6, 4], [6, 3], ];
+    var replaceFill = [[7, 3], [8, 3], [9, 3], [10, 3], [11, 3], [7, 4], [8, 4], [9, 4], [10, 4], [11, 4], [12, 4], [13, 4], [7, 5], [8, 5], [9, 5], [10, 5], [11, 5], [12, 5], [13, 5], [7, 6], [8, 6], [9, 6], [10, 6], [11, 6], [12, 6], [13, 6], [8, 7], [9, 7], [10, 7], [11, 7], [12, 7], [13, 7], [8, 8], [9, 8], [10, 8], [11, 8], [12, 8],];
+    var replaceContour = [[6, 2], [7, 2], [8, 2], [9, 2], [10, 2], [11, 2], [12, 2], [13, 3], [14, 3], [14, 4], [14, 5], [14, 6], [14, 7], [14, 8], [13, 8], [13, 9], [12, 9], [11, 9], [10, 9], [9, 9], [8, 9], [7, 9], [7, 8], [7, 7], [6, 7], [6, 6], [6, 5], [6, 4], [6, 3],];
 
     for (var i = 0; i < replaceFill.length; i++) {
         map.putTile(244, replaceFill[i][0], replaceFill[i][1], fog);
@@ -889,7 +969,7 @@ function revealArea() {
             for (var x = replaceContour[i][0] - 1; x <= replaceContour[i][0] + 1; ++x) {
 
                 var t_id = normalize(replaceContour[i][0], replaceContour[i][1]);
-                
+
                 map.putTile(t_id, replaceContour[i][0], replaceContour[i][1], fog);
             }
         }
@@ -1039,8 +1119,7 @@ var runProgram = function () {
     //console.log(code);
     Pegman.vdposX = Pegman.dposX;
     Pegman.vdposY = Pegman.dposY;
-    console.log(code);
-    console.log(Pegman.pegmanActions);
+
 
     try {
         eval(code);
@@ -1056,6 +1135,7 @@ var runProgram = function () {
 
 
 var resetProgram = function () {
+    player.body.enable = false;
 
     try {
         weapon.fireAngle = Phaser.ANGLE_RIGHT;

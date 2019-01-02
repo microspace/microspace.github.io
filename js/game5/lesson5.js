@@ -37,58 +37,35 @@ TopDownGame.Lesson5 = function () { };
 TopDownGame.Lesson5.prototype = {
     create: function () {
 
-        Blockly.mainWorkspace.clear();
-        Blockly.mainWorkspace.clearUndo();
+
         Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
-
-
-        fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
-        // loadmap("lesson53");
-
-
-
-        map = this.game.add.tilemap('lesson53');
-        //the first parameter is the tileset name as specified in Tiled, the second is the key to the asset
-        map.addTilesetImage('tileSheetWinter', 'gameTiles');
-        //create layer
-        flour = map.createLayer('flour');
-        //this.collision1 = map.createLayer('collision1');
-        //this.collision2 = map.createLayer('collision2');
+        
+        loadmap("lesson51");
 
 
 
-        blockLayer = map.createLayer('blockLayer');
-        onBlockLayer = map.createLayer('onBlockLayer');
-        sinkLayer = map.createLayer('sinkLayer');
-        onFlour = map.createLayer('onFlour');
 
 
-
-        this.createItems();
+        
     
 
 
-        // var glades = this.game.add.group();
-        // glades.create((7 + getRandomInt(0, 4)) * 64, 3 * 64, 'water');
-        // glades.create((7 + getRandomInt(0, 4)) * 64, 4 * 64, 'water');
+        // pointer.visible = true;
 
-        // map.replace(15, 154, 8 + getRandomInt(0, 4), 4, 1, 1, map.getLayer());
-        // map.replace(15, 154, 8 + getRandomInt(0, 4), 5, 1, 1, map.getLayer());
-
-        var result = findObjectsByType('playerStartPosition', map, 'playerLayer');
+        // var result = findObjectsByType('playerStartPosition', map, 'playerLayer');
 
 
-        lastSuccessfullPosition = {
-            x: result[0].x,
-            y: result[0].y
-        };
-        dlastSuccessfullPosition = {
-            x: Math.floor(result[0].x / 64),
-            y: Math.floor(result[0].y / 64)
-        };
-        Pegman.dposX = dlastSuccessfullPosition.x;
-        Pegman.dposY = dlastSuccessfullPosition.y;
-        player = this.game.add.sprite(result[0].x, result[0].y, 'pegman');
+        // lastSuccessfullPosition = {
+        //     x: result[0].x,
+        //     y: result[0].y
+        // };
+        // dlastSuccessfullPosition = {
+        //     x: Math.floor(result[0].x / 64),
+        //     y: Math.floor(result[0].y / 64)
+        // };
+        // Pegman.dposX = dlastSuccessfullPosition.x;
+        // Pegman.dposY = dlastSuccessfullPosition.y;
+        player = this.game.add.sprite(0, 0, 'pegman');
 
 
 
@@ -99,10 +76,11 @@ TopDownGame.Lesson5.prototype = {
 
         player.anchor.setTo(0.5, 0.5);
         this.game.physics.arcade.enable(player);
+        player.body.enable = false;
         player.body.setSize(60, 13, 40, 73);
         flour.resizeWorld();
-        upperLayer = map.createLayer('upperLayer');
-        fog = map.createLayer('fog');
+        
+
         //fog.resizeWorld();
 
         pointer = this.game.add.sprite(0, 0, 'pointer');
@@ -114,7 +92,8 @@ TopDownGame.Lesson5.prototype = {
         this.game.physics.arcade.enable(pointer);
         pointer.anchor.setTo(0.5, 0.5);
         pointer.body.setSize(10, 65, 48, 10);
-        scene = 1;
+
+        scene = 0;
         Pegman.init(player);
 
         load_scene(scene);
@@ -132,7 +111,14 @@ TopDownGame.Lesson5.prototype = {
         explosion.visible = false;
         explanim = explosion.animations.add('EXPL', [0, 1, 2, 3, 4, 5], 20, /*loop*/ false);
         explanim.onComplete.add(this.animationStopped, this);
-
+        
+            this.game.world.bringToTop(pointer);
+    
+            this.game.world.bringToTop(explosion);
+    
+    
+            this.game.world.bringToTop(player);
+        
         var fps = 7;
         player.animations.add('NORTH', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], fps, /*loop*/ true);
         player.animations.add('EAST', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], fps, /*loop*/ true);
@@ -172,12 +158,11 @@ TopDownGame.Lesson5.prototype = {
         l.onDown.add(this.l_down, this);
         l.onUp.add(this.l_up, this);
 
+
+        if (map.key != "lesson53") {
         map.putTile(244, Pegman.dposX, Pegman.dposY, fog);
-
         updateFog = new Phaser.Signal();
-
         updateFog.add(function () {
-
             map.putTile(244, Pegman.dposX, Pegman.dposY, fog);
             for (var y = Pegman.dposY - 1; y <= Pegman.dposY + 1; ++y) {
                 for (var x = Pegman.dposX - 1; x <= Pegman.dposX + 1; ++x) {
@@ -188,7 +173,7 @@ TopDownGame.Lesson5.prototype = {
         }, this.game);
 
         updateFog.dispatch();
-
+    }
     },
     animationStopped: function (sprite, animation) {
         explosion.visible = false;
@@ -221,7 +206,7 @@ TopDownGame.Lesson5.prototype = {
     update: function () {
 
 
-
+        if (map.key != "lesson53") {
         var cposx = Math.floor(player.x / 64);
         var cposy = Math.floor(player.y / 64);
         if (cposx != Pegman.dposX || cposy != Pegman.dposY) {
@@ -229,7 +214,7 @@ TopDownGame.Lesson5.prototype = {
             Pegman.dposY = cposy;
             updateFog.dispatch();
         }
-
+    }
 
 
 
@@ -346,6 +331,7 @@ TopDownGame.Lesson5.prototype = {
 
 function hitEvent() {
     if (!hitflag) {
+        console.log("hit");
         player.body.enable = false;
         Pegman.pegmanActions = [];
         if (Pegman.tween) {
@@ -559,14 +545,16 @@ function load_scene(scene) {
         pointer.x = result[0].x;
         pointer.y = result[0].y;
     } else if (scene == 0) {
-
+        
     }
 
-
+Pegman.reset2();
 }
 
 
 function loadmap(name) {
+    try {player.body.enable = false; } catch {}
+    
     TopDownGame.game.camera.flash(0x000000, 1000);
 
     try {
@@ -586,25 +574,32 @@ function loadmap(name) {
     map.addTilesetImage('tileSheetWinter', 'gameTiles');
     flour = map.createLayer('flour');
     onFlour = map.createLayer('onFlour');
+    sinkLayer = map.createLayer('sinkLayer');
     blockLayer = map.createLayer('blockLayer');
     onBlockLayer = map.createLayer('onBlockLayer');
-
+    
     var result = findObjectsByType('playerStartPosition', map, 'playerLayer');
     // player.x = result[0].x;
     // player.y = result[0].y;
     lastSuccessfullPosition.x = result[0].x;
     lastSuccessfullPosition.y = result[0].y;
-    Pegman.reset2();
+    try {Pegman.reset2(); } catch {}
 
     //Copied from reset button code. Resets html button
 
 
+    sinkLayer = map.createLayer('sinkLayer');
+    map.setTileIndexCallback([...Array(500).keys()], sinkInWater, this, sinkLayer);
+    map.setTileIndexCallback([...Array(500).keys()], hitEvent, this, blockLayer);
+    
 
-    var result = findObjectsByType('scene1Goal', map, 'playerLayer');
-
-    pointer.x = result[0].x;
-    pointer.y = result[0].y;
-    pointer.visible = true;
+    upperLayer = map.createLayer('upperLayer');
+    
+    if (map.key != "lesson53") {
+        fog = map.createLayer('fog');
+        
+    }
+ 
 
     TopDownGame.game.time.events.add(500, fadePicture, this);
 
@@ -612,13 +607,8 @@ function loadmap(name) {
 
     function fadePicture() {
         // загнал сюда, потому что глюк возникает когда плеер не успевает успеть
-        sinkLayer = map.createLayer('sinkLayer');
-        map.setTileIndexCallback([...Array(500).keys()], sinkInWater, this, sinkLayer);
-        map.setTileIndexCallback([...Array(500).keys()], hitEvent, this, blockLayer);
+ 
         
-
-        upperLayer = map.createLayer('upperLayer');
-        fog = map.createLayer('fog');
     }
     //scene1Goal
 
