@@ -469,12 +469,7 @@ function load_map(name) {
     lastSuccessfullPosition.y = result[0].y;
     Pegman.reset2();
 
-    //Copied from reset button code. Resets html button
-    var runButton = document.getElementById('runButton');
-    runButton.style.display = 'inline';
-    document.getElementById('resetButton').style.display = 'none';
-    // Prevent double-clicks or double-taps.
-    runButton.disabled = false;
+
 
 
     var result = findObjectsByType('scene1Goal', map, 'playerLayer');

@@ -107,7 +107,8 @@ Blockly.JavaScript['maze_down'] = function (block) {
 
         try {
         var tileDown = map.getTile(Pegman.vdposX, Pegman.vdposY + 1, map.getLayer());
-        Pegman.isGladeToDown = tileDown.index == 235;
+        
+        Pegman.isGladeBelow = tileDown.index == 235;
         } catch {}
 
         

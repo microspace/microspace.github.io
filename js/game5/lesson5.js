@@ -43,8 +43,11 @@ TopDownGame.Lesson5.prototype = {
 
 
         fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
+        // loadmap("lesson53");
 
-        map = this.game.add.tilemap('lesson51');
+
+
+        map = this.game.add.tilemap('lesson53');
         //the first parameter is the tileset name as specified in Tiled, the second is the key to the asset
         map.addTilesetImage('tileSheetWinter', 'gameTiles');
         //create layer
@@ -53,27 +56,16 @@ TopDownGame.Lesson5.prototype = {
         //this.collision2 = map.createLayer('collision2');
 
 
-        onBlockLayer = map.createLayer('onBlockLayer');
+
         blockLayer = map.createLayer('blockLayer');
+        onBlockLayer = map.createLayer('onBlockLayer');
         sinkLayer = map.createLayer('sinkLayer');
         onFlour = map.createLayer('onFlour');
 
-        pointer = this.game.add.sprite(0, 0, 'pointer');
-        pointer.scale.setTo(0.8, 0.8);
-        pointer.animations.add('ANIM', [0, 1], 2, /*loop*/ true);
 
-        pointer.animations.play('ANIM');
-
-        this.game.physics.arcade.enable(pointer);
-        pointer.anchor.setTo(0.5, 0.5);
-        pointer.body.setSize(10, 65, 48, 10);
-        var result = findObjectsByType('scene1Goal', map, 'playerLayer');
-
-        pointer.x = result[0].x;
-        pointer.y = result[0].y;
 
         this.createItems();
-        weapon = this.game.add.weapon(20, 'bullet');
+    
 
 
         // var glades = this.game.add.group();
@@ -113,9 +105,19 @@ TopDownGame.Lesson5.prototype = {
         fog = map.createLayer('fog');
         //fog.resizeWorld();
 
-        Pegman.init(player);
+        pointer = this.game.add.sprite(0, 0, 'pointer');
+        pointer.scale.setTo(0.8, 0.8);
+        pointer.animations.add('ANIM', [0, 1], 2, /*loop*/ true);
+
+        pointer.animations.play('ANIM');
+
+        this.game.physics.arcade.enable(pointer);
+        pointer.anchor.setTo(0.5, 0.5);
+        pointer.body.setSize(10, 65, 48, 10);
         scene = 1;
-        load_scene();
+        Pegman.init(player);
+
+        load_scene(scene);
 
         builddust = this.game.add.sprite(0, 0, 'build');
         builddust.visible = false;
@@ -123,12 +125,7 @@ TopDownGame.Lesson5.prototype = {
         //bullets
 
 
-        weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
-        weapon.bulletAngleOffset = 0;
-        weapon.bulletSpeed = 250;
-        weapon.fireAngle = Phaser.ANGLE_RIGHT; // shoot at right direcion by default
-        weapon.trackSprite(player, 0, -13, false); //-65 выведено экспериментальным путём
-        //weapon.addBulletAnimation("fly", [0, 1, 2, 3, 4, 5, 6, 7], 40, true);
+
 
         //explosion
         explosion = this.game.add.sprite(0, 0, 'explosion');
@@ -177,10 +174,10 @@ TopDownGame.Lesson5.prototype = {
 
         map.putTile(244, Pegman.dposX, Pegman.dposY, fog);
 
-       updateFog = new Phaser.Signal();
+        updateFog = new Phaser.Signal();
 
         updateFog.add(function () {
-            
+
             map.putTile(244, Pegman.dposX, Pegman.dposY, fog);
             for (var y = Pegman.dposY - 1; y <= Pegman.dposY + 1; ++y) {
                 for (var x = Pegman.dposX - 1; x <= Pegman.dposX + 1; ++x) {
@@ -215,7 +212,7 @@ TopDownGame.Lesson5.prototype = {
         player.body.velocity.y = 0;
     },
     l_down: function () {
-        console.log(map.getTileRight(map.getLayer(), Pegman.dposX, Pegman.dposY));
+        player.body.velocity.x = velocity;
     },
     l_up: function () {
         player.body.velocity.x = 0;
@@ -236,11 +233,11 @@ TopDownGame.Lesson5.prototype = {
 
 
 
-        this.game.physics.arcade.overlap(barrels, weapon.bullets, this.bulletHitBarrel, null, this);
+
         this.game.physics.arcade.collide(player, sinkLayer);
         this.game.physics.arcade.collide(player, flour);
         this.game.physics.arcade.collide(player, blockLayer);
-        this.game.physics.arcade.collide(player, barrels, hitEvent, null, this);
+
 
         //player.body.velocity.x = 0;
         // var velocity = 400;
@@ -282,6 +279,10 @@ TopDownGame.Lesson5.prototype = {
 
 
 
+    },
+    render: function () {
+        this.game.debug.bodyInfo(player, 32, 32);
+        this.game.debug.body(player);
     },
     createItems: function () {
         //create items
@@ -340,21 +341,7 @@ TopDownGame.Lesson5.prototype = {
             sprite.kill();
         }
     },
-    bulletHitBarrel: function (sprite, bullet) {
-        var damage = 48;
-        sprite.damage(damage);
-        if (sprite.health > 50) {
-            sprite.frame = 196;
-        } else if (sprite.health < 20) {
-            sprite.frame = 197;
-            sprite.body.enable = false; // отключаем физику чтобы пули пролетали сквозь остатки бочки
-        }
-        explosion.x = sprite.x;
-        explosion.y = sprite.y - 30;
-        explosion.visible = true;
-        explosion.animations.play('EXPL');
-        bullet.kill();
-    },
+
 };
 
 function hitEvent() {
@@ -401,166 +388,10 @@ function sinkInWater() {
         }, this);
     }
 };
-function load_scene() {
-    showflag = true;
-    Blockly.mainWorkspace.clear();
-    Blockly.mainWorkspace.clearUndo();
-    Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
-
-    if (scene == 1) {
-
-    }
-    else if (scene == 2) {
-        var newTree = `
-        <xml id="toolbox" style="display: none; background-color: #4d90fe;">
-        <block type="fire"></block>
-        <block type="maze_up"></block>
-        <block type="maze_down"></block>
-        <block type="maze_left"></block>
-        <block type="maze_right"></block>
-        <block type="uturn"></block>
-        <block type="repeat_n_times"></block>
-        </xml>`;
-        workspace.updateToolbox(newTree);
-        //maxcaps2 = 2 + 1;
-        workspace.options.maxBlocks = maxcaps2;
-        myHealthBar.barSprite.visible = true;
-        myHealthBar.bgSprite.visible = true;
-        myHealthBar.borderSprite.visible = true;
-
-    } else if (scene == 3) {
-        var newTree = `
-        <xml id="toolbox" style="display: none; background-color: #4d90fe;">
-        <block type="maze_up"></block>
-        <block type="maze_down"></block>
-        <block type="maze_left"></block>
-        <block type="maze_right"></block>
-        <block type="fire"></block>
-        <block type="repeat_n_times"></block>
-        </xml>`;
-        workspace.updateToolbox(newTree);
-        //maxcaps2 = 11 + 1 + 1;
-        workspace.options.maxBlocks = maxcaps2;
-    } else if (scene == 4) {
-        console.log(scene);
-        var newTree = `
-        <xml id="toolbox" style="display: none; background-color: #4d90fe;">
-        <block type="maze_up"></block>
-        <block type="maze_down"></block>
-        <block type="maze_left"></block>
-        <block type="maze_right"></block>
-        <block type="fire"></block>
-        <block type="repeat_n_times"></block>
-        </xml>`;
-        workspace.updateToolbox(newTree);
-        //maxcaps2 = 5 + 1 + 10;
-        workspace.options.maxBlocks = maxcaps2;
-    } else if (scene == 5) {
-        var newTree = `
-        <xml id="toolbox" style="display: none; background-color: #4d90fe;">
-        <block type="maze_up"></block>
-        <block type="maze_down"></block>
-        <block type="maze_left"></block>
-        <block type="maze_right"></block>
-        <block type="fire"></block>
-        <block type="repeat_n_times"></block>
-        </xml>`;
-        workspace.updateToolbox(newTree);
-        //maxcaps2 = 12 + 1 + 3;
-        workspace.options.maxBlocks = maxcaps2;
-
-        var result = findObjectsByType('scene5Goal', map, 'playerLayer');
-        pointer.x = result[0].x;
-        pointer.y = result[0].y;
-        pointer.visible = true;
-        pointer.animations.play('ANIM');
-
-    }
-    barrels.forEach(function (c) {
-        if (c.scene == scene) {
-            c.revive();
-        } else {
-            c.kill();
-        }
-    });
-    Pegman.reset2();
-}
-
-
-function load_map(name) {
-    TopDownGame.game.camera.flash(0x000000, 1000);
-
-    try {
-        map.destroy();
-        flour.destroy();
-        onFlour.destroy();
-        blockLayer.destroy();
-        onBlockLayer.destroy();
-        sinkLayer.destroy();
-        upperLayer.destroy();
-        barrels.callAll('kill');
-    } catch { }
-
-
-    map = TopDownGame.game.add.tilemap(name); //add tileset image     
-    map.addTilesetImage('tileSheetWinter', 'gameTiles');
-    flour = map.createLayer('flour');
-    onFlour = map.createLayer('onFlour');
-    blockLayer = map.createLayer('blockLayer');
-    onBlockLayer = map.createLayer('onBlockLayer');
-
-    var result = findObjectsByType('playerStartPosition', map, 'playerLayer');
-    // player.x = result[0].x;
-    // player.y = result[0].y;
-    lastSuccessfullPosition.x = result[0].x;
-    lastSuccessfullPosition.y = result[0].y;
-    Pegman.reset2();
-
-    //Copied from reset button code. Resets html button
-    var runButton = document.getElementById('runButton');
-    runButton.style.display = 'inline';
-    document.getElementById('resetButton').style.display = 'none';
-    // Prevent double-clicks or double-taps.
-    runButton.disabled = false;
-
-
-    var result = findObjectsByType('scene1Goal', map, 'playerLayer');
-
-    pointer.x = result[0].x;
-    pointer.y = result[0].y;
-    pointer.visible = true;
-
-    TopDownGame.game.time.events.add(500, fadePicture, this);
-    barrels.removeAll();
-
-    result = findObjectsByType('barrel', map, 'objectLayer');
-
-    result.forEach(function (element) {
-        createFromTiledObject2(element, barrels);
-    }, this);
-
-
-    function fadePicture() {
-        // загнал сюда, потому что глюк возникает когда плеер не успевает успеть
-        sinkLayer = map.createLayer('sinkLayer');
-        map.setTileIndexCallback([...Array(500).keys()], sinkInWater, this, sinkLayer);
-        map.setTileIndexCallback([...Array(500).keys()], hitEvent, this, blockLayer);
-        try {
-            TopDownGame.game.world.bringToTop(pointer);
-            TopDownGame.game.world.bringToTop(barrels);
-            TopDownGame.game.world.bringToTop(explosion);
-
-            TopDownGame.game.world.bringToTop(weapon.bullets);
-            TopDownGame.game.world.bringToTop(player);
-        } catch { }
-
-        upperLayer = map.createLayer('upperLayer');
-    }
-    //scene1Goal
 
 
 
-}
+
 
 function findObjectsByType(type, map, layer) {
     var result = new Array();
@@ -709,3 +540,95 @@ Maze.tile_SHAPES = {
 
 };
 
+
+
+function load_scene(scene) {
+
+    if (scene == 1) {
+        var result = findObjectsByType('scene1Goal', map, 'playerLayer');
+        pointer.x = result[0].x;
+        pointer.y = result[0].y;
+    }
+    else if (scene == 2) {
+        var result = findObjectsByType('scene2Goal', map, 'playerLayer');
+        pointer.x = result[0].x;
+        pointer.y = result[0].y;
+    }
+    else if (scene == 3) {
+        var result = findObjectsByType('scene3Goal', map, 'playerLayer');
+        pointer.x = result[0].x;
+        pointer.y = result[0].y;
+    } else if (scene == 0) {
+
+    }
+
+
+}
+
+
+function loadmap(name) {
+    TopDownGame.game.camera.flash(0x000000, 1000);
+
+    try {
+        map.destroy();
+        flour.destroy();
+        onFlour.destroy();
+        blockLayer.destroy();
+        onBlockLayer.destroy();
+        sinkLayer.destroy();
+        upperLayer.destroy();
+        fog.destroy();
+
+    } catch { }
+
+
+    map = TopDownGame.game.add.tilemap(name); //add tileset image     
+    map.addTilesetImage('tileSheetWinter', 'gameTiles');
+    flour = map.createLayer('flour');
+    onFlour = map.createLayer('onFlour');
+    blockLayer = map.createLayer('blockLayer');
+    onBlockLayer = map.createLayer('onBlockLayer');
+
+    var result = findObjectsByType('playerStartPosition', map, 'playerLayer');
+    // player.x = result[0].x;
+    // player.y = result[0].y;
+    lastSuccessfullPosition.x = result[0].x;
+    lastSuccessfullPosition.y = result[0].y;
+    Pegman.reset2();
+
+    //Copied from reset button code. Resets html button
+
+
+
+    var result = findObjectsByType('scene1Goal', map, 'playerLayer');
+
+    pointer.x = result[0].x;
+    pointer.y = result[0].y;
+    pointer.visible = true;
+
+    TopDownGame.game.time.events.add(500, fadePicture, this);
+
+
+
+    function fadePicture() {
+        // загнал сюда, потому что глюк возникает когда плеер не успевает успеть
+        sinkLayer = map.createLayer('sinkLayer');
+        map.setTileIndexCallback([...Array(500).keys()], sinkInWater, this, sinkLayer);
+        map.setTileIndexCallback([...Array(500).keys()], hitEvent, this, blockLayer);
+        
+
+        upperLayer = map.createLayer('upperLayer');
+        fog = map.createLayer('fog');
+    }
+    //scene1Goal
+
+    try {
+        TopDownGame.game.world.bringToTop(pointer);
+
+        TopDownGame.game.world.bringToTop(explosion);
+
+
+        TopDownGame.game.world.bringToTop(player);
+    } catch { }
+
+}

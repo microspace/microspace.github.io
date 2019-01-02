@@ -27,11 +27,11 @@ var Pegman = {
         // getSelfInfo();
 
         function delayEnBody() {
-            
+
             // включаем физику с задержкой, из-за переходных процессов в игре
             this.pegmanSprite.body.enable = true;
             if (TopDownGame.game.state.getCurrentState().key == "lesson1" && scene == 0) {
-            
+
 
                 $("#modaltext").text("Приветствую тебя " + Pegman.firstName + "! Я научу тебя пользоваться твоим экзокостюмом. Для начала попробуй просто сдвинуться с места!");
                 $("#exampleModal").modal();
@@ -52,21 +52,28 @@ var Pegman = {
             $("#modaltext").text(Pegman.firstName + ", только что с учебки, а уже сразу на такое опасное задание?!! Сначала докажи, что умеешь стрелять!");
             $("#exampleModal").modal();
         }
+
+        if (TopDownGame.game.state.getCurrentState().key == "lesson5"  && scene == 0  && map.key == "lesson51") {
+            $("#modaltext").text("Вокруг много подтаявшего льда, сквозь который можно проавлиться. Давай проверим как ты умеешь засыпать полынью снегом. Используй блок засыпать");
+            $("#exampleModal").modal();
+        }
         this.reset2();
     },
 
     reset2: function () {
-
+        TopDownGame.game.stage.updateTransform();
         TopDownGame.game.time.events.add(500, delayEnBody, this);
-        this.pegmanSprite.angle = 0;
+        try {
+            this.pegmanSprite.angle = 0;
+        } catch {}
         function delayEnBody() {
             // включаем физику с задержкой, из-за переходных процессов в игре
             this.pegmanSprite.body.enable = true;
         }
 
 
-        TopDownGame.game.tweens.removeAll();
-        TopDownGame.game.stage.updateTransform();
+     TopDownGame.game.tweens.removeAll(); 
+
         this.direction = Maze.DirectionType.EAST
 
         this.posX = lastSuccessfullPosition.x;
@@ -79,12 +86,12 @@ var Pegman = {
         }
 
 
-        try {
-            this.dposX = dlastSuccessfullPosition.x;
-            this.dposY = dlastSuccessfullPosition.y;
-        } catch {
+        // try {
+        //     this.dposX = dlastSuccessfullPosition.x;
+        //     this.dposY = dlastSuccessfullPosition.y;
+        // } catch {
 
-        }
+        // }
         this.preReset();
         this.tween = null;
         this.tween1 = null;
@@ -120,12 +127,12 @@ var Pegman = {
     },
 
     postReset: function () {
+        
         this.pegmanSprite.reset(lastSuccessfullPosition.x, lastSuccessfullPosition.y);
         this.pegmanSprite.fresh = false;
-
         flag = false;
 
-        if (TopDownGame.game.state.getCurrentState().key == "lesson11") {
+        if (TopDownGame.game.state.getCurrentState().key == "lesson1") {
             barrels.forEach(function (c) {
                 if (c["scene"] - 1 == scene) { //оживляем только те бочки, которые относятся к данной сцене.
                     c.revive();
@@ -261,19 +268,21 @@ var Pegman = {
                     //  }
                 }
             }
+
+
+            /*             map.putTile(237, Pegman.dposX, Pegman.dposY - 1, fog);
+                        map.putTile(238, Pegman.dposX - 1, Pegman.dposY, fog);
+                        map.putTile(239, Pegman.dposX, Pegman.dposY + 1, fog);
+                        map.putTile(240, Pegman.dposX + 1, Pegman.dposY, fog);
+                        map.putTile(241, Pegman.dposX - 1, Pegman.dposY - 1, fog);
+                        map.putTile(242, Pegman.dposX + 1, Pegman.dposY - 1, fog);
+                        map.putTile(243, Pegman.dposX - 1, Pegman.dposY + 1, fog);
+                        map.putTile(244, Pegman.dposX + 1, Pegman.dposY + 1, fog); 
             
-/*             map.putTile(237, Pegman.dposX, Pegman.dposY - 1, fog);
-            map.putTile(238, Pegman.dposX - 1, Pegman.dposY, fog);
-            map.putTile(239, Pegman.dposX, Pegman.dposY + 1, fog);
-            map.putTile(240, Pegman.dposX + 1, Pegman.dposY, fog);
-            map.putTile(241, Pegman.dposX - 1, Pegman.dposY - 1, fog);
-            map.putTile(242, Pegman.dposX + 1, Pegman.dposY - 1, fog);
-            map.putTile(243, Pegman.dposX - 1, Pegman.dposY + 1, fog);
-            map.putTile(244, Pegman.dposX + 1, Pegman.dposY + 1, fog); 
-
-
-*/
-
+            
+            */
+            Pegman.dposX = Math.floor(player.x / 64);
+            Pegman.dposY = Math.floor(player.y / 64);
             map.putTile(244, Pegman.dposX, Pegman.dposY, fog);
             for (var y = Pegman.dposY - 1; y <= Pegman.dposY + 1; ++y) {
                 for (var x = Pegman.dposX - 1; x <= Pegman.dposX + 1; ++x) {
@@ -282,18 +291,52 @@ var Pegman = {
                 }
             }
 
-            map.replace(235, 15, 8, 4, 5, 2, map.getLayer());
-            map.replace(236, 15, 8, 4, 5, 2, map.getLayer());
-            map.replace(15, 235, 8 + getRandomInt(0, 4), 4, 1, 1, map.getLayer());
-            map.replace(15, 235, 8 + getRandomInt(0, 4), 5, 1, 1, map.getLayer());
+            if (scene == 0 && map.key == "lesson51") {
+                map.putTile(244, Pegman.dposX+1, Pegman.dposY, fog);
+                for (var y = Pegman.dposY - 1; y <= Pegman.dposY + 1; ++y) {
+                    for (var x = Pegman.dposX +1 - 1; x <= Pegman.dposX +1 + 1; ++x) {
+                        var t_id = normalize(x, y);
+                        map.putTile(t_id, x, y, fog);
+                    }
+                }
+
+            } else if (scene == 1 && map.key == "lesson51") {
+                map.replace(235, 15, 6, 4, 6, 2, map.getLayer());
+                map.replace(236, 15, 6, 4, 6, 2, map.getLayer());
+                map.replace(15, 235, 6 + getRandomInt(0, 6), 4, 1, 1, map.getLayer());
+                map.replace(15, 235, 6 + getRandomInt(0, 6), 5, 1, 1, map.getLayer());
+            } else if (scene == 2 && map.key == "lesson51") {
+                this.refillarea(12, 6, 15, 12);
+            } else if (scene == 3 && map.key == "lesson51") {
+                this.refillarea(16, 11, 22, 14);
+            } else if (scene == 1 && map.key == "lesson52") {
+                this.refillarea(6, 10, 9, 14);
+            } else if (scene == 2 && map.key == "lesson52") {
+                this.refillarea(12, 10, 18, 12);
+                this.refillarea(16, 3, 19, 9);
+                this.revealArea();
+            }
+
         }
-
-
 
         this.pegmanSprite.animations.play('STAND');
 
     },
+    refillarea: function (x1,y1, x2,y2){
+        map.replace(235, 15, x1, y1, x2 - x1 + 1, y2 - y1 + 1, flour);
+        map.replace(236, 15, x1, y1, x2 - x1 + 1, y2 - y1 + 1, flour);
 
+        var arr = shuffle(Array((x2 - x1 + 1) * (y2 - y1 + 1) - 5).fill(0).concat([1, 1, 1, 1, 1]));
+        var i = 0;
+        for (var y = y1; y <= y2; ++y) {
+            for (var x = x1; x <= x2; ++x) {
+                if (arr[i]) {
+                    map.replace(15, 235, x, y, 1, 1, flour);
+                }
+                i = i + 1;
+            }
+        }
+    },
     nextAction: function (action, step = 1, tox = 0, toy = 0) {
         var actionobject = {
             action: action,
@@ -441,7 +484,7 @@ var Pegman = {
                     this.playNextAction();
                 }, this);
                 break;
-                break;
+               
             case "build":
                 var tileIDToReplace;
                 var tileToReplaceX;
@@ -550,8 +593,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
     this.animSpeedByStep = 500;
     this.posX = x;
     this.posY = y;
-    this.dposX = Math.floor(x / 64);
-    this.dposY = Math.floor(y / 64);
+
     this.anim = this.pegmanSprite.animations.play("NORTH");
     this.tween = TopDownGame.game.add.tween(this.pegmanSprite);
     this.tween.to({
@@ -560,8 +602,8 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
     }, this.animSpeedByStep * stepcount, Phaser.Easing.Linear.In);
     this.tween.onComplete.addOnce(function () {
         this.pegmanSprite.animations.play("STAND");
-        TopDownGame.game.stage.updateTransform();
-        this.pegmanSprite.fresh = false;
+        this.dposX = Math.floor(x / 64);
+        this.dposY = Math.floor(y / 64);
         this.playNextAction();
     }, this);
     this.tween.start();
@@ -603,10 +645,9 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 scene += 1;
 
 
-                this.pegmanSprite.body.enable = false;
+
                 pointer.x = Maze.scenes[scene].endPos[0];
                 pointer.y = Maze.scenes[scene].endPos[1];
-                this.pegmanSprite.body.enable = true;
 
 
                 lastSuccessfullPosition.x = player.x;
@@ -773,8 +814,9 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     lastSuccessfullPosition.x = player.x;
                     lastSuccessfullPosition.y = player.y;
                     scene += 1;
-                    saveWorkspace();
+
                     load_scene();
+                    saveWorkspace();
 
                 } else if (scene == 5) {
                     var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
@@ -798,23 +840,62 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
             }
         }
         if (TopDownGame.game.state.getCurrentState().key == "lesson5") {
-            var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
-            if (isOverlapping == true) {
 
-                $("#modaltext").text("Поздравляю! Ты закончил уровень №5");
-                $("#exampleModal").modal();
+            if (scene == 0) {
+                 if (map.getTile(5, 4, flour).index == 236) {
+                    scene += 1;
+                    load_scene(scene);
+                    $("#modaltext").text("Теперь доберись до указателя");
+                    $("#exampleModal").modal();
+                
+                 }
+
+            } else {
+
 
             }
-
+            var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
+            if (isOverlapping == true) {
+                lastSuccessfullPosition.x = player.x;
+                lastSuccessfullPosition.y = player.y;
+                if (scene < 3) {
+                    scene += 1;
+                    if (scene == 2 && map.key == 'lesson52') {
+                        revealArea();
+                    }
+                    load_scene(scene);
+                } else if (scene == 3 && map.key == 'lesson51') {
+                    loadmap('lesson52');
+                    scene = 1;
+                } else if (scene == 3 && map.key == 'lesson52') {
+                    loadmap('lesson53');
+                    scene = 1;
+                }
+                // saveWorkspace();
+            }
         }
-
-
     };
 
+function revealArea() {
+ var replaceFill = [ [7, 3], [8, 3], [9, 3], [10, 3], [11, 3], [7, 4], [8, 4], [9, 4], [10, 4], [11, 4], [12, 4], [13, 4], [7, 5], [8, 5], [9, 5], [10, 5], [11, 5], [12, 5], [13, 5], [7, 6], [8, 6], [9, 6], [10, 6], [11, 6], [12, 6], [13, 6], [8, 7], [9, 7], [10, 7], [11, 7], [12, 7], [13, 7], [8, 8], [9, 8], [10, 8], [11, 8], [12, 8], ];
+ var replaceContour = [ [6, 2], [7, 2], [8, 2], [9, 2], [10, 2], [11, 2], [12, 2], [13, 3], [14, 3], [14, 4], [14, 5], [14, 6], [14, 7], [14, 8], [13, 8], [13, 9], [12, 9], [11, 9], [10, 9], [9, 9], [8, 9], [7, 9], [7, 8], [7, 7], [6, 7], [6, 6], [6, 5], [6, 4], [6, 3], ];
 
+    for (var i = 0; i < replaceFill.length; i++) {
+        map.putTile(244, replaceFill[i][0], replaceFill[i][1], fog);
+    }
 
+    for (var i = 0; i < replaceContour.length; i++) {
+        for (var y = replaceContour[i][1] - 1; y <= replaceContour[i][1] + 1; ++y) {
+            for (var x = replaceContour[i][0] - 1; x <= replaceContour[i][0] + 1; ++x) {
 
+                var t_id = normalize(replaceContour[i][0], replaceContour[i][1]);
+                
+                map.putTile(t_id, replaceContour[i][0], replaceContour[i][1], fog);
+            }
+        }
 
+    }
+}
 
 
 
@@ -938,7 +1019,7 @@ function getSelfInfo() {
                 // var code = JSON.parse(data.data).code;
                 // scene = JSON.parse(data.data).scene;
 
-            } 
+            }
 
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -950,7 +1031,7 @@ function getSelfInfo() {
 
 
 
-var runProgram = function() {
+var runProgram = function () {
 
     //var statements_stack = Blockly.JavaScript.statementToCode(Blockly.Blocks['factory_base'], 'STACK');
 
@@ -958,14 +1039,17 @@ var runProgram = function() {
     //console.log(code);
     Pegman.vdposX = Pegman.dposX;
     Pegman.vdposY = Pegman.dposY;
+    console.log(code);
+    console.log(Pegman.pegmanActions);
+
     try {
         eval(code);
     } catch (e) {
         alert(e);
     }
-    
+
     Pegman.play();
- 
+
     TopDownGame.game.camera.follow(player);
 }
 
@@ -980,4 +1064,16 @@ var resetProgram = function () {
     }
     Pegman.reset2();
     TopDownGame.game.camera.follow(player);
+}
+
+
+function shuffle(a) {
+    var j, x, i;
+    for (i = a.length - 1; i > 0; i--) {
+        j = Math.floor(Math.random() * (i + 1));
+        x = a[i];
+        a[i] = a[j];
+        a[j] = x;
+    }
+    return a;
 }
