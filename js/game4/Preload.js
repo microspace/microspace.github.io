@@ -29,7 +29,13 @@ TopDownGame.Preload.prototype = {
 
     },
     create: function() {
-        // this.state.start('lesson4');
-        loadWorkspace('lesson4');
+        // 
+        
+        try {
+            loadWorkspace('lesson4');
+        } catch {
+            console.log("fallback - no server");
+            this.state.start('lesson4');
+        }
     }
 };

@@ -672,7 +672,13 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
 
                 lastSuccessfullPosition.x = player.x;
                 lastSuccessfullPosition.y = player.y;
-                saveWorkspace();
+                toogleRunButton();
+                try { 
+                    saveWorkspace(); 
+                }
+                catch {
+                    console.log("couldn't save");
+                }
             } else {
                 //show modal unsuccessful
                 if (scene == 4) {
@@ -713,7 +719,13 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
 
                 TopDownGame.game.state.start('lesson22');
                 scene = 2;
-                saveWorkspace();
+                toogleRunButton();
+                try { 
+                    saveWorkspace(); 
+                }
+                catch {
+                    console.log("couldn't save");
+                }
 
             } else {
                 $("#modaltext").text("Ты подобрал не все сундуки!");
@@ -736,7 +748,13 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
 
                 TopDownGame.game.state.start('lesson23');
                 scene = 3;
-                saveWorkspace();
+                toogleRunButton();
+                try { 
+                    saveWorkspace(); 
+                }
+                catch {
+                    console.log("couldn't save");
+                }
 
             } else {
                 $("#modaltext").text("Ты подобрал не все сундуки!");
@@ -758,7 +776,13 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 // $("#exampleModal").modal();
                 TopDownGame.game.state.start('lesson24');
                 scene = 4;
-                saveWorkspace();
+                toogleRunButton();
+                try { 
+                    saveWorkspace(); 
+                }
+                catch {
+                    console.log("couldn't save");
+                }
 
             } else {
                 $("#modaltext").text("Ты подобрал не все сундуки!");
@@ -778,7 +802,13 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
             if (aliveChestsCount == 0) {
                 scene = 5;
                 TopDownGame.game.state.start('lesson25');
-                saveWorkspace();
+                toogleRunButton();
+                try { 
+                    saveWorkspace(); 
+                }
+                catch {
+                    console.log("couldn't save");
+                }
 
             } else {
                 $("#modaltext").text("Ты подобрал не все сундуки!");
@@ -814,7 +844,13 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                         scene += 1;
 
                         change_map('lesson3' + scene);
-                        saveWorkspace();
+                        toogleRunButton();
+                        try { 
+                            saveWorkspace(); 
+                        }
+                        catch {
+                            console.log("couldn't save");
+                        }
                         Pegman.reset2();
                         TopDownGame.game.camera.flash(0x000000, 500);
                     });
@@ -836,14 +872,26 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     scene += 1;
 
                     load_scene();
-                    saveWorkspace();
+                    toogleRunButton();
+                try { 
+                    saveWorkspace(); 
+                }
+                catch {
+                    console.log("couldn't save");
+                }
 
                 } else if (scene == 5) {
                     var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
                     if (isOverlapping == true) {
                         pointer.visible = false;
                         scene = 42;
-                        saveWorkspace();
+                        toogleRunButton();
+                try { 
+                    saveWorkspace(); 
+                }
+                catch {
+                    console.log("couldn't save");
+                }
                         load_map("lesson42");
                     }
 
@@ -869,7 +917,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     toogleRunButton();
 
 
-                    
+
                     $("#modaltext").text("Теперь доберись до указателя");
                     $("#exampleModal").modal();
 
@@ -902,7 +950,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     } else if (scene == 1 && map.key == 'lesson52') {
                         lastSuccessfullPosition.x = player.x;
                         lastSuccessfullPosition.y = player.y;
-                        
+
                         $("#modaltext").text("Наконец-то пришла помощь! Мы нашли важный след Агносто. Но нас атаковали и мы не можем вернуться. Есть раненные. Помоги нам доставить следы Агносто на базу альянса!");
                         $("#exampleModal").modal();
                         revealArea();
@@ -913,7 +961,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     } else if (scene == 2 && map.key == 'lesson52') {
 
                         loadmap('lesson53');
-                        
+
                         $("#modaltext").text("Путь к точке эвакуации проходит через реку. Нужно засыпать дорогу для отряда.");
                         $("#exampleModal").modal();
                         scene = 1;
