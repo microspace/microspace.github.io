@@ -4,7 +4,7 @@ var TopDownGame = TopDownGame || {};
 var player;
 var explosion;
 var cp;
-
+var barrels;
 var flag = false;
 var hitflag = false;
 var scene;
@@ -54,7 +54,7 @@ TopDownGame.Lesson4.prototype = {
         pointer.scale.setTo(0.8, 0.8);
         pointer.animations.add('ANIM', [0, 1], 2, /*loop*/ true);
         pointer.visible = false;
-        //pointer.animations.play('ANIM');
+        pointer.animations.play('ANIM');
     
         this.game.physics.arcade.enable(pointer);
         pointer.anchor.setTo(0.5, 0.5);
@@ -63,7 +63,6 @@ TopDownGame.Lesson4.prototype = {
         this.createItems();
         weapon = this.game.add.weapon(20, 'bullet');
         var result = findObjectsByType('playerStartPosition', map, 'playerLayer');
-        
         lastSuccessfullPosition = {
             x: result[0].x,
             y: result[0].y
@@ -229,69 +228,35 @@ TopDownGame.Lesson4.prototype = {
         //camera end
 
 
-        try {
+       
             myHealthBar.setPercent(workspace.remainingCapacity() / (maxcaps2 - 1) * 100);
-        } catch { };
+        
     },
 
     createItems: function () {
         //create items
         barrels = this.game.add.group();
         barrels.enableBody = true;
-        result = this.findObjectsByType('barrel', map, 'objectLayer');
+        result = findObjectsByType('barrel', map, 'objectLayer');
         result.forEach(function (element) {
             this.createFromTiledObject(element, barrels);
         }, this);
     },
 
     //find objects in a Tiled layer that containt a property called "type" equal to a certain value
-    findObjectsByType: function (type, map, layer) {
-        var result = new Array();
-        var elemid;
-        map.objects[layer].forEach(function (element) {
-            var i;
-            
-            for (i = 0; i < element.properties.length; i++) {
-                
-                if (element.properties[i].value === type) {
-                    elemid = i;
-                    element.y -= map.tileHeight;
-                    result.push(element);
-                }
-            }
 
-            if (element.properties[elemid].value === type) {
-                
-                
-            
-            }
-
-        });
-        
-        return result;
-    },
     //create a sprite from an object
     createFromTiledObject: function (element, group) {
-        var sprite = group.create(element.x, element.y, 'totalsheet', 234);
+        var sprite = group.create(element.x, element.y, 'totalsheet', 195);
         //copy all properties to the sprite
         element.properties.forEach(function (element) {
-            
-
-            
+        
 
             sprite[element.name] = element.value;
         });
         sprite.health = 100;
         sprite.body.immovable = true;
-        //sprite.scale.set(2 , 2 );
-        if (sprite["sprite"] === "needToHit") {
-            sprite.frame = 195;
-        }
-        if (sprite["scene"] < scene) {
-            sprite.frame = 197
-        } else if (sprite["scene"] > scene) {
-            sprite.kill();
-        }
+
     },
     bulletHitBarrel: function (sprite, bullet) {
         var damage = 48;
@@ -366,16 +331,17 @@ function load_scene() {
     else if (scene == 2) {
         var newTree = `
         <xml id="toolbox" style="display: none; background-color: #4d90fe;">
-        <block type="fire"></block>
+        
         <block type="maze_up"></block>
         <block type="maze_down"></block>
         <block type="maze_left"></block>
         <block type="maze_right"></block>
+        <block type="fire"></block>
         <block type="uturn"></block>
         <block type="repeat_n_times"></block>
         </xml>`;
         workspace.updateToolbox(newTree);
-        //maxcaps2 = 2 + 1;
+        maxcaps2 = 2 + 1;
         workspace.options.maxBlocks = maxcaps2;
         myHealthBar.barSprite.visible = true;
         myHealthBar.bgSprite.visible = true;
@@ -389,10 +355,11 @@ function load_scene() {
         <block type="maze_left"></block>
         <block type="maze_right"></block>
         <block type="fire"></block>
+        <block type="uturn"></block>
         <block type="repeat_n_times"></block>
         </xml>`;
         workspace.updateToolbox(newTree);
-        //maxcaps2 = 11 + 1 + 1;
+        maxcaps2 = 12 + 1;
         workspace.options.maxBlocks = maxcaps2;
     } else if (scene == 4) {
         console.log(scene);
@@ -403,10 +370,11 @@ function load_scene() {
         <block type="maze_left"></block>
         <block type="maze_right"></block>
         <block type="fire"></block>
+        <block type="uturn"></block>
         <block type="repeat_n_times"></block>
         </xml>`;
         workspace.updateToolbox(newTree);
-        //maxcaps2 = 5 + 1 + 10;
+        maxcaps2 = 6 + 1;
         workspace.options.maxBlocks = maxcaps2;
     } else if (scene == 5) {
         var newTree = `
@@ -416,10 +384,11 @@ function load_scene() {
         <block type="maze_left"></block>
         <block type="maze_right"></block>
         <block type="fire"></block>
+        <block type="uturn"></block>
         <block type="repeat_n_times"></block>
         </xml>`;
         workspace.updateToolbox(newTree);
-        //maxcaps2 = 12 + 1 + 3;
+        maxcaps2 = 16 + 1;
         workspace.options.maxBlocks = maxcaps2;
 
         var result = findObjectsByType('scene5Goal', map, 'playerLayer');
@@ -441,8 +410,20 @@ function load_scene() {
 
 
 function load_map(name) {
+    var newTree = `
+    <xml id="toolbox" style="display: none; background-color: #4d90fe;">
+    <block type="maze_up"></block>
+    <block type="maze_down"></block>
+    <block type="maze_left"></block>
+    <block type="maze_right"></block>
+    <block type="fire"></block>
+    <block type="uturn"></block>
+    <block type="repeat_n_times"></block>
+    </xml>`;
+    workspace.updateToolbox(newTree);
     TopDownGame.game.camera.flash(0x000000, 1000);
-
+    maxcaps2 = 15 + 1;
+    workspace.options.maxBlocks = maxcaps2;
     try {
         map.destroy();
         flour.destroy();
@@ -482,6 +463,7 @@ function load_map(name) {
     barrels.removeAll();
 
     result = findObjectsByType('barrel', map, 'objectLayer');
+    console.log(result);
 
     result.forEach(function (element) {
         createFromTiledObject2(element, barrels);
@@ -489,10 +471,13 @@ function load_map(name) {
 
 
     function fadePicture() {
+        $("#modaltext").text("Ха! Да ты со всем справился! А теперь последнее испытание. Оно только для бойцов со стальными нервами! Пройди по очень тонкому мосту над бездной и подстрели те бочки!");
+        $("#exampleModal").modal();
         // загнал сюда, потому что глюк возникает когда плеер не успевает успеть
         sinkLayer = map.createLayer('sinkLayer');
         map.setTileIndexCallback([...Array(500).keys()], sinkInWater, this, sinkLayer);
         map.setTileIndexCallback([...Array(500).keys()], hitEvent, this, blockLayer);
+        upperLayer = map.createLayer('upperLayer');
         try {
             TopDownGame.game.world.bringToTop(pointer);
             TopDownGame.game.world.bringToTop(barrels);
@@ -500,9 +485,15 @@ function load_map(name) {
             
             TopDownGame.game.world.bringToTop(weapon.bullets);
             TopDownGame.game.world.bringToTop(player);
-        } catch { }
+            TopDownGame.game.world.bringToTop(myHealthBar.borderSprite);
+            TopDownGame.game.world.bringToTop(myHealthBar.bgSprite);
+            TopDownGame.game.world.bringToTop(myHealthBar.barSprite);
+            
+        } catch { 
 
-        upperLayer = map.createLayer('upperLayer');
+        }
+
+        
     }
     //scene1Goal
 
@@ -510,33 +501,15 @@ function load_map(name) {
 
 }
 
-function findObjectsByType(type, map, layer) {
-    var result = new Array();
-    map.objects[layer].forEach(function (element) {
-        
-        if (element.properties[0].value === type) {
-            //Phaser uses top left, Tiled bottom left so we have to adjust
-            //also keep in mind that the cup images are a bit smaller than the tile which is 16x16
-            //so they might not be placed in the exact position as in Tiled
-            element.y -= map.tileHeight;
-            result.push(element);
-        }
-    });
-
-    return result;
-}
 
 function createFromTiledObject2(element, group) {
-    var sprite = group.create(element.x, element.y, 'totalsheet', 234);
+    var sprite = group.create(element.x, element.y, 'totalsheet', 195);
     //copy all properties to the sprite
     Object.keys(element.properties).forEach(function (key) {
         sprite[key] = element.properties[key];
     });
     sprite.health = 100;
     sprite.body.immovable = true;
-    //sprite.scale.set(2 , 2 );
-    if (sprite["sprite"] === "needToHit") {
-        sprite.frame = 195;
-    }
+
 
 }

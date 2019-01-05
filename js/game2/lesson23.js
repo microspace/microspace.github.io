@@ -28,28 +28,10 @@ TopDownGame.Lesson23.prototype = {
 
         this.onBlockLayer = this.map.createLayer('onBlockLayer');
         this.onFlour = this.map.createLayer('onFlour');
-        //create player
-        // load all data from map json, populate the structure.
-        //this.loadsceneData();
-        /*        lastSuccessfullPosition = {
-                    x: Maze.scenes[scene2].startPos[0],
-                    y: Maze.scenes[scene2].startPos[1]
-                };*/
-        //var result = this.findObjectsByType('playerStartPosition', this.map, 'playerLayer');
+
         this.createItems();
-        // here we count barrels which we need to hit
 
-        /*        barrels.forEach(function(c) {
-                    console.log(c.health);
-                });*/
-
-
-        // game goal pointer
-        /*        pointer = this.game.add.sprite(Maze.scenes[scene2].endPos[0], Maze.scenes[scene2].endPos[1], 'pointer');
-                pointer.scale.setTo(0.8, 0.8);
-                pointer.animations.add('ANIM', [0, 1], 2, true);
-                pointer.animations.play('ANIM');*/
-        var result = this.findObjectsByType('playerStartPosition', this.map, 'playerLayer');
+        var result = findObjectsByType('playerStartPosition', this.map, 'playerLayer');
         lastSuccessfullPosition = {
             x: result[0].x,
             y: result[0].y
@@ -207,32 +189,18 @@ TopDownGame.Lesson23.prototype = {
         //create items
         chests = this.game.add.group();
         chests.enableBody = true;
-        result = this.findObjectsByType('chest', this.map, 'objectLayer');
+        result = findObjectsByType('chest', this.map, 'objectLayer');
         result.forEach(function(element) {
             this.createFromTiledObject(element, chests);
         }, this);
     },
 
-    //find objects in a Tiled layer that containt a property called "type" equal to a certain value
-    findObjectsByType: function(type, map, layer) {
-        var result = new Array();
-        map.objects[layer].forEach(function(element) {
-            if (element.properties.type === type) {
-                //Phaser uses top left, Tiled bottom left so we have to adjust
-                //also keep in mind that the cup images are a bit smaller than the tile which is 16x16
-                //so they might not be placed in the exact position as in Tiled
-                element.y -= map.tileHeight;
-                result.push(element);
-            }
-        });
-        return result;
-    },
     //create a sprite from an object
     createFromTiledObject: function(element, group) {
         var sprite = group.create(element.x, element.y, 'totalsheet', 163);
         //copy all properties to the sprite
-        Object.keys(element.properties).forEach(function(key) {
-            sprite[key] = element.properties[key];
+        element.properties.forEach(function (element) {
+            sprite[element.name] = element.value;
         });
 
         if (sprite["sprite"] === "treasure1") {

@@ -150,7 +150,7 @@
                  "type":"",
                  "visible":true,
                  "width":64,
-                 "x":1347.66333333333,
+                 "x":1347.66,
                  "y":388.167
                 }, 
                 {
@@ -178,7 +178,7 @@
                  "type":"",
                  "visible":true,
                  "width":64,
-                 "x":1348.66666666667,
+                 "x":1348.67,
                  "y":634.5
                 }, 
                 {
@@ -206,7 +206,7 @@
                  "type":"",
                  "visible":true,
                  "width":64,
-                 "x":1408.66666666667,
+                 "x":1408.67,
                  "y":894.5
                 }],
          "opacity":1,
@@ -237,7 +237,7 @@
         {
          "columns":13,
          "firstgid":1,
-         "image":"..\/..\/\u0413\u0420\u0410\u0424\u0418\u041a\u0410\/SHEETS\/winter\/tileSheetWinter03-11.png",
+         "image":"tileSheetWinter03-11.png",
          "imageheight":1216,
          "imagewidth":832,
          "margin":0,

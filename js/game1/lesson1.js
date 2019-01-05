@@ -32,7 +32,7 @@ TopDownGame.Lesson1.prototype = {
             if (scene === undefined || scene === null) {
                scene = 0
            }
-            var result = this.findObjectsByType('playerStartPosition', this.map, 'playerLayer');
+            var result = findObjectsByType('playerStartPosition', this.map, 'playerLayer');
             
             lastSuccessfullPosition = {
                 x: result[0].x,
@@ -252,34 +252,26 @@ TopDownGame.Lesson1.prototype = {
         //create items
         barrels = this.game.add.group();
         barrels.enableBody = true;
-        result = this.findObjectsByType('barrel', this.map, 'objectLayer');
+        result = findObjectsByType('barrel', this.map, 'objectLayer');
         result.forEach(function (element) {
             this.createFromTiledObject(element, barrels);
         }, this);
     },
 
-    //find objects in a Tiled layer that containt a property called "type" equal to a certain value
-    findObjectsByType: function (type, map, layer) {
-        var result = new Array();
-        map.objects[layer].forEach(function (element) {
-            if (element.properties.type === type) {
-                //Phaser uses top left, Tiled bottom left so we have to adjust
-                //also keep in mind that the cup images are a bit smaller than the tile which is 16x16
-                //so they might not be placed in the exact position as in Tiled
-                
-                element.y -= map.tileHeight;
-                result.push(element);
-            }
-        });
-        return result;
-    },
+
     //create a sprite from an object
     createFromTiledObject: function (element, group) {
+
+        
         var sprite = group.create(element.x, element.y, 'totalsheet', 234);
         //copy all properties to the sprite
-        Object.keys(element.properties).forEach(function (key) {
-            sprite[key] = element.properties[key];
+
+        element.properties.forEach(function (element) {
+            sprite[element.name] = element.value;
         });
+
+
+        console.log(sprite);
 
         if (sprite["sprite"] === "allowedToHit") {
             sprite.frame = 234;
@@ -307,23 +299,23 @@ TopDownGame.Lesson1.prototype = {
 /*          var result = this.findObjectsByType('playerStartPosition', this.map, 'playerLayer');
         Maze.scenes[0].startPos[0] = result[0].x;
         Maze.scenes[0].startPos[1] = result[0].y;  */
-        var result = this.findObjectsByType('scene1Goal', this.map, 'playerLayer');
+        var result = findObjectsByType('scene1Goal', this.map, 'playerLayer');
         Maze.scenes[0].endPos[0] = result[0].x;
         Maze.scenes[0].endPos[1] = result[0].y;
 
-        var result = this.findObjectsByType('scene2Goal', this.map, 'playerLayer');
+        var result = findObjectsByType('scene2Goal', this.map, 'playerLayer');
         Maze.scenes[1].startPos[0] = Maze.scenes[0].endPos[0];
         Maze.scenes[1].startPos[1] = Maze.scenes[0].endPos[1];
         Maze.scenes[1].endPos[0] = result[0].x;
         Maze.scenes[1].endPos[1] = result[0].y;
 
-        var result = this.findObjectsByType('scene3Goal', this.map, 'playerLayer');
+        var result = findObjectsByType('scene3Goal', this.map, 'playerLayer');
         Maze.scenes[2].startPos[0] = Maze.scenes[1].endPos[0];
         Maze.scenes[2].startPos[1] = Maze.scenes[1].endPos[1];
         Maze.scenes[2].endPos[0] = result[0].x;
         Maze.scenes[2].endPos[1] = result[0].y;
 
-        var result = this.findObjectsByType('scene4Goal', this.map, 'playerLayer');
+        var result = findObjectsByType('scene4Goal', this.map, 'playerLayer');
         Maze.scenes[3].startPos[0] = Maze.scenes[2].endPos[0];
         Maze.scenes[3].startPos[1] = Maze.scenes[2].endPos[1];
         Maze.scenes[3].endPos[0] = result[0].x;

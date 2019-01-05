@@ -18,7 +18,7 @@ var Pegman = {
     isGladeToLeft: false,
     isGladeAbove: false,
     isGladeBelow: false,
-    firstName: "рекрут",
+    firstName: "Рекрут",
 
 
     init: function (pegmanSprite) {
@@ -244,7 +244,7 @@ var Pegman = {
 
 
             if (showflag && scene == 2) {
-                $("#modaltext").text("Я так и знал! У нас тут на планете каждый патрон, каждая энергетическая ячейка не счету! Для экономии энергии используй команду 'Повтори'!");
+                $("#modaltext").text("Я так и знал! У нас тут на планете каждый патрон, каждая энергетическая ячейка не счету! Для экономии энергии используй команду «Повтори»!");
                 $("#exampleModal").modal();
                 showflag = false;
             } else if (showflag && scene == 3) {
@@ -658,7 +658,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     var messagetext = "Эти бочки преградили тебе путь. Расстреляй их, чтобы пройти дальше!";
                 } else if (scene == 3) {
                     //var messagetext = "А теперь нужно найти 3 бочки с мишенями и подстрелить их. Но не в коем случае не стреляй в бочки с водой!";
-                    var messagetext = "А теперь нужно найти 5 бочки с мишенями и подстрелить их";
+                    var messagetext = "А теперь нужно найти 5 бочек с мишенями и подстрелить их";
                 }
                 $("#modaltext").text(messagetext);
                 $("#exampleModal").modal();
@@ -899,7 +899,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     console.log("scene = ", scene);
                     var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
                     if (isOverlapping == true) {
-                        $("#modaltext").text("Поздравляю! Ты закончил уровень №4");
+                        $("#modaltext").text("Ты отлично справился! Альянс может гордится, что в его рядах есть такие умелые и умные рейнджеры как ты!");
                         $("#exampleModal").modal();
                     }
 
@@ -1205,3 +1205,27 @@ function shuffle(a) {
     }
     return a;
 }
+
+function findObjectsByType(type, map, layer) {
+    var result = new Array();
+    var elemid;
+    map.objects[layer].forEach(function (element) {
+        var i;
+
+        for (i = 0; i < element.properties.length; i++) {
+
+            if (element.properties[i].value === type) {
+                elemid = i;
+                element.y -= map.tileHeight;
+                result.push(element);
+            }
+        }
+
+        
+
+    });
+
+    return result;
+}
+
+

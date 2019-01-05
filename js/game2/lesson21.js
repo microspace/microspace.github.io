@@ -37,7 +37,7 @@ TopDownGame.Lesson21.prototype = {
         explosion.visible = false;
         explanim = explosion.animations.add('EXPL', [0, 1, 2, 3, 4, 5], 20, /*loop*/ false);
         explanim.onComplete.add(this.animationStopped, this);
-        var result = this.findObjectsByType('playerStartPosition', this.map, 'playerLayer');
+        var result = findObjectsByType('playerStartPosition', this.map, 'playerLayer');
         lastSuccessfullPosition = {
             x: result[0].x,
             y: result[0].y
@@ -177,32 +177,19 @@ TopDownGame.Lesson21.prototype = {
         //create items
         chests = this.game.add.group();
         chests.enableBody = true;
-        result = this.findObjectsByType('chest', this.map, 'objectLayer');
+        result = findObjectsByType('chest', this.map, 'objectLayer');
         result.forEach(function(element) {
             this.createFromTiledObject(element, chests);
         }, this);
     },
 
-    //find objects in a Tiled layer that containt a property called "type" equal to a certain value
-    findObjectsByType: function(type, map, layer) {
-        var result = new Array();
-        map.objects[layer].forEach(function(element) {
-            if (element.properties.type === type) {
-                //Phaser uses top left, Tiled bottom left so we have to adjust
-                //also keep in mind that the cup images are a bit smaller than the tile which is 16x16
-                //so they might not be placed in the exact position as in Tiled
-                element.y -= map.tileHeight;
-                result.push(element);
-            }
-        });
-        return result;
-    },
+
     //create a sprite from an object
     createFromTiledObject: function(element, group) {
         var sprite = group.create(element.x, element.y, 'totalsheet', 163);
         //copy all properties to the sprite
-        Object.keys(element.properties).forEach(function(key) {
-            sprite[key] = element.properties[key];
+        element.properties.forEach(function (element) {
+            sprite[element.name] = element.value;
         });
 
         sprite.health = 100;
