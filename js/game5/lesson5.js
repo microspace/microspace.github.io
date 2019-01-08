@@ -24,8 +24,8 @@ var fogCircle;
 var ccellx, xcelly;
 
 var lastSuccessfullPosition = {
-    x: Maze.SQUARE_SIZE * (4 + 0.5),
-    y: Maze.SQUARE_SIZE * (3 + 0.5)
+    x: null,
+    y: null
 };
 var dlastSuccessfullPosition = {
     x: null,
@@ -38,50 +38,25 @@ TopDownGame.Lesson5.prototype = {
     create: function () {
 
 
-        Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
         
-        loadmap("lesson51");
-
-
-
-
-
         
-    
+        
+        if (scene === undefined || scene === null) {
+            Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
+            scene = "510";
+        }
 
-
-        // pointer.visible = true;
-
-        // var result = findObjectsByType('playerStartPosition', map, 'playerLayer');
-
-
-        // lastSuccessfullPosition = {
-        //     x: result[0].x,
-        //     y: result[0].y
-        // };
-        // dlastSuccessfullPosition = {
-        //     x: Math.floor(result[0].x / 64),
-        //     y: Math.floor(result[0].y / 64)
-        // };
-        // Pegman.dposX = dlastSuccessfullPosition.x;
-        // Pegman.dposY = dlastSuccessfullPosition.y;
         player = this.game.add.sprite(0, 0, 'pegman');
+        
+        loadmap("lesson" + scene.substring(0,2));
 
-
-
-
-        //map.setLayer(fog);
-        //map.removeTile(9, 5, fog);
-
+        
 
         player.anchor.setTo(0.5, 0.5);
         this.game.physics.arcade.enable(player);
         player.body.enable = false;
         player.body.setSize(60, 13, 40, 73);
         flour.resizeWorld();
-        
-
-        //fog.resizeWorld();
 
         pointer = this.game.add.sprite(0, 0, 'pointer');
         pointer.scale.setTo(0.8, 0.8);
@@ -92,11 +67,11 @@ TopDownGame.Lesson5.prototype = {
         this.game.physics.arcade.enable(pointer);
         pointer.anchor.setTo(0.5, 0.5);
         pointer.body.setSize(10, 65, 48, 10);
-
-        scene = 0;
+load_scene(scene);
+    
         Pegman.init(player);
 
-        load_scene(scene);
+        
 
         builddust = this.game.add.sprite(0, 0, 'build');
         builddust.visible = false;
@@ -390,6 +365,7 @@ function sinkInWater() {
 
 
 function findObjectsByType(type, map, layer) {
+    console.log("invoked")
     var result = new Array();
     map.objects[layer].forEach(function (element) {
 
@@ -539,26 +515,38 @@ Maze.tile_SHAPES = {
 
 
 function load_scene(scene) {
+    console.log(scene);
+    if (scene == "510") {
+        try {player.body.enable = false; } catch {}
+        var result = findObjectsByType('playerStartPosition', map, 'playerLayer');
+        console.log(result);
+    lastSuccessfullPosition.x = result[0].x;
+    lastSuccessfullPosition.y = result[0].y;
+//     try {Pegman.reset2(); } catch (e){
+// console.log(e);
+//     }
+    }
+    
 
-    if (scene == 1) {
+   
+    if (scene == "511" || scene == "521" || scene == "531" ) {
         var result = findObjectsByType('scene1Goal', map, 'playerLayer');
         pointer.x = result[0].x;
         pointer.y = result[0].y;
     }
-    else if (scene == 2) {
+    else if (scene == "512" || scene == "522") {
         var result = findObjectsByType('scene2Goal', map, 'playerLayer');
         pointer.x = result[0].x;
         pointer.y = result[0].y;
     }
-    else if (scene == 3) {
+    else if (scene == "513") {
         var result = findObjectsByType('scene3Goal', map, 'playerLayer');
         pointer.x = result[0].x;
         pointer.y = result[0].y;
-    } else if (scene == 0) {
-        
-    }
+    } 
 
-Pegman.reset2();
+player.x = lastSuccessfullPosition.x;
+player.y = lastSuccessfullPosition.y;
 }
 
 
@@ -588,46 +576,24 @@ function loadmap(name) {
     blockLayer = map.createLayer('blockLayer');
     onBlockLayer = map.createLayer('onBlockLayer');
     
-    var result = findObjectsByType('playerStartPosition', map, 'playerLayer');
-    // player.x = result[0].x;
-    // player.y = result[0].y;
-    lastSuccessfullPosition.x = result[0].x;
-    lastSuccessfullPosition.y = result[0].y;
-    try {Pegman.reset2(); } catch {}
-
-    //Copied from reset button code. Resets html button
 
 
     sinkLayer = map.createLayer('sinkLayer');
     map.setTileIndexCallback([...Array(500).keys()], sinkInWater, this, sinkLayer);
     map.setTileIndexCallback([...Array(500).keys()], hitEvent, this, blockLayer);
     
-
     upperLayer = map.createLayer('upperLayer');
     
     if (map.key != "lesson53") {
         fog = map.createLayer('fog');
-        
     }
  
 
-    TopDownGame.game.time.events.add(500, fadePicture, this);
 
-
-
-    function fadePicture() {
-        // загнал сюда, потому что глюк возникает когда плеер не успевает успеть
- 
-        
-    }
-    //scene1Goal
 
     try {
         TopDownGame.game.world.bringToTop(pointer);
-
         TopDownGame.game.world.bringToTop(explosion);
-
-
         TopDownGame.game.world.bringToTop(player);
     } catch { }
 

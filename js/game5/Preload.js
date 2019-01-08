@@ -35,11 +35,11 @@ TopDownGame.Preload.prototype = {
         
         //  
 
-        try {
+         try {
             loadWorkspace('lesson5');
-        } catch {
-            console.log("fallback - no server");
-            this.state.start('lesson5');
-        }
+         } catch {
+             console.log("fallback - no server");
+             this.state.start('lesson5');
+         }
     }
 };
