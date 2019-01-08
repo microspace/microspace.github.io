@@ -1120,6 +1120,7 @@ function getSelfInfo() {
 }
 
 function setIsCheckedForLesson() {
+    console.log("level was complete");
     var params = location.href.split('?')[1].split('&');
     var urldata = {};
     for (var x in params) {
@@ -1129,10 +1130,9 @@ function setIsCheckedForLesson() {
 
     $.ajax({
         type: "POST",
-        url: "https://backend.it.robooky.ru/api/courses/" + urldata['course-id'] + "/lessons/" + urldata['lesson-id'] + "?action=set-checked&isChecked=true&studentId=" + urldata["student-id"],
+        url: "https://backend.it.robooky.ru/api/courses/" + urldata['course-id'] + "/lessons/" + urldata['lesson-id'] + "?action=set-checked&isChecked=true&studentId=" + urldata['student-id'],
         headers: { "Authorization": urldata.token },
         success: function (data) {
-            console.log(data);
          },
         failure: function (errMsg) {
             console.log(errMsg);
