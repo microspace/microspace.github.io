@@ -682,6 +682,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 toogleRunButton();
                 try { 
                     saveWorkspace(); 
+                    setIsCheckedForLesson();
                 }
                 catch {
                     console.log("couldn't save");
@@ -1118,6 +1119,27 @@ function getSelfInfo() {
     });
 }
 
+function setIsCheckedForLesson() {
+    var params = location.href.split('?')[1].split('&');
+    var urldata = {};
+    for (var x in params) {
+        urldata[params[x].split('=')[0]] = params[x].split('=')[1];
+    }
+    urldata.token = decodeURIComponent(urldata.token);
+
+    $.ajax({
+        type: "POST",
+        url: "https://backend.it.robooky.ru/api/courses/" + urldata['course-id'] + "/lessons/" + urldata['lesson-id'] + "?action=set-checked&isChecked=true&studentId=" + urldata["student-id"],
+        headers: { "Authorization": urldata.token },
+        success: function (data) {
+            console.log(data);
+         },
+        failure: function (errMsg) {
+            console.log(errMsg);
+        }
+    });
+
+} 
 
 var runProgram = function () {
     var code = Blockly.JavaScript.workspaceToCode(workspace);
