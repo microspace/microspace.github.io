@@ -772,3 +772,46 @@ Blockly.JavaScript['fill_the_pit'] = function (block) {
 
 
 };
+
+
+
+
+Blockly.Blocks['if_block'] = {
+
+    init: function () {
+        this.jsonInit({
+            "type": "if_block",
+            "message0": "если %1 выполнить %2",
+            "args0": [
+              {
+                "type": "input_value",
+                "name": "condition",
+                "check": "Boolean"
+              },
+              {
+                "type": "input_statement",
+                "name": "true_statement"
+              }
+            ],
+            "previousStatement": null,
+            "nextStatement": null,
+            "colour": 210,
+            "tooltip": "",
+            "helpUrl": ""
+          });
+    }
+};
+
+Blockly.JavaScript['if_block'] = function(block) {
+  var value_condition = Blockly.JavaScript.valueToCode(block, 'condition', Blockly.JavaScript.ORDER_ATOMIC);
+  var true_code = Blockly.JavaScript.statementToCode(block, 'true_statement');
+
+  // TODO: Assemble JavaScript into code variable.
+  var code;
+  if (value_condition) {
+      code = true_code;
+  } else {
+      code = "\n";
+  }
+  return code;
+};

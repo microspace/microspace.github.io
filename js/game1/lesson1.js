@@ -270,9 +270,6 @@ TopDownGame.Lesson1.prototype = {
             sprite[element.name] = element.value;
         });
 
-
-        console.log(sprite);
-
         if (sprite["sprite"] === "allowedToHit") {
             sprite.frame = 234;
 

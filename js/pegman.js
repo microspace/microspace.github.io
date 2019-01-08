@@ -291,11 +291,18 @@ var Pegman = {
 
                 Pegman.dposX = Math.floor(player.x / 64);
                 Pegman.dposY = Math.floor(player.y / 64);
-                map.putTile(244, Pegman.dposX, Pegman.dposY, fog);
                 for (var y = Pegman.dposY - 1; y <= Pegman.dposY + 1; ++y) {
                     for (var x = Pegman.dposX - 1; x <= Pegman.dposX + 1; ++x) {
-                        var t_id = normalize(x, y);
-                        map.putTile(t_id, x, y, fog);
+                        map.putTile(244, x, y, fog);
+                    }
+                }
+    
+                for (var y = Pegman.dposY - 2; y <= Pegman.dposY + 2; ++y) {
+                    for (var x = Pegman.dposX - 2; x <= Pegman.dposX + 2; ++x) {
+                        if ((x >= Pegman.dposX + 1 || x <= Pegman.dposX - 1) || (y >= Pegman.dposY + 1 || y <= Pegman.dposY - 1)) {
+                            var t_id = normalize(x, y);
+                            map.putTile(t_id, x, y, fog);
+                        } 
                     }
                 }
 
@@ -824,7 +831,8 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
             });
             if (aliveChestsCount == 0) {
 
-                window.open("http://unibtc.store:4200/student/courses", "_self")
+                $("#modaltext").text("Поздравляю! Открыт следующий уровень!");
+                $("#exampleModal").modal();
 
             } else {
                 $("#modaltext").text("Ты собрал не все сундуки!");
@@ -879,7 +887,6 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 catch {
                     console.log("couldn't save");
                 }
-
                 } else if (scene == 5) {
                     var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
                     if (isOverlapping == true) {
@@ -894,7 +901,6 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 }
                         load_map("lesson42");
                     }
-
                 } else if (scene == 42) {
                     console.log("scene = ", scene);
                     var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
@@ -902,29 +908,19 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                         $("#modaltext").text("Ты отлично справился! Альянс может гордится, что в его рядах есть такие умелые и умные рейнджеры как ты!");
                         $("#exampleModal").modal();
                     }
-
-
                 }
             }
         }
         if (TopDownGame.game.state.getCurrentState().key == "lesson5") {
-
             if (scene == 0 && map.key == 'lesson51') {
                 if (map.getTile(5, 4, flour).index == 236) {
                     scene = 1;
                     load_scene(scene);
-
                     toogleRunButton();
-
-
-
                     $("#modaltext").text("Теперь доберись до указателя");
                     $("#exampleModal").modal();
-
                 }
-
             } else {
-
                 var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
                 if (isOverlapping == true) {
                     if (scene == 1 && map.key == 'lesson51') {
@@ -939,7 +935,6 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                         scene = 3;
                         toogleRunButton();
                         load_scene(scene);
-
                     } else if (scene == 3 && map.key == 'lesson51') {
                         loadmap('lesson52');
                         scene = 1;
@@ -950,18 +945,14 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     } else if (scene == 1 && map.key == 'lesson52') {
                         lastSuccessfullPosition.x = player.x;
                         lastSuccessfullPosition.y = player.y;
-
                         $("#modaltext").text("Наконец-то пришла помощь! Мы нашли важный след Агносто. Но нас атаковали и мы не можем вернуться. Есть раненные. Помоги нам доставить следы Агносто на базу альянса!");
                         $("#exampleModal").modal();
                         revealArea();
                         scene = 2;
                         toogleRunButton();
                         load_scene(scene);
-
                     } else if (scene == 2 && map.key == 'lesson52') {
-
                         loadmap('lesson53');
-
                         $("#modaltext").text("Путь к точке эвакуации проходит через реку. Нужно засыпать дорогу для отряда.");
                         $("#exampleModal").modal();
                         scene = 1;
@@ -973,12 +964,10 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                             for (var x = 9; x <= 14; ++x) {
                                 if (map.getTile(x, y, 'flour').index == 235) {
                                     notfilledblocks += 1;
-
                                 }
                             }
                         }
                         if (notfilledblocks > 0) {
-
                             $("#modaltext").text("Нужно засыпать все блоки на мосту");
                             $("#exampleModal").modal();
                         } else {
@@ -988,22 +977,17 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                             $("#exampleModal").modal();
                         }
                     }
-
                 }
-
             }
-
-
-
-
-
         }
-    };
+    }
+
 function toogleRunButton() {
     $('#play').val() == "play" ? play_int() : play_pause();
     $('#play').find('i:first').toggleClass('fa-play fa-refresh');
     $('#play').toggleClass('play reset');
 }
+
 function revealArea() {
     var replaceFill = [[7, 3], [8, 3], [9, 3], [10, 3], [11, 3], [7, 4], [8, 4], [9, 4], [10, 4], [11, 4], [12, 4], [13, 4], [7, 5], [8, 5], [9, 5], [10, 5], [11, 5], [12, 5], [13, 5], [7, 6], [8, 6], [9, 6], [10, 6], [11, 6], [12, 6], [13, 6], [8, 7], [9, 7], [10, 7], [11, 7], [12, 7], [13, 7], [8, 8], [9, 8], [10, 8], [11, 8], [12, 8],];
     var replaceContour = [[6, 2], [7, 2], [8, 2], [9, 2], [10, 2], [11, 2], [12, 2], [13, 3], [14, 3], [14, 4], [14, 5], [14, 6], [14, 7], [14, 8], [13, 8], [13, 9], [12, 9], [11, 9], [10, 9], [9, 9], [8, 9], [7, 9], [7, 8], [7, 7], [6, 7], [6, 6], [6, 5], [6, 4], [6, 3],];
@@ -1021,10 +1005,8 @@ function revealArea() {
                 map.putTile(t_id, replaceContour[i][0], replaceContour[i][1], fog);
             }
         }
-
     }
 }
-
 
 
 function saveWorkspace() {
@@ -1034,20 +1016,14 @@ function saveWorkspace() {
         urldata[params[x].split('=')[0]] = params[x].split('=')[1];
     }
     urldata.token = decodeURIComponent(urldata.token);
-
     var xmlDom = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
     var xmlText = Blockly.Xml.domToPrettyText(xmlDom);
-
     var newTemp = xmlText.replace(/"/g, "'");
     var datatoStore = {};
     datatoStore.code = newTemp;
     datatoStore.scene = scene;
     datatoStore.positionX = lastSuccessfullPosition.x;
     datatoStore.positionY = lastSuccessfullPosition.y;
-
-    console.log(datatoStore);
-
-
 
     $.ajax({
         type: "POST",
@@ -1071,23 +1047,15 @@ function loadWorkspace(clesson) {
         urldata[params[x].split('=')[0]] = params[x].split('=')[1];
     }
     urldata.token = decodeURIComponent(urldata.token);
-
-
     $.ajax({
         type: 'GET',
         url: 'https://backend.it.robooky.ru/api/save?lesson-id=' + urldata["lesson-id"] + '&user-id=' + urldata["student-id"],
         headers: { "Authorization": urldata.token },
         success: function (data) {
-
             if (data) {
-
                 try {
-
                     var code = JSON.parse(data.data).code;
                     scene = JSON.parse(data.data).scene;
-                    console.log("scene " + scene);
-
-
                     if (clesson == 'lesson2') {
                         TopDownGame.game.state.start(clesson + scene);
                     } else {
@@ -1108,7 +1076,6 @@ function loadWorkspace(clesson) {
                     } else {
                         TopDownGame.game.state.start(clesson);
                     }
-
                 }
             } else {
                 if (clesson == 'lesson2') {
@@ -1140,15 +1107,9 @@ function getSelfInfo() {
         url: 'https://backend.it.robooky.ru/api/users/self',
         headers: { "Authorization": urldata.token },
         success: function (data) {
-
             if (data) {
-
                 Pegman.firstName = data.firstName;
-                // var code = JSON.parse(data.data).code;
-                // scene = JSON.parse(data.data).scene;
-
             }
-
         },
         error: function (xhr, ajaxOptions, thrownError) {
             console.log(xhr.status);
@@ -1158,17 +1119,10 @@ function getSelfInfo() {
 }
 
 
-
 var runProgram = function () {
-
-    //var statements_stack = Blockly.JavaScript.statementToCode(Blockly.Blocks['factory_base'], 'STACK');
-
     var code = Blockly.JavaScript.workspaceToCode(workspace);
-    //console.log(code);
     Pegman.vdposX = Pegman.dposX;
     Pegman.vdposY = Pegman.dposY;
-
-
     try {
         eval(code);
     } catch (e) {
@@ -1176,19 +1130,16 @@ var runProgram = function () {
     }
 
     Pegman.play();
-
     TopDownGame.game.camera.follow(player);
 }
 
 
-
 var resetProgram = function () {
     player.body.enable = false;
-
     try {
         weapon.fireAngle = Phaser.ANGLE_RIGHT;
     } catch {
-
+        alert(e);
     }
     Pegman.reset2();
     TopDownGame.game.camera.follow(player);
@@ -1220,11 +1171,7 @@ function findObjectsByType(type, map, layer) {
                 result.push(element);
             }
         }
-
-        
-
     });
-
     return result;
 }
 

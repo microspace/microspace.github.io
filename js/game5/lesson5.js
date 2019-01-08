@@ -163,11 +163,21 @@ TopDownGame.Lesson5.prototype = {
         map.putTile(244, Pegman.dposX, Pegman.dposY, fog);
         updateFog = new Phaser.Signal();
         updateFog.add(function () {
-            map.putTile(244, Pegman.dposX, Pegman.dposY, fog);
+            
+           
             for (var y = Pegman.dposY - 1; y <= Pegman.dposY + 1; ++y) {
                 for (var x = Pegman.dposX - 1; x <= Pegman.dposX + 1; ++x) {
-                    var t_id = normalize(x, y);
-                    map.putTile(t_id, x, y, fog);
+                    map.putTile(244, x, y, fog);
+                }
+            }
+
+            for (var y = Pegman.dposY - 2; y <= Pegman.dposY + 2; ++y) {
+                for (var x = Pegman.dposX - 2; x <= Pegman.dposX + 2; ++x) {
+                    if ((x >= Pegman.dposX + 1 || x <= Pegman.dposX - 1) || (y >= Pegman.dposY + 1 || y <= Pegman.dposY - 1)) {
+                        var t_id = normalize(x, y);
+                        
+                        map.putTile(t_id, x, y, fog);
+                    } 
                 }
             }
         }, this.game);
@@ -265,10 +275,10 @@ TopDownGame.Lesson5.prototype = {
 
 
     },
-    render: function () {
-        this.game.debug.bodyInfo(player, 32, 32);
-        this.game.debug.body(player);
-    },
+    // render: function () {
+    //     this.game.debug.bodyInfo(player, 32, 32);
+    //     this.game.debug.body(player);
+    // },
     createItems: function () {
         //create items
         barrels = this.game.add.group();
@@ -422,57 +432,57 @@ function normalize(x, y) {
     if (cTile) {
         a11 = cTile.index == 244 ? 0 : 1
     } else {
-        a11 = 'e'
+        a11 = 1
     }
     cTile = map.getTile(x, y - 1, fog);
     if (cTile) {
         a12 = cTile.index == 244 ? 0 : 1
     } else {
-        a12 = 'e'
+        a12 = 1
     }
     cTile = map.getTile(x + 1, y - 1, fog);
     if (cTile) {
         a13 = cTile.index == 244 ? 0 : 1
     } else {
-        a13 = 'e'
+        a13 = 1
     }
 
     cTile = map.getTile(x - 1, y, fog);
     if (cTile) {
         a21 = cTile.index == 244 ? 0 : 1
     } else {
-        a21 = 'e'
+        a21 = 1
     }
     cTile = map.getTile(x, y, fog);
     if (cTile) {
         a22 = cTile.index == 244 ? 0 : 1
     } else {
-        a22 = 'e'
+        a22 = 1
     }
     cTile = map.getTile(x + 1, y, fog);
     if (cTile) {
         a23 = cTile.index == 244 ? 0 : 1
     } else {
-        a23 = 'e'
+        a23 = 1
     }
 
     cTile = map.getTile(x - 1, y + 1, fog);
     if (cTile) {
         a31 = cTile.index == 244 ? 0 : 1
     } else {
-        a31 = 'e'
+        a31 = 1
     }
     cTile = map.getTile(x, y + 1, fog);
     if (cTile) {
         a32 = cTile.index == 244 ? 0 : 1
     } else {
-        a32 = 'e'
+        a32 = 1
     }
     cTile = map.getTile(x + 1, y + 1, fog);
     if (cTile) {
         a33 = cTile.index == 244 ? 0 : 1
     } else {
-        a33 = 'e'
+        a33 = 1
     }
     if (a22 == '0' || a11 + a12 + a13 + a21 + a23 + a31 + a32 + a33 <= 2 || (!a12 && !a32) || (!a21 && !a23)) {
         return 244;
@@ -485,13 +495,13 @@ function normalize(x, y) {
     } else if (a21 + a22 + a31 + a32 == 4 && (!a11 || !a12) && (!a23 || !a33)) {
         return 218;
     } else {
-
         return Maze.tile_SHAPES[String(a11) + String(a12) + String(a13) + String(a21) + String(a22) + String(a23) + String(a31) + String(a32) + String(a33)];
     }
 }
 
 
 Maze.tile_SHAPES = {
+
     '111111110': 229,
     '111111011': 230,
     '011111111': 243,
