@@ -36,22 +36,12 @@ var timeSinceLastIncrement = 0;
 TopDownGame.Lesson5 = function () { };
 TopDownGame.Lesson5.prototype = {
     create: function () {
-
-
-
-
-
         if (scene === undefined || scene === null) {
             Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
             scene = "510";
         }
-
         player = this.game.add.sprite(0, 0, 'pegman');
-
         loadmap("lesson" + scene.substring(0, 2));
-
-
-
         player.anchor.setTo(0.5, 0.5);
         this.game.physics.arcade.enable(player);
         player.body.enable = false;
@@ -71,15 +61,10 @@ TopDownGame.Lesson5.prototype = {
 
         Pegman.init(player);
 
-
-
         builddust = this.game.add.sprite(0, 0, 'build');
         builddust.visible = false;
         builddust.animations.add('BUILD', [0, 1, 2, 3, 4, 5], 20, false);
         //bullets
-
-
-
 
         //explosion
         explosion = this.game.add.sprite(0, 0, 'explosion');
@@ -88,10 +73,7 @@ TopDownGame.Lesson5.prototype = {
         explanim.onComplete.add(this.animationStopped, this);
 
         this.game.world.bringToTop(pointer);
-
         this.game.world.bringToTop(explosion);
-
-
         this.game.world.bringToTop(player);
 
         var fps = 7;
@@ -139,7 +121,6 @@ TopDownGame.Lesson5.prototype = {
             updateFog = new Phaser.Signal();
             updateFog.add(function () {
 
-
                 for (var y = Pegman.dposY - 1; y <= Pegman.dposY + 1; ++y) {
                     for (var x = Pegman.dposX - 1; x <= Pegman.dposX + 1; ++x) {
                         map.putTile(244, x, y, fog);
@@ -150,7 +131,6 @@ TopDownGame.Lesson5.prototype = {
                     for (var x = Pegman.dposX - 2; x <= Pegman.dposX + 2; ++x) {
                         if ((x >= Pegman.dposX + 1 || x <= Pegman.dposX - 1) || (y >= Pegman.dposY + 1 || y <= Pegman.dposY - 1)) {
                             var t_id = normalize(x, y);
-
                             map.putTile(t_id, x, y, fog);
                         }
                     }
@@ -189,8 +169,6 @@ TopDownGame.Lesson5.prototype = {
     },
 
     update: function () {
-
-
         if (map.key != "lesson53") {
             var cposx = Math.floor(player.x / 64);
             var cposy = Math.floor(player.y / 64);
@@ -201,32 +179,10 @@ TopDownGame.Lesson5.prototype = {
             }
         }
 
-
-
-
         this.game.physics.arcade.collide(player, sinkLayer);
         this.game.physics.arcade.collide(player, flour);
         this.game.physics.arcade.collide(player, blockLayer);
 
-
-        //player.body.velocity.x = 0;
-        // var velocity = 400;
-        // if (this.cursors.up.isDown) {
-        //     if (player.body.velocity.y == 0)
-        //         player.body.velocity.y -= velocity;
-
-        // } else if (this.cursors.down.isDown) {
-        //     if (player.body.velocity.y == 0)
-        //         player.body.velocity.y += velocity;
-        // } else {
-        //     player.body.velocity.y = 0;
-        // }
-        // if (this.cursors.left.isDown) {
-        //     player.body.velocity.x -= velocity;
-        // } else if (this.cursors.right.isDown) {
-        //     player.body.velocity.x += velocity;
-        // }
-        //camera start
         if (this.cursors.up.isDown) {
             this.game.camera.unfollow();
             this.game.camera.y -= 10;
@@ -244,7 +200,7 @@ TopDownGame.Lesson5.prototype = {
             this.game.camera.unfollow();
             this.game.camera.x += 10;
         }
-        //camera end
+
 
 
 
@@ -272,18 +228,12 @@ TopDownGame.Lesson5.prototype = {
             var i;
 
             for (i = 0; i < element.properties.length; i++) {
-
                 if (element.properties[i].value === type) {
                     elemid = i;
                     element.y -= map.tileHeight;
                     result.push(element);
                 }
             }
-
-            if (element.properties[elemid].value === type) {
-
-            }
-
         });
 
         return result;
@@ -293,10 +243,6 @@ TopDownGame.Lesson5.prototype = {
         var sprite = group.create(element.x, element.y, 'totalsheet', 234);
         //copy all properties to the sprite
         element.properties.forEach(function (element) {
-
-
-
-
             sprite[element.name] = element.value;
         });
         sprite.health = 100;
@@ -359,9 +305,6 @@ function sinkInWater() {
         }, this);
     }
 };
-
-
-
 
 
 function findObjectsByType(type, map, layer) {
@@ -527,7 +470,7 @@ function load_scene(scene) {
         lastSuccessfullPosition.x = result[0].x;
         lastSuccessfullPosition.y = result[0].y;
     }
-    if (scene == "531") {
+    if (scene == "531" && lastSuccessfullPosition.x == null) {
         try { player.body.enable = false; } catch { }
         var result = findObjectsByType('playerStartPosition', map, 'playerLayer');
         lastSuccessfullPosition.x = result[0].x;

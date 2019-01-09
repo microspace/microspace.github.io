@@ -274,11 +274,8 @@ var Pegman = {
             });
         }
         if (TopDownGame.game.state.getCurrentState().key == "lesson5") {
-            //TopDownGame.game.state.start(TopDownGame.game.state.current);
-
-            //TopDownGame.game.state.restart();
+            
             if (map.key != "lesson53") {
-
 
                 for (var y = 0; y < map.height; ++y) {
                     for (var x = 0; x < map.width; ++x) {
@@ -287,7 +284,6 @@ var Pegman = {
                         //  }
                     }
                 }
-
 
                 Pegman.dposX = Math.floor(player.x / 64);
                 Pegman.dposY = Math.floor(player.y / 64);
@@ -305,27 +301,10 @@ var Pegman = {
                         }
                     }
                 }
-
-
-
-                /*             map.putTile(237, Pegman.dposX, Pegman.dposY - 1, fog);
-                            map.putTile(238, Pegman.dposX - 1, Pegman.dposY, fog);
-                            map.putTile(239, Pegman.dposX, Pegman.dposY + 1, fog);
-                            map.putTile(240, Pegman.dposX + 1, Pegman.dposY, fog);
-                            map.putTile(241, Pegman.dposX - 1, Pegman.dposY - 1, fog);
-                            map.putTile(242, Pegman.dposX + 1, Pegman.dposY - 1, fog);
-                            map.putTile(243, Pegman.dposX - 1, Pegman.dposY + 1, fog);
-                            map.putTile(244, Pegman.dposX + 1, Pegman.dposY + 1, fog); 
-                
-                
-                */
-
             } else {
                 map.replace(236, 235, 9, 6, 6, 2, flour);
-
             }
             if (scene == "510") {
-
 
             } else if (scene == "511") {
                 map.replace(235, 15, 6, 4, 6, 2, map.getLayer());
