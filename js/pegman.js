@@ -1015,8 +1015,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                         toogleRunButton();
                         load_scene(scene);
                     } else if (scene == "531") {
-                        lastSuccessfullPosition.x = player.x;
-                        lastSuccessfullPosition.y = player.y;
+                        
                         var notfilledblocks = 0;
                         for (var y = 6; y <= 7; ++y) {
                             for (var x = 9; x <= 14; ++x) {
