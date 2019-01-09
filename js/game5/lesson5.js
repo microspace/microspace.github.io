@@ -365,7 +365,6 @@ function sinkInWater() {
 
 
 function findObjectsByType(type, map, layer) {
-    console.log("invoked")
     var result = new Array();
     map.objects[layer].forEach(function (element) {
 
@@ -515,11 +514,9 @@ Maze.tile_SHAPES = {
 
 
 function load_scene(scene) {
-    console.log(scene);
     if (scene == "510") {
         try { player.body.enable = false; } catch { }
         var result = findObjectsByType('playerStartPosition', map, 'playerLayer');
-        console.log(result);
         lastSuccessfullPosition.x = result[0].x;
         lastSuccessfullPosition.y = result[0].y;
     }

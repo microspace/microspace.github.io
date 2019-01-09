@@ -324,21 +324,21 @@ var Pegman = {
                 map.replace(236, 235, 9, 6, 6, 2, flour);
 
             }
-            if (scene == 0 && map.key == "lesson51") {
+            if (scene == "510") {
 
 
-            } else if (scene == 1 && map.key == "lesson51") {
+            } else if (scene == "511") {
                 map.replace(235, 15, 6, 4, 6, 2, map.getLayer());
                 map.replace(236, 15, 6, 4, 6, 2, map.getLayer());
                 map.replace(15, 235, 6 + getRandomInt(0, 6), 4, 1, 1, map.getLayer());
                 map.replace(15, 235, 6 + getRandomInt(0, 6), 5, 1, 1, map.getLayer());
-            } else if (scene == 2 && map.key == "lesson51") {
+            } else if (scene == "512") {
                 this.refillarea(12, 6, 15, 12);
-            } else if (scene == 3 && map.key == "lesson51") {
+            } else if (scene == "513") {
                 this.refillarea(16, 11, 22, 14);
-            } else if (scene == 1 && map.key == "lesson52") {
+            } else if (scene == "521") {
                 this.refillarea(6, 10, 9, 14);
-            } else if (scene == 2 && map.key == "lesson52") {
+            } else if (scene == "522") {
                 this.refillarea(12, 10, 18, 12);
                 this.refillarea(16, 3, 19, 9);
                 revealArea();
