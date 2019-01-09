@@ -641,7 +641,7 @@ Blockly.Blocks['repeat_n_times'] = {
                 {
                     "type": "field_number",
                     "name": "times",
-                    "value": 4
+                    "value": 9
                 }
             ],
             "message1": "выполнить %1",

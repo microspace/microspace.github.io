@@ -698,7 +698,12 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     if (aliveBarrelsCount == 0) {
                         $("#modaltext").text("Поздравляю!");
                         $("#exampleModal").modal();
-                        setIsCheckedForLesson();
+                        try {
+                            setIsCheckedForLesson();
+                        }
+                        catch {
+                            console.log("couldn't set IsCheckedForLesson");
+                        }
 
                     } else {
                         $("#modaltext").text("Ты убрал не все нужные бочки!");
@@ -834,7 +839,12 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
 
                 $("#modaltext").text("Поздравляю! Открыт следующий уровень!");
                 $("#exampleModal").modal();
-                setIsCheckedForLesson();
+                try {
+                    setIsCheckedForLesson();
+                }
+                catch {
+                    console.log("couldn't set IsCheckedForLesson");
+                }
 
             } else {
                 $("#modaltext").text("Ты собрал не все сундуки!");
@@ -846,7 +856,12 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 if (scene == 6) {
                     $("#modaltext").text("Поздравляю! Ты закончил уровень №3");
                     $("#exampleModal").modal();
-                    setIsCheckedForLesson();
+                    try {
+                        setIsCheckedForLesson();
+                    }
+                    catch {
+                        console.log("couldn't set IsCheckedForLesson");
+                    }
                 } else {
                     $("#nextButton").show();
                     $('#nextButton').one('click', function () {
@@ -908,7 +923,12 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     if (isOverlapping == true) {
                         $("#modaltext").text("Ты отлично справился! Альянс может гордится, что в его рядах есть такие умелые и умные рейнджеры как ты!");
                         $("#exampleModal").modal();
-                        setIsCheckedForLesson();
+                        try {
+                            setIsCheckedForLesson();
+                        }
+                        catch {
+                            console.log("couldn't set IsCheckedForLesson");
+                        }
                     }
                 }
             }
@@ -952,6 +972,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                         }
                         load_scene(scene);
                     } else if (scene == "513") {
+                        
                         loadmap('lesson52');
                         scene = "521";
                         toogleRunButton();
@@ -994,6 +1015,8 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                         toogleRunButton();
                         load_scene(scene);
                     } else if (scene == "531") {
+                        lastSuccessfullPosition.x = player.x;
+                        lastSuccessfullPosition.y = player.y;
                         var notfilledblocks = 0;
                         for (var y = 6; y <= 7; ++y) {
                             for (var x = 9; x <= 14; ++x) {
@@ -1016,7 +1039,12 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                             }
                             $("#modaltext").text("Поздравляю! Следующий урок разблокирован!");
                             $("#exampleModal").modal();
-                            setIsCheckedForLesson();
+                            try {
+                                setIsCheckedForLesson();
+                            }
+                            catch {
+                                console.log("couldn't set IsCheckedForLesson");
+                            }
                         }
                     }
                 }

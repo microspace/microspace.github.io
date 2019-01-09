@@ -38,19 +38,19 @@ TopDownGame.Lesson5.prototype = {
     create: function () {
 
 
-        
-        
-        
+
+
+
         if (scene === undefined || scene === null) {
             Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
             scene = "510";
         }
 
         player = this.game.add.sprite(0, 0, 'pegman');
-        
-        loadmap("lesson" + scene.substring(0,2));
 
-        
+        loadmap("lesson" + scene.substring(0, 2));
+
+
 
         player.anchor.setTo(0.5, 0.5);
         this.game.physics.arcade.enable(player);
@@ -67,11 +67,11 @@ TopDownGame.Lesson5.prototype = {
         this.game.physics.arcade.enable(pointer);
         pointer.anchor.setTo(0.5, 0.5);
         pointer.body.setSize(10, 65, 48, 10);
-load_scene(scene);
-    
+        load_scene(scene);
+
         Pegman.init(player);
 
-        
+
 
         builddust = this.game.add.sprite(0, 0, 'build');
         builddust.visible = false;
@@ -86,14 +86,14 @@ load_scene(scene);
         explosion.visible = false;
         explanim = explosion.animations.add('EXPL', [0, 1, 2, 3, 4, 5], 20, /*loop*/ false);
         explanim.onComplete.add(this.animationStopped, this);
-        
-            this.game.world.bringToTop(pointer);
-    
-            this.game.world.bringToTop(explosion);
-    
-    
-            this.game.world.bringToTop(player);
-        
+
+        this.game.world.bringToTop(pointer);
+
+        this.game.world.bringToTop(explosion);
+
+
+        this.game.world.bringToTop(player);
+
         var fps = 7;
         player.animations.add('NORTH', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], fps, /*loop*/ true);
         player.animations.add('EAST', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], fps, /*loop*/ true);
@@ -135,30 +135,30 @@ load_scene(scene);
 
 
         if (map.key != "lesson53") {
-        map.putTile(244, Pegman.dposX, Pegman.dposY, fog);
-        updateFog = new Phaser.Signal();
-        updateFog.add(function () {
-            
-           
-            for (var y = Pegman.dposY - 1; y <= Pegman.dposY + 1; ++y) {
-                for (var x = Pegman.dposX - 1; x <= Pegman.dposX + 1; ++x) {
-                    map.putTile(244, x, y, fog);
-                }
-            }
+            map.putTile(244, Pegman.dposX, Pegman.dposY, fog);
+            updateFog = new Phaser.Signal();
+            updateFog.add(function () {
 
-            for (var y = Pegman.dposY - 2; y <= Pegman.dposY + 2; ++y) {
-                for (var x = Pegman.dposX - 2; x <= Pegman.dposX + 2; ++x) {
-                    if ((x >= Pegman.dposX + 1 || x <= Pegman.dposX - 1) || (y >= Pegman.dposY + 1 || y <= Pegman.dposY - 1)) {
-                        var t_id = normalize(x, y);
-                        
-                        map.putTile(t_id, x, y, fog);
-                    } 
-                }
-            }
-        }, this.game);
 
-        updateFog.dispatch();
-    }
+                for (var y = Pegman.dposY - 1; y <= Pegman.dposY + 1; ++y) {
+                    for (var x = Pegman.dposX - 1; x <= Pegman.dposX + 1; ++x) {
+                        map.putTile(244, x, y, fog);
+                    }
+                }
+
+                for (var y = Pegman.dposY - 2; y <= Pegman.dposY + 2; ++y) {
+                    for (var x = Pegman.dposX - 2; x <= Pegman.dposX + 2; ++x) {
+                        if ((x >= Pegman.dposX + 1 || x <= Pegman.dposX - 1) || (y >= Pegman.dposY + 1 || y <= Pegman.dposY - 1)) {
+                            var t_id = normalize(x, y);
+
+                            map.putTile(t_id, x, y, fog);
+                        }
+                    }
+                }
+            }, this.game);
+
+            updateFog.dispatch();
+        }
     },
     animationStopped: function (sprite, animation) {
         explosion.visible = false;
@@ -192,14 +192,14 @@ load_scene(scene);
 
 
         if (map.key != "lesson53") {
-        var cposx = Math.floor(player.x / 64);
-        var cposy = Math.floor(player.y / 64);
-        if (cposx != Pegman.dposX || cposy != Pegman.dposY) {
-            Pegman.dposX = cposx;
-            Pegman.dposY = cposy;
-            updateFog.dispatch();
+            var cposx = Math.floor(player.x / 64);
+            var cposy = Math.floor(player.y / 64);
+            if (cposx != Pegman.dposX || cposy != Pegman.dposY) {
+                Pegman.dposX = cposx;
+                Pegman.dposY = cposy;
+                updateFog.dispatch();
+            }
         }
-    }
 
 
 
@@ -517,19 +517,27 @@ Maze.tile_SHAPES = {
 function load_scene(scene) {
     console.log(scene);
     if (scene == "510") {
-        try {player.body.enable = false; } catch {}
+        try { player.body.enable = false; } catch { }
         var result = findObjectsByType('playerStartPosition', map, 'playerLayer');
         console.log(result);
-    lastSuccessfullPosition.x = result[0].x;
-    lastSuccessfullPosition.y = result[0].y;
-//     try {Pegman.reset2(); } catch (e){
-// console.log(e);
-//     }
+        lastSuccessfullPosition.x = result[0].x;
+        lastSuccessfullPosition.y = result[0].y;
     }
-    
 
-   
-    if (scene == "511" || scene == "521" || scene == "531" ) {
+    if (scene == "521") {
+        try { player.body.enable = false; } catch { }
+        var result = findObjectsByType('playerStartPosition', map, 'playerLayer');
+        lastSuccessfullPosition.x = result[0].x;
+        lastSuccessfullPosition.y = result[0].y;
+    }
+    if (scene == "531") {
+        try { player.body.enable = false; } catch { }
+        var result = findObjectsByType('playerStartPosition', map, 'playerLayer');
+        lastSuccessfullPosition.x = result[0].x;
+        lastSuccessfullPosition.y = result[0].y;
+    }
+
+    if (scene == "511" || scene == "521" || scene == "531") {
         var result = findObjectsByType('scene1Goal', map, 'playerLayer');
         pointer.x = result[0].x;
         pointer.y = result[0].y;
@@ -543,15 +551,16 @@ function load_scene(scene) {
         var result = findObjectsByType('scene3Goal', map, 'playerLayer');
         pointer.x = result[0].x;
         pointer.y = result[0].y;
-    } 
+    }
 
-player.x = lastSuccessfullPosition.x;
-player.y = lastSuccessfullPosition.y;
+    // player.x = lastSuccessfullPosition.x;
+    // player.y = lastSuccessfullPosition.y;
+     try {Pegman.reset2()} catch {}
 }
 
 
 function loadmap(name) {
-    try {player.body.enable = false; } catch {}
+    try { player.body.enable = false; } catch { }
     
     TopDownGame.game.camera.flash(0x000000, 1000);
 
@@ -575,19 +584,19 @@ function loadmap(name) {
     sinkLayer = map.createLayer('sinkLayer');
     blockLayer = map.createLayer('blockLayer');
     onBlockLayer = map.createLayer('onBlockLayer');
-    
+
 
 
     sinkLayer = map.createLayer('sinkLayer');
     map.setTileIndexCallback([...Array(500).keys()], sinkInWater, this, sinkLayer);
     map.setTileIndexCallback([...Array(500).keys()], hitEvent, this, blockLayer);
-    
+
     upperLayer = map.createLayer('upperLayer');
-    
+
     if (map.key != "lesson53") {
         fog = map.createLayer('fog');
     }
- 
+
 
 
 
@@ -596,5 +605,5 @@ function loadmap(name) {
         TopDownGame.game.world.bringToTop(explosion);
         TopDownGame.game.world.bringToTop(player);
     } catch { }
-
+    
 }
