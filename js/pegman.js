@@ -664,12 +664,12 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 catch {
                     console.log("couldn't set IsChecked For Lesson");
                 }
-                // try {
-                //     saveWorkspace();
-                // }
-                // catch {
-                //     console.log("couldn't save");
-                // }
+                try {
+                    saveWorkspace();
+                }
+                catch {
+                    console.log("couldn't save");
+                }
             } else {
                 //show modal unsuccessful
                 if (scene == 4) {
