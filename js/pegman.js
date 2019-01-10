@@ -659,6 +659,12 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 lastSuccessfullPosition.y = player.y;
                 toogleRunButton();
                 try {
+                    setIsCheckedForLesson();
+                }
+                catch {
+                    console.log("couldn't set IsChecked For Lesson");
+                }
+                try {
                     saveWorkspace();
                 }
                 catch {
