@@ -21,7 +21,7 @@ TopDownGame.Preload.prototype = {
 
         this.load.spritesheet('pegman', 'assets/sprites/player.png', 141, 100);
         this.load.spritesheet('explosion', 'assets/sprites/explosion.png', 99, 87);
-        this.load.spritesheet("pointer", "assets/sprites/pointer.png", 107, 77);
+        this.load.spritesheet("pointer", "assets/sprites/pointer.png", 80, 58);
 
         this.load.image('bullet', 'assets/images/bullet2.png');
         this.load.image('gameTiles', 'assets/maps/game4/tileSheetWinter03-11.png');

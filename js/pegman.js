@@ -579,7 +579,6 @@ var Pegman = {
 
 Pegman.textoffset_x = 0;
 Pegman.textoffset_y = 45;
-Pegman.bulletSpeed = 1000;
 Pegman.selected_tileid = 1;
 
 Pegman.preReset = function () {
@@ -644,7 +643,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     var messagetext = "Эти бочки преградили тебе путь. Расстреляй их, чтобы пройти дальше!";
                 } else if (scene == 3) {
                     //var messagetext = "А теперь нужно найти 3 бочки с мишенями и подстрелить их. Но не в коем случае не стреляй в бочки с водой!";
-                    var messagetext = "А теперь нужно найти 5 бочек с мишенями и подстрелить их";
+                    var messagetext = "А теперь нужно найти и подстрелить 5 бочек с мишенями. Нельзя стрелять по бочкам с водой. Используй стрелочки, чтобы двигать карту и искать цели.";
                 }
                 $("#modaltext").text(messagetext);
                 $("#exampleModal").modal();
@@ -1187,7 +1186,7 @@ function setIsCheckedForLesson() {
         url: "https://backend.it.robooky.ru/api/courses/" + urldata['course-id'] + "/lessons/" + urldata['lesson-id'] + "?action=set-checked&isChecked=true&studentId=" + urldata['student-id'],
         headers: { "Authorization": urldata.token },
         success: function (data) {
-
+            window.parent.postMessage({fromIframe:true, command:'updateSidebar'}, '*');
         },
         failure: function (errMsg) {
             console.log(errMsg);

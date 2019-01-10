@@ -288,7 +288,7 @@ Blockly.Blocks['factory_base'] = {
                 "type": "input_statement",
                 "name": "STACK"
             }],
-            "colour": 230,
+            "colour": 120,
             "tooltip": "",
             "helpUrl": ""
         });
@@ -647,7 +647,7 @@ Blockly.Blocks['repeat_n_times'] = {
                 {
                     "type": "field_number",
                     "name": "times",
-                    "value": 9
+                    "value": 4
                 }
             ],
             "message1": "выполнить %1",

@@ -185,20 +185,20 @@ TopDownGame.Lesson5.prototype = {
 
         if (this.cursors.up.isDown) {
             this.game.camera.unfollow();
-            this.game.camera.y -= 10;
+            this.game.camera.y -= cameraSpeed;
         }
         else if (this.cursors.down.isDown) {
             this.game.camera.unfollow();
-            this.game.camera.y += 10;
+            this.game.camera.y += cameraSpeed;
         }
 
         if (this.cursors.left.isDown) {
             this.game.camera.unfollow();
-            this.game.camera.x -= 10;
+            this.game.camera.x -= cameraSpeed;
         }
         else if (this.cursors.right.isDown) {
             this.game.camera.unfollow();
-            this.game.camera.x += 10;
+            this.game.camera.x += cameraSpeed10;
         }
 
 

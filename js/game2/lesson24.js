@@ -96,7 +96,7 @@ TopDownGame.Lesson24.prototype = {
 
         weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
         weapon.bulletAngleOffset = 0;
-        weapon.bulletSpeed = Pegman.bulletSpeed;
+        weapon.bulletSpeed = bulletSpeed;
         weapon.fireAngle = Phaser.ANGLE_RIGHT; // shoot at right direcion by default
         weapon.trackSprite(player, 0, -9, false); //-65 выведено экспериментальным путём
         //the camera will follow the player in the world
@@ -165,20 +165,20 @@ TopDownGame.Lesson24.prototype = {
 
         if (this.cursors.up.isDown) {
             this.game.camera.unfollow();
-            this.game.camera.y -= 50;
+            this.game.camera.y -= cameraSpeed;
         }
         else if (this.cursors.down.isDown) {
             this.game.camera.unfollow();
-            this.game.camera.y += 50;
+            this.game.camera.y += cameraSpeed;
         }
 
         if (this.cursors.left.isDown) {
             this.game.camera.unfollow();
-            this.game.camera.x -= 50;
+            this.game.camera.x -= cameraSpeed;
         }
         else if (this.cursors.right.isDown) {
             this.game.camera.unfollow();
-            this.game.camera.x += 50;
+            this.game.camera.x += cameraSpeed;
         }
 
     },

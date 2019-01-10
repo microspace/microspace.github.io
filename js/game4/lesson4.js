@@ -107,7 +107,7 @@ TopDownGame.Lesson4.prototype = {
 
         weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
         weapon.bulletAngleOffset = 0;
-        weapon.bulletSpeed = 250;
+        weapon.bulletSpeed = bulletSpeed;
         weapon.fireAngle = Phaser.ANGLE_RIGHT; // shoot at right direcion by default
         weapon.trackSprite(player, 0, -13, false); //-65 выведено экспериментальным путём
         //weapon.addBulletAnimation("fly", [0, 1, 2, 3, 4, 5, 6, 7], 40, true);
@@ -190,40 +190,22 @@ TopDownGame.Lesson4.prototype = {
         this.game.physics.arcade.collide(player, blockLayer);
         this.game.physics.arcade.collide(player, barrels, hitEvent, null, this);
 
-        //player.body.velocity.x = 0;
-        // var velocity = 400;
-        // if (this.cursors.up.isDown) {
-        //     if (player.body.velocity.y == 0)
-        //         player.body.velocity.y -= velocity;
-
-        // } else if (this.cursors.down.isDown) {
-        //     if (player.body.velocity.y == 0)
-        //         player.body.velocity.y += velocity;
-        // } else {
-        //     player.body.velocity.y = 0;
-        // }
-        // if (this.cursors.left.isDown) {
-        //     player.body.velocity.x -= velocity;
-        // } else if (this.cursors.right.isDown) {
-        //     player.body.velocity.x += velocity;
-        // }
-        //camera start
         if (this.cursors.up.isDown) {
             this.game.camera.unfollow();
-            this.game.camera.y -= 50;
+            this.game.camera.y -= cameraSpeed;
         }
         else if (this.cursors.down.isDown) {
             this.game.camera.unfollow();
-            this.game.camera.y += 50;
+            this.game.camera.y += cameraSpeed;
         }
 
         if (this.cursors.left.isDown) {
             this.game.camera.unfollow();
-            this.game.camera.x -= 50;
+            this.game.camera.x -= cameraSpeed;
         }
         else if (this.cursors.right.isDown) {
             this.game.camera.unfollow();
-            this.game.camera.x += 50;
+            this.game.camera.x += cameraSpeed;
         }
         //camera end
 

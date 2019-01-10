@@ -101,20 +101,20 @@ TopDownGame.Lesson3.prototype = {
 
         if (this.cursors.up.isDown) {
             this.game.camera.unfollow();
-            this.game.camera.y -= 50;
+            this.game.camera.y -= cameraSpeed;
         }
         else if (this.cursors.down.isDown) {
             this.game.camera.unfollow();
-            this.game.camera.y += 50;
+            this.game.camera.y += cameraSpeed;
         }
 
         if (this.cursors.left.isDown) {
             this.game.camera.unfollow();
-            this.game.camera.x -= 50;
+            this.game.camera.x -= cameraSpeed;
         }
         else if (this.cursors.right.isDown) {
             this.game.camera.unfollow();
-            this.game.camera.x += 50;
+            this.game.camera.x += cameraSpeed;
         }
 
 /*         if (sl1.isDown) {
