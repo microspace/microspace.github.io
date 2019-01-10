@@ -274,7 +274,7 @@ var Pegman = {
             });
         }
         if (TopDownGame.game.state.getCurrentState().key == "lesson5") {
-            
+
             if (map.key != "lesson53") {
 
                 for (var y = 0; y < map.height; ++y) {
@@ -674,13 +674,22 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                         }
                     });
                     if (aliveBarrelsCount == 0) {
-                        $("#modaltext").text("Поздравляю!");
+                        $("#modaltext").text("Поздравляю! Тебе открыт следующий урок.");
                         $("#exampleModal").modal();
+                        lastSuccessfullPosition.x = player.x;
+                        lastSuccessfullPosition.y = player.y;
+
+                        try {
+                            saveWorkspace();
+                        }
+                        catch {
+                            console.log("couldn't save");
+                        }
                         try {
                             setIsCheckedForLesson();
                         }
                         catch {
-                            console.log("couldn't set IsCheckedForLesson");
+                            console.log("couldn't set IsChecked For Lesson");
                         }
 
                     } else {
@@ -817,6 +826,14 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
 
                 $("#modaltext").text("Поздравляю! Открыт следующий уровень!");
                 $("#exampleModal").modal();
+                lastSuccessfullPosition.x = player.x;
+                lastSuccessfullPosition.y = player.y;
+                try {
+                    saveWorkspace();
+                }
+                catch {
+                    console.log("couldn't save");
+                }
                 try {
                     setIsCheckedForLesson();
                 }
@@ -834,11 +851,19 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 if (scene == 6) {
                     $("#modaltext").text("Поздравляю! Ты закончил уровень №3");
                     $("#exampleModal").modal();
+                    lastSuccessfullPosition.x = player.x;
+                    lastSuccessfullPosition.y = player.y;
+                    try {
+                        saveWorkspace();
+                    }
+                    catch {
+                        console.log("couldn't save");
+                    }
                     try {
                         setIsCheckedForLesson();
                     }
                     catch {
-                        console.log("couldn't set IsCheckedForLesson");
+                        console.log("couldn't set IsChecked For Lesson");
                     }
                 } else {
                     $("#nextButton").show();
@@ -901,11 +926,19 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     if (isOverlapping == true) {
                         $("#modaltext").text("Ты отлично справился! Альянс может гордится, что в его рядах есть такие умелые и умные рейнджеры как ты!");
                         $("#exampleModal").modal();
+                        lastSuccessfullPosition.x = player.x;
+                        lastSuccessfullPosition.y = player.y;
+                        try {
+                            saveWorkspace();
+                        }
+                        catch {
+                            console.log("couldn't save");
+                        }
                         try {
                             setIsCheckedForLesson();
                         }
                         catch {
-                            console.log("couldn't set IsCheckedForLesson");
+                            console.log("couldn't set IsChecked For Lesson");
                         }
                     }
                 }
@@ -914,7 +947,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
         if (TopDownGame.game.state.getCurrentState().key == "lesson5") {
             if (scene == "510") {
                 if (map.getTile(5, 4, flour).index == 236) {
-                    
+
                     scene = "511";
                     load_scene(scene);
                     toogleRunButton();
@@ -950,7 +983,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                         }
                         load_scene(scene);
                     } else if (scene == "513") {
-                        
+
                         loadmap('lesson52');
                         scene = "521";
                         toogleRunButton();
@@ -960,7 +993,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                         catch {
                             console.log("couldn't save");
                         }
-                        
+
                         load_scene(scene);
                         $("#modaltext").text(" Тут повсюду трупы. Что тут произошло? Надеюсь с отрядом все в порядке.");
                         $("#exampleModal").modal();
@@ -993,7 +1026,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                         toogleRunButton();
                         load_scene(scene);
                     } else if (scene == "531") {
-                        
+
                         var notfilledblocks = 0;
                         for (var y = 6; y <= 7; ++y) {
                             for (var x = 9; x <= 14; ++x) {
@@ -1006,6 +1039,8 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                             $("#modaltext").text("Нужно засыпать все блоки на мосту");
                             $("#exampleModal").modal();
                         } else {
+                            $("#modaltext").text("Поздравляю! Следующий урок разблокирован!");
+                            $("#exampleModal").modal();
                             lastSuccessfullPosition.x = player.x;
                             lastSuccessfullPosition.y = player.y;
                             try {
@@ -1014,13 +1049,12 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                             catch {
                                 console.log("couldn't save");
                             }
-                            $("#modaltext").text("Поздравляю! Следующий урок разблокирован!");
-                            $("#exampleModal").modal();
+
                             try {
                                 setIsCheckedForLesson();
                             }
                             catch {
-                                console.log("couldn't set IsCheckedForLesson");
+                                console.log("couldn't set IsChecked For Lesson");
                             }
                         }
                     }
@@ -1082,7 +1116,7 @@ function saveWorkspace() {
         dataType: "json",
         success: function (data) {
             console.log("saved");
-         },
+        },
         failure: function (errMsg) {
             console.log(errMsg);
         }
@@ -1109,9 +1143,8 @@ function loadWorkspace(clesson) {
                     console.log(scene);
                     if (clesson == 'lesson2') {
                         TopDownGame.game.state.start(clesson + scene);
-                    } 
-                     else
-                    {
+                    }
+                    else {
                         lastSuccessfullPosition = {
                             x: JSON.parse(data.data).positionX,
                             y: JSON.parse(data.data).positionY
@@ -1186,7 +1219,7 @@ function setIsCheckedForLesson() {
         url: "https://backend.it.robooky.ru/api/courses/" + urldata['course-id'] + "/lessons/" + urldata['lesson-id'] + "?action=set-checked&isChecked=true&studentId=" + urldata['student-id'],
         headers: { "Authorization": urldata.token },
         success: function (data) {
-            window.parent.postMessage({fromIframe:true, command:'updateSidebar'}, '*');
+            window.parent.postMessage({ fromIframe: true, command: 'updateSidebar' }, '*');
         },
         failure: function (errMsg) {
             console.log(errMsg);
@@ -1217,7 +1250,7 @@ var resetProgram = function () {
     try {
         weapon.fireAngle = Phaser.ANGLE_RIGHT;
     } catch {
-        
+
     }
     Pegman.reset2();
     TopDownGame.game.camera.follow(player);
