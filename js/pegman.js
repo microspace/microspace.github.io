@@ -664,12 +664,12 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 catch {
                     console.log("couldn't set IsChecked For Lesson");
                 }
-                try {
-                    saveWorkspace();
-                }
-                catch {
-                    console.log("couldn't save");
-                }
+                // try {
+                //     saveWorkspace();
+                // }
+                // catch {
+                //     console.log("couldn't save");
+                // }
             } else {
                 //show modal unsuccessful
                 if (scene == 4) {
@@ -1146,7 +1146,6 @@ function loadWorkspace(clesson) {
                 try {
                     var code = JSON.parse(data.data).code;
                     scene = JSON.parse(data.data).scene;
-                    console.log(scene);
                     if (clesson == 'lesson2') {
                         TopDownGame.game.state.start(clesson + scene);
                     }
@@ -1155,7 +1154,6 @@ function loadWorkspace(clesson) {
                             x: JSON.parse(data.data).positionX,
                             y: JSON.parse(data.data).positionY
                         };
-                        console.log(lastSuccessfullPosition);
                         TopDownGame.game.state.start(clesson);
                     }
 
