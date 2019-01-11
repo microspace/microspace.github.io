@@ -72,6 +72,7 @@ TopDownGame.Lesson3.prototype = {
         player.tint = 0xAADDDD;
         player.anchor.setTo(0.5, 0.5);
         this.game.physics.arcade.enable(player);
+        player.body.collideWorldBounds=true;
         player.body.setSize(60, 13, 40, 73);
         flour.resizeWorld();
         

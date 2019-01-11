@@ -26,7 +26,6 @@ TopDownGame.Lesson1.prototype = {
         //create player
         // load all data from map json, populate the structure.
         this.loadSceneData();
-        
 
         if (jQuery.isEmptyObject(lastSuccessfullPosition)) {
             if (scene === undefined || scene === null) {
@@ -38,25 +37,19 @@ TopDownGame.Lesson1.prototype = {
                 x: result[0].x,
                 y: result[0].y 
             };
-
-            
         }
 
 
 
         //var result = this.findObjectsByType('playerStartPosition', this.map, 'playerLayer');
         this.createItems();
-
-
         weapon = this.game.add.weapon(20, 'bullet');
         // game goal pointer
         pointer = this.game.add.sprite(Maze.scenes[scene].endPos[0], Maze.scenes[scene].endPos[1], 'pointer');
         pointer.scale.setTo(0.8, 0.8);
         pointer.animations.add('ANIM', [0, 1], 2, /*loop*/ true);
         pointer.animations.play('ANIM');
-
         player = this.game.add.sprite(Maze.scenes[scene].startPos[0], Maze.scenes[scene].startPos[1], 'pegman');
-
         player.anchor.setTo(0.5, 0.5);
         pointer.anchor.setTo(0.5, 0.5);
 
@@ -80,6 +73,7 @@ TopDownGame.Lesson1.prototype = {
 
         this.upperLayer = this.map.createLayer('upperLayer');
         this.game.physics.arcade.enable(player);
+        player.body.collideWorldBounds=true;
         player.body.enable = false;
         this.game.physics.arcade.enable(pointer);
         player.body.setSize(60, 13, 40, 73);

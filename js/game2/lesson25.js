@@ -79,6 +79,7 @@ TopDownGame.Lesson25.prototype = {
 
         this.upperLayer = this.map.createLayer('upperLayer');
         this.game.physics.arcade.enable(player);
+        player.body.collideWorldBounds=true;
         //this.game.physics.arcade.enable(pointer);
         player.body.setSize(60, 13, 40, 73);
 
