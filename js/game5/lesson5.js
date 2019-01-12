@@ -126,6 +126,9 @@ TopDownGame.Lesson5.prototype = {
         // f.onDown.add(this.switch521, this);
         // g = this.game.input.keyboard.addKey(Phaser.Keyboard.G);
         // g.onDown.add(this.switch522, this);
+        
+        с = this.game.input.keyboard.addKey(Phaser.Keyboard.С);
+        с.onDown.add(this.switch521, this);
         v = this.game.input.keyboard.addKey(Phaser.Keyboard.V);
         v.onDown.add(this.switch531, this);   
 
