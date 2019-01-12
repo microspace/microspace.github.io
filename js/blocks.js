@@ -156,7 +156,7 @@ Blockly.JavaScript['maze_right'] = function (block) {
     if (TopDownGame.game.state.getCurrentState().key == "lesson5") {
         var step = Maze.getStepInDirection["EAST"];
         Pegman.vdposX = Pegman.vdposX + step[0] * operator; 
-        console.log(Pegman.vdposX, Pegman.vdposY);
+        //console.log(Pegman.vdposX, Pegman.vdposY);
 
 
     try {
@@ -815,4 +815,39 @@ Blockly.JavaScript['if_block'] = function(block) {
   // TODO: Assemble JavaScript into code variable.
   var code = 'if (' + value_condition + ') {' + true_code + '};' 
   return code;
+};
+
+
+Blockly.Blocks['pickup'] = {
+    /**
+     * Block for moving forward.
+     * @this Blockly.Block
+     */
+    init: function () {
+        this.jsonInit({
+            "message0": 'Поднять',
+            "previousStatement": null,
+            "nextStatement": null,
+            "colour": 0,
+            "tooltip": 'Поднимает предмет '
+        });
+    }
+};
+
+Blockly.JavaScript['pickup'] = function (block) {
+    var code = `
+
+    var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, batteries, null, processCallback1, TopDownGame);
+    function processCallback1 (sprite, battery) {
+        console.log("processCallback");
+    };
+    console.log(Pegman.vdposX, Pegman.vdposY);
+    console.log(Pegman.dposX, Pegman.dposY);
+    if (isOverlapping) {
+        //Pegman.nextAction("pickup");
+    }`
+    return code;
+
+
+
 };

@@ -10,17 +10,15 @@ var scene;
 var map;
 var drawLayer;
 var showflag = true;
-var fog;
+var batteries;
 //var data;
 var capacity = 100;
 var maxcaps2 = 100;
 var myHealthBar;
 var velocity = 400;
 var sinkflag = false;
-var updateFog;
-var bmd;
-var fringe;
-var fogCircle;
+var text;
+
 var ccellx, xcelly;
 
 var lastSuccessfullPosition = {
@@ -33,18 +31,18 @@ var dlastSuccessfullPosition = {
 };
 var timeSinceLastIncrement = 0;
 //title screen
-TopDownGame.Lesson5 = function () { };
-TopDownGame.Lesson5.prototype = {
+TopDownGame.lesson6 = function () { };
+TopDownGame.lesson6.prototype = {
     create: function () {
         if (scene === undefined || scene === null) {
             Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
-            scene = "510";
+            scene = "610";
         }
         player = this.game.add.sprite(0, 0, 'pegman');
         loadmap("lesson" + scene.substring(0, 2));
         player.anchor.setTo(0.5, 0.5);
         this.game.physics.arcade.enable(player);
-        player.body.collideWorldBounds=true;
+        player.body.collideWorldBounds = true;
         player.body.enable = false;
         player.body.setSize(60, 13, 40, 73);
         flour.resizeWorld();
@@ -59,6 +57,8 @@ TopDownGame.Lesson5.prototype = {
         pointer.anchor.setTo(0.5, 0.5);
         pointer.body.setSize(10, 65, 48, 10);
         load_scene(scene);
+
+        this.createItems();
 
         Pegman.init(player);
 
@@ -95,6 +95,28 @@ TopDownGame.Lesson5.prototype = {
         player.animations.add('SHOOT', [20, 21, 22, 23, 24], fps, /*loop*/ false);
         player.animations.play('STAND');
 
+
+        //menu
+        inventory = this.game.add.sprite(600, 30, 'battery');
+        inventory.fixedToCamera = true;
+        text = this.game.add.text(690, 65, 'x 7');
+        text.fixedToCamera = true;
+
+        //	Center align
+        text.anchor.set(0.5);
+        text.align = 'center';
+
+        //	Font style
+        text.font = 'Arial Black';
+        text.fontSize = 30;
+        text.fontWeight = 'bold';
+
+        //	Stroke color and thickness
+        text.stroke = '#000000';
+        text.strokeThickness = 6;
+        text.fill = '#43d637';
+        //menu
+
         //the camera will follow the player in the world
         //this.game.camera.follow(player);
         //move player with cursor keys
@@ -116,42 +138,6 @@ TopDownGame.Lesson5.prototype = {
         l.onDown.add(this.l_down, this);
         l.onUp.add(this.l_up, this);
 
-        // a = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
-        // a.onDown.add(this.switch511, this);
-        // s = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
-        // s.onDown.add(this.switch512, this);
-        // d = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
-        // d.onDown.add(this.switch513, this);
-        // f = this.game.input.keyboard.addKey(Phaser.Keyboard.F);
-        // f.onDown.add(this.switch521, this);
-        // g = this.game.input.keyboard.addKey(Phaser.Keyboard.G);
-        // g.onDown.add(this.switch522, this);
-        v = this.game.input.keyboard.addKey(Phaser.Keyboard.V);
-        v.onDown.add(this.switch531, this);   
-
-        if (map.key != "lesson53") {
-            map.putTile(244, Pegman.dposX, Pegman.dposY, fog);
-            updateFog = new Phaser.Signal();
-            updateFog.add(function () {
-
-                for (var y = Pegman.dposY - 1; y <= Pegman.dposY + 1; ++y) {
-                    for (var x = Pegman.dposX - 1; x <= Pegman.dposX + 1; ++x) {
-                        map.putTile(244, x, y, fog);
-                    }
-                }
-
-                for (var y = Pegman.dposY - 2; y <= Pegman.dposY + 2; ++y) {
-                    for (var x = Pegman.dposX - 2; x <= Pegman.dposX + 2; ++x) {
-                        if ((x >= Pegman.dposX + 1 || x <= Pegman.dposX - 1) || (y >= Pegman.dposY + 1 || y <= Pegman.dposY - 1)) {
-                            var t_id = normalize(x, y);
-                            map.putTile(t_id, x, y, fog);
-                        }
-                    }
-                }
-            }, this.game);
-
-            updateFog.dispatch();
-        }
     },
     animationStopped: function (sprite, animation) {
         explosion.visible = false;
@@ -180,23 +166,9 @@ TopDownGame.Lesson5.prototype = {
     l_up: function () {
         player.body.velocity.x = 0;
     },
-    switch531: function() {
-        loadmap('lesson53');
-        $("#modaltext").text("Путь к точке эвакуации проходит через реку. Нужно засыпать дорогу для отряда.");
-        $("#exampleModal").modal();
-        scene = "531";        
-        load_scene(scene);
-    },
+
     update: function () {
-        if (map.key != "lesson53") {
-            var cposx = Math.floor(player.x / 64);
-            var cposy = Math.floor(player.y / 64);
-            if (cposx != Pegman.dposX || cposy != Pegman.dposY) {
-                Pegman.dposX = cposx;
-                Pegman.dposY = cposy;
-                updateFog.dispatch();
-            }
-        }
+        text.text = 'x ' + batteries.countLiving();
 
         this.game.physics.arcade.collide(player, sinkLayer);
         this.game.physics.arcade.collide(player, flour);
@@ -217,7 +189,7 @@ TopDownGame.Lesson5.prototype = {
         }
         else if (this.cursors.right.isDown) {
             this.game.camera.unfollow();
-            this.game.camera.x += cameraSpeed10;
+            this.game.camera.x += cameraSpeed;
         }
 
 
@@ -231,14 +203,13 @@ TopDownGame.Lesson5.prototype = {
     // },
     createItems: function () {
         //create items
-        barrels = this.game.add.group();
-        barrels.enableBody = true;
-        result = this.findObjectsByType('barrel', map, 'objectLayer');
+        batteries = this.game.add.group();
+        batteries.enableBody = true;
+        result = this.findObjectsByType('battery', map, 'objectLayer');
         result.forEach(function (element) {
-            this.createFromTiledObject(element, barrels);
+            this.createFromTiledObject(element, batteries);
         }, this);
     },
-
     //find objects in a Tiled layer that containt a property called "type" equal to a certain value
     findObjectsByType: function (type, map, layer) {
         var result = new Array();
@@ -259,7 +230,7 @@ TopDownGame.Lesson5.prototype = {
     },
     //create a sprite from an object
     createFromTiledObject: function (element, group) {
-        var sprite = group.create(element.x, element.y, 'totalsheet', 234);
+        var sprite = group.create(element.x, element.y, 'totalsheet', 176);
         //copy all properties to the sprite
         element.properties.forEach(function (element) {
             sprite[element.name] = element.value;
@@ -267,14 +238,7 @@ TopDownGame.Lesson5.prototype = {
         sprite.health = 100;
         sprite.body.immovable = true;
         //sprite.scale.set(2 , 2 );
-        if (sprite["sprite"] === "needToHit") {
-            sprite.frame = 195;
-        }
-        if (sprite["scene"] < scene) {
-            sprite.frame = 197
-        } else if (sprite["scene"] > scene) {
-            sprite.kill();
-        }
+
     },
 
 };
@@ -363,164 +327,32 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function normalize(x, y) {
-    var cTile;
-    cTile = map.getTile(x - 1, y - 1, fog);
-    if (cTile) {
-        a11 = cTile.index == 244 ? 0 : 1
-    } else {
-        a11 = 1
-    }
-    cTile = map.getTile(x, y - 1, fog);
-    if (cTile) {
-        a12 = cTile.index == 244 ? 0 : 1
-    } else {
-        a12 = 1
-    }
-    cTile = map.getTile(x + 1, y - 1, fog);
-    if (cTile) {
-        a13 = cTile.index == 244 ? 0 : 1
-    } else {
-        a13 = 1
-    }
-
-    cTile = map.getTile(x - 1, y, fog);
-    if (cTile) {
-        a21 = cTile.index == 244 ? 0 : 1
-    } else {
-        a21 = 1
-    }
-    cTile = map.getTile(x, y, fog);
-    if (cTile) {
-        a22 = cTile.index == 244 ? 0 : 1
-    } else {
-        a22 = 1
-    }
-    cTile = map.getTile(x + 1, y, fog);
-    if (cTile) {
-        a23 = cTile.index == 244 ? 0 : 1
-    } else {
-        a23 = 1
-    }
-
-    cTile = map.getTile(x - 1, y + 1, fog);
-    if (cTile) {
-        a31 = cTile.index == 244 ? 0 : 1
-    } else {
-        a31 = 1
-    }
-    cTile = map.getTile(x, y + 1, fog);
-    if (cTile) {
-        a32 = cTile.index == 244 ? 0 : 1
-    } else {
-        a32 = 1
-    }
-    cTile = map.getTile(x + 1, y + 1, fog);
-    if (cTile) {
-        a33 = cTile.index == 244 ? 0 : 1
-    } else {
-        a33 = 1
-    }
-    if (a22 == '0' || a11 + a12 + a13 + a21 + a23 + a31 + a32 + a33 <= 2 || (!a12 && !a32) || (!a21 && !a23)) {
-        return 244;
-    } else if (a11 + a12 + a21 + a22 == 4 && (!a13 || !a23) && (!a31 || !a32)) {
-        return 218;
-    } else if (a12 + a13 + a22 + a23 == 4 && (!a11 || !a21) && (!a32 || !a33)) {
-        return 218;
-    } else if (a22 + a23 + a32 + a33 == 4 && (!a12 || !a13) && (!a21 || !a31)) {
-        return 218;
-    } else if (a21 + a22 + a31 + a32 == 4 && (!a11 || !a12) && (!a23 || !a33)) {
-        return 218;
-    } else {
-        return Maze.tile_SHAPES[String(a11) + String(a12) + String(a13) + String(a21) + String(a22) + String(a23) + String(a31) + String(a32) + String(a33)];
-    }
-}
 
 
-Maze.tile_SHAPES = {
 
-    '111111110': 229,
-    '111111011': 230,
-    '011111111': 243,
-    '110111111': 242,
 
-    '111111101': 245,
-    '111111100': 245,
-    '111111001': 245,
-    '111111000': 245,
-    '111111010': 245,
-
-    '111011111': 231,
-    '111011011': 231,
-    '011011111': 231,
-    '011011011': 231,
-    '011111011': 231,
-
-    '101111111': 219,
-    '100111111': 219,
-    '001111111': 219,
-    '000111111': 219,
-    '010111111': 219,
-
-    '111110111': 233,
-    '110110111': 233,
-    '111110110': 233,
-    '110110110': 233,
-    '110111110': 233,
-
-    '110111011': 218,
-    '011111110': 218,
-
-};
 
 
 
 function load_scene(scene) {
-    if (scene == "510") {
+    if (scene == "610") {
         try { player.body.enable = false; } catch { }
         var result = findObjectsByType('playerStartPosition', map, 'playerLayer');
         lastSuccessfullPosition.x = result[0].x;
         lastSuccessfullPosition.y = result[0].y;
     }
 
-    if (scene == "521") {
-        try { player.body.enable = false; } catch { }
-        var result = findObjectsByType('playerStartPosition', map, 'playerLayer');
-        lastSuccessfullPosition.x = result[0].x;
-        lastSuccessfullPosition.y = result[0].y;
-    }
-    if (scene == "531" && lastSuccessfullPosition.x == null) {
-        try { player.body.enable = false; } catch { }
-        var result = findObjectsByType('playerStartPosition', map, 'playerLayer');
-        lastSuccessfullPosition.x = result[0].x;
-        lastSuccessfullPosition.y = result[0].y;
-    }
 
-    if (scene == "511" || scene == "521" || scene == "531") {
-        var result = findObjectsByType('scene1Goal', map, 'playerLayer');
-        pointer.x = result[0].x;
-        pointer.y = result[0].y;
-    }
-    else if (scene == "512" || scene == "522") {
-        var result = findObjectsByType('scene2Goal', map, 'playerLayer');
-        pointer.x = result[0].x;
-        pointer.y = result[0].y;
-    }
-    else if (scene == "513") {
-        var result = findObjectsByType('scene3Goal', map, 'playerLayer');
-        pointer.x = result[0].x;
-        pointer.y = result[0].y;
-    }
 
     // player.x = lastSuccessfullPosition.x;
     // player.y = lastSuccessfullPosition.y;
-     try {Pegman.reset2()} catch {}
+    try { Pegman.reset2() } catch { }
 }
 
 
 function loadmap(name) {
     try { player.body.enable = false; } catch { }
-    
+
     TopDownGame.game.camera.flash(0x000000, 1000);
 
     try {
@@ -531,7 +363,7 @@ function loadmap(name) {
         onBlockLayer.destroy();
         sinkLayer.destroy();
         upperLayer.destroy();
-        fog.destroy();
+
 
     } catch { }
 
@@ -552,9 +384,7 @@ function loadmap(name) {
 
     upperLayer = map.createLayer('upperLayer');
 
-    if (map.key != "lesson53") {
-        fog = map.createLayer('fog');
-    }
+
 
 
 
@@ -564,5 +394,5 @@ function loadmap(name) {
         TopDownGame.game.world.bringToTop(explosion);
         TopDownGame.game.world.bringToTop(player);
     } catch { }
-    
+
 }

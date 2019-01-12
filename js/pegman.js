@@ -196,7 +196,7 @@ var Pegman = {
 
         if (TopDownGame.game.state.getCurrentState().key[6] == "2") { // это значит второй уровень (((
             chests.forEach(function (c) {
-                c.revive();
+                c.visible = true;
             });
 
         }
@@ -325,6 +325,13 @@ var Pegman = {
 
         }
 
+        // if (TopDownGame.game.state.getCurrentState().key == "lesson6") {
+        //     batteries.forEach(function (c) {
+        //         c.visible = true;
+        //     });
+
+        // }
+        
         this.pegmanSprite.animations.play('STAND');
 
     },
@@ -562,6 +569,7 @@ var Pegman = {
                 Pegman.pegmanSprite.visible = true;
                 this.playNextAction();
                 break;
+                
 
 
         }
