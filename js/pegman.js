@@ -30,6 +30,8 @@ var Pegman = {
 
             // включаем физику с задержкой, из-за переходных процессов в игре
             this.pegmanSprite.body.enable = true;
+
+
             if (TopDownGame.game.state.getCurrentState().key == "lesson1" && scene == 0) {
 
 
@@ -40,6 +42,11 @@ var Pegman = {
                 TopDownGame.game.world.bringToTop(pointer);
                 TopDownGame.game.world.bringToTop(explosion);
                 TopDownGame.game.world.bringToTop(player);
+            }
+
+            if (TopDownGame.game.state.getCurrentState().key == "lesson0") {
+                $("#modaltext").text("Приветствую тебя! В этой игре тебе предстоит пройти испытания чтобы присединиться к остальным учащимся курса!");
+                $("#exampleModal").modal();
             }
 
 
@@ -149,6 +156,29 @@ var Pegman = {
         this.pegmanSprite.fresh = false;
         flag = false;
         TopDownGame.game.camera.follow(player);
+
+
+        if (TopDownGame.game.state.getCurrentState().key == "lesson0") {
+            console.log("callsed");
+            try {
+                map.removeTile(19, 9, flour);
+                map.removeTile(20, 9, flour);
+                map.removeTile(21, 9, flour);
+                map.putTile(145, 19, 9, sinkLayer);
+                map.putTile(145, 20, 9, sinkLayer);
+                map.putTile(145, 21, 9, sinkLayer);
+
+                map.replace(228, 229, 21, 2, 1, 1, flour);
+            } catch {
+
+            }
+
+        }
+
+
+
+
+
         if (TopDownGame.game.state.getCurrentState().key == "lesson1") {
             barrels.forEach(function (c) {
                 if (c["scene"] - 1 == scene) { //оживляем только те бочки, которые относятся к данной сцене.
@@ -332,7 +362,7 @@ var Pegman = {
         //     });
 
         // }
-        
+
         this.pegmanSprite.animations.play('STAND');
 
     },
@@ -570,7 +600,7 @@ var Pegman = {
                 Pegman.pegmanSprite.visible = true;
                 this.playNextAction();
                 break;
-                
+
 
 
         }
@@ -645,48 +675,77 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
             var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
             if (isOverlapping == true) {
                 if (scene == 0) {
-                    var messagetext = "Отлично получилось! Теперь попробуй дойди до конца коридора!";
-                } else if (scene == 1) {
-                    var messagetext = "Превосходно! Сейчас надо дойти до тех бочек!";
-                } else if (scene == 2) {
-                    var messagetext = "Эти бочки преградили тебе путь. Расстреляй их, чтобы пройти дальше!";
-                } else if (scene == 3) {
-                    //var messagetext = "А теперь нужно найти 3 бочки с мишенями и подстрелить их. Но не в коем случае не стреляй в бочки с водой!";
-                    var messagetext = "А теперь нужно найти и подстрелить 5 бочек с мишенями. Нельзя стрелять по бочкам с водой. Используй стрелочки, чтобы двигать карту и искать цели.";
-                }
-                $("#modaltext").text(messagetext);
+                    var messagetext = "Отлично получилось! Теперь попробуй дойди до следующего указателя!";
+                    $("#modaltext").text(messagetext);
                 $("#exampleModal").modal();
-                scene += 1;
+                scene = 1;
+
+                } else if (scene == 1) {
+                    var messagetext = "Превосходно! Нажми на кнопку чтобы мост восстановился! Остерегайся ловушек!";
+                    $("#modaltext").text(messagetext);
+                $("#exampleModal").modal();
+                scene = 2;
+                } else if (scene == 2) {
 
 
 
-                pointer.x = Maze.scenes[scene].endPos[0];
-                pointer.y = Maze.scenes[scene].endPos[1];
+                    var messagetext = "Осталось совсем немного! Нужно дойти до больших ворот!";
+                    $("#modaltext").text(messagetext);
+                $("#exampleModal").modal();
+                scene = 3;
+                } else if (scene == 3) {
+                    
+                    TopDownGame.game.time.events.add(500, openNarrow, this);
+                    TopDownGame.game.time.events.add(1000, openWide, this);
+                    function openNarrow() {
+                        map.replace(196, 198, 31, 8, 1, 1, blockLayer);
+                        map.replace(197, 199, 32, 8, 1, 1, blockLayer);
+
+                        map.replace(209, 211, 31, 9, 1, 1, blockLayer);
+                        map.replace(210, 212, 32, 9, 1, 1, blockLayer);
+
+                        map.replace(222, 224, 31, 10, 1, 1, blockLayer);
+                        map.replace(223, 225, 32, 10, 1, 1, blockLayer);
+
+
+                    }
+                    function openWide() {
+                        map.replace(198, 200, 31, 8, 1, 1, blockLayer);
+                        map.replace(199, 201, 32, 8, 1, 1, blockLayer);
+
+                        map.replace(211, 213, 31, 9, 1, 1, blockLayer);
+                        map.replace(212, 214, 32, 9, 1, 1, blockLayer);
+
+                        map.replace(224, 226, 31, 10, 1, 1, blockLayer);
+                        map.replace(225, 227, 32, 10, 1, 1, blockLayer);
+    
+                    }
+                }
+            } 
+
+
+if (scene <= 3) {
+       pointer.x = Maze.scenes[scene].endPos[0];
+       pointer.y = Maze.scenes[scene].endPos[1];
+} else if (scene == 4) {
+    pointer.kill();
+}
+             
 
 
                 lastSuccessfullPosition.x = player.x;
                 lastSuccessfullPosition.y = player.y;
                 toogleRunButton();
-/*                 try {
-                    setIsCheckedForLesson();
-                }
-                catch {
-                    console.log("couldn't set IsChecked For Lesson");
-                }
-                try {
-                    saveWorkspace();
-                }
-                catch {
-                    console.log("couldn't save");
-                } */
-            } 
+
+            }
 
             //TopDownGame.game.state.getCurrentState().key == "Game" 
-        }
+        
         if (TopDownGame.game.state.getCurrentState().key == "lesson1") {
             var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
             if (isOverlapping == true) {
                 if (scene == 0) {
+
                     var messagetext = "Отлично получилось! Теперь попробуй дойди до конца коридора!";
                 } else if (scene == 1) {
                     var messagetext = "Превосходно! Сейчас надо дойти до тех бочек!";
@@ -1293,18 +1352,18 @@ var runProgram = function () {
     if (TopDownGame.game.state.getCurrentState().key == "lesson5") {
 
         try {
-        var tileLeft = map.getTile(Pegman.vdposX - 1, Pegman.vdposY, map.getLayer());
-        Pegman.isGladeToLeft = tileLeft.index == 235;
-        } catch {}
+            var tileLeft = map.getTile(Pegman.vdposX - 1, Pegman.vdposY, map.getLayer());
+            Pegman.isGladeToLeft = tileLeft.index == 235;
+        } catch { }
         try {
-        var tileRight = map.getTile(Pegman.vdposX + 1, Pegman.vdposY, map.getLayer());
-        Pegman.isGladeToRight = tileRight.index == 235;
-        } catch {}
+            var tileRight = map.getTile(Pegman.vdposX + 1, Pegman.vdposY, map.getLayer());
+            Pegman.isGladeToRight = tileRight.index == 235;
+        } catch { }
         try {
-        var tileAbove = map.getTile(Pegman.vdposX, Pegman.vdposY - 1, map.getLayer());
-        Pegman.isGladeAbove = tileAbove.index == 235;
-        } catch {}
-   }
+            var tileAbove = map.getTile(Pegman.vdposX, Pegman.vdposY - 1, map.getLayer());
+            Pegman.isGladeAbove = tileAbove.index == 235;
+        } catch { }
+    }
 
     try {
         eval(code);

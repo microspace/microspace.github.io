@@ -6,6 +6,11 @@ var weapon;
 var explosion;
 var items;
 var barrels;
+var map;
+var sinkLayer;
+var blockLayer;
+var flour;
+var sinkLayer;
  // 0 is start scene of the level
 var goalbarrelcount;
 var xyqueue = getArrayWithLimitedLength(10);
@@ -14,15 +19,15 @@ var lastSuccessfullPosition = {}; //хранит положение какое �
 TopDownGame.Lesson0 = function () { };
 TopDownGame.Lesson0.prototype = {
     create: function () {
-        this.map = this.game.add.tilemap('lesson0');
+        map = this.game.add.tilemap('lesson0');
         //the first parameter is the tileset name as specified in Tiled, the second is the key to the asset
-        this.map.addTilesetImage('tileSheet04-01', 'gameTiles');
+        map.addTilesetImage('tileSheet04-01', 'gameTiles');
         //create layer
-        this.flour = this.map.createLayer('flour');
-        this.blockLayer = this.map.createLayer('blockLayer');
-        this.onBlockLayer = this.map.createLayer('onBlockLayer');
-        this.onFlour = this.map.createLayer('onFlour');
-        this.sinkLayer = this.map.createLayer('sinkLayer');
+        flour = map.createLayer('flour');
+        blockLayer = map.createLayer('blockLayer');
+        this.onBlockLayer = map.createLayer('onBlockLayer');
+        this.onFlour = map.createLayer('onFlour');
+        sinkLayer = map.createLayer('sinkLayer');
         //create player
         // load all data from map json, populate the structure.
         this.loadSceneData();
@@ -31,17 +36,27 @@ TopDownGame.Lesson0.prototype = {
             if (scene === undefined || scene === null) {
                scene = 0
            }
-            var result = findObjectsByType('playerStartPosition', this.map, 'playerLayer');
             
+        }
+
+        if (scene == 3) {
+            var result = findObjectsByType('scene3Goal', map, 'playerLayer');
+
             lastSuccessfullPosition = {
-                x: result[0].x,
-                y: result[0].y 
-            };
+            x: result[0].x,
+            y: result[0].y - 15 
+        };
+        } else {
+            var result = findObjectsByType('playerStartPosition', map, 'playerLayer');
+
+            lastSuccessfullPosition = {
+            x: result[0].x,
+            y: result[0].y 
+        };
         }
 
 
-
-        //var result = this.findObjectsByType('playerStartPosition', this.map, 'playerLayer');
+        //var result = this.findObjectsByType('playerStartPosition', map, 'playerLayer');
         this.createItems();
         weapon = this.game.add.weapon(20, 'bullet');
         // game goal pointer
@@ -71,23 +86,25 @@ TopDownGame.Lesson0.prototype = {
         player.animations.add('SHOOT', [20, 21, 22, 23, 24], fps, /*loop*/ false);
         player.animations.play('STAND');
 
-        this.upperLayer = this.map.createLayer('upperLayer');
+        
         this.game.physics.arcade.enable(player);
         player.body.collideWorldBounds=true;
         player.body.enable = false;
         this.game.physics.arcade.enable(pointer);
-        player.body.setSize(60, 13, 40, 73);
+        player.body.setSize(50, 13, 40, 73);
         pointer.body.setSize(10, 65, 48, 10);
         //collision on blockedLayer
 
-        this.map.setTileIndexCallback([...Array(500).keys()], this.hitWall, this, this.blockLayer);
-        this.map.setTileIndexCallback([81, 82, 83, 132, 133], this.sinkInWater, this, 'sinkLayer');
-        //this.map.setTileIndexCallback([17, 18, 30, 31], this.hitWall, this, this.blockLayer);
-        //this.map.setCollisionBetween(1, 2000, true, 'blockLayer');
+        map.setTileIndexCallback([15, 16, 17, 18, 28, 29, 30, 31, 32, 35, 36, 37, 169, 231, 209, 210, 222, 223], this.hitWall, this, blockLayer);
+        map.setTileIndexCallback(229, this.restoreBridge, this, flour);
+        // /* S */map.setTileLocationCallback(2, 0, 1, 1, this.hitCoin, this);
+        map.setTileIndexCallback([...Array(500).keys()], this.sinkInWater, this, sinkLayer);
+        //map.setTileIndexCallback([17, 18, 30, 31], this.hitWall, this, blockLayer);
+        //map.setCollisionBetween(1, 2000, true, 'blockLayer');
         //resizes the game world to match the layer dimensions
-        this.blockLayer.resizeWorld();
+        blockLayer.resizeWorld();
         Pegman.init(player);
-        //player.kill();
+        this.upperLayer = map.createLayer('upperLayer');
 
         //bullets
 
@@ -111,14 +128,24 @@ TopDownGame.Lesson0.prototype = {
         //move player with cursor keys
         this.cursors = this.game.input.keyboard.createCursorKeys();
         //this.game.physics.arcade.overlap(bullets, aliens, collisionHandler, null, this);
-        //this.blockLayer.debug = true;
+        //blockLayer.debug = true;
 
 
     },
     animationStopped: function (sprite, animation) {
         explosion.visible = false;
     },
+    restoreBridge: function (sprite, animation) {
+        map.removeTile(19, 9, sinkLayer);
+        map.removeTile(20, 9, sinkLayer);
+        map.removeTile(21, 9, sinkLayer);
+        map.putTile(22, 19, 9, flour);
+        map.putTile(23, 20, 9, flour);
+        map.putTile(24, 21, 9, flour);
 
+        map.replace(229, 228, 21, 2, 1, 1, flour);
+
+    },
     update: function () {
 
         if (xyqueue.length <= 9) {
@@ -136,12 +163,13 @@ TopDownGame.Lesson0.prototype = {
         }
 
         //collision
-        this.game.physics.arcade.collide(player, this.blockLayer);
-        this.game.physics.arcade.collide(player, this.sinkLayer);
+        this.game.physics.arcade.collide(player, blockLayer);
+        this.game.physics.arcade.collide(player, flour);
+        this.game.physics.arcade.collide(player, sinkLayer);
         this.game.physics.arcade.collide(player, barrels, this.hitWall, null, this);
         this.game.physics.arcade.overlap(barrels, weapon.bullets, this.bulletHitBarrel, null, this);
         //this.game.physics.arcade.overlap(player, pointer, this.sceneCompeteHandler, null, this);
-        //this.game.physics.arcade.overlap(this.blockLayer, weapon.bullets, this.bulletHitWall, null, this);
+        //this.game.physics.arcade.overlap(blockLayer, weapon.bullets, this.bulletHitWall, null, this);
         //player movement
 
         if (this.cursors.up.isDown) {
@@ -164,6 +192,7 @@ TopDownGame.Lesson0.prototype = {
     },
     render: function () {
 
+        this.game.debug.body(player);
     },
     hitWall: function () {
 
@@ -213,6 +242,7 @@ TopDownGame.Lesson0.prototype = {
         bullet.kill();
     },
     sinkInWater: function () {
+        console.log("sink");
         if (!flag) {
             Pegman.pegmanActions = [];
             if (Pegman.tween) {
@@ -246,7 +276,7 @@ TopDownGame.Lesson0.prototype = {
         //create items
         barrels = this.game.add.group();
         barrels.enableBody = true;
-        result = findObjectsByType('barrel', this.map, 'objectLayer');
+        result = findObjectsByType('barrel', map, 'objectLayer');
         result.forEach(function (element) {
             this.createFromTiledObject(element, barrels);
         }, this);
@@ -287,25 +317,30 @@ TopDownGame.Lesson0.prototype = {
         sprite.body.immovable = true;
     },
     loadSceneData: function () {
-/*          var result = this.findObjectsByType('playerStartPosition', this.map, 'playerLayer');
+/*          var result = this.findObjectsByType('playerStartPosition', map, 'playerLayer');
         Maze.scenes[0].startPos[0] = result[0].x;
         Maze.scenes[0].startPos[1] = result[0].y;  */
-        var result = findObjectsByType('scene1Goal', this.map, 'playerLayer');
+        var result = findObjectsByType('scene1Goal', map, 'playerLayer');
         Maze.scenes[0].endPos[0] = result[0].x;
         Maze.scenes[0].endPos[1] = result[0].y;
 
-        var result = findObjectsByType('scene2Goal', this.map, 'playerLayer');
+        var result = findObjectsByType('scene2Goal', map, 'playerLayer');
         Maze.scenes[1].startPos[0] = Maze.scenes[0].endPos[0];
         Maze.scenes[1].startPos[1] = Maze.scenes[0].endPos[1];
         Maze.scenes[1].endPos[0] = result[0].x;
         Maze.scenes[1].endPos[1] = result[0].y;
 
-        var result = findObjectsByType('scene3Goal', this.map, 'playerLayer');
+        var result = findObjectsByType('scene3Goal', map, 'playerLayer');
         Maze.scenes[2].startPos[0] = Maze.scenes[1].endPos[0];
         Maze.scenes[2].startPos[1] = Maze.scenes[1].endPos[1];
         Maze.scenes[2].endPos[0] = result[0].x;
         Maze.scenes[2].endPos[1] = result[0].y;
 
+        var result = findObjectsByType('scene4Goal', map, 'playerLayer');
+        Maze.scenes[3].startPos[0] = Maze.scenes[2].endPos[0];
+        Maze.scenes[3].startPos[1] = Maze.scenes[2].endPos[1];
+        Maze.scenes[3].endPos[0] = result[0].x;
+        Maze.scenes[3].endPos[1] = result[0].y;
     },
 };
 
