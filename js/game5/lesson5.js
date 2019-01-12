@@ -127,10 +127,10 @@ TopDownGame.Lesson5.prototype = {
         // g = this.game.input.keyboard.addKey(Phaser.Keyboard.G);
         // g.onDown.add(this.switch522, this);
         
-        с = this.game.input.keyboard.addKey(Phaser.Keyboard.С);
-        с.onDown.add(this.switch521, this);
         v = this.game.input.keyboard.addKey(Phaser.Keyboard.V);
-        v.onDown.add(this.switch531, this);   
+        v.onDown.add(this.switch521, this);
+        b = this.game.input.keyboard.addKey(Phaser.Keyboard.B);
+        b.onDown.add(this.switch531, this);   
 
         if (map.key != "lesson53") {
             map.putTile(244, Pegman.dposX, Pegman.dposY, fog);
