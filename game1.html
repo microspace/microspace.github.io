@@ -48,6 +48,7 @@
   </div>
   <div id="resstart" style="position: absolute; left: 0px; top: 552px;z-index: 2 ">
     <button class="play" id="play" value="play"><i id="play" class="fa fa-play" aria-hidden="true"></i>&nbsp;<span>Запуск</span></button>
+    <button id="setischecked">setIsCheckedForLesson</button>
   </div>
 
 
@@ -97,7 +98,10 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
     crossorigin="anonymous"></script>
   <script>
-
+    
+    $( "#setischecked" ).click(function() {
+      setIsCheckedForLesson();
+});
     var scene;
     var blocklyArea = document.getElementById('full-size');
     var blocklyDiv = document.getElementById('blocklyDiv');
