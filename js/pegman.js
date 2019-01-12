@@ -284,9 +284,10 @@ var Pegman = {
                         //  }
                     }
                 }
-
                 Pegman.dposX = Math.floor(player.x / 64);
                 Pegman.dposY = Math.floor(player.y / 64);
+                Pegman.vdposX = Pegman.dposX;
+                Pegman.vdposY = Pegman.dposY;
                 for (var y = Pegman.dposY - 1; y <= Pegman.dposY + 1; ++y) {
                     for (var x = Pegman.dposX - 1; x <= Pegman.dposX + 1; ++x) {
                         map.putTile(244, x, y, fog);
@@ -1246,6 +1247,23 @@ var runProgram = function () {
     var code = Blockly.JavaScript.workspaceToCode(workspace);
     Pegman.vdposX = Pegman.dposX;
     Pegman.vdposY = Pegman.dposY;
+
+    if (TopDownGame.game.state.getCurrentState().key == "lesson5") {
+
+        try {
+        var tileLeft = map.getTile(Pegman.vdposX - 1, Pegman.vdposY, map.getLayer());
+        Pegman.isGladeToLeft = tileLeft.index == 235;
+        } catch {}
+        try {
+        var tileRight = map.getTile(Pegman.vdposX + 1, Pegman.vdposY, map.getLayer());
+        Pegman.isGladeToRight = tileRight.index == 235;
+        } catch {}
+        try {
+        var tileAbove = map.getTile(Pegman.vdposX, Pegman.vdposY - 1, map.getLayer());
+        Pegman.isGladeAbove = tileAbove.index == 235;
+        } catch {}
+   }
+    console.log(code);
     try {
         eval(code);
     } catch (e) {

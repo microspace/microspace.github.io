@@ -36,7 +36,8 @@ Blockly.JavaScript['maze_up'] = function (block) {
     if (TopDownGame.game.state.getCurrentState().key == "lesson5") {
         var step = Maze.getStepInDirection["NORTH"];
         Pegman.vdposY = Pegman.vdposY + step[1] * operator; 
-        //console.log(Pegman.vdposX, Pegman.vdposY);
+        console.log("dpos ", Pegman.dposX, Pegman.dposY);
+        console.log("vdpos ", Pegman.vdposX, Pegman.vdposY);
         try {
         var tileLeft = map.getTile(Pegman.vdposX - 1, Pegman.vdposY, map.getLayer());
         Pegman.isGladeToLeft = tileLeft.index == 235;
@@ -94,7 +95,8 @@ Blockly.JavaScript['maze_down'] = function (block) {
     if (TopDownGame.game.state.getCurrentState().key == "lesson5") {
         var step = Maze.getStepInDirection["SOUTH"];
         Pegman.vdposY = Pegman.vdposY + step[1] * operator; 
-
+        console.log("dpos ", Pegman.dposX, Pegman.dposY);
+        console.log("vdpos ", Pegman.vdposX, Pegman.vdposY);
         try {
             var tileLeft = map.getTile(Pegman.vdposX - 1, Pegman.vdposY, map.getLayer());
             Pegman.isGladeToLeft = tileLeft.index == 235;
@@ -156,7 +158,8 @@ Blockly.JavaScript['maze_right'] = function (block) {
     if (TopDownGame.game.state.getCurrentState().key == "lesson5") {
         var step = Maze.getStepInDirection["EAST"];
         Pegman.vdposX = Pegman.vdposX + step[0] * operator; 
-        //console.log(Pegman.vdposX, Pegman.vdposY);
+        console.log("dpos ", Pegman.dposX, Pegman.dposY);
+        console.log("vdpos ", Pegman.vdposX, Pegman.vdposY);
 
 
     try {
@@ -222,7 +225,8 @@ Blockly.JavaScript['maze_left'] = function (block) {
     if (TopDownGame.game.state.getCurrentState().key == "lesson5") {
         var step = Maze.getStepInDirection["WEST"];
         Pegman.vdposX = Pegman.vdposX + step[0] * operator; 
-        //console.log(Pegman.vdposX, Pegman.vdposY);
+        console.log("dpos ", Pegman.dposX, Pegman.dposY);
+        console.log("vdpos ", Pegman.vdposX, Pegman.vdposY);
 
     try {
         var tileAbove = map.getTile(Pegman.vdposX, Pegman.vdposY - 1, map.getLayer());
@@ -773,10 +777,32 @@ Blockly.JavaScript['fill_the_pit'] = function (block) {
     } else if (direction == "BELOW") {
         dirnum = 3;
     }
-    return 'Pegman.nextAction("fillpit", ' + dirnum + ');\n';
+    
+    var code = `
+    Pegman.isGladeAbove = Pegman.isGladeBelow = Pegman.isGladeToRight = Pegman.isGladeToLeft = false;
+    
 
+    Pegman.nextAction("fillpit", ` + dirnum + `);
+    
+    if (TopDownGame.game.state.getCurrentState().key == "lesson5") {
+ 
 
+    try {
+        var tileAbove = map.getTile(Pegman.vdposX, Pegman.vdposY - 1, map.getLayer());
+        Pegman.isGladeAbove = tileAbove.index == 235;
+    } catch {}
+    try {
+        var tileBelow = map.getTile(Pegman.vdposX, Pegman.vdposY + 1, map.getLayer());
+        Pegman.isGladeBelow = tileBelow.index == 235;
+    } catch {}
+    try {
+        var tileLeft = map.getTile(Pegman.vdposX - 1, Pegman.vdposY, map.getLayer());
+        Pegman.isGladeToLeft = tileLeft.index == 235;
+    } catch {}
 
+  }
+    `
+    return code;
 };
 
 
