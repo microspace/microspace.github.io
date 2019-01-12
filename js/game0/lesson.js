@@ -57,8 +57,8 @@ TopDownGame.Lesson0.prototype = {
 
 
         //var result = this.findObjectsByType('playerStartPosition', map, 'playerLayer');
-        this.createItems();
-        weapon = this.game.add.weapon(20, 'bullet');
+        
+
         // game goal pointer
         pointer = this.game.add.sprite(Maze.scenes[scene].endPos[0], Maze.scenes[scene].endPos[1], 'pointer');
         pointer.scale.setTo(0.8, 0.8);
@@ -106,23 +106,10 @@ TopDownGame.Lesson0.prototype = {
         Pegman.init(player);
         this.upperLayer = map.createLayer('upperLayer');
 
-        //bullets
+ 
 
 
-        weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
-        weapon.bulletAngleOffset = 0;
-        weapon.bulletSpeed = bulletSpeed;
-        weapon.fireAngle = Phaser.ANGLE_RIGHT; // shoot at right direcion by default
-        weapon.trackSprite(player, 0, -9, false); //-65 выведено экспериментальным путём
-        //weapon.addBulletAnimation("fly", [0, 1, 2, 3, 4, 5, 6, 7], 40, true);
 
-        //explosion
-        explosion = this.game.add.sprite(0, 0, 'explosion');
-        explosion.visible = false;
-        explanim = explosion.animations.add('EXPL', [0, 1, 2, 3, 4, 5], 20, /*loop*/ false);
-        explanim.onComplete.add(this.animationStopped, this);
-        //bullets.callAll('animations.add', 'animations', 'fire', [0,1,2,3,4,5,6], 5, true);bullets.callAll('play', null, 'fire');
-        fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
         //the camera will follow the player in the world
         this.game.camera.follow(player);
         //move player with cursor keys
@@ -166,8 +153,6 @@ TopDownGame.Lesson0.prototype = {
         this.game.physics.arcade.collide(player, blockLayer);
         this.game.physics.arcade.collide(player, flour);
         this.game.physics.arcade.collide(player, sinkLayer);
-        this.game.physics.arcade.collide(player, barrels, this.hitWall, null, this);
-        this.game.physics.arcade.overlap(barrels, weapon.bullets, this.bulletHitBarrel, null, this);
         //this.game.physics.arcade.overlap(player, pointer, this.sceneCompeteHandler, null, this);
         //this.game.physics.arcade.overlap(blockLayer, weapon.bullets, this.bulletHitWall, null, this);
         //player movement
@@ -190,10 +175,10 @@ TopDownGame.Lesson0.prototype = {
             this.game.camera.x += cameraSpeed;
         }
     },
-    render: function () {
+    // render: function () {
 
-        this.game.debug.body(player);
-    },
+    //     this.game.debug.body(player);
+    // },
     hitWall: function () {
 
         if (!flag) {
@@ -206,40 +191,6 @@ TopDownGame.Lesson0.prototype = {
             player.animations.play('HIT');
             flag = true;
         }
-    },
-    bulletHitBarrel: function (sprite, bullet) {
-        var damage = 48;
-        sprite.damage(damage);
-        if (sprite["sprite"] == "restrictedToHit") {
-            $("#modaltext").text("Нельзя стрелять по бочкам с водой! Целься точнее!");
-            $("#exampleModal").modal();
-            Pegman.reset2();
-        } else {
-            if (sprite.health > 40) {
-                sprite.frame = 237;
-                if (sprite["sprite"] == "needToHit") {
-                    sprite.frame = 239;
-                }
-                if (sprite["flipped"] == true) {
-                    sprite.frame = 242;
-                }
-            } else if (sprite.health < 60) {
-                sprite.frame = 240;
-                if (sprite["sprite"] == "needToHit") {
-                    sprite.frame = 240;
-                }
-                if (sprite["flipped"] == true) {
-                    sprite.frame = 243;
-                }
-                sprite.health += damage; // говнокод, позволяющий не умирать
-                sprite.body.enable = false; // отключаем физику чтобы пули пролетали сквозь остатки бочки
-            }
-        }
-        explosion.x = sprite.x;
-        explosion.y = sprite.y - 30;
-        explosion.visible = true;
-        explosion.animations.play('EXPL');
-        bullet.kill();
     },
     sinkInWater: function () {
         console.log("sink");

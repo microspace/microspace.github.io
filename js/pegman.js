@@ -45,7 +45,7 @@ var Pegman = {
             }
 
             if (TopDownGame.game.state.getCurrentState().key == "lesson0") {
-                $("#modaltext").text("Приветствую тебя! В этой игре тебе предстоит пройти испытания чтобы присединиться к остальным учащимся курса!");
+                $("#modaltext").text("Приветствую тебя! В этой игре тебе предстоит пройти испытания чтобы присединиться к остальным учащимся курса! (Используй стрелки для просмотра карты)");
                 $("#exampleModal").modal();
             }
 
@@ -159,7 +159,7 @@ var Pegman = {
 
 
         if (TopDownGame.game.state.getCurrentState().key == "lesson0") {
-            console.log("callsed");
+
             try {
                 map.removeTile(19, 9, flour);
                 map.removeTile(20, 9, flour);
@@ -677,24 +677,24 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 if (scene == 0) {
                     var messagetext = "Отлично получилось! Теперь попробуй дойди до следующего указателя!";
                     $("#modaltext").text(messagetext);
-                $("#exampleModal").modal();
-                scene = 1;
+                    $("#exampleModal").modal();
+                    scene = 1;
 
                 } else if (scene == 1) {
                     var messagetext = "Превосходно! Нажми на кнопку чтобы мост восстановился! Остерегайся ловушек!";
                     $("#modaltext").text(messagetext);
-                $("#exampleModal").modal();
-                scene = 2;
+                    $("#exampleModal").modal();
+                    scene = 2;
                 } else if (scene == 2) {
 
 
 
                     var messagetext = "Осталось совсем немного! Нужно дойти до больших ворот!";
                     $("#modaltext").text(messagetext);
-                $("#exampleModal").modal();
-                scene = 3;
+                    $("#exampleModal").modal();
+                    scene = 3;
                 } else if (scene == 3) {
-                    
+
                     TopDownGame.game.time.events.add(500, openNarrow, this);
                     TopDownGame.game.time.events.add(1000, openWide, this);
                     function openNarrow() {
@@ -718,29 +718,35 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
 
                         map.replace(224, 226, 31, 10, 1, 1, blockLayer);
                         map.replace(225, 227, 32, 10, 1, 1, blockLayer);
-    
+
                     }
+                    scene = 4;
                 }
-            } 
-
-
-if (scene <= 3) {
-       pointer.x = Maze.scenes[scene].endPos[0];
-       pointer.y = Maze.scenes[scene].endPos[1];
-} else if (scene == 4) {
-    pointer.kill();
-}
-             
-
-
-                lastSuccessfullPosition.x = player.x;
-                lastSuccessfullPosition.y = player.y;
-                toogleRunButton();
+                if (scene <= 3) {
+                    pointer.x = Maze.scenes[scene].endPos[0];
+                    pointer.y = Maze.scenes[scene].endPos[1];
+                    lastSuccessfullPosition.x = player.x;
+                    lastSuccessfullPosition.y = player.y;
+                    toogleRunButton();
+                } else if (scene == 4) {
+                    lastSuccessfullPosition.x = player.x;
+                    lastSuccessfullPosition.y = player.y;
+                    pointer.kill();
+                }
 
             }
 
-            //TopDownGame.game.state.getCurrentState().key == "Game" 
-        
+
+
+
+
+
+
+
+        }
+
+        //TopDownGame.game.state.getCurrentState().key == "Game" 
+
         if (TopDownGame.game.state.getCurrentState().key == "lesson1") {
             var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
             if (isOverlapping == true) {
