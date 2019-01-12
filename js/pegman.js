@@ -641,6 +641,48 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
     },
 
     Pegman.checkFinal = function () {
+        if (TopDownGame.game.state.getCurrentState().key == "lesson0") {
+            var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
+            if (isOverlapping == true) {
+                if (scene == 0) {
+                    var messagetext = "Отлично получилось! Теперь попробуй дойди до конца коридора!";
+                } else if (scene == 1) {
+                    var messagetext = "Превосходно! Сейчас надо дойти до тех бочек!";
+                } else if (scene == 2) {
+                    var messagetext = "Эти бочки преградили тебе путь. Расстреляй их, чтобы пройти дальше!";
+                } else if (scene == 3) {
+                    //var messagetext = "А теперь нужно найти 3 бочки с мишенями и подстрелить их. Но не в коем случае не стреляй в бочки с водой!";
+                    var messagetext = "А теперь нужно найти и подстрелить 5 бочек с мишенями. Нельзя стрелять по бочкам с водой. Используй стрелочки, чтобы двигать карту и искать цели.";
+                }
+                $("#modaltext").text(messagetext);
+                $("#exampleModal").modal();
+                scene += 1;
+
+
+
+                pointer.x = Maze.scenes[scene].endPos[0];
+                pointer.y = Maze.scenes[scene].endPos[1];
+
+
+                lastSuccessfullPosition.x = player.x;
+                lastSuccessfullPosition.y = player.y;
+                toogleRunButton();
+/*                 try {
+                    setIsCheckedForLesson();
+                }
+                catch {
+                    console.log("couldn't set IsChecked For Lesson");
+                }
+                try {
+                    saveWorkspace();
+                }
+                catch {
+                    console.log("couldn't save");
+                } */
+            } 
+
+            //TopDownGame.game.state.getCurrentState().key == "Game" 
+        }
         if (TopDownGame.game.state.getCurrentState().key == "lesson1") {
             var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
             if (isOverlapping == true) {
@@ -1263,7 +1305,7 @@ var runProgram = function () {
         Pegman.isGladeAbove = tileAbove.index == 235;
         } catch {}
    }
-    console.log(code);
+
     try {
         eval(code);
     } catch (e) {
