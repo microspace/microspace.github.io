@@ -187,6 +187,13 @@ TopDownGame.Lesson5.prototype = {
         scene = "531";        
         load_scene(scene);
     },
+    switch521: function() {
+        loadmap('lesson52');
+        scene = "521";
+        $("#modaltext").text(" Тут повсюду трупы. Что тут произошло? Надеюсь с отрядом все в порядке.");
+        $("#exampleModal").modal();
+        load_scene(scene);
+    },
     update: function () {
         if (map.key != "lesson53") {
             var cposx = Math.floor(player.x / 64);
