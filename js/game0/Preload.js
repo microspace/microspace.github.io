@@ -15,14 +15,14 @@ TopDownGame.Preload.prototype = {
 
 
         this.game.time.advancedTiming = true;
-        this.load.spritesheet('totalsheet', 'assets/maps/tileSheet2.png', 64, 64);
+        this.load.spritesheet('totalsheet', 'assets/maps/game0/tileSheets14-01-19.png', 64, 64);
         this.load.spritesheet('pegman', 'assets/sprites/player.png', 141, 100);
         this.load.spritesheet('explosion', 'assets/sprites/explosion.png', 99, 87);
         this.load.spritesheet("pointer", "assets/sprites/pointer.png", 80, 58);
 
 
         this.load.image('bullet', 'assets/images/bullet2.png');
-        this.load.image('gameTiles', 'assets/maps/tileSheet2.png');
+        this.load.image('gameTiles', 'assets/maps/game0/tileSheets14-01-19.png');
         this.load.image('coordinateplane', 'assets/images/coordinatePlane.png');
         
     },
