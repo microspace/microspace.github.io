@@ -184,7 +184,25 @@
          "draworder":"topdown",
          "id":7,
          "name":"objectLayer",
-         "objects":[],
+         "objects":[
+                {
+                 "gid":181,
+                 "height":64,
+                 "id":38,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"type",
+                         "type":"string",
+                         "value":"goldenKey"
+                        }],
+                 "rotation":0,
+                 "type":"",
+                 "visible":true,
+                 "width":64,
+                 "x":1600,
+                 "y":960
+                }],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
@@ -204,7 +222,7 @@
          "y":0
         }],
  "nextlayerid":27,
- "nextobjectid":38,
+ "nextobjectid":39,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.2.1",

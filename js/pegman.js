@@ -19,6 +19,7 @@ var Pegman = {
     isGladeAbove: false,
     isGladeBelow: false,
     firstName: "Рекрут",
+    hasGoldenKey: false,
 
 
     init: function (pegmanSprite) {
@@ -91,11 +92,6 @@ var Pegman = {
             TopDownGame.game.world.bringToTop(player);
         } catch { }
 
-
-
-
-
-
         TopDownGame.game.tweens.removeAll();
 
         this.direction = Maze.DirectionType.EAST;
@@ -109,19 +105,11 @@ var Pegman = {
 
         }
 
-
-        // try {
-        //     this.dposX = dlastSuccessfullPosition.x;
-        //     this.dposY = dlastSuccessfullPosition.y;
-        // } catch {
-
-        // }
         this.preReset();
         this.tween = null;
         this.tween1 = null;
         this.tween2 = null;
         this.anim = null;
-
 
         this.pegmanSprite.scale.x = 1;
         this.pegmanSprite.scale.y = 1;
@@ -157,7 +145,6 @@ var Pegman = {
         flag = false;
         TopDownGame.game.camera.follow(player);
 
-
         if (TopDownGame.game.state.getCurrentState().key == "lesson0") {
 
             try {
@@ -172,6 +159,20 @@ var Pegman = {
             } catch {
 
             }
+
+
+
+            player.removeChild(goldenKey);
+            TopDownGame.game.world.add(goldenKey);
+          
+            goldenKey.reset(goldenKey.realX, goldenKey.realY);
+
+
+            Pegman.hasGoldenKey = false;
+            if (scene == 4) {
+                goldenKey.kill();
+            }
+
 
         }
 
@@ -353,15 +354,7 @@ var Pegman = {
                 this.refillarea(16, 3, 19, 9);
                 revealArea();
             }
-
         }
-
-        // if (TopDownGame.game.state.getCurrentState().key == "lesson6") {
-        //     batteries.forEach(function (c) {
-        //         c.visible = true;
-        //     });
-
-        // }
 
         this.pegmanSprite.animations.play('STAND');
 
@@ -679,60 +672,83 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     $("#modaltext").text(messagetext);
                     $("#exampleModal").modal();
                     scene = 1;
+                    pointer.x = Maze.scenes[scene].endPos[0];
+                    pointer.y = Maze.scenes[scene].endPos[1];
+                    lastSuccessfullPosition.x = player.x;
+                    lastSuccessfullPosition.y = player.y;
+                    toogleRunButton();
 
                 } else if (scene == 1) {
                     var messagetext = "Превосходно! Нажми на кнопку чтобы мост восстановился! Остерегайся ловушек!";
                     $("#modaltext").text(messagetext);
                     $("#exampleModal").modal();
                     scene = 2;
-                } else if (scene == 2) {
-
-
-
-                    var messagetext = "Осталось совсем немного! Нужно дойти до больших ворот!";
-                    $("#modaltext").text(messagetext);
-                    $("#exampleModal").modal();
-                    scene = 3;
-                } else if (scene == 3) {
-
-                    TopDownGame.game.time.events.add(500, openNarrow, this);
-                    TopDownGame.game.time.events.add(1000, openWide, this);
-                    function openNarrow() {
-                        map.replace(196, 198, 31, 8, 1, 1, blockLayer);
-                        map.replace(197, 199, 32, 8, 1, 1, blockLayer);
-
-                        map.replace(209, 211, 31, 9, 1, 1, blockLayer);
-                        map.replace(210, 212, 32, 9, 1, 1, blockLayer);
-
-                        map.replace(222, 224, 31, 10, 1, 1, blockLayer);
-                        map.replace(223, 225, 32, 10, 1, 1, blockLayer);
-
-
-                    }
-                    function openWide() {
-                        map.replace(198, 200, 31, 8, 1, 1, blockLayer);
-                        map.replace(199, 201, 32, 8, 1, 1, blockLayer);
-
-                        map.replace(211, 213, 31, 9, 1, 1, blockLayer);
-                        map.replace(212, 214, 32, 9, 1, 1, blockLayer);
-
-                        map.replace(224, 226, 31, 10, 1, 1, blockLayer);
-                        map.replace(225, 227, 32, 10, 1, 1, blockLayer);
-
-                    }
-                    scene = 4;
-                }
-                if (scene <= 3) {
                     pointer.x = Maze.scenes[scene].endPos[0];
                     pointer.y = Maze.scenes[scene].endPos[1];
                     lastSuccessfullPosition.x = player.x;
                     lastSuccessfullPosition.y = player.y;
                     toogleRunButton();
+
+                } else if (scene == 2) {
+                    var messagetext = "Теперь нужно дойти до больших ворот, но чтобы они открылись нужен ключ!";
+                    $("#modaltext").text(messagetext);
+                    $("#exampleModal").modal();
+                    scene = 3;
+                    pointer.x = Maze.scenes[scene].endPos[0];
+                    pointer.y = Maze.scenes[scene].endPos[1];
+                    lastSuccessfullPosition.x = player.x;
+                    lastSuccessfullPosition.y = player.y;
+                    toogleRunButton();
+
+                } else if (scene == 3) {
+
+
+                    if (Pegman.hasGoldenKey) {
+                        scene = 4;
+                        TopDownGame.game.time.events.add(500, openNarrow, this);
+                        TopDownGame.game.time.events.add(1000, openWide, this);
+                        function openNarrow() {
+                            map.replace(196, 198, 31, 8, 1, 1, blockLayer);
+                            map.replace(197, 199, 32, 8, 1, 1, blockLayer);
+
+                            map.replace(209, 211, 31, 9, 1, 1, blockLayer);
+                            map.replace(210, 212, 32, 9, 1, 1, blockLayer);
+
+                            map.replace(222, 224, 31, 10, 1, 1, blockLayer);
+                            map.replace(223, 225, 32, 10, 1, 1, blockLayer);
+
+
+                        }
+                        function openWide() {
+                            map.replace(198, 200, 31, 8, 1, 1, blockLayer);
+                            map.replace(199, 201, 32, 8, 1, 1, blockLayer);
+
+                            map.replace(211, 213, 31, 9, 1, 1, blockLayer);
+                            map.replace(212, 214, 32, 9, 1, 1, blockLayer);
+
+                            map.replace(224, 226, 31, 10, 1, 1, blockLayer);
+                            map.replace(225, 227, 32, 10, 1, 1, blockLayer);
+
+                        }
+                        pointer.x = Maze.scenes[scene].endPos[0];
+                        pointer.y = Maze.scenes[scene].endPos[1];
+                        lastSuccessfullPosition.x = player.x;
+                        lastSuccessfullPosition.y = player.y;
+                        toogleRunButton();
+                    }
                 } else if (scene == 4) {
+                    var messagetext = "Поздравляю! Вот ты и встретился со своими друзьями!";
+                    $("#modaltext").text(messagetext);
+                    $("#exampleModal").modal();
                     lastSuccessfullPosition.x = player.x;
                     lastSuccessfullPosition.y = player.y;
                     pointer.kill();
                 }
+
+
+
+
+
 
             }
 

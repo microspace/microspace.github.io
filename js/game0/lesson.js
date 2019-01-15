@@ -9,9 +9,10 @@ var barrels;
 var map;
 var sinkLayer;
 var blockLayer;
+var goldenKey;
 var flour;
 var sinkLayer;
- // 0 is start scene of the level
+// 0 is start scene of the level
 var goalbarrelcount;
 var xyqueue = getArrayWithLimitedLength(10);
 var lastSuccessfullPosition = {}; //хранит положение какое было у спрайта когда он в последний раз соверлаппился с целью
@@ -34,30 +35,34 @@ TopDownGame.Lesson0.prototype = {
 
         if (jQuery.isEmptyObject(lastSuccessfullPosition)) {
             if (scene === undefined || scene === null) {
-               scene = 0
-           }
-            
+                scene = 0
+            }
         }
 
         if (scene == 3) {
             var result = findObjectsByType('scene3Goal', map, 'playerLayer');
 
             lastSuccessfullPosition = {
-            x: result[0].x,
-            y: result[0].y - 15 
-        };
+                x: result[0].x,
+                y: result[0].y - 15
+            };
         } else {
             var result = findObjectsByType('playerStartPosition', map, 'playerLayer');
-
             lastSuccessfullPosition = {
-            x: result[0].x,
-            y: result[0].y 
-        };
+                x: result[0].x,
+                y: result[0].y
+            };
         }
+        var result = findObjectsByType('goldenKey', map, 'objectLayer');
+        goldenKey = this.game.add.sprite(result[0].x + 16, result[0].y - 16, 'totalsheet', 180);
+        goldenKey.realX = goldenKey.x;
+        goldenKey.realY = goldenKey.y;
+        this.game.physics.arcade.enable(goldenKey);
+        goldenKey.body.setSize(30, 30, 0, 32);
 
-
+        // totalsheet
         //var result = this.findObjectsByType('playerStartPosition', map, 'playerLayer');
-        
+
 
         // game goal pointer
         pointer = this.game.add.sprite(Maze.scenes[scene].endPos[0], Maze.scenes[scene].endPos[1], 'pointer');
@@ -86,9 +91,9 @@ TopDownGame.Lesson0.prototype = {
         player.animations.add('SHOOT', [20, 21, 22, 23, 24], fps, /*loop*/ false);
         player.animations.play('STAND');
 
-        
+
         this.game.physics.arcade.enable(player);
-        player.body.collideWorldBounds=true;
+        player.body.collideWorldBounds = true;
         player.body.enable = false;
         this.game.physics.arcade.enable(pointer);
         player.body.setSize(50, 13, 40, 73);
@@ -106,7 +111,7 @@ TopDownGame.Lesson0.prototype = {
         Pegman.init(player);
         this.upperLayer = map.createLayer('upperLayer');
 
- 
+
 
 
 
@@ -155,6 +160,9 @@ TopDownGame.Lesson0.prototype = {
         this.game.physics.arcade.collide(player, sinkLayer);
         //this.game.physics.arcade.overlap(player, pointer, this.sceneCompeteHandler, null, this);
         //this.game.physics.arcade.overlap(blockLayer, weapon.bullets, this.bulletHitWall, null, this);
+
+        this.game.physics.arcade.overlap(player, goldenKey, this.goldenKeyCallback, null, this);
+
         //player movement
 
         if (this.cursors.up.isDown) {
@@ -178,6 +186,7 @@ TopDownGame.Lesson0.prototype = {
     // render: function () {
 
     //     this.game.debug.body(player);
+    //     this.game.debug.body(goldenKey);
     // },
     hitWall: function () {
 
@@ -190,6 +199,18 @@ TopDownGame.Lesson0.prototype = {
             }
             player.animations.play('HIT');
             flag = true;
+        }
+    },
+
+    goldenKeyCallback: function () {
+        
+        if (!flag) {
+            //goldenKey.visible = false;
+            //goldenKey.body.enable = false;
+            player.addChild(goldenKey);
+            goldenKey.x = -40;
+            goldenKey.y = -100;
+            Pegman.hasGoldenKey = true;
         }
     },
     sinkInWater: function () {
@@ -237,17 +258,13 @@ TopDownGame.Lesson0.prototype = {
     //create a sprite from an object
     createFromTiledObject: function (element, group) {
 
-        
         var sprite = group.create(element.x, element.y, 'totalsheet', 234);
         //copy all properties to the sprite
-
         element.properties.forEach(function (element) {
             sprite[element.name] = element.value;
         });
-
         if (sprite["sprite"] === "allowedToHit") {
             sprite.frame = 234;
-
         } else if (sprite["sprite"] == "allowedToHit2") {
             sprite.frame = 236;
 
@@ -268,9 +285,9 @@ TopDownGame.Lesson0.prototype = {
         sprite.body.immovable = true;
     },
     loadSceneData: function () {
-/*          var result = this.findObjectsByType('playerStartPosition', map, 'playerLayer');
-        Maze.scenes[0].startPos[0] = result[0].x;
-        Maze.scenes[0].startPos[1] = result[0].y;  */
+        /*          var result = this.findObjectsByType('playerStartPosition', map, 'playerLayer');
+                Maze.scenes[0].startPos[0] = result[0].x;
+                Maze.scenes[0].startPos[1] = result[0].y;  */
         var result = findObjectsByType('scene1Goal', map, 'playerLayer');
         Maze.scenes[0].endPos[0] = result[0].x;
         Maze.scenes[0].endPos[1] = result[0].y;
@@ -292,6 +309,12 @@ TopDownGame.Lesson0.prototype = {
         Maze.scenes[3].startPos[1] = Maze.scenes[2].endPos[1];
         Maze.scenes[3].endPos[0] = result[0].x;
         Maze.scenes[3].endPos[1] = result[0].y;
+
+        var result = findObjectsByType('scene5Goal', map, 'playerLayer');
+        Maze.scenes[4].startPos[0] = Maze.scenes[3].endPos[0];
+        Maze.scenes[4].startPos[1] = Maze.scenes[3].endPos[1];
+        Maze.scenes[4].endPos[0] = result[0].x;
+        Maze.scenes[4].endPos[1] = result[0].y;
     },
 };
 
