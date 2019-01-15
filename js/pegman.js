@@ -148,12 +148,25 @@ var Pegman = {
         if (TopDownGame.game.state.getCurrentState().key == "lesson0") {
 
             try {
+                map.removeTile(19, 7, flour);
+                map.removeTile(20, 7, flour);
+                map.removeTile(21, 7, flour);
+                map.removeTile(19, 8, flour);
+                map.removeTile(20, 8, flour);
+                map.removeTile(21, 8, flour);
                 map.removeTile(19, 9, flour);
                 map.removeTile(20, 9, flour);
                 map.removeTile(21, 9, flour);
-                map.putTile(145, 19, 9, sinkLayer);
-                map.putTile(145, 20, 9, sinkLayer);
-                map.putTile(145, 21, 9, sinkLayer);
+
+                map.putTile(145, 19, 7, sinkLayer);
+                map.putTile(145, 20, 7, sinkLayer);
+                map.putTile(145, 21, 7, sinkLayer);
+                map.putTile(134, 19, 8, sinkLayer);
+                map.putTile(134, 20, 8, sinkLayer);
+                map.putTile(134, 21, 8, sinkLayer);
+                map.putTile(134, 19, 9, sinkLayer);
+                map.putTile(134, 20, 9, sinkLayer);
+                map.putTile(134, 21, 9, sinkLayer);
 
                 map.replace(228, 229, 21, 2, 1, 1, flour);
             } catch {

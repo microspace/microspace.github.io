@@ -26,9 +26,10 @@ TopDownGame.Lesson0.prototype = {
         //create layer
         flour = map.createLayer('flour');
         blockLayer = map.createLayer('blockLayer');
-        this.onBlockLayer = map.createLayer('onBlockLayer');
+        
         this.onFlour = map.createLayer('onFlour');
         sinkLayer = map.createLayer('sinkLayer');
+        this.onBlockLayer = map.createLayer('onBlockLayer');
         //create player
         // load all data from map json, populate the structure.
         this.loadSceneData();
@@ -124,16 +125,29 @@ TopDownGame.Lesson0.prototype = {
 
 
     },
-    animationStopped: function (sprite, animation) {
+    animationStopped: function () {
         explosion.visible = false;
     },
-    restoreBridge: function (sprite, animation) {
+    restoreBridge: function () {
+        map.removeTile(19, 7, sinkLayer);
+        map.removeTile(20, 7, sinkLayer);
+        map.removeTile(21, 7, sinkLayer);
+        map.removeTile(19, 8, sinkLayer);
+        map.removeTile(20, 8, sinkLayer);
+        map.removeTile(21, 8, sinkLayer);
         map.removeTile(19, 9, sinkLayer);
         map.removeTile(20, 9, sinkLayer);
         map.removeTile(21, 9, sinkLayer);
-        map.putTile(22, 19, 9, flour);
-        map.putTile(23, 20, 9, flour);
-        map.putTile(24, 21, 9, flour);
+
+        map.putTile(107, 19, 7, flour);
+        map.putTile(107, 20, 7, flour);
+        map.putTile(107, 21, 7, flour);
+        map.putTile(107, 19, 8, flour);
+        map.putTile(107, 20, 8, flour);
+        map.putTile(107, 21, 8, flour);
+        map.putTile(107, 19, 9, flour);
+        map.putTile(107, 20, 9, flour);
+        map.putTile(107, 21, 9, flour);
 
         map.replace(229, 228, 21, 2, 1, 1, flour);
 
