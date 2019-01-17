@@ -52,7 +52,20 @@
 
 
             <button class="play" id="play" value="play"><i id="play" class="fa fa-play" aria-hidden="true"></i>&nbsp;<span>Запуск</span></button>
-
+            <!-- <div class="btn-group btn-group-toggle btn-block" data-toggle="buttons">
+                    <label class="btn btn-secondary">
+                      <input type="radio" name="options" id="option05" autocomplete="off"> x0,5
+                    </label>
+                    <label class="btn btn-secondary active">
+                      <input type="radio" name="options" id="option1" autocomplete="off" checked> x1
+                    </label>
+                    <label class="btn btn-secondary">
+                      <input type="radio" name="options" id="option2" autocomplete="off"> x2
+                    </label>
+                    <label class="btn btn-secondary">
+                      <input type="radio" name="options" id="option6" autocomplete="off"> x6
+                    </label>
+                  </div> -->
             <button type="button" id="nextButton" class="btn btn-success" style="display: none;" title=" Next">
                 Следущий
             </button>
@@ -78,7 +91,7 @@
                     <p id="modaltext"></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
                 </div>
             </div>
         </div>
@@ -92,6 +105,25 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
     <script>
+            $('input[type=radio][name=options]').change(function () {
+      var optionValue = this.id;
+      if (optionValue == "option05") {
+        timeScale = 0.5;
+      } else if (optionValue == "option2") {
+        timeScale = 2;
+      } else if (optionValue == "option6") {
+        timeScale = 6;
+      } else if (optionValue == "option1") {
+        timeScale = 1;
+      }
+
+      try {
+        Pegman.tween.timeScale = timeScale;
+      } catch {
+
+      }
+
+    });
         var blocklyArea = document.getElementById('full-size');
         var blocklyDiv = document.getElementById('blocklyDiv');
         var workspace = Blockly.inject(blocklyDiv,

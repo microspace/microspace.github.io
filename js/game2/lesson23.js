@@ -2,6 +2,7 @@ var TopDownGame = TopDownGame || {};
 var player;
 
 var flag = false;
+var bulletFlag = false;
 var weapon;
 var explosion;
 var items;
@@ -74,7 +75,7 @@ TopDownGame.Lesson23.prototype = {
 
 
 
-        this.map.setTileIndexCallback([...Array(500).keys()], this.hitWall, this, 'blockLayer');
+        this.map.setTileIndexCallback([...Array(300).keys()], this.hitWall, this, 'blockLayer');
         //this.map.setTileIndexCallback([17, 18, 30, 31], this.hitWall, this, this.blockLayer);
         //this.map.setCollisionBetween(1, 4000, true, 'blockLayer');
         //resizes the game world to match the layer dimensions
@@ -104,7 +105,12 @@ TopDownGame.Lesson23.prototype = {
         weapon.bulletSpeed = bulletSpeed;
         weapon.fireAngle = Phaser.ANGLE_RIGHT; // shoot at right direcion by default
         weapon.trackSprite(player, 0, -9, false); //-65 выведено экспериментальным путём
-        this.game.time.events.repeat(Phaser.Timer.SECOND * 60, 1000, savetoServer, this);
+        this.game.physics.arcade.enable(weapon.bullets);
+
+        explosion = this.game.add.sprite(0, 0, 'explosion');
+        explosion.visible = false;
+        explanim = explosion.animations.add('EXPL', [0, 1, 2, 3, 4, 5], 20, /*loop*/ false);
+        explanim.onComplete.add(this.animationStopped, this);
 
     },
 
@@ -137,6 +143,7 @@ TopDownGame.Lesson23.prototype = {
 
 
         //collision
+        this.game.physics.arcade.collide(weapon.bullets, this.blockLayer);
         this.game.physics.arcade.collide(player, this.blockLayer);
         this.game.physics.arcade.overlap(player, chests, this.chestCallback, null, this);
         //this.game.physics.arcade.collide(player, barrels, this.hitWall, null, this);
@@ -163,24 +170,28 @@ TopDownGame.Lesson23.prototype = {
             this.game.camera.x += cameraSpeed;
         }
     },
-    hitWall: function() {
+    hitWall: function (sprite) {
 
-        if (!flag) {
-
-            console.log("hitWall1");
-            //Pegman.pegmanSprite.body.enable = false;
+        if (!flag && sprite.key == "pegman") {
             player.y = xyqueue[7].y;
             player.x = xyqueue[7].x;
-            Pegman.pegmanActions = [];
-            if (Pegman.tween) {
-                Pegman.tween.stop();
-            }
-            player.animations.play('HIT');
-
-            flag = true;
-
-
-        }
+           Pegman.pegmanActions = [];
+           if (Pegman.tween) {
+               Pegman.tween.stop();
+           }
+           player.animations.play('HIT');
+           flag = true;
+       } else if (!bulletFlag && sprite.key == "bullet") {        
+           explosion.x = sprite.x - 20;
+           explosion.y = sprite.y - 50;
+           explosion.visible = true;
+           explosion.animations.play('EXPL');
+           sprite.kill();
+           bulletFlag = true;
+       }
+    },
+    animationStopped: function(sprite, animation) {
+        explosion.visible = false;
     },
     chestCallback: function(sprite, chest) {
         chest.visible = false;

@@ -98,7 +98,9 @@ TopDownGame.Lesson1.prototype = {
         weapon.fireAngle = Phaser.ANGLE_RIGHT; // shoot at right direcion by default
         weapon.trackSprite(player, 0, -9, false); //-65 выведено экспериментальным путём
         //weapon.addBulletAnimation("fly", [0, 1, 2, 3, 4, 5, 6, 7], 40, true);
-
+        
+        this.game.physics.arcade.enable(weapon.bullets);
+        
         //explosion
         explosion = this.game.add.sprite(0, 0, 'explosion');
         explosion.visible = false;
@@ -137,6 +139,7 @@ TopDownGame.Lesson1.prototype = {
 
         //collision
         this.game.physics.arcade.collide(player, this.blockLayer);
+        this.game.physics.arcade.collide(weapon.bullets, this.blockLayer);
         this.game.physics.arcade.collide(player, this.sinkLayer);
         this.game.physics.arcade.collide(player, barrels, this.hitWall, null, this);
         this.game.physics.arcade.overlap(barrels, weapon.bullets, this.bulletHitBarrel, null, this);
@@ -165,9 +168,11 @@ TopDownGame.Lesson1.prototype = {
     render: function () {
 
     },
-    hitWall: function () {
+    hitWall: function (sprite) 
+    {
+        
 
-        if (!flag) {
+        if (!flag && sprite.key == "pegman") {
             player.y = xyqueue[7].y;
             player.x = xyqueue[7].x;
             Pegman.pegmanActions = [];
@@ -176,6 +181,12 @@ TopDownGame.Lesson1.prototype = {
             }
             player.animations.play('HIT');
             flag = true;
+        } else {        
+            explosion.x = sprite.x - 20;
+            explosion.y = sprite.y - 50;
+            explosion.visible = true;
+            explosion.animations.play('EXPL');
+            sprite.kill();
         }
     },
     bulletHitBarrel: function (sprite, bullet) {

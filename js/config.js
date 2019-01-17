@@ -1,3 +1,7 @@
 
 var cameraSpeed = 10;
-var bulletSpeed = 250;
+
+const bulletSpeed = 250;
+const tweenSpeed = 500;
+
+var timeScale = 1;

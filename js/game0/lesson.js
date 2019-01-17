@@ -26,7 +26,7 @@ TopDownGame.Lesson0.prototype = {
         //create layer
         flour = map.createLayer('flour');
         blockLayer = map.createLayer('blockLayer');
-        
+
         this.onFlour = map.createLayer('onFlour');
         sinkLayer = map.createLayer('sinkLayer');
         this.onBlockLayer = map.createLayer('onBlockLayer');
@@ -55,7 +55,10 @@ TopDownGame.Lesson0.prototype = {
             };
         }
         var result = findObjectsByType('goldenKey', map, 'objectLayer');
-        goldenKey = this.game.add.sprite(result[0].x + 16, result[0].y - 16, 'totalsheet', 180);
+        goldenKey = this.game.add.sprite(result[0].x + 16, result[0].y - 16, 'goldenKey');
+         goldenKey.animations.add('SHADOW', [1], 2, /*loop*/ false);
+         goldenKey.animations.add('NOSHADOW', [0], 2, /*loop*/ false);
+         goldenKey.animations.play('SHADOW');
         goldenKey.realX = goldenKey.x;
         goldenKey.realY = goldenKey.y;
         this.game.physics.arcade.enable(goldenKey);
@@ -123,7 +126,7 @@ TopDownGame.Lesson0.prototype = {
         //this.game.physics.arcade.overlap(bullets, aliens, collisionHandler, null, this);
         //blockLayer.debug = true;
 
-
+  
     },
     animationStopped: function () {
         explosion.visible = false;
@@ -203,7 +206,7 @@ TopDownGame.Lesson0.prototype = {
     //     this.game.debug.body(goldenKey);
     // },
     hitWall: function () {
-
+        
         if (!flag) {
             player.y = xyqueue[7].y;
             player.x = xyqueue[7].x;
@@ -221,6 +224,7 @@ TopDownGame.Lesson0.prototype = {
         if (!flag) {
             //goldenKey.visible = false;
             //goldenKey.body.enable = false;
+            goldenKey.animations.play('NOSHADOW');
             player.addChild(goldenKey);
             goldenKey.x = -40;
             goldenKey.y = -100;

@@ -145,6 +145,8 @@ var Pegman = {
         flag = false;
         TopDownGame.game.camera.follow(player);
 
+        try {weapon.bullets.callAll('kill');} catch {}
+
         if (TopDownGame.game.state.getCurrentState().key == "lesson0") {
 
             try {
@@ -173,25 +175,15 @@ var Pegman = {
 
             }
 
-
-
             player.removeChild(goldenKey);
             TopDownGame.game.world.add(goldenKey);
-          
             goldenKey.reset(goldenKey.realX, goldenKey.realY);
-
-
+            goldenKey.animations.play('SHADOW');
             Pegman.hasGoldenKey = false;
             if (scene == 4) {
                 goldenKey.kill();
             }
-
-
         }
-
-
-
-
 
         if (TopDownGame.game.state.getCurrentState().key == "lesson1") {
             barrels.forEach(function (c) {
@@ -242,6 +234,10 @@ var Pegman = {
             chests.forEach(function (c) {
                 c.visible = true;
             });
+
+            bulletFlag = false;
+
+            
 
         }
 
@@ -640,12 +636,14 @@ Pegman.finishPreviousAction = function () { };
 Pegman.moveNSWE = function (x, y, stepcount = 1) {
     TopDownGame.game.stage.updateTransform();
     this.pegmanSprite.fresh = false;
-    this.animSpeedByStep = 500;
+    this.animSpeedByStep = tweenSpeed;
     this.posX = x;
     this.posY = y;
 
+
     this.anim = this.pegmanSprite.animations.play("NORTH");
     this.tween = TopDownGame.game.add.tween(this.pegmanSprite);
+    this.tween.timeScale = timeScale;
     this.tween.to({
         x: this.posX,
         y: this.posY,

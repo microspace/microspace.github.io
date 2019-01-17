@@ -48,6 +48,23 @@
   </div>
   <div id="resstart" style="position: absolute; left: 0px; top: 552px;z-index: 2 ">
     <button class="play" id="play" value="play"><i id="play" class="fa fa-play" aria-hidden="true"></i>&nbsp;<span>Запуск</span></button>
+
+    <!-- <div class="btn-group btn-group-toggle btn-block" data-toggle="buttons">
+      <label class="btn btn-secondary">
+        <input type="radio" name="options" id="option05" autocomplete="off"> x0,5
+      </label>
+      <label class="btn btn-secondary active">
+        <input type="radio" name="options" id="option1" autocomplete="off" checked> x1
+      </label>
+      <label class="btn btn-secondary">
+        <input type="radio" name="options" id="option2" autocomplete="off"> x2
+      </label>
+      <label class="btn btn-secondary">
+        <input type="radio" name="options" id="option6" autocomplete="off"> x6
+      </label>
+    </div> -->
+
+
   </div>
 
 
@@ -57,7 +74,6 @@
     <block type="maze_left"></block>
     <block type="maze_right"></block>
     <block type="uturn"></block>
-    
   </xml>
   <xml id="startBlocks" style="display: none">
     <block type="factory_base" deletable="false" x="20" y="20"></block>
@@ -76,7 +92,7 @@
           <p id="modaltext">Modal body text goes here.</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
         </div>
       </div>
     </div>
@@ -98,6 +114,25 @@
     crossorigin="anonymous"></script>
   <script>
 
+    $('input[type=radio][name=options]').change(function () {
+      var optionValue = this.id;
+      if (optionValue == "option05") {
+        timeScale = 0.5;
+      } else if (optionValue == "option2") {
+        timeScale = 2;
+      } else if (optionValue == "option6") {
+        timeScale = 6;
+      } else if (optionValue == "option1") {
+        timeScale = 1;
+      }
+
+      try {
+        Pegman.tween.timeScale = timeScale;
+      } catch {
+
+      }
+
+    });
     var scene;
     var blocklyArea = document.getElementById('full-size');
     var blocklyDiv = document.getElementById('blocklyDiv');
