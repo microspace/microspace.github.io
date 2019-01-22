@@ -71,7 +71,7 @@ TopDownGame.Lesson1.prototype = {
         player.animations.add('SHOOT', [20, 21, 22, 23, 24], fps, /*loop*/ false);
         player.animations.play('STAND');
 
-        this.upperLayer = this.map.createLayer('upperLayer');
+        
         this.game.physics.arcade.enable(player);
         player.body.collideWorldBounds=true;
         player.body.enable = false;
@@ -90,7 +90,7 @@ TopDownGame.Lesson1.prototype = {
         //player.kill();
 
         //bullets
-
+this.upperLayer = this.map.createLayer('upperLayer');
 
         weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
         weapon.bulletAngleOffset = 0;

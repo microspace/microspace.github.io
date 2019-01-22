@@ -87,10 +87,10 @@ var Pegman = {
         }
 
 
-        try {
-            TopDownGame.game.world.bringToTop(pointer);
-            TopDownGame.game.world.bringToTop(player);
-        } catch { }
+        // try {
+        //     TopDownGame.game.world.bringToTop(pointer);
+        //     TopDownGame.game.world.bringToTop(player);
+        // } catch { }
 
         TopDownGame.game.tweens.removeAll();
 
@@ -145,7 +145,7 @@ var Pegman = {
         flag = false;
         TopDownGame.game.camera.follow(player);
 
-        try {weapon.bullets.callAll('kill');} catch {}
+        try { weapon.bullets.callAll('kill'); } catch { }
 
         if (TopDownGame.game.state.getCurrentState().key == "lesson0") {
 
@@ -237,7 +237,7 @@ var Pegman = {
 
             bulletFlag = false;
 
-            
+
 
         }
 
@@ -353,9 +353,10 @@ var Pegman = {
                 map.replace(15, 235, 6 + getRandomInt(0, 6), 4, 1, 1, map.getLayer());
                 map.replace(15, 235, 6 + getRandomInt(0, 6), 5, 1, 1, map.getLayer());
             } else if (scene == "512") {
-                this.refillarea(12, 6, 15, 12);
+                this.fillpath(12, 6, 15, 11);
+                // this.fillpath(12, 6, 15, 12);
             } else if (scene == "513") {
-                this.refillarea(16, 11, 22, 14);
+                this.fillpath(16, 11, 22, 14);
             } else if (scene == "521") {
                 this.refillarea(6, 10, 9, 14);
             } else if (scene == "522") {
@@ -368,6 +369,23 @@ var Pegman = {
         this.pegmanSprite.animations.play('STAND');
 
     },
+    fillpath: function (x1, y1, x2, y2) {
+        var sc11 = getRandomInt(0, 3);
+        console.log(sc11);
+        for (var y = y1; y <= y2; ++y) {
+            for (var x = x1; x <= x2; ++x) {
+                console.log(scene11[sc11][y - y1][x - x1], x - x1, y - y1);
+                map.replace(238, 15, x, y, 1, 1, flour);
+                if (scene11[sc11][y - y1][x - x1] == 1) {
+
+                    map.replace(15, 238, x, y, 1, 1, flour);
+                }
+
+
+            }
+        }
+    },
+
     refillarea: function (x1, y1, x2, y2) {
         map.replace(235, 15, x1, y1, x2 - x1 + 1, y2 - y1 + 1, flour);
         map.replace(236, 15, x1, y1, x2 - x1 + 1, y2 - y1 + 1, flour);
@@ -754,22 +772,14 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     lastSuccessfullPosition.x = player.x;
                     lastSuccessfullPosition.y = player.y;
                     pointer.kill();
+                    try {
+                        setIsCheckedForLesson();
+                    }
+                    catch {
+                        console.log("couldn't set IsChecked For Lesson");
+                    }
                 }
-
-
-
-
-
-
             }
-
-
-
-
-
-
-
-
         }
 
         //TopDownGame.game.state.getCurrentState().key == "Game" 
@@ -778,7 +788,6 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
             var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
             if (isOverlapping == true) {
                 if (scene == 0) {
-
                     var messagetext = "Отлично получилось! Теперь попробуй дойди до конца коридора!";
                 } else if (scene == 1) {
                     var messagetext = "Превосходно! Сейчас надо дойти до тех бочек!";
@@ -792,21 +801,18 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 $("#exampleModal").modal();
                 scene += 1;
 
-
-
                 pointer.x = Maze.scenes[scene].endPos[0];
                 pointer.y = Maze.scenes[scene].endPos[1];
 
-
                 lastSuccessfullPosition.x = player.x;
                 lastSuccessfullPosition.y = player.y;
+
                 toogleRunButton();
-                try {
-                    setIsCheckedForLesson();
-                }
-                catch {
-                    console.log("couldn't set IsChecked For Lesson");
-                }
+
+                Blockly.mainWorkspace.clear();
+                Blockly.mainWorkspace.clearUndo();
+                Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
+                
                 try {
                     saveWorkspace();
                 }
@@ -828,6 +834,10 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                         lastSuccessfullPosition.x = player.x;
                         lastSuccessfullPosition.y = player.y;
 
+                        Blockly.mainWorkspace.clear();
+                        Blockly.mainWorkspace.clearUndo();
+                        Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
+                        
                         try {
                             saveWorkspace();
                         }
@@ -866,6 +876,10 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 // $("#modaltext").text("Задание выполнено! Переходим на уровень 2.2!");
                 // $("#exampleModal").modal();
 
+                Blockly.mainWorkspace.clear();
+                Blockly.mainWorkspace.clearUndo();
+                Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
+                
                 TopDownGame.game.state.start('lesson22');
                 scene = 2;
                 toogleRunButton();
@@ -898,6 +912,9 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 TopDownGame.game.state.start('lesson23');
                 scene = 3;
                 toogleRunButton();
+                Blockly.mainWorkspace.clear();
+                Blockly.mainWorkspace.clearUndo();
+                Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
                 try {
                     saveWorkspace();
                 }
@@ -926,6 +943,9 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 TopDownGame.game.state.start('lesson24');
                 scene = 4;
                 toogleRunButton();
+                Blockly.mainWorkspace.clear();
+                Blockly.mainWorkspace.clearUndo();
+                Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
                 try {
                     saveWorkspace();
                 }
@@ -951,6 +971,9 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
             if (aliveChestsCount == 0) {
                 scene = 5;
                 TopDownGame.game.state.start('lesson25');
+                Blockly.mainWorkspace.clear();
+                Blockly.mainWorkspace.clearUndo();
+                Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
                 toogleRunButton();
                 try {
                     saveWorkspace();
@@ -977,6 +1000,9 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 $("#exampleModal").modal();
                 lastSuccessfullPosition.x = player.x;
                 lastSuccessfullPosition.y = player.y;
+                Blockly.mainWorkspace.clear();
+                Blockly.mainWorkspace.clearUndo();
+                Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
                 try {
                     saveWorkspace();
                 }
@@ -1002,6 +1028,9 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     $("#exampleModal").modal();
                     lastSuccessfullPosition.x = player.x;
                     lastSuccessfullPosition.y = player.y;
+                    Blockly.mainWorkspace.clear();
+                    Blockly.mainWorkspace.clearUndo();
+                    Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
                     try {
                         saveWorkspace();
                     }
@@ -1049,7 +1078,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
 
                     load_scene();
                     toogleRunButton();
-                    try {
+                     try {
                         saveWorkspace();
                     }
                     catch {
@@ -1067,6 +1096,10 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                         catch {
                             console.log("couldn't save");
                         }
+                        Blockly.mainWorkspace.clear();
+                        Blockly.mainWorkspace.clearUndo();
+                        Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
+                        
                         load_map("lesson42");
                     }
                 } else if (scene == 42) {
@@ -1077,6 +1110,9 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                         $("#exampleModal").modal();
                         lastSuccessfullPosition.x = player.x;
                         lastSuccessfullPosition.y = player.y;
+                        Blockly.mainWorkspace.clear();
+                        Blockly.mainWorkspace.clearUndo();
+                        Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
                         try {
                             saveWorkspace();
                         }
@@ -1109,33 +1145,35 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     if (scene == "511") {
                         lastSuccessfullPosition.x = player.x;
                         lastSuccessfullPosition.y = player.y;
-                        console.log(lastSuccessfullPosition);
                         scene = "512";
                         toogleRunButton();
+                        load_scene(scene);
                         try {
                             saveWorkspace();
                         }
                         catch {
                             console.log("couldn't save");
                         }
-                        load_scene(scene);
+                        
                     } else if (scene == "512") {
                         lastSuccessfullPosition.x = player.x;
                         lastSuccessfullPosition.y = player.y;
                         scene = "513";
                         toogleRunButton();
+                        load_scene(scene);
                         try {
                             saveWorkspace();
                         }
                         catch {
                             console.log("couldn't save");
                         }
-                        load_scene(scene);
+                        
                     } else if (scene == "513") {
 
                         loadmap('lesson52');
                         scene = "521";
                         toogleRunButton();
+                        load_scene(scene);
                         try {
                             saveWorkspace();
                         }
@@ -1143,7 +1181,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                             console.log("couldn't save");
                         }
 
-                        load_scene(scene);
+                        
                         $("#modaltext").text(" Тут повсюду трупы. Что тут произошло? Надеюсь с отрядом все в порядке.");
                         $("#exampleModal").modal();
                     } else if (scene == "521") {
@@ -1153,6 +1191,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                         $("#exampleModal").modal();
                         revealArea();
                         scene = "522";
+                        load_scene(scene);
                         try {
                             saveWorkspace();
                         }
@@ -1160,12 +1199,13 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                             console.log("couldn't save");
                         }
                         toogleRunButton();
-                        load_scene(scene);
+                        
                     } else if (scene == "522") {
                         loadmap('lesson53');
                         $("#modaltext").text("Путь к точке эвакуации проходит через реку. Нужно засыпать дорогу для отряда.");
                         $("#exampleModal").modal();
                         scene = "531";
+                        load_scene(scene);
                         try {
                             saveWorkspace();
                         }
@@ -1173,7 +1213,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                             console.log("couldn't save");
                         }
                         toogleRunButton();
-                        load_scene(scene);
+                        
                     } else if (scene == "531") {
 
                         var notfilledblocks = 0;
@@ -1192,6 +1232,9 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                             $("#exampleModal").modal();
                             lastSuccessfullPosition.x = player.x;
                             lastSuccessfullPosition.y = player.y;
+                            Blockly.mainWorkspace.clear();
+                            Blockly.mainWorkspace.clearUndo();
+                            Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
                             try {
                                 saveWorkspace();
                             }
@@ -1239,16 +1282,21 @@ function revealArea() {
 }
 
 
-function saveWorkspace() {
+function saveWorkspace(saveCode = 0) {
     var params = location.href.split('?')[1].split('&');
     var urldata = {};
     for (var x in params) {
         urldata[params[x].split('=')[0]] = params[x].split('=')[1];
     }
     urldata.token = decodeURIComponent(urldata.token);
-    var xmlDom = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
-    var xmlText = Blockly.Xml.domToPrettyText(xmlDom);
-    var newTemp = xmlText.replace(/"/g, "'");
+    var newTemp = "";
+    if (saveCode == 1) {
+        var xmlDom = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
+        var xmlText = Blockly.Xml.domToPrettyText(xmlDom);
+        newTemp = xmlText.replace(/"/g, "'");
+    } 
+
+
     var datatoStore = {};
     datatoStore.code = newTemp;
     datatoStore.scene = scene;
@@ -1378,6 +1426,8 @@ function setIsCheckedForLesson() {
 }
 
 var runProgram = function () {
+
+
     var code = Blockly.JavaScript.workspaceToCode(workspace);
     Pegman.vdposX = Pegman.dposX;
     Pegman.vdposY = Pegman.dposY;
@@ -1406,6 +1456,13 @@ var runProgram = function () {
 
     Pegman.play();
     TopDownGame.game.camera.follow(player);
+
+    try {
+        saveWorkspace(1);
+    }
+    catch {
+        console.log("couldn't save");
+    }
 }
 
 

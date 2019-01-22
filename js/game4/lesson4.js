@@ -101,7 +101,12 @@ TopDownGame.Lesson4.prototype = {
             scene = 1;
         }
         
-        load_scene();
+        if (scene != 42) {
+            load_scene();
+        } else if (scene == 42) {
+            load_map("lesson42");
+        }
+        
 
         //bullets
 
@@ -446,7 +451,7 @@ function load_map(name) {
     barrels.removeAll();
 
     result = findObjectsByType('barrel', map, 'objectLayer');
-    console.log(result);
+
 
     result.forEach(function (element) {
         createFromTiledObject2(element, barrels);

@@ -38,13 +38,13 @@ TopDownGame.Lesson5.prototype = {
     create: function () {
         if (scene === undefined || scene === null) {
             Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
-            scene = "510";
+            scene = "511";
         }
         player = this.game.add.sprite(0, 0, 'pegman');
         loadmap("lesson" + scene.substring(0, 2));
         player.anchor.setTo(0.5, 0.5);
         this.game.physics.arcade.enable(player);
-        player.body.collideWorldBounds=true;
+        player.body.collideWorldBounds = true;
         player.body.enable = false;
         player.body.setSize(60, 13, 40, 73);
         flour.resizeWorld();
@@ -101,6 +101,7 @@ TopDownGame.Lesson5.prototype = {
         this.cursors = this.game.input.keyboard.createCursorKeys();
         map.setTileIndexCallback([...Array(500).keys()], sinkInWater, this, sinkLayer);
         map.setTileIndexCallback(235, sinkInWater, this, flour);
+        map.setTileIndexCallback([14, 27], hitEvent, this, flour);
         map.setTileIndexCallback([...Array(500).keys()], hitEvent, this, blockLayer);
         TopDownGame.game.camera.flash(0x000000, 500);
         h = this.game.input.keyboard.addKey(Phaser.Keyboard.H);
@@ -126,11 +127,11 @@ TopDownGame.Lesson5.prototype = {
         // f.onDown.add(this.switch521, this);
         // g = this.game.input.keyboard.addKey(Phaser.Keyboard.G);
         // g.onDown.add(this.switch522, this);
-        
+
         v = this.game.input.keyboard.addKey(Phaser.Keyboard.V);
         v.onDown.add(this.switch521, this);
         b = this.game.input.keyboard.addKey(Phaser.Keyboard.B);
-        b.onDown.add(this.switch531, this);   
+        b.onDown.add(this.switch531, this);
 
         if (map.key != "lesson53") {
             map.putTile(244, Pegman.dposX, Pegman.dposY, fog);
@@ -183,14 +184,14 @@ TopDownGame.Lesson5.prototype = {
     l_up: function () {
         player.body.velocity.x = 0;
     },
-    switch531: function() {
+    switch531: function () {
         loadmap('lesson53');
         $("#modaltext").text("Путь к точке эвакуации проходит через реку. Нужно засыпать дорогу для отряда.");
         $("#exampleModal").modal();
-        scene = "531";        
+        scene = "531";
         load_scene(scene);
     },
-    switch521: function() {
+    switch521: function () {
         loadmap('lesson52');
         scene = "521";
         $("#modaltext").text(" Тут повсюду трупы. Что тут произошло? Надеюсь с отрядом все в порядке.");
@@ -289,7 +290,8 @@ TopDownGame.Lesson5.prototype = {
 
 };
 
-function hitEvent() {
+function hitEvent(a, b) {
+    console.log(a, b);
     if (!hitflag) {
         console.log("hit");
         player.body.enable = false;
@@ -303,7 +305,7 @@ function hitEvent() {
 };
 
 function sinkInWater() {
-
+    console.log("sink");
     if (sinkflag == false) {
         player.body.enable = false;
         sinkflag = true;
@@ -486,7 +488,12 @@ Maze.tile_SHAPES = {
 
 
 function load_scene(scene) {
-    if (scene == "510") {
+
+    Blockly.mainWorkspace.clear();
+    Blockly.mainWorkspace.clearUndo();
+    Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
+    
+    if (scene == "511") {
         try { player.body.enable = false; } catch { }
         var result = findObjectsByType('playerStartPosition', map, 'playerLayer');
         lastSuccessfullPosition.x = result[0].x;
@@ -524,13 +531,13 @@ function load_scene(scene) {
 
     // player.x = lastSuccessfullPosition.x;
     // player.y = lastSuccessfullPosition.y;
-     try {Pegman.reset2()} catch {}
+    try { Pegman.reset2() } catch { }
 }
 
 
 function loadmap(name) {
     try { player.body.enable = false; } catch { }
-    
+
     TopDownGame.game.camera.flash(0x000000, 1000);
 
     try {
@@ -553,11 +560,10 @@ function loadmap(name) {
     sinkLayer = map.createLayer('sinkLayer');
     blockLayer = map.createLayer('blockLayer');
     onBlockLayer = map.createLayer('onBlockLayer');
-
-
-
     sinkLayer = map.createLayer('sinkLayer');
+
     map.setTileIndexCallback([...Array(500).keys()], sinkInWater, this, sinkLayer);
+    map.setTileIndexCallback([15, 28], hitEvent, this, flour);
     map.setTileIndexCallback([...Array(500).keys()], hitEvent, this, blockLayer);
 
     upperLayer = map.createLayer('upperLayer');
@@ -574,5 +580,81 @@ function loadmap(name) {
         TopDownGame.game.world.bringToTop(explosion);
         TopDownGame.game.world.bringToTop(player);
     } catch { }
-    
+
 }
+
+
+
+var scene11 =
+    [
+        [
+            [0, 1, 0, 0],
+            [0, 1, 0, 0],
+            [0, 1, 1, 0],
+            [0, 0, 1, 0],
+            [0, 0, 1, 0],
+            [0, 0, 1, 0],
+        ],
+
+        [
+            [0, 1, 0, 0],
+            [0, 1, 1, 0],
+            [0, 0, 1, 0],
+            [0, 0, 1, 0],
+            [0, 0, 1, 0],
+            [0, 0, 1, 0],
+        ],
+
+        [
+            [0, 1, 0, 0],
+            [0, 1, 0, 0],
+            [0, 1, 0, 0],
+            [0, 1, 1, 0],
+            [0, 0, 1, 0],
+            [0, 0, 1, 0],
+        ],
+
+        [
+            [0, 1, 0, 0],
+            [0, 1, 0, 0],
+            [0, 1, 0, 0],
+            [0, 1, 0, 0],
+            [0, 1, 0, 0],
+            [0, 1, 1, 0],
+        ]
+    ]
+
+var scene21 =
+    [
+        [
+            [1, 1, 0, 0, 0, 0],
+            [0, 1, 0, 0, 0, 0],
+            [0, 1, 1, 1, 0, 0],
+            [0, 0, 0, 1, 1, 1],
+            [0, 0, 0, 0, 0, 1],
+        ],
+
+        [
+            [1, 1, 1, 1, 0, 0],
+            [0, 0, 0, 1, 0, 0],
+            [0, 0, 0, 1, 0, 0],
+            [0, 0, 0, 1, 1, 1],
+            [0, 0, 0, 0, 0, 1],
+        ],
+
+        [
+            [1, 0, 0, 0, 0, 0],
+            [1, 1, 0, 0, 0, 0],
+            [0, 1, 1, 1, 1, 1],
+            [0, 0, 0, 0, 0, 1],
+            [0, 0, 0, 0, 0, 1],
+        ],
+
+        [
+            [1, 0, 0, 0, 0, 0],
+            [1, 1, 1, 0, 0, 0],
+            [0, 0, 1, 1, 1, 0],
+            [0, 0, 0, 0, 1, 1],
+            [0, 0, 0, 0, 0, 1],
+        ],
+    ]
