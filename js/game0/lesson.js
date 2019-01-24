@@ -21,6 +21,9 @@ TopDownGame.Lesson0 = function () { };
 TopDownGame.Lesson0.prototype = {
     create: function () {
         map = this.game.add.tilemap('lesson0');
+        this.game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+        this.scale.pageAlignVertically = true;
+
         //the first parameter is the tileset name as specified in Tiled, the second is the key to the asset
         map.addTilesetImage('tileSheet04-01', 'gameTiles');
         //create layer

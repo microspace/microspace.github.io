@@ -1,10 +1,11 @@
 'use strict';
 var TopDownGame = TopDownGame || {};
-$(window).resize(function() {
-    window.resizeGame();
-});
+// $(window).resize(function() {
+//     window.resizeGame();
+// });
 
-TopDownGame.game = new Phaser.Game($(window).width(), $(window).height(), Phaser.AUTO, 'canvasContainer', null, false, true);
+TopDownGame.game = new Phaser.Game(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio, Phaser.AUTO, 'canvasContainer', null, false, true);
+
 TopDownGame.game.state.add('Boot', TopDownGame.Boot);
 TopDownGame.game.state.add('Preload', TopDownGame.Preload);
 TopDownGame.game.state.add('lesson0', TopDownGame.Lesson0);
