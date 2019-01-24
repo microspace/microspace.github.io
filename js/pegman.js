@@ -1379,7 +1379,7 @@ function loadWorkspace(clesson) {
                     
 
                 } catch (e) {
-                    console.log(e.message);
+                    console.log(e);
                     if (clesson == 'lesson2') {
                         TopDownGame.game.state.start('lesson21');
                     } else {
