@@ -228,7 +228,7 @@ TopDownGame.Lesson5.prototype = {
         }
         else if (this.cursors.right.isDown) {
             this.game.camera.unfollow();
-            this.game.camera.x += cameraSpeed10;
+            this.game.camera.x += cameraSpeed;
         }
 
 
