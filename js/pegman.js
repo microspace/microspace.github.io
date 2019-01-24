@@ -830,7 +830,8 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
 
                 Blockly.mainWorkspace.clear();
                 Blockly.mainWorkspace.clearUndo();
-                Blockly.Xml.domToWorkspace('<xml id="startBlocks" style="display: none"><block type="factory_base" deletable="false" x="20" y="20"></block></xml>', workspace);
+                Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
+
                 try {
                     saveWorkspace();
                 }
