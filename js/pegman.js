@@ -1367,10 +1367,17 @@ function loadWorkspace(clesson) {
                         TopDownGame.game.state.start(clesson);
                     }
 
-                    Blockly.mainWorkspace.clear();
+                    try {
+                        Blockly.mainWorkspace.clear();
                     var xmlDom = Blockly.Xml.textToDom(code);
-                    console.log(xmlDom);
                     Blockly.Xml.domToWorkspace(xmlDom, Blockly.mainWorkspace);
+                    } catch {
+                        Blockly.mainWorkspace.clear();
+                    var xmlDom = Blockly.Xml.textToDom(code);
+                    Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
+                    }
+                    
+
                 } catch (e) {
                     console.log(e.message);
                     if (clesson == 'lesson2') {
