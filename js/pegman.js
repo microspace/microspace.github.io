@@ -1309,11 +1309,11 @@ function saveWorkspace(saveCode = 0) {
     }
     urldata.token = decodeURIComponent(urldata.token);
     var newTemp = "";
-    if (saveCode == 1) {
+    
         var xmlDom = Blockly.Xml.workspaceToDom(Blockly.mainWorkspace);
         var xmlText = Blockly.Xml.domToPrettyText(xmlDom);
         newTemp = xmlText.replace(/"/g, "'");
-    } 
+    
 
 
     var datatoStore = {};
@@ -1369,6 +1369,7 @@ function loadWorkspace(clesson) {
 
                     Blockly.mainWorkspace.clear();
                     var xmlDom = Blockly.Xml.textToDom(code);
+                    console.log(xmlDom);
                     Blockly.Xml.domToWorkspace(xmlDom, Blockly.mainWorkspace);
                 } catch (e) {
                     console.log(e.message);
