@@ -710,7 +710,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
 
 
 
-
+    
     Pegman.checkFinal = function () {
         if (TopDownGame.game.state.getCurrentState().key == "lesson0") {
             var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
@@ -830,7 +830,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
 
                 Blockly.mainWorkspace.clear();
                 Blockly.mainWorkspace.clearUndo();
-                Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), Blockly.mainWorkspace);
+                Blockly.Xml.domToWorkspace('<xml id="startBlocks" style="display: none"><block type="factory_base" deletable="false" x="20" y="20"></block></xml>', Blockly.mainWorkspace);
                 try {
                     saveWorkspace();
                 }
