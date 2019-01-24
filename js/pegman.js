@@ -1373,7 +1373,7 @@ function loadWorkspace(clesson) {
                     Blockly.Xml.domToWorkspace(xmlDom, Blockly.mainWorkspace);
                     } catch {
                         Blockly.mainWorkspace.clear();
-                    var xmlDom = Blockly.Xml.textToDom(code);
+                   
                     Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
                     }
                     
