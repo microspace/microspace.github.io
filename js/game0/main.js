@@ -1,10 +1,10 @@
 'use strict';
 var TopDownGame = TopDownGame || {};
-// $(window).resize(function() {
-//     window.resizeGame();
-// });
+$(window).resize(function() {
+    window.resizeGame();
+});
 
-TopDownGame.game = new Phaser.Game(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio, Phaser.AUTO, 'canvasContainer', null, false, true);
+TopDownGame.game = new Phaser.Game($(window).width(), $(window).height(), Phaser.AUTO, 'canvasContainer', null, false, true);
 
 TopDownGame.game.state.add('Boot', TopDownGame.Boot);
 TopDownGame.game.state.add('Preload', TopDownGame.Preload);
@@ -21,4 +21,5 @@ function resizeGame() {
     if (TopDownGame.game.renderType === Phaser.WEBGL) {
         TopDownGame.game.renderer.resize(width, height);
     }
+    
 }

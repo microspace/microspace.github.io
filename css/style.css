@@ -3,7 +3,7 @@ html,body { margin:0; padding:0; height:100%; width:100%; }
 #full-size {
   height:100%;
   width:100%;
-  overflow:hidden; /* or overflow:auto; if you want scrollbars */
+  overflow:auto; /* or overflow:auto; if you want scrollbars */
 }
 
 #canvasContainer div.kineticjs-content, #canvasContainer canvas, #canvas {
@@ -156,3 +156,4 @@ width: 150px;
   top: 0px;
   left: 0px;
 }
+
