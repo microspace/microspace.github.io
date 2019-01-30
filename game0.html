@@ -45,7 +45,8 @@
   <div id="layer2" style="z-index: 1;">
     <div class="canvas" id="blocklyDiv" style="position: absolute"></div>
   </div>
-  <div id="resstart" style="position: absolute; left: 0px; top: 552px;z-index: 2 ">
+
+  <div id="resstart" style="position: fixed; bottom: 0px; left: 0px; z-index: 2;">
     <button class="play" id="play" value="play"><i id="play" class="fa fa-play" aria-hidden="true"></i>&nbsp;<span>Запуск</span></button>
 
     <!-- <div class="btn-group btn-group-toggle btn-block" data-toggle="buttons">
@@ -114,13 +115,14 @@
   <script>
 
 
-    var element = document.getElementById('blocklyDiv');
-    var hammertime = Hammer(element).on("pinch", function (event) {
-      player.scale.set(event.gesture.scale);
+    // var element = document.getElementById('blocklyDiv');
+    // var hammertime = Hammer(element).on("pinch", function (event) {
 
-    });
+    //   TopDownGame.game.camera.scale.x = event.gesture.scale;
+    //   TopDownGame.game.camera.scale.y = event.gesture.scale;
+    // });
 
-
+ 
 
     $('input[type=radio][name=options]').change(function () {
       var optionValue = this.id;
@@ -148,8 +150,7 @@
       { toolbox: document.getElementById('toolbox') });
 
     Blockly.BlockSvg.START_HAT = true;
-    Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'),
-      workspace);
+    Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
     workspace.addChangeListener(Blockly.Events.disableOrphans);
     var onresize = function (e) {
       // Compute the absolute coordinates and dimensions of blocklyArea.
@@ -171,9 +172,9 @@
     window.addEventListener('resize', onresize, false);
     onresize();
     Blockly.svgResize(workspace);
-    var buttonh = blocklyArea.offsetHeight - 200;
+    var buttonh = blocklyArea.offsetHeight - 37;
     $("#resstart").css({ "z-index": 20 });
-    $("#resstart").css({ "top": buttonh + 'px' });
+    $("#resstart").css({ "bottom": '0px' });
     function onHideHat(event) {
       if (event.type == Blockly.Events.MOVE) {
         try {
@@ -188,6 +189,11 @@
       }
     }
     workspace.addChangeListener(onHideHat);
+
+    var bw = Math.floor($(".blocklyFlyout").width());
+    var stss = bw + 'px';
+    $("#play").css({ "width": stss });
+
   </script>
 </body>
 

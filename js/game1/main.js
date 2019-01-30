@@ -3,7 +3,7 @@
 var TopDownGame = TopDownGame || {};
 $(window).resize(function() {
     window.resizeGame();
-});﻿
+});
 
 
 

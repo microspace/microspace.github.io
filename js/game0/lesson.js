@@ -12,6 +12,7 @@ var blockLayer;
 var goldenKey;
 var flour;
 var sinkLayer;
+
 // 0 is start scene of the level
 var goalbarrelcount;
 var xyqueue = getArrayWithLimitedLength(10);
@@ -20,7 +21,13 @@ var lastSuccessfullPosition = {}; //хранит положение какое �
 TopDownGame.Lesson0 = function () { };
 TopDownGame.Lesson0.prototype = {
     create: function () {
+
+        this.game.scale.onSizeChange.add(this.onSizeChange, this);
+
+  
         map = this.game.add.tilemap('lesson0');
+       
+
         //the first parameter is the tileset name as specified in Tiled, the second is the key to the asset
         map.addTilesetImage('tileSheet04-01', 'gameTiles');
         //create layer
@@ -56,9 +63,9 @@ TopDownGame.Lesson0.prototype = {
         }
         var result = findObjectsByType('goldenKey', map, 'objectLayer');
         goldenKey = this.game.add.sprite(result[0].x + 16, result[0].y - 16, 'goldenKey');
-         goldenKey.animations.add('SHADOW', [1], 2, /*loop*/ false);
-         goldenKey.animations.add('NOSHADOW', [0], 2, /*loop*/ false);
-         goldenKey.animations.play('SHADOW');
+        goldenKey.animations.add('SHADOW', [1], 2, /*loop*/ false);
+        goldenKey.animations.add('NOSHADOW', [0], 2, /*loop*/ false);
+        goldenKey.animations.play('SHADOW');
         goldenKey.realX = goldenKey.x;
         goldenKey.realY = goldenKey.y;
         this.game.physics.arcade.enable(goldenKey);
@@ -125,9 +132,37 @@ TopDownGame.Lesson0.prototype = {
         this.cursors = this.game.input.keyboard.createCursorKeys();
         //this.game.physics.arcade.overlap(bullets, aliens, collisionHandler, null, this);
         //blockLayer.debug = true;
-
   
+        sl4 = this.input.keyboard.addKey(Phaser.KeyCode.F);
+
     },
+    onSizeChange: function() {
+		// fire the game resize event for the current state (make sure each state has this)
+        // this.game.state.callbackContext.resize();
+        var height = $(window).height();
+        var width = $(window).width();
+        this.game.width = width;
+        this.game.height = height;
+  
+  
+        sinkLayer.resize(width, height);
+        blockLayer.resize(width, height);
+        sinkLayer.resize(width, height);
+        flour.resize(width, height);
+        this.upperLayer.resize(width, height);
+  
+        this.game.scale.setGameSize(width, height);
+        this.game.stage.getBounds.width = width;
+        this.game.stage.getBounds.height = height;
+        if (this.game.renderType === Phaser.WEBGL) {
+            this.game.renderer.resize(width, height);
+        }
+  
+  
+  
+        this.game.scale.refresh();
+    },
+    
     animationStopped: function () {
         explosion.visible = false;
     },
@@ -157,6 +192,15 @@ TopDownGame.Lesson0.prototype = {
     },
     update: function () {
 
+        var height = $(window).height();
+        var width = $(window).width();
+        TopDownGame.game.width = width;
+        TopDownGame.game.height = height;
+        TopDownGame.game.stage.getBounds.width = width;
+        TopDownGame.game.stage.getBounds.height = height;
+        if (TopDownGame.game.renderType === Phaser.WEBGL) {
+            TopDownGame.game.renderer.resize(width, height);
+        }
         if (xyqueue.length <= 9) {
             xyqueue.push({
                 x: player.x,
@@ -206,7 +250,7 @@ TopDownGame.Lesson0.prototype = {
     //     this.game.debug.body(goldenKey);
     // },
     hitWall: function () {
-        
+
         if (!flag) {
             player.y = xyqueue[7].y;
             player.x = xyqueue[7].x;
@@ -220,7 +264,7 @@ TopDownGame.Lesson0.prototype = {
     },
 
     goldenKeyCallback: function () {
-        
+
         if (!flag) {
             //goldenKey.visible = false;
             //goldenKey.body.enable = false;
@@ -348,3 +392,5 @@ function getArrayWithLimitedLength(length) {
     }
     return array;
 }
+
+

@@ -5,6 +5,7 @@ $(window).resize(function() {
 });
 
 TopDownGame.game = new Phaser.Game($(window).width(), $(window).height(), Phaser.AUTO, 'canvasContainer', null, false, true);
+
 TopDownGame.game.state.add('Boot', TopDownGame.Boot);
 TopDownGame.game.state.add('Preload', TopDownGame.Preload);
 TopDownGame.game.state.add('lesson0', TopDownGame.Lesson0);
@@ -20,4 +21,5 @@ function resizeGame() {
     if (TopDownGame.game.renderType === Phaser.WEBGL) {
         TopDownGame.game.renderer.resize(width, height);
     }
+    
 }
