@@ -139,8 +139,11 @@ TopDownGame.Lesson0.prototype = {
     onSizeChange: function() {
 		// fire the game resize event for the current state (make sure each state has this)
         // this.game.state.callbackContext.resize();
-        var height = $(window).height();
-        var width = $(window).width();
+        var height = document.getElementById('rightside').clientHeight;
+        var width = document.getElementById('rightside').clientWidth;
+        console.log(height, width);
+        // var height = $(window).height();
+        // var width = $(window).width();
         this.game.width = width;
         this.game.height = height;
   

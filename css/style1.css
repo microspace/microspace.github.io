@@ -8,7 +8,7 @@ body {
 
 .container {
     display: flex;
-    border: 1px solid green;
+    border: 3px solid green;
     flex-flow: row nowrap;
 }
 
@@ -31,7 +31,7 @@ body {
 @media (orientation: portrait) {
     .container {
         display: flex;
-        border: 1px solid yellow;
+        border: 3px solid yellow;
         flex-flow: column nowrap;
     }
 
@@ -43,7 +43,7 @@ body {
 @media (orientation: landscape) {
   .container {
     display: flex;
-    border: 1px solid green;
+    border: 3px solid green;
     flex-flow: row nowrap;
 }
 
