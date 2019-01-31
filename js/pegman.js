@@ -725,6 +725,12 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     lastSuccessfullPosition.x = player.x;
                     lastSuccessfullPosition.y = player.y;
                     toogleRunButton();
+                    try {
+                        setIsCheckedForLesson();
+                    }
+                    catch {
+                        console.log("couldn't set IsChecked For Lesson");
+                    }
 
                 } else if (scene == 1) {
                     var messagetext = "Превосходно! Нажми на кнопку чтобы мост восстановился! Остерегайся ловушек!";
