@@ -889,7 +889,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
             } else if (scene == 3) {
                 var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
                 if (isOverlapping == true) {
-                    $("#modaltext").text("Эти бочки преградили тебе путь. Расстреляй их, чтобы пройти дальше!");
+                    $("#modaltext").text("А теперь нужно найти и подстрелить 5 бочек с мишенями. Нельзя стрелять по бочкам с водой. Используй стрелочки, чтобы двигать карту и искать цели.");
                     $("#exampleModal").modal();
                 }
                 scene = 4;
@@ -909,6 +909,13 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 }
                 catch (e) {
                     console.log("couldn't save: " + e);
+                }
+
+                try {
+                    setIsCheckedForLesson();
+                }
+                catch (e) {
+                    console.log("couldn't set IsChecked For Lesson" + e);
                 }
                 
             } else if (scene == 4) {
@@ -943,91 +950,6 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
             }
 
 
-
-
-
-
-
-
-
-
-
-
-/* 
-
-            if (isOverlapping == true) {
-                if (scene == 0) {
-                    var messagetext = "Отлично получилось! Теперь попробуй дойди до конца коридора!";
-                } else if (scene == 1) {
-                    var messagetext = "Превосходно! Сейчас надо дойти до тех бочек!";
-                } else if (scene == 2) {
-                    var messagetext = "Эти бочки преградили тебе путь. Расстреляй их, чтобы пройти дальше!";
-                } else if (scene == 3) {
-                    //var messagetext = "А теперь нужно найти 3 бочки с мишенями и подстрелить их. Но не в коем случае не стреляй в бочки с водой!";
-                    var messagetext = "А теперь нужно найти и подстрелить 5 бочек с мишенями. Нельзя стрелять по бочкам с водой. Используй стрелочки, чтобы двигать карту и искать цели.";
-                }
-                $("#modaltext").text(messagetext);
-                $("#exampleModal").modal();
-                scene += 1;
-
-                pointer.x = Maze.scenes[scene].endPos[0];
-                pointer.y = Maze.scenes[scene].endPos[1];
-
-                lastSuccessfullPosition.x = player.x;
-                lastSuccessfullPosition.y = player.y;
-
-                toogleRunButton();
-
-                Blockly.mainWorkspace.clear();
-                Blockly.mainWorkspace.clearUndo();
-                Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
-
-                if (scene == 3) {
-
-
-                }
-                try {
-                    saveWorkspace();
-                }
-                catch {
-                    console.log("couldn't save");
-                }
-            } else {
-                //show modal unsuccessful
-                if (scene == 4) {
-                    var aliveBarrelsCount = 0;
-                    barrels.forEach(function (c) {
-                        if (c["sprite"] == "needToHit" && c.health > 60) {
-                            aliveBarrelsCount += 1;
-                        }
-                    });
-                    if (aliveBarrelsCount == 0) {
-                        $("#modaltext").text("Поздравляю! Ты прошел сложный уровень!");
-                        $("#exampleModal").modal();
-                        lastSuccessfullPosition.x = player.x;
-                        lastSuccessfullPosition.y = player.y;
-
-                        Blockly.mainWorkspace.clear();
-                        Blockly.mainWorkspace.clearUndo();
-                        Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
-
-                        try {
-                            saveWorkspace();
-                        }
-                        catch {
-                            console.log("couldn't save");
-                        }
-
-
-                    } else {
-                        $("#modaltext").text("Ты убрал не все нужные бочки!");
-                        $("#exampleModal").modal();
-                    }
-                } else {
-                    console.log("please try again!");
-                }
-            }
- */
             //TopDownGame.game.state.getCurrentState().key == "Game" 
         }
 
