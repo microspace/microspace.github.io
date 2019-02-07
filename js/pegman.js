@@ -816,108 +816,113 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 if (isOverlapping == true) {
                     $("#modaltext").text("Отлично получилось! Теперь попробуй дойди до конца коридора!");
                     $("#exampleModal").modal();
-                }
-                scene = 1;
-                pointer.x = Maze.scenes[scene].endPos[0];
-                pointer.y = Maze.scenes[scene].endPos[1];
 
-                lastSuccessfullPosition.x = player.x;
-                lastSuccessfullPosition.y = player.y;
+                    scene = 1;
+                    pointer.x = Maze.scenes[scene].endPos[0];
+                    pointer.y = Maze.scenes[scene].endPos[1];
 
-                toogleRunButton();
+                    lastSuccessfullPosition.x = player.x;
+                    lastSuccessfullPosition.y = player.y;
 
-                Blockly.mainWorkspace.clear();
-                Blockly.mainWorkspace.clearUndo();
-                Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
-                try {
-                    saveWorkspace();
+                    toogleRunButton();
+
+                    Blockly.mainWorkspace.clear();
+                    Blockly.mainWorkspace.clearUndo();
+                    Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
+                    try {
+                        saveWorkspace();
+                    }
+                    catch (e) {
+                        console.log("couldn't save: " + e);
+                    }
                 }
-                catch (e) {
-                    console.log("couldn't save: " + e);
-                }
-                
+
+
             } else if (scene == 1) {
                 var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
                 if (isOverlapping == true) {
                     $("#modaltext").text("Превосходно! Сейчас надо дойти до тех бочек!");
                     $("#exampleModal").modal();
-                }
-                scene = 2;
-                pointer.x = Maze.scenes[scene].endPos[0];
-                pointer.y = Maze.scenes[scene].endPos[1];
+                    scene = 2;
+                    pointer.x = Maze.scenes[scene].endPos[0];
+                    pointer.y = Maze.scenes[scene].endPos[1];
 
-                lastSuccessfullPosition.x = player.x;
-                lastSuccessfullPosition.y = player.y;
+                    lastSuccessfullPosition.x = player.x;
+                    lastSuccessfullPosition.y = player.y;
 
-                toogleRunButton();
+                    toogleRunButton();
 
-                Blockly.mainWorkspace.clear();
-                Blockly.mainWorkspace.clearUndo();
-                Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
-                try {
-                    saveWorkspace();
+                    Blockly.mainWorkspace.clear();
+                    Blockly.mainWorkspace.clearUndo();
+                    Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
+                    try {
+                        saveWorkspace();
+                    }
+                    catch (e) {
+                        console.log("couldn't save: " + e);
+                    }
                 }
-                catch (e) {
-                    console.log("couldn't save: " + e);
-                }
-                
+
+
             } else if (scene == 2) {
                 var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
                 if (isOverlapping == true) {
                     $("#modaltext").text("Эти бочки преградили тебе путь. Расстреляй их, чтобы пройти дальше!");
                     $("#exampleModal").modal();
-                }
-                scene = 3;
-                pointer.x = Maze.scenes[scene].endPos[0];
-                pointer.y = Maze.scenes[scene].endPos[1];
+                    scene = 3;
+                    pointer.x = Maze.scenes[scene].endPos[0];
+                    pointer.y = Maze.scenes[scene].endPos[1];
 
-                lastSuccessfullPosition.x = player.x;
-                lastSuccessfullPosition.y = player.y;
+                    lastSuccessfullPosition.x = player.x;
+                    lastSuccessfullPosition.y = player.y;
 
-                toogleRunButton();
+                    toogleRunButton();
 
-                Blockly.mainWorkspace.clear();
-                Blockly.mainWorkspace.clearUndo();
-                Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
-                try {
-                    saveWorkspace();
+                    Blockly.mainWorkspace.clear();
+                    Blockly.mainWorkspace.clearUndo();
+                    Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
+                    try {
+                        saveWorkspace();
+                    }
+                    catch (e) {
+                        console.log("couldn't save: " + e);
+                    }
                 }
-                catch (e) {
-                    console.log("couldn't save: " + e);
-                }
-                
+
+
             } else if (scene == 3) {
                 var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
                 if (isOverlapping == true) {
                     $("#modaltext").text("А теперь нужно найти и подстрелить 5 бочек с мишенями. Нельзя стрелять по бочкам с водой. Используй стрелочки, чтобы двигать карту и искать цели.");
                     $("#exampleModal").modal();
-                }
-                scene = 4;
-                pointer.x = Maze.scenes[scene].endPos[0];
-                pointer.y = Maze.scenes[scene].endPos[1];
+                    scene = 4;
+                    pointer.x = Maze.scenes[scene].endPos[0];
+                    pointer.y = Maze.scenes[scene].endPos[1];
 
-                lastSuccessfullPosition.x = player.x;
-                lastSuccessfullPosition.y = player.y;
+                    lastSuccessfullPosition.x = player.x;
+                    lastSuccessfullPosition.y = player.y;
 
-                toogleRunButton();
+                    toogleRunButton();
 
-                Blockly.mainWorkspace.clear();
-                Blockly.mainWorkspace.clearUndo();
-                Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
-                try {
-                    saveWorkspace();
-                }
-                catch (e) {
-                    console.log("couldn't save: " + e);
+                    Blockly.mainWorkspace.clear();
+                    Blockly.mainWorkspace.clearUndo();
+                    Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
+                    try {
+                        saveWorkspace();
+                    }
+                    catch (e) {
+                        console.log("couldn't save: " + e);
+                    }
+
+                    try {
+                        setIsCheckedForLesson();
+                    }
+                    catch (e) {
+                        console.log("couldn't set IsChecked For Lesson" + e);
+                    }
                 }
 
-                try {
-                    setIsCheckedForLesson();
-                }
-                catch (e) {
-                    console.log("couldn't set IsChecked For Lesson" + e);
-                }
-                
+
             } else if (scene == 4) {
                 var aliveBarrelsCount = 0;
                 barrels.forEach(function (c) {
