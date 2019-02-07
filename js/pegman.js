@@ -829,12 +829,12 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 Blockly.mainWorkspace.clear();
                 Blockly.mainWorkspace.clearUndo();
                 Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
-                // try {
-                //     saveWorkspace();
-                // }
-                // catch (e) {
-                //     console.log("couldn't save: " + e);
-                // }
+                try {
+                    saveWorkspace();
+                }
+                catch (e) {
+                    console.log("couldn't save: " + e);
+                }
                 
             } else if (scene == 1) {
                 var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
