@@ -258,6 +258,11 @@
                  "name":"",
                  "properties":[
                         {
+                         "name":"flipped",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
                          "name":"scene",
                          "type":"int",
                          "value":5
@@ -538,6 +543,11 @@
                  "name":"",
                  "properties":[
                         {
+                         "name":"flipped",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
                          "name":"scene",
                          "type":"int",
                          "value":5
@@ -565,6 +575,11 @@
                  "id":34,
                  "name":"",
                  "properties":[
+                        {
+                         "name":"flipped",
+                         "type":"bool",
+                         "value":true
+                        }, 
                         {
                          "name":"scene",
                          "type":"int",

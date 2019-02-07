@@ -6,7 +6,7 @@ var weapon;
 var explosion;
 var items;
 var barrels;
- // 0 is start scene of the level
+// 0 is start scene of the level
 var goalbarrelcount;
 var xyqueue = getArrayWithLimitedLength(10);
 var lastSuccessfullPosition = {}; //хранит положение какое было у спрайта когда он в последний раз соверлаппился с целью
@@ -29,13 +29,13 @@ TopDownGame.Lesson1.prototype = {
 
         if (jQuery.isEmptyObject(lastSuccessfullPosition)) {
             if (scene === undefined || scene === null) {
-               scene = 0
-           }
+                scene = 0
+            }
             var result = findObjectsByType('playerStartPosition', this.map, 'playerLayer');
-            
+
             lastSuccessfullPosition = {
                 x: result[0].x,
-                y: result[0].y 
+                y: result[0].y
             };
         }
 
@@ -71,9 +71,9 @@ TopDownGame.Lesson1.prototype = {
         player.animations.add('SHOOT', [20, 21, 22, 23, 24], fps, /*loop*/ false);
         player.animations.play('STAND');
 
-        
+
         this.game.physics.arcade.enable(player);
-        player.body.collideWorldBounds=true;
+        player.body.collideWorldBounds = true;
         player.body.enable = false;
         this.game.physics.arcade.enable(pointer);
         player.body.setSize(60, 13, 40, 73);
@@ -90,7 +90,7 @@ TopDownGame.Lesson1.prototype = {
         //player.kill();
 
         //bullets
-this.upperLayer = this.map.createLayer('upperLayer');
+        this.upperLayer = this.map.createLayer('upperLayer');
 
         weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
         weapon.bulletAngleOffset = 0;
@@ -98,9 +98,9 @@ this.upperLayer = this.map.createLayer('upperLayer');
         weapon.fireAngle = Phaser.ANGLE_RIGHT; // shoot at right direcion by default
         weapon.trackSprite(player, 0, -9, false); //-65 выведено экспериментальным путём
         //weapon.addBulletAnimation("fly", [0, 1, 2, 3, 4, 5, 6, 7], 40, true);
-        
+
         this.game.physics.arcade.enable(weapon.bullets);
-        
+
         //explosion
         explosion = this.game.add.sprite(0, 0, 'explosion');
         explosion.visible = false;
@@ -165,12 +165,11 @@ this.upperLayer = this.map.createLayer('upperLayer');
             this.game.camera.x += cameraSpeed;
         }
     },
-    render: function () {
+    // render: function () {
 
-    },
-    hitWall: function (sprite) 
-    {
-        
+    // },
+    hitWall: function (sprite) {
+
 
         if (!flag && sprite.key == "pegman") {
             player.y = xyqueue[7].y;
@@ -181,7 +180,7 @@ this.upperLayer = this.map.createLayer('upperLayer');
             }
             player.animations.play('HIT');
             flag = true;
-        } else {        
+        } else {
             explosion.x = sprite.x - 20;
             explosion.y = sprite.y - 50;
             explosion.visible = true;
@@ -267,7 +266,7 @@ this.upperLayer = this.map.createLayer('upperLayer');
     //create a sprite from an object
     createFromTiledObject: function (element, group) {
 
-        
+
         var sprite = group.create(element.x, element.y, 'totalsheet', 234);
         //copy all properties to the sprite
 
@@ -298,9 +297,9 @@ this.upperLayer = this.map.createLayer('upperLayer');
         sprite.body.immovable = true;
     },
     loadSceneData: function () {
-/*          var result = this.findObjectsByType('playerStartPosition', this.map, 'playerLayer');
-        Maze.scenes[0].startPos[0] = result[0].x;
-        Maze.scenes[0].startPos[1] = result[0].y;  */
+        /*          var result = this.findObjectsByType('playerStartPosition', this.map, 'playerLayer');
+                Maze.scenes[0].startPos[0] = result[0].x;
+                Maze.scenes[0].startPos[1] = result[0].y;  */
         var result = findObjectsByType('scene1Goal', this.map, 'playerLayer');
         Maze.scenes[0].endPos[0] = result[0].x;
         Maze.scenes[0].endPos[1] = result[0].y;
