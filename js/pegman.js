@@ -46,7 +46,7 @@ var Pegman = {
             }
 
             if (TopDownGame.game.state.getCurrentState().key == "lesson0") {
-                $("#modaltext").text("Приветствую тебя! В этой игре тебе предстоит пройти испытания чтобы присединиться к остальным учащимся курса! (Используй стрелки для просмотра карты)");
+                $("#modaltext").text("Приветствую тебя, кадет! Ты должен дойти до пункта сбора. Управляй робо-костюмом с помощью блоков и доберись до указателя. Используй стрелки для просмотра карты.");
                 $("#exampleModal").modal();
             }
 
@@ -374,7 +374,7 @@ var Pegman = {
         console.log(sc11);
         for (var y = y1; y <= y2; ++y) {
             for (var x = x1; x <= x2; ++x) {
-                console.log(scene11[sc11][y - y1][x - x1], x - x1, y - y1);
+                // console.log(scene11[sc11][y - y1][x - x1], x - x1, y - y1);
                 map.replace(238, 15, x, y, 1, 1, flour);
                 if (scene11[sc11][y - y1][x - x1] == 1) {
 
@@ -464,16 +464,16 @@ var Pegman = {
                 this.moveNSWE(this.posX + Maze.SQUARE_SIZE * step[0] * stepcount, this.posY + Maze.SQUARE_SIZE * step[1] * stepcount, stepcount);
                 break;
             case "uturn":
-                if (weapon.fireAngle == Phaser.ANGLE_RIGHT) {
+                if (this.direction == Maze.DirectionType.EAST) {
                     this.direction = Maze.DirectionType.WEST;
                     var step = Maze.getStepInDirection["WEST"];
                     this.pegmanSprite.scale.x = -1;
-                    weapon.fireAngle = Phaser.ANGLE_LEFT;
-                } else if (weapon.fireAngle == Phaser.ANGLE_LEFT) {
+                    try { weapon.fireAngle = Phaser.ANGLE_LEFT; } catch { }
+                } else if (this.direction == Maze.DirectionType.WEST) {
                     this.direction = Maze.DirectionType.EAST;
                     var step = Maze.getStepInDirection["EAST"];
                     this.pegmanSprite.scale.x = 1;
-                    weapon.fireAngle = Phaser.ANGLE_RIGHT;
+                    try { weapon.fireAngle = Phaser.ANGLE_RIGHT; } catch { }
                 }
 
                 this.playNextAction();
@@ -492,11 +492,14 @@ var Pegman = {
                     try {
                         weapon.fireAngle = Phaser.ANGLE_LEFT
                     } catch { };
+                    this.direction = Maze.DirectionType.WEST;
+
                 } else {
                     this.pegmanSprite.scale.x = 1;
                     try {
                         weapon.fireAngle = Phaser.ANGLE_RIGHT
                     } catch { };
+                    this.direction = Maze.DirectionType.EAST;
                 }
                 this.moveNSWE(goalx, goaly, stepcount);
                 break;
@@ -733,7 +736,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     }
 
                 } else if (scene == 1) {
-                    var messagetext = "Превосходно! Нажми на кнопку чтобы мост восстановился! Остерегайся ловушек!";
+                    var messagetext = "Превосходно! Нажми на кнопку, чтобы восстановить мост!";
                     $("#modaltext").text(messagetext);
                     $("#exampleModal").modal();
                     scene = 2;
@@ -744,7 +747,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     toogleRunButton();
 
                 } else if (scene == 2) {
-                    var messagetext = "Теперь нужно дойти до больших ворот, но чтобы они открылись нужен ключ!";
+                    var messagetext = "Теперь нужно дойти до больших ворот, но они закрыты. Чтобы их открыть нужно взять ключ!";
                     $("#modaltext").text(messagetext);
                     $("#exampleModal").modal();
                     scene = 3;
@@ -791,7 +794,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                         toogleRunButton();
                     }
                 } else if (scene == 4) {
-                    var messagetext = "Поздравляю! Вот ты и встретился со своими друзьями!";
+                    var messagetext = "Отлично! Все кадеты в сборе! Теперь мы летим в космос! Там вас ждет учебный бой против наших роботов.";
                     $("#modaltext").text(messagetext);
                     $("#exampleModal").modal();
                     lastSuccessfullPosition.x = player.x;
@@ -800,8 +803,8 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     try {
                         setIsCheckedForLesson();
                     }
-                    catch {
-                        console.log("couldn't set IsChecked For Lesson");
+                    catch (e) {
+                        console.log("couldn't set IsChecked For Lesson:" + e);
                     }
                 }
             }

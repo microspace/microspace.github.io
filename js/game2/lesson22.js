@@ -174,13 +174,12 @@ TopDownGame.Lesson22.prototype = {
            }
            player.animations.play('HIT');
            flag = true;
-       } else if (!bulletFlag && sprite.key == "bullet") {        
+       } else if (sprite.key == "bullet") {        
            explosion.x = sprite.x - 20;
            explosion.y = sprite.y - 50;
            explosion.visible = true;
            explosion.animations.play('EXPL');
            sprite.kill();
-           bulletFlag = true;
        }
     },
     sinkInWater: function () {
