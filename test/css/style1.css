@@ -1,0 +1,129 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+
+
+.container {
+    display: flex;
+    border: 3px solid green;
+    flex-flow: row nowrap;
+}
+
+
+.container>div {
+    height: 50vh;
+    color: white;
+    font-size: 40px;
+}
+
+.canvas {
+    height: 50vh;
+  }
+
+
+  @media (max-width: 1588px) {
+    .container>.leftside {
+  
+      flex-basis: 40%;
+  }
+  
+  .container>.rightside {
+    
+      flex-basis: 60%;
+  }
+  }
+  @media (min-width: 1588px) {
+    .container>.leftside {
+  
+      flex: 0 0 635px;
+  }
+  
+  .container>.rightside {
+    
+      flex-basis: 60%;
+  }
+  }
+.container>.leftside {
+    background: red;
+    
+}
+
+.container>.rightside {
+    background: blue;
+  
+}
+
+@media (orientation: portrait) {
+    .container {
+        display: flex;
+        border: 3px solid yellow;
+        flex-flow: column nowrap;
+    }
+
+    .container>div {
+        height: 50vh;
+    }
+    .canvas {
+        height: 50vh;
+      }
+}
+
+@media (orientation: landscape) {
+  .container {
+    display: flex;
+    
+    flex-flow: row nowrap;
+}
+
+  .container>div {
+    height: 100vh;
+    flex-grow: 1;
+    flex-shrink: 0;
+    flex-basis: 50%;
+    
+  }
+  .canvas {
+    height: 100vh;
+    
+  }
+
+  
+}
+
+
+
+
+
+.blocklySvg {
+    background-image: url(../assets/images/back.png);
+    
+}
+
+
+button.play {
+    background: rgb(255, 164, 0);
+    cursor: pointer;
+    border-top: solid 0px #eaeaea;
+    border-left: solid 0px #eaeaea;
+    border-bottom: solid 0px #777;
+    border-right: solid 0px #777;
+    padding: 5px 5px;
+    width: 150px;
+    }
+    button.reset {
+    background: #0094ca;
+    cursor: pointer;
+    border-top: solid 0px #eaeaea;
+    border-left: solid 0px #eaeaea;
+    border-bottom: solid 0px #777;
+    border-right: solid 0px #777;
+    padding: 5px 5px;
+    width: 150px;
+    }
+    
