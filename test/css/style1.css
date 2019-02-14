@@ -27,7 +27,7 @@ body {
   }
 
 
-  @media (max-width: 1588px) {
+  @media (max-width: 1120px) {
     .container>.leftside {
   
       flex-basis: 40%;
@@ -38,10 +38,10 @@ body {
       flex-basis: 60%;
   }
   }
-  @media (min-width: 1588px) {
+  @media (min-width: 1120px) {
     .container>.leftside {
   
-      flex: 0 0 635px;
+      flex: 0 0 448px;
   }
   
   .container>.rightside {
