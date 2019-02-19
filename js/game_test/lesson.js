@@ -161,9 +161,14 @@ TopDownGame.Lesson0.prototype = {
 
         sinkLayer.resize(width, height);
         blockLayer.resize(width, height);
-        sinkLayer.resize(width, height);
+        this.onBlockLayer.resize(width, height);
+        this.onFlour.resize(width, height);
         flour.resize(width, height);
         this.upperLayer.resize(width, height);
+
+
+
+
 
         this.game.scale.setGameSize(width, height);
         this.game.stage.getBounds.width = width;
@@ -182,7 +187,9 @@ TopDownGame.Lesson0.prototype = {
         // this.game.debug.body(player);
     },
     update: function () {
-
+        if (this.game.kineticScrolling.dragging) {
+            player.body.enable = false;
+        }
         if (xyqueue.length <= 9) {
             xyqueue.push({
                 x: player.x,
