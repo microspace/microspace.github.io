@@ -88,7 +88,10 @@ var modal = new tingle.modal({
         return false; // nothing happens
     }
 });
-
+modal.addFooterBtn('Закрыть', 'tingle-btn tingle-btn--primary', function() {
+                        // here goes some logic
+                        modal.close();
+                    })
 
 
 

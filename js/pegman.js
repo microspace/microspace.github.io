@@ -730,10 +730,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     </div>`;
 
                     modal.setContent(messagetext);
-                    modal.addFooterBtn('Закрыть', 'tingle-btn tingle-btn--primary', function() {
-                        // here goes some logic
-                        modal.close();
-                    })
+                    
                     modal.open();
 
                     scene = 1;
@@ -758,10 +755,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     </div>`;
 
                     modal.setContent(messagetext);
-                    modal.addFooterBtn('Закрыть', 'tingle-btn tingle-btn--primary', function() {
-                        // here goes some logic
-                        modal.close();
-                    })
+
                     modal.open();
                     scene = 2;
                     pointer.x = Maze.scenes[scene].endPos[0];
@@ -778,10 +772,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     <p>Теперь нужно дойти до больших ворот, но они закрыты. Чтобы их открыть нужно взять ключ!</p>
                     </div>`;
                     modal.setContent(messagetext);
-                    modal.addFooterBtn('Закрыть', 'tingle-btn tingle-btn--primary', function() {
-                        // here goes some logic
-                        modal.close();
-                    })
+                    
                     modal.open();
                     scene = 3;
                     pointer.x = Maze.scenes[scene].endPos[0];
@@ -834,10 +825,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     <p>Все кадеты в сборе! Теперь мы летим в космос! Там вас ждет учебный бой против наших роботов.</p>
                     </div>`;
                     modal.setContent(messagetext);
-                    modal.addFooterBtn('Закрыть', 'tingle-btn tingle-btn--primary', function() {
-                        // here goes some logic
-                        modal.close();
-                    })
+                   
                     modal.open();
                     lastSuccessfullPosition.x = player.x;
                     lastSuccessfullPosition.y = player.y;
