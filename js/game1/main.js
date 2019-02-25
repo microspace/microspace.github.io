@@ -52,7 +52,7 @@ var resetProgram_ = function() {
 
     try {
         weapon.fireAngle = Phaser.ANGLE_RIGHT;
-    } catch {
+    } catch (e) {
 
     }
 

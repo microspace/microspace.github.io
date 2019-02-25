@@ -80,7 +80,7 @@ var Pegman = {
         TopDownGame.game.time.events.add(500, delayEnBody, this);
         try {
             this.pegmanSprite.angle = 0;
-        } catch { }
+        } catch (e) { }
         function delayEnBody() {
             // включаем физику с задержкой, из-за переходных процессов в игре
             this.pegmanSprite.body.enable = true;
@@ -90,7 +90,7 @@ var Pegman = {
         // try {
         //     TopDownGame.game.world.bringToTop(pointer);
         //     TopDownGame.game.world.bringToTop(player);
-        // } catch { }
+        // } catch (e) { }
 
         TopDownGame.game.tweens.removeAll();
 
@@ -101,7 +101,7 @@ var Pegman = {
         try {
             this.dposX = startPositions['lesson3' + scene][0];
             this.dposY = startPositions['lesson3' + scene][1];
-        } catch {
+        } catch (e) {
 
         }
 
@@ -117,7 +117,7 @@ var Pegman = {
             sinkflag = false;
             hitflag = false;
             b.visible = true;
-        } catch { };
+        } catch (e) { };
         this.pegmanActions = [];
         this.postReset();
     },
@@ -146,7 +146,7 @@ var Pegman = {
         TopDownGame.game.camera.follow(player);
         TopDownGame.game.camera.unfollow(player);
 
-        try { weapon.bullets.callAll('kill'); } catch { }
+        try { weapon.bullets.callAll('kill'); } catch (e) { }
 
         if (TopDownGame.game.state.getCurrentState().key == "lesson0" || TopDownGame.game.state.getCurrentState().key == "lesson_test") {
 
@@ -172,7 +172,7 @@ var Pegman = {
                 map.putTile(134, 21, 9, sinkLayer);
 
                 map.replace(228, 229, 21, 2, 1, 1, flour);
-            } catch {
+            } catch (e) {
 
             }
 
@@ -454,14 +454,14 @@ var Pegman = {
                 this.direction = Maze.DirectionType.WEST;
                 var step = Maze.getStepInDirection["WEST"];
                 this.pegmanSprite.scale.x = -1;
-                try { weapon.fireAngle = Phaser.ANGLE_LEFT; } catch { }
+                try { weapon.fireAngle = Phaser.ANGLE_LEFT; } catch (e) { }
                 this.moveNSWE(this.posX + Maze.SQUARE_SIZE * step[0] * stepcount, this.posY + Maze.SQUARE_SIZE * step[1] * stepcount, stepcount);
                 break;
             case "right":
                 this.direction = Maze.DirectionType.EAST;
                 var step = Maze.getStepInDirection["EAST"];
                 this.pegmanSprite.scale.x = 1;
-                try { weapon.fireAngle = Phaser.ANGLE_RIGHT; } catch { }
+                try { weapon.fireAngle = Phaser.ANGLE_RIGHT; } catch (e) { }
                 this.moveNSWE(this.posX + Maze.SQUARE_SIZE * step[0] * stepcount, this.posY + Maze.SQUARE_SIZE * step[1] * stepcount, stepcount);
                 break;
             case "uturn":
@@ -469,12 +469,12 @@ var Pegman = {
                     this.direction = Maze.DirectionType.WEST;
                     var step = Maze.getStepInDirection["WEST"];
                     this.pegmanSprite.scale.x = -1;
-                    try { weapon.fireAngle = Phaser.ANGLE_LEFT; } catch { }
+                    try { weapon.fireAngle = Phaser.ANGLE_LEFT; } catch (e) { }
                 } else if (this.direction == Maze.DirectionType.WEST) {
                     this.direction = Maze.DirectionType.EAST;
                     var step = Maze.getStepInDirection["EAST"];
                     this.pegmanSprite.scale.x = 1;
-                    try { weapon.fireAngle = Phaser.ANGLE_RIGHT; } catch { }
+                    try { weapon.fireAngle = Phaser.ANGLE_RIGHT; } catch (e) { }
                 }
 
                 this.playNextAction();
@@ -483,7 +483,7 @@ var Pegman = {
                 this.pegmanSprite.scale.x = 1;
                 try {
                     weapon.fireAngle = Phaser.ANGLE_RIGHT
-                } catch { };
+                } catch (e) { };
                 // нужно вычислить в пикселях куда должен попасть игрок.
 
                 var goalx = Maze.SQUARE_SIZE * (tox - Maze.coordoffset_x) + Maze.SQUARE_SIZE / 2;
@@ -492,14 +492,14 @@ var Pegman = {
                     this.pegmanSprite.scale.x = -1;
                     try {
                         weapon.fireAngle = Phaser.ANGLE_LEFT
-                    } catch { };
+                    } catch (e) { };
                     this.direction = Maze.DirectionType.WEST;
 
                 } else {
                     this.pegmanSprite.scale.x = 1;
                     try {
                         weapon.fireAngle = Phaser.ANGLE_RIGHT
-                    } catch { };
+                    } catch (e) { };
                     this.direction = Maze.DirectionType.EAST;
                 }
                 this.moveNSWE(goalx, goaly, stepcount);
@@ -742,7 +742,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     try {
                         setIsCheckedForLesson();
                     }
-                    catch {
+                    catch (e) {
                         console.log("couldn't set IsChecked For Lesson");
                     }
 
@@ -857,7 +857,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     try {
                         setIsCheckedForLesson();
                     }
-                    catch {
+                    catch (e) {
                         console.log("couldn't set IsChecked For Lesson");
                     }
 
@@ -1110,7 +1110,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 try {
                     saveWorkspace();
                 }
-                catch {
+                catch (e) {
                     console.log("couldn't save");
                 }
 
@@ -1142,7 +1142,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 try {
                     saveWorkspace();
                 }
-                catch {
+                catch (e) {
                     console.log("couldn't save");
                 }
 
@@ -1173,7 +1173,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 try {
                     saveWorkspace();
                 }
-                catch {
+                catch (e) {
                     console.log("couldn't save");
                 }
 
@@ -1239,13 +1239,13 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 try {
                     saveWorkspace();
                 }
-                catch {
+                catch (e) {
                     console.log("couldn't save");
                 }
                 // try {
                 //     setIsCheckedForLesson();
                 // }
-                // catch {
+                // catch (e) {
                 //     console.log("couldn't set IsCheckedForLesson");
                 // }
 
@@ -1267,13 +1267,13 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     try {
                         saveWorkspace();
                     }
-                    catch {
+                    catch (e) {
                         console.log("couldn't save");
                     }
                     try {
                         setIsCheckedForLesson();
                     }
-                    catch {
+                    catch (e) {
                         console.log("couldn't set IsChecked For Lesson");
                     }
                 } else {
@@ -1286,7 +1286,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                         try {
                             saveWorkspace();
                         }
-                        catch {
+                        catch (e) {
                             console.log("couldn't save");
                         }
                         Pegman.reset2();
@@ -1314,7 +1314,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     try {
                         saveWorkspace();
                     }
-                    catch {
+                    catch (e) {
                         console.log("couldn't save");
                     }
                 } else if (scene == 5) {
@@ -1326,7 +1326,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                         try {
                             saveWorkspace();
                         }
-                        catch {
+                        catch (e) {
                             console.log("couldn't save");
                         }
                         Blockly.mainWorkspace.clear();
@@ -1349,13 +1349,13 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                         try {
                             saveWorkspace();
                         }
-                        catch {
+                        catch (e) {
                             console.log("couldn't save");
                         }
                         try {
                             setIsCheckedForLesson();
                         }
-                        catch {
+                        catch (e) {
                             console.log("couldn't set IsChecked For Lesson");
                         }
                     }
@@ -1384,7 +1384,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                         try {
                             saveWorkspace();
                         }
-                        catch {
+                        catch (e) {
                             console.log("couldn't save");
                         }
 
@@ -1397,7 +1397,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                         try {
                             saveWorkspace();
                         }
-                        catch {
+                        catch (e) {
                             console.log("couldn't save");
                         }
 
@@ -1410,7 +1410,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                         try {
                             saveWorkspace();
                         }
-                        catch {
+                        catch (e) {
                             console.log("couldn't save");
                         }
 
@@ -1428,7 +1428,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                         try {
                             saveWorkspace();
                         }
-                        catch {
+                        catch (e) {
                             console.log("couldn't save");
                         }
                         toogleRunButton();
@@ -1442,7 +1442,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                         try {
                             saveWorkspace();
                         }
-                        catch {
+                        catch (e) {
                             console.log("couldn't save");
                         }
                         toogleRunButton();
@@ -1471,14 +1471,14 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                             try {
                                 saveWorkspace();
                             }
-                            catch {
+                            catch (e) {
                                 console.log("couldn't save");
                             }
 
                             try {
                                 setIsCheckedForLesson();
                             }
-                            catch {
+                            catch (e) {
                                 console.log("couldn't set IsChecked For Lesson");
                             }
                         }
@@ -1585,7 +1585,7 @@ function loadWorkspace(clesson) {
                         Blockly.mainWorkspace.clear();
                         var xmlDom = Blockly.Xml.textToDom(code);
                         Blockly.Xml.domToWorkspace(xmlDom, Blockly.mainWorkspace);
-                    } catch {
+                    } catch (e) {
                         Blockly.mainWorkspace.clear();
 
                         Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
@@ -1678,15 +1678,15 @@ var runProgram = function () {
         try {
             var tileLeft = map.getTile(Pegman.vdposX - 1, Pegman.vdposY, map.getLayer());
             Pegman.isGladeToLeft = tileLeft.index == 235;
-        } catch { }
+        } catch (e) { }
         try {
             var tileRight = map.getTile(Pegman.vdposX + 1, Pegman.vdposY, map.getLayer());
             Pegman.isGladeToRight = tileRight.index == 235;
-        } catch { }
+        } catch (e) { }
         try {
             var tileAbove = map.getTile(Pegman.vdposX, Pegman.vdposY - 1, map.getLayer());
             Pegman.isGladeAbove = tileAbove.index == 235;
-        } catch { }
+        } catch (e) { }
     }
 
     try {
@@ -1711,7 +1711,7 @@ var resetProgram = function () {
     player.body.enable = false;
     try {
         weapon.fireAngle = Phaser.ANGLE_RIGHT;
-    } catch {
+    } catch (e) {
 
     }
     Pegman.reset2();

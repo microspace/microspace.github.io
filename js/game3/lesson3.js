@@ -171,7 +171,7 @@ function change_map(name) {
         blockLayer.destroy();
         onBlockLayer.destroy();
         drawLayer.destroy();
-    } catch {
+    } catch (e) {
 
     }
 
@@ -190,7 +190,7 @@ function change_map(name) {
 
         Pegman.selected_tileid = 1;
         Pegman.pegmanSprite.frame = Pegman.selected_tileid;
-    } catch {
+    } catch (e) {
 
     }
     cp = TopDownGame.game.add.sprite(0, 0, 'coordinateplane');

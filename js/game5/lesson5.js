@@ -494,20 +494,20 @@ function load_scene(scene) {
     Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
     
     if (scene == "511") {
-        try { player.body.enable = false; } catch { }
+        try { player.body.enable = false; } catch (e) { }
         var result = findObjectsByType('playerStartPosition', map, 'playerLayer');
         lastSuccessfullPosition.x = result[0].x;
         lastSuccessfullPosition.y = result[0].y;
     }
 
     if (scene == "521") {
-        try { player.body.enable = false; } catch { }
+        try { player.body.enable = false; } catch (e) { }
         var result = findObjectsByType('playerStartPosition', map, 'playerLayer');
         lastSuccessfullPosition.x = result[0].x;
         lastSuccessfullPosition.y = result[0].y;
     }
     if (scene == "531" && lastSuccessfullPosition.x == null) {
-        try { player.body.enable = false; } catch { }
+        try { player.body.enable = false; } catch (e) { }
         var result = findObjectsByType('playerStartPosition', map, 'playerLayer');
         lastSuccessfullPosition.x = result[0].x;
         lastSuccessfullPosition.y = result[0].y;
@@ -531,12 +531,12 @@ function load_scene(scene) {
 
     // player.x = lastSuccessfullPosition.x;
     // player.y = lastSuccessfullPosition.y;
-    try { Pegman.reset2() } catch { }
+    try { Pegman.reset2() } catch (e) { }
 }
 
 
 function loadmap(name) {
-    try { player.body.enable = false; } catch { }
+    try { player.body.enable = false; } catch (e) { }
 
     TopDownGame.game.camera.flash(0x000000, 1000);
 
@@ -550,7 +550,7 @@ function loadmap(name) {
         upperLayer.destroy();
         fog.destroy();
 
-    } catch { }
+    } catch (e) { }
 
 
     map = TopDownGame.game.add.tilemap(name); //add tileset image     
@@ -579,7 +579,7 @@ function loadmap(name) {
         TopDownGame.game.world.bringToTop(pointer);
         TopDownGame.game.world.bringToTop(explosion);
         TopDownGame.game.world.bringToTop(player);
-    } catch { }
+    } catch (e) { }
 
 }
 

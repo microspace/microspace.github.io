@@ -55,7 +55,7 @@ var resetProgram = function() {
 
     try {
         weapon.fireAngle = Phaser.ANGLE_RIGHT;
-    } catch {
+    } catch (e) {
 
     }
     TopDownGame.game.stage.updateTransform();

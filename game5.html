@@ -144,7 +144,7 @@
 
             try {
                 Pegman.tween.timeScale = timeScale;
-            } catch {
+            } catch (e) {
 
             }
 
@@ -196,7 +196,7 @@
                     if (event.newCoordinate.x < 0 && bl.type == "factory_base") {
                         bl.moveBy(dx, 0);
                     }
-                } catch {
+                } catch (e) {
 
                 }
             }

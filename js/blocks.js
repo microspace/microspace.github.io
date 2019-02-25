@@ -41,15 +41,15 @@ Blockly.JavaScript['maze_up'] = function (block) {
         try {
         var tileLeft = map.getTile(Pegman.vdposX - 1, Pegman.vdposY, flour);
         Pegman.isGladeToLeft = tileLeft.index == 235;
-        } catch {}
+        } catch (e) {}
         try {
         var tileRight = map.getTile(Pegman.vdposX + 1, Pegman.vdposY, flour);
         Pegman.isGladeToRight = tileRight.index == 235;
-        } catch {}
+        } catch (e) {}
         try {
         var tileAbove = map.getTile(Pegman.vdposX, Pegman.vdposY - 1, flour);
         Pegman.isGladeAbove = tileAbove.index == 235;
-        } catch {}
+        } catch (e) {}
         
         
         
@@ -100,18 +100,18 @@ Blockly.JavaScript['maze_down'] = function (block) {
         try {
             var tileLeft = map.getTile(Pegman.vdposX - 1, Pegman.vdposY, flour);
             Pegman.isGladeToLeft = tileLeft.index == 235;
-        } catch {}
+        } catch (e) {}
 
         try {
         var tileRight = map.getTile(Pegman.vdposX + 1, Pegman.vdposY, flour);
         Pegman.isGladeToRight = tileRight.index == 235;
-        } catch {}
+        } catch (e) {}
 
         try {
         var tileDown = map.getTile(Pegman.vdposX, Pegman.vdposY + 1, flour);
         
         Pegman.isGladeBelow = tileDown.index == 235;
-        } catch {}
+        } catch (e) {}
 
         console.log(Pegman.isGladeAbove, Pegman.isGladeBelow, Pegman.isGladeToRight, Pegman.isGladeToLeft);
 
@@ -232,15 +232,15 @@ Blockly.JavaScript['maze_left'] = function (block) {
     try {
         var tileAbove = map.getTile(Pegman.vdposX, Pegman.vdposY - 1, flour);
         Pegman.isGladeAbove = tileAbove.index == 235;
-    } catch {}
+    } catch (e) {}
     try {
         var tileBelow = map.getTile(Pegman.vdposX, Pegman.vdposY + 1, flour);
         Pegman.isGladeBelow = tileBelow.index == 235;
-    } catch {}
+    } catch (e) {}
     try {
         var tileLeft = map.getTile(Pegman.vdposX - 1, Pegman.vdposY, flour);
         Pegman.isGladeToLeft = tileLeft.index == 235;
-    } catch {}
+    } catch (e) {}
 
         
         
@@ -791,15 +791,15 @@ Blockly.JavaScript['fill_the_pit'] = function (block) {
     try {
         var tileAbove = map.getTile(Pegman.vdposX, Pegman.vdposY - 1, map.getLayer());
         Pegman.isGladeAbove = tileAbove.index == 235;
-    } catch {}
+    } catch (e) {}
     try {
         var tileBelow = map.getTile(Pegman.vdposX, Pegman.vdposY + 1, map.getLayer());
         Pegman.isGladeBelow = tileBelow.index == 235;
-    } catch {}
+    } catch (e) {}
     try {
         var tileLeft = map.getTile(Pegman.vdposX - 1, Pegman.vdposY, map.getLayer());
         Pegman.isGladeToLeft = tileLeft.index == 235;
-    } catch {}
+    } catch (e) {}
 
   }
     `

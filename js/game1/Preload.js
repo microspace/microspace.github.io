@@ -29,7 +29,7 @@ TopDownGame.Preload.prototype = {
     create: function() {
         try {
             loadWorkspace('lesson1');
-        } catch {
+        } catch (e) {
             console.log("fallback - no server");
             this.state.start('lesson1');
         }

@@ -421,7 +421,7 @@ function load_map(name) {
         sinkLayer.destroy();
         upperLayer.destroy();
         barrels.callAll('kill');
-    } catch { }
+    } catch (e) { }
 
 
     map = TopDownGame.game.add.tilemap(name); //add tileset image     
@@ -477,7 +477,7 @@ function load_map(name) {
             TopDownGame.game.world.bringToTop(myHealthBar.bgSprite);
             TopDownGame.game.world.bringToTop(myHealthBar.barSprite);
             
-        } catch { 
+        } catch (e) { 
 
         }
 
