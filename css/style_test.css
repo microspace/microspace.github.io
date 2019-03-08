@@ -13,6 +13,7 @@ body {
     display: flex;
     border: 3px solid green;
     flex-flow: row nowrap;
+    height: 100%;
 }
 
 
@@ -27,7 +28,7 @@ body {
   }
 
 
-  @media (max-width: 1120px) {
+  /* @media (max-width: 1120px) {
     .container>.leftside {
   
       flex-basis: 40%;
@@ -37,7 +38,7 @@ body {
     
       flex-basis: 60%;
   }
-  }
+  } */
   @media (min-width: 1120px) {
     .container>.leftside {
   

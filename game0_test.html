@@ -21,6 +21,7 @@
   <script type="text/javascript" src="js/lib/blockly/msg/js/ru.js"></script>
   <script type="text/javascript" src="js/lib/phaser-kinetic-scrolling-plugin.min.js"></script>
   <script type="text/javascript" src="js/lib/tingle.js"></script>
+  <script type="text/javascript"  src="js/lib/platform.js"></script>
   <script type="text/javascript" src="js/config.js"></script>
   <script type="text/javascript" src="js/maze.js"></script>
   <script type="text/javascript" src="js/pegman.js"></script>
@@ -40,13 +41,13 @@
 
   <div class="container">
     <div class="leftside" id='blocklyArea'>
-
+      <div class="canvas" id="blocklyDiv" style="position: absolute"></div>
     </div>
     <div class="rightside" id="rightside">
       <div class="canvas" id="canvasContainer"></div>
     </div>
   </div>
-  <div class="canvas" id="blocklyDiv" style="position: absolute"></div>
+  
   <div id="resstart" style="position: fixed; bottom: 0px; left: 0px; z-index: 2;">
     <button class="play" id="play" value="play"><i id="play" class="fa fa-play" aria-hidden="true"></i>&nbsp;<span>Запуск</span></button>
   </div>
@@ -84,11 +85,11 @@ var modal = new tingle.modal({
     beforeClose: function() {
         // here's goes some logic
         // e.g. save content before closing the modal
-        return true; // close the modal
-        return false; // nothing happens
+        // return true; // close the modal
+        // return false; // nothing happens
     }
 });
-modal.addFooterBtn('Закрыть', 'tingle-btn tingle-btn--primary', function() {
+modal.addFooterBtn('ОК', 'tingle-btn tingle-btn--primary', function() {
                         // here goes some logic
                         modal.close();
                     })
@@ -119,6 +120,7 @@ modal.addFooterBtn('Закрыть', 'tingle-btn tingle-btn--primary', function(
     };
     var scene;
     var blocklyArea = document.getElementById('blocklyArea');
+
     var blocklyDiv = document.getElementById('blocklyDiv');
     options.toolbox = toolbox;
     var workspace = Blockly.inject(blocklyDiv, options);
@@ -138,6 +140,7 @@ modal.addFooterBtn('Закрыть', 'tingle-btn tingle-btn--primary', function(
       // Position blocklyDiv over blocklyArea.
       blocklyDiv.style.left = x + 'px';
       blocklyDiv.style.top = y + 'px';
+    
       blocklyDiv.style.width = blocklyArea.offsetWidth + 'px';
       blocklyDiv.style.height = blocklyArea.offsetHeight + 'px';
       Blockly.svgResize(workspace);

@@ -17,6 +17,7 @@
   <script type="text/javascript" src="js/lib/blockly/blocks_compressed.js"></script>
   <script type="text/javascript" src="js/lib/blockly/javascript_compressed.js"></script>
   <script type="text/javascript" src="js/lib/blockly/msg/js/ru.js"></script>
+  <script type="text/javascript"  src="js/lib/platform.js"></script>
   <script type="text/javascript" src="js/config.js"></script>
   <script type="text/javascript" src="js/maze.js"></script>
   <script type="text/javascript" src="js/pegman.js"></script>
@@ -44,8 +45,7 @@
   <div id="layer2" style="z-index: 1;">
     <div class="canvas" id="blocklyDiv" style="position: absolute"></div>
   </div>
-
-  <div id="resstart" style="position: fixed; bottom: 0px; left: 0px; z-index: 2;">
+  <div id="resstart" style="position: absolute; left: 0px; top: 552px;z-index: 2 ">
     <button class="play" id="play" value="play"><i id="play" class="fa fa-play" aria-hidden="true"></i>&nbsp;<span>Запуск</span></button>
 
     <!-- <div class="btn-group btn-group-toggle btn-block" data-toggle="buttons">

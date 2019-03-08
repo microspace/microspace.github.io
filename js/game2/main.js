@@ -5,7 +5,12 @@ $(window).resize(function() {
     window.resizeGame();
 });
 
-TopDownGame.game = new Phaser.Game($(window).width(), $(window).height(), Phaser.CANVAS, 'canvasContainer', null, false, true);
+const thisDeviceOS = platform.os.family;
+let renderEngine = Phaser.AUTO;
+if (thisDeviceOS == "Android" || thisDeviceOS == "iOS") {
+    renderEngine = Phaser.CANVAS;
+} 
+TopDownGame.game = new Phaser.Game($(window).width(), $(window).height(), renderEngine, 'canvasContainer', null, false, true);
 
 TopDownGame.game.state.add('Boot', TopDownGame.Boot);
 TopDownGame.game.state.add('Preload', TopDownGame.Preload);

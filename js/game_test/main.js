@@ -1,8 +1,12 @@
 'use strict';
 var TopDownGame = TopDownGame || {};
 
-
-TopDownGame.game = new Phaser.Game(400, 400, Phaser.CANVAS, 'canvasContainer', null, false, true);
+const thisDeviceOS = platform.os.family;
+let renderEngine = Phaser.AUTO;
+if (thisDeviceOS == "Android" || thisDeviceOS == "iOS") {
+    renderEngine = Phaser.CANVAS;
+} 
+TopDownGame.game = new Phaser.Game(400, 400, renderEngine, 'canvasContainer', null, false, true);
 
 TopDownGame.game.state.add('Boot', TopDownGame.Boot);
 TopDownGame.game.state.add('Preload', TopDownGame.Preload);

@@ -1212,8 +1212,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 }
                 catch (e) {
                     console.log(e + "couldn't set IsChecked For Lesson");
-                    $("#modaltext").text("Ты прошел урок, но что-то пошло не так. Позови учителя");
-                    $("#exampleModal").modal();
+                    
                 }
             } else {
                 $("#modaltext").text("Ты подобрал не все сундуки!");

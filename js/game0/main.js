@@ -4,7 +4,13 @@ $(window).resize(function() {
     window.resizeGame();
 });
 
+const thisDeviceOS = platform.os.family;
+let renderEngine = Phaser.AUTO;
+if (thisDeviceOS == "Android" || thisDeviceOS == "iOS") {
+    renderEngine = Phaser.CANVAS;
+} 
 TopDownGame.game = new Phaser.Game($(window).width(), $(window).height(), Phaser.AUTO, 'canvasContainer', null, false, true);
+
 TopDownGame.game.state.add('Boot', TopDownGame.Boot);
 TopDownGame.game.state.add('Preload', TopDownGame.Preload);
 TopDownGame.game.state.add('lesson0', TopDownGame.Lesson0);
