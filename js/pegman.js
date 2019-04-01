@@ -20,6 +20,7 @@ var Pegman = {
     isGladeBelow: false,
     firstName: "Рекрут",
     hasGoldenKey: false,
+    flipX: false,
 
 
     init: function (pegmanSprite) {
@@ -95,6 +96,7 @@ var Pegman = {
         TopDownGame.game.tweens.removeAll();
 
         this.direction = Maze.DirectionType.EAST;
+        this.flipX = false;
 
         this.posX = lastSuccessfullPosition.x;
         this.posY = lastSuccessfullPosition.y;
@@ -465,16 +467,18 @@ var Pegman = {
                 this.moveNSWE(this.posX + Maze.SQUARE_SIZE * step[0] * stepcount, this.posY + Maze.SQUARE_SIZE * step[1] * stepcount, stepcount);
                 break;
             case "uturn":
-                if (this.direction == Maze.DirectionType.EAST) {
+                if (this.flipX == false) {
                     this.direction = Maze.DirectionType.WEST;
                     var step = Maze.getStepInDirection["WEST"];
                     this.pegmanSprite.scale.x = -1;
                     try { weapon.fireAngle = Phaser.ANGLE_LEFT; } catch (e) { }
-                } else if (this.direction == Maze.DirectionType.WEST) {
+                    this.flipX = true;
+                } else if (this.flipX == true) {
                     this.direction = Maze.DirectionType.EAST;
                     var step = Maze.getStepInDirection["EAST"];
                     this.pegmanSprite.scale.x = 1;
                     try { weapon.fireAngle = Phaser.ANGLE_RIGHT; } catch (e) { }
+                    this.flipX = false;
                 }
 
                 this.playNextAction();
