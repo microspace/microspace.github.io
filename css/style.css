@@ -133,3 +133,24 @@ width: 150px;
 }
 
 
+.hero {
+  position: absolute;
+  bottom: 22px;
+  left: -55px;
+  overflow: hidden;
+  transform: scale(1.2);
+}
+
+.hero_fail {
+  position: absolute;
+  bottom: 0px;
+  left: -100px;
+  overflow: hidden;
+
+}
+
+.modal-body{
+  font-family: 'Montserrat', sans-serif;
+  font-weight:bold;
+  padding-left: 35%
+}

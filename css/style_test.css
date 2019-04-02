@@ -134,5 +134,13 @@ button.reset {
 
 
 .custom-class-1 {
-  font-family: 'Russo One', sans-serif;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.tingle-modal-box__content {
+ margin-left: 30%;
+}
+
+.tingle-btn {
+  border-radius: 12px;
 }
