@@ -32,13 +32,18 @@ TopDownGame.Lesson1.prototype = {
 
             if (scene === undefined || scene === null) {
 
-                scene = 0;
+                scene = 4;
             }
             if (scene == 0) {
                 var result = findObjectsByType('playerStartPosition', this.map, 'playerLayer');
                 lastSuccessfullPosition = {
                     x: result[0].x,
                     y: result[0].y
+                };
+            } else if (scene == 5) {
+                lastSuccessfullPosition = {
+                    x: Maze.scenes[scene - 2].endPos[0],
+                    y: Maze.scenes[scene - 2].endPos[0]
                 };
             } else {
                 lastSuccessfullPosition = {
@@ -339,6 +344,11 @@ TopDownGame.Lesson1.prototype = {
         Maze.scenes[4].startPos[1] = Maze.scenes[3].endPos[1];
         Maze.scenes[4].endPos[0] = null;
         Maze.scenes[4].endPos[1] = null;
+
+        Maze.scenes[5].startPos[0] = Maze.scenes[3].endPos[0];
+        Maze.scenes[5].startPos[1] = Maze.scenes[3].endPos[1];
+        Maze.scenes[5].endPos[0] = null;
+        Maze.scenes[5].endPos[1] = null;
     },
 };
 

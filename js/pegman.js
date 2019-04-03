@@ -98,7 +98,7 @@ var Pegman = {
 
         this.direction = Maze.DirectionType.EAST;
         this.flipX = false;
-        
+
         this.posX = lastSuccessfullPosition.x;
         this.posY = lastSuccessfullPosition.y;
         try {
@@ -148,7 +148,7 @@ var Pegman = {
         flag = false;
         TopDownGame.game.camera.follow(player);
 
-        
+
         try {
             weapon.bullets.callAll('kill');
         } catch (e) {}
@@ -422,8 +422,9 @@ var Pegman = {
     },
 
     playNextAction: function () {
-     if (this.pegmanActions.length <= 0) {
+        if (this.pegmanActions.length <= 0) {
             TopDownGame.game.time.events.add(500, delayBeforeCheck, this);
+
             function delayBeforeCheck() {
                 Pegman.checkFinal();
             }
@@ -1073,6 +1074,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     }
                 });
                 if (aliveBarrelsCount == 0) {
+                    scene = 5;
                     $("#modaltext").text("Поздравляю! Ты прошел сложный уровень!");
                     $("#imagecontainer").attr('class', 'hero_win');
                     $("#mood").attr("src", "assets/images/win.png");
@@ -1095,12 +1097,18 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
 
                     if (restrictedToHit == false) {
                         $("#modaltext").text("Ты убрал не все нужные бочки!");
-                    $("#imagecontainer").attr('class', 'hero_fail');
-                    $("#mood").attr("src", "assets/images/fail.png");
-                    $("#exampleModal").modal();
+                        $("#imagecontainer").attr('class', 'hero_fail');
+                        $("#mood").attr("src", "assets/images/fail.png");
+                        $("#exampleModal").modal();
                     }
-                    
+
                 }
+            }  else if (scene == 5) { 
+                // это уровень - заглушка
+                $("#modaltext").text("Ты уже прошел этот уровень!");
+                $("#imagecontainer").attr('class', 'hero_win');
+                $("#mood").attr("src", "assets/images/win.png");
+                $("#exampleModal").modal();
             }
 
 
@@ -1273,6 +1281,16 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 $("#exampleModal").modal();
             }
         }
+
+
+
+
+
+
+
+
+
+        
         if (TopDownGame.game.state.getCurrentState().key == "lesson3") {
             if (setblocks == tilestodraw.length) {
                 if (scene == 6) {
@@ -1758,7 +1776,9 @@ function setIsCheckedForLesson() {
 
 var runProgram = function () {
 
-    try { restrictedToHit = false;} catch (e) {}
+    try {
+        restrictedToHit = false;
+    } catch (e) {}
     var code = Blockly.JavaScript.workspaceToCode(workspace);
     Pegman.vdposX = Pegman.dposX;
     Pegman.vdposY = Pegman.dposY;
@@ -1804,7 +1824,7 @@ var resetProgram = function () {
 
     }
     Pegman.reset2();
-    
+
 }
 
 

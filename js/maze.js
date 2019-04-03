@@ -103,6 +103,18 @@ Maze.scenes = [{
         300,
         500
     ]
+}, {
+    "id": 5,
+    "name": "Scene5",
+    "status": 0,
+    "startPos": [
+        300,
+        400
+    ],
+    "endPos": [
+        300,
+        500
+    ]
 }];
 
 $(function () {
