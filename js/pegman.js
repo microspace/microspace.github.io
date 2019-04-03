@@ -957,6 +957,21 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
 
         //TopDownGame.game.state.getCurrentState().key == "Game" 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
         if (TopDownGame.game.state.getCurrentState().key == "lesson1") {
 
             if (scene == 0) {
@@ -1069,7 +1084,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
             } else if (scene == 4) {
                 var aliveBarrelsCount = 0;
                 barrels.forEach(function (c) {
-                    if (c["sprite"] == "needToHit" && c.health > 60) {
+                    if (c["sprite"] == "needToHit" && c.health > 20) {
                         aliveBarrelsCount += 1;
                     }
                 });
@@ -1079,6 +1094,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     $("#imagecontainer").attr('class', 'hero_win');
                     $("#mood").attr("src", "assets/images/win.png");
                     $("#exampleModal").modal();
+                    toogleRunButton();
                     lastSuccessfullPosition.x = player.x;
                     lastSuccessfullPosition.y = player.y;
 

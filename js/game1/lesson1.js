@@ -215,7 +215,7 @@ TopDownGame.Lesson1.prototype = {
 
             toogleRunButton();
         } else {
-            if (sprite.health > 40) {
+            if (sprite.health == 52) {
                 sprite.frame = 237;
                 if (sprite["sprite"] == "needToHit") {
                     sprite.frame = 239;
@@ -223,7 +223,7 @@ TopDownGame.Lesson1.prototype = {
                 if (sprite["flipped"] == true) {
                     sprite.frame = 242;
                 }
-            } else if (sprite.health < 60) {
+            } else if (sprite.health == 4) {
                 sprite.frame = 240;
                 if (sprite["sprite"] == "needToHit") {
                     sprite.frame = 240;
@@ -231,7 +231,7 @@ TopDownGame.Lesson1.prototype = {
                 if (sprite["flipped"] == true) {
                     sprite.frame = 243;
                 }
-                sprite.health += damage; // говнокод, позволяющий не умирать
+                //sprite.health += damage; // говнокод, позволяющий не умирать
                 sprite.body.enable = false; // отключаем физику чтобы пули пролетали сквозь остатки бочки
             }
         }
