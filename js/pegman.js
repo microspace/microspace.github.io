@@ -1132,6 +1132,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
 
             } else {
                 $("#modaltext").text("Ты подобрал не все сундуки!");
+                $("#imagecontainer").attr('class', 'hero_fail');
                 $("#mood").attr("src", "assets/images/fail.png");
                 $("#exampleModal").modal();
             }
@@ -1161,6 +1162,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
 
             } else {
                 $("#modaltext").text("Ты подобрал не все сундуки!");
+                $("#imagecontainer").attr('class', 'hero_fail');
                 $("#mood").attr("src", "assets/images/fail.png");
                 $("#exampleModal").modal();
             }
@@ -1192,6 +1194,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
 
             } else {
                 $("#modaltext").text("Ты подобрал не все сундуки!");
+                $("#imagecontainer").attr('class', 'hero_fail');
                 $("#mood").attr("src", "assets/images/fail.png");
                 $("#exampleModal").modal();
             }
@@ -1228,6 +1231,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 }
             } else {
                 $("#modaltext").text("Ты подобрал не все сундуки!");
+                $("#imagecontainer").attr('class', 'hero_fail');
                 $("#mood").attr("src", "assets/images/fail.png");
                 $("#exampleModal").modal();
             }
@@ -1264,6 +1268,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
 
             } else {
                 $("#modaltext").text("Ты собрал не все сундуки!");
+                $("#imagecontainer").attr('class', 'hero_fail');
                 $("#mood").attr("src", "assets/images/fail.png");
                 $("#exampleModal").modal();
             }
@@ -1349,7 +1354,8 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
                     if (isOverlapping == true) {
                         $("#modaltext").text("Ты отлично справился! Альянс может гордится, что в его рядах есть такие умелые и умные рейнджеры как ты!");
-                        $("#mood").attr("src", "assets/images/fail.png");
+                        $("#imagecontainer").attr('class', 'hero_win');
+                        $("#mood").attr("src", "assets/images/win.png");
                         $("#exampleModal").modal();
                         lastSuccessfullPosition.x = player.x;
                         lastSuccessfullPosition.y = player.y;
@@ -1421,6 +1427,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
 
 
                         $("#modaltext").text(" Тут повсюду трупы. Что тут произошло? Надеюсь с отрядом все в порядке.");
+                        $("#imagecontainer").attr('class', 'hero_fail');
                         $("#mood").attr("src", "assets/images/fail.png");
                         $("#exampleModal").modal();
                     } else if (scene == "521") {
@@ -1751,7 +1758,7 @@ function setIsCheckedForLesson() {
 
 var runProgram = function () {
 
-    restrictedToHit = false;
+    try { restrictedToHit = false;} catch (e) {}
     var code = Blockly.JavaScript.workspaceToCode(workspace);
     Pegman.vdposX = Pegman.dposX;
     Pegman.vdposY = Pegman.dposY;

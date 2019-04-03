@@ -5,19 +5,20 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Game</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
 
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <script type="text/javascript" src="js/lib/phaser.min.js"></script>
-    <script src="//code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="//code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
     <script type="text/javascript" src="js/lib/plugin.min.js"></script>
     <script type="text/javascript" src="js/lib/blockly/blockly_compressed.js"></script>
     <script type="text/javascript" src="js/lib/blockly/blocks_compressed.js"></script>
     <script type="text/javascript" src="js/lib/blockly/javascript_compressed.js"></script>
     <script type="text/javascript" src="js/lib/blockly/msg/js/ru.js"></script>
-    <script type="text/javascript"  src="js/lib/platform.js"></script>
+    <script type="text/javascript" src="js/lib/platform.js"></script>
     <script type="text/javascript" src="js/lib/HealthBar.standalone.js"></script>
     <script type="text/javascript" src="js/blocks.js"></script>
     <script type="text/javascript" src="js/config.js"></script>
@@ -33,8 +34,8 @@
     <script type="text/javascript" src="js/game4/main.js"></script>
     <style>
         .blocklySvg {
-        background-color: transparent;
-    }
+            background-color: transparent;
+        }
     </style>
 </head>
 
@@ -52,7 +53,8 @@
         <div class="btn-group-vertical">
 
 
-            <button class="play" id="play" value="play"><i id="play" class="fa fa-play" aria-hidden="true"></i>&nbsp;<span>Запуск</span></button>
+            <button class="play" id="play" value="play"><i id="play" class="fa fa-play"
+                    aria-hidden="true"></i>&nbsp;<span>Запуск</span></button>
             <!-- <div class="btn-group btn-group-toggle btn-block" data-toggle="buttons">
                     <label class="btn btn-secondary">
                       <input type="radio" name="options" id="option05" autocomplete="off"> x0,5
@@ -81,7 +83,7 @@
         <block type="factory_base" deletable="false" x="100" y="20"></block>
     </xml>
     <div class="modal" tabindex="-1" role="dialog" id="exampleModal">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -92,6 +94,9 @@
                     <p id="modaltext"></p>
                 </div>
                 <div class="modal-footer">
+                    <div id="imagecontainer" class="hero">
+                        <img id="mood" src="assets/images/success.png" />
+                    </div>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
                 </div>
             </div>
@@ -99,60 +104,61 @@
     </div>
     <!-- include the main game file -->
     <script type="text/javascript">
-    //var workspace = Blockly.inject('blockly_editor', { toolbox: document.getElementById('toolbox') });
+        //var workspace = Blockly.inject('blockly_editor', { toolbox: document.getElementById('toolbox') });
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
+    </script>
     <script>
+        var options = {
+            comments: true,
+            collapse: true,
+            disable: true,
+            maxBlocks: 20,
+            oneBasedIndex: true,
+            readOnly: false,
+            //rtl: false,
+            //scrollbars: true,
+            trashcan: true,
+            //toolbox: null,
+            horizontalLayout: false,
+            toolboxPosition: 'start',
+            zoom: {
+                controls: false,
+                wheel: true,
+                startScale: 0.8,
+                maxScale: 4,
+                minScale: 0.25,
+                scaleSpeed: 1.1
+            }
+        };
 
-var options = {
-      comments: true,
-      collapse: true,
-      disable: true,
-      maxBlocks: 20,
-      oneBasedIndex: true,
-      readOnly: false,
-      //rtl: false,
-      //scrollbars: true,
-      trashcan: true,
-      //toolbox: null,
-      horizontalLayout: false,
-      toolboxPosition: 'start',
-      zoom: {
-        controls: false,
-        wheel: true,
-        startScale: 0.8,
-        maxScale: 4,
-        minScale: 0.25,
-        scaleSpeed: 1.1
-      }
-    };
+        $('input[type=radio][name=options]').change(function () {
+            var optionValue = this.id;
+            if (optionValue == "option05") {
+                timeScale = 0.5;
+            } else if (optionValue == "option2") {
+                timeScale = 2;
+            } else if (optionValue == "option6") {
+                timeScale = 6;
+            } else if (optionValue == "option1") {
+                timeScale = 1;
+            }
 
-            $('input[type=radio][name=options]').change(function () {
-      var optionValue = this.id;
-      if (optionValue == "option05") {
-        timeScale = 0.5;
-      } else if (optionValue == "option2") {
-        timeScale = 2;
-      } else if (optionValue == "option6") {
-        timeScale = 6;
-      } else if (optionValue == "option1") {
-        timeScale = 1;
-      }
+            try {
+                Pegman.tween.timeScale = timeScale;
+            } catch (e) {
 
-      try {
-        Pegman.tween.timeScale = timeScale;
-      } catch (e) {
+            }
 
-      }
-
-    });
+        });
         var blocklyArea = document.getElementById('full-size');
         var blocklyDiv = document.getElementById('blocklyDiv');
         options.toolbox = toolbox;
-    var workspace = Blockly.inject(blocklyDiv, options);
+        var workspace = Blockly.inject(blocklyDiv, options);
 
         Blockly.BlockSvg.START_HAT = true;
         //Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'),  workspace);
@@ -178,10 +184,16 @@ var options = {
         onresize();
         Blockly.svgResize(workspace);
 
-        $("#resstart").css({ "z-index": 20 });
+        $("#resstart").css({
+            "z-index": 20
+        });
         var buttonh = blocklyArea.offsetHeight - 200;
-        $("#resstart").css({ "z-index": 20 });
-        $("#resstart").css({ "top": buttonh + 'px' });
+        $("#resstart").css({
+            "z-index": 20
+        });
+        $("#resstart").css({
+            "top": buttonh + 'px'
+        });
 
         function onHideHat(event) {
             if (event.type == Blockly.Events.MOVE) {
@@ -197,7 +209,6 @@ var options = {
             }
         }
         workspace.addChangeListener(onHideHat);
-
     </script>
 </body>
 
