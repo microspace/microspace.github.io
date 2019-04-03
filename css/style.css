@@ -149,6 +149,15 @@ width: 150px;
 
 }
 
+.hero_win {
+  position: absolute;
+  bottom: 31px;
+  left: -25px;
+  transform: scale(1.2);
+  overflow: hidden;
+
+}
+
 .modal-body{
   font-family: 'Montserrat', sans-serif;
   font-weight:bold;

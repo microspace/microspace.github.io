@@ -6,6 +6,7 @@ var weapon;
 var explosion;
 var items;
 var barrels;
+var restrictedToHit = false; // нужна дял того чтобы запретить конечную проверку при выстреле по бочке
 // 0 is start scene of the level
 var goalbarrelcount;
 var xyqueue = getArrayWithLimitedLength(10);
@@ -26,18 +27,19 @@ TopDownGame.Lesson1.prototype = {
         //create player
         // load all data from map json, populate the structure.
         this.loadSceneData();
+scene = 4
 
-        if (jQuery.isEmptyObject(lastSuccessfullPosition)) {
+         if (jQuery.isEmptyObject(lastSuccessfullPosition)) {
             if (scene === undefined || scene === null) {
-                scene = 0
+                
             }
             var result = findObjectsByType('playerStartPosition', this.map, 'playerLayer');
 
             lastSuccessfullPosition = {
-                x: result[0].x,
-                y: result[0].y
+                x: Maze.scenes[scene - 1].endPos[0],
+                y: Maze.scenes[scene - 1].endPos[1]
             };
-        }
+        } 
 
 
 
@@ -189,12 +191,18 @@ TopDownGame.Lesson1.prototype = {
         }
     },
     bulletHitBarrel: function (sprite, bullet) {
+
         var damage = 48;
         sprite.damage(damage);
         if (sprite["sprite"] == "restrictedToHit") {
+
             $("#modaltext").text("Нельзя стрелять по бочкам с водой! Целься точнее!");
             $("#exampleModal").modal();
+            restrictedToHit = true;
             Pegman.reset2();
+
+
+            toogleRunButton();
         } else {
             if (sprite.health > 40) {
                 sprite.frame = 237;
