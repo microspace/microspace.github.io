@@ -12,7 +12,7 @@ var goalbarrelcount;
 var xyqueue = getArrayWithLimitedLength(10);
 var lastSuccessfullPosition = {}; //хранит положение какое было у спрайта когда он в последний раз соверлаппился с целью
 //title screen
-TopDownGame.Lesson1 = function () { };
+TopDownGame.Lesson1 = function () {};
 TopDownGame.Lesson1.prototype = {
     create: function () {
         this.map = this.game.add.tilemap('lesson1');
@@ -27,19 +27,27 @@ TopDownGame.Lesson1.prototype = {
         //create player
         // load all data from map json, populate the structure.
         this.loadSceneData();
-scene = 4
 
-         if (jQuery.isEmptyObject(lastSuccessfullPosition)) {
+        if (jQuery.isEmptyObject(lastSuccessfullPosition)) {
+
             if (scene === undefined || scene === null) {
-                
-            }
-            var result = findObjectsByType('playerStartPosition', this.map, 'playerLayer');
 
-            lastSuccessfullPosition = {
-                x: Maze.scenes[scene - 1].endPos[0],
-                y: Maze.scenes[scene - 1].endPos[1]
-            };
-        } 
+                scene = 0;
+            }
+            if (scene == 0) {
+                var result = findObjectsByType('playerStartPosition', this.map, 'playerLayer');
+                lastSuccessfullPosition = {
+                    x: result[0].x,
+                    y: result[0].y
+                };
+            } else {
+                lastSuccessfullPosition = {
+                    x: Maze.scenes[scene - 1].endPos[0],
+                    y: Maze.scenes[scene - 1].endPos[1]
+                };
+            }
+
+        }
 
 
 
@@ -152,8 +160,7 @@ scene = 4
         if (this.cursors.up.isDown) {
             this.game.camera.unfollow();
             this.game.camera.y -= cameraSpeed;
-        }
-        else if (this.cursors.down.isDown) {
+        } else if (this.cursors.down.isDown) {
             this.game.camera.unfollow();
             this.game.camera.y += cameraSpeed;
         }
@@ -161,8 +168,7 @@ scene = 4
         if (this.cursors.left.isDown) {
             this.game.camera.unfollow();
             this.game.camera.x -= cameraSpeed;
-        }
-        else if (this.cursors.right.isDown) {
+        } else if (this.cursors.right.isDown) {
             this.game.camera.unfollow();
             this.game.camera.x += cameraSpeed;
         }
@@ -288,8 +294,7 @@ scene = 4
         } else if (sprite["sprite"] == "allowedToHit2") {
             sprite.frame = 236;
 
-        }
-        else if (sprite["sprite"] == "needToHit") {
+        } else if (sprite["sprite"] == "needToHit") {
             sprite.frame = 238;
             if (sprite["flipped"] == true) {
                 sprite.frame = 241;
