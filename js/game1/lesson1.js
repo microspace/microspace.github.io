@@ -26,8 +26,16 @@ TopDownGame.Lesson1.prototype = {
         //create player
         // load all data from map json, populate the structure.
         this.loadSceneData();
-        console.log(scene)
 
+        console.log(scene)
+        if (scene == 5) {
+            $('#play').prop('disabled', true);
+
+            $("#modaltext").text("Ты уже прошел этот уровень!");
+            $("#imagecontainer").attr('class', 'hero_win');
+            $("#exampleModal").modal();
+        }
+        
         if (jQuery.isEmptyObject(lastSuccessfullPosition)) {
 
             if (scene === undefined || scene === null) {
@@ -41,11 +49,6 @@ TopDownGame.Lesson1.prototype = {
                     y: result[0].y
                 };
             } else if (scene == 5) {
-                $('#play').prop('disabled', true);
-
-                $("#modaltext").text("Ты уже прошел этот уровень!");
-                $("#imagecontainer").attr('class', 'hero_win');
-                $("#exampleModal").modal(); 
 
                 lastSuccessfullPosition = {
                     x: Maze.scenes[scene - 2].endPos[0],
