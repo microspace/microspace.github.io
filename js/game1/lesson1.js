@@ -32,7 +32,7 @@ TopDownGame.Lesson1.prototype = {
 
             if (scene === undefined || scene === null) {
 
-                scene = 4;
+                scene = 0;
             }
             if (scene == 0) {
                 var result = findObjectsByType('playerStartPosition', this.map, 'playerLayer');

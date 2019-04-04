@@ -77,7 +77,6 @@ var Pegman = {
     },
 
     reset2: function () {
-    console.log("ffff")
         TopDownGame.game.stage.updateTransform();
         TopDownGame.game.time.events.add(500, delayEnBody, this);
         try {
@@ -1091,7 +1090,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                         aliveBarrelsCount += 1;
                     }
                 });
-                if (aliveBarrelsCount >= 0) {
+                if (aliveBarrelsCount == 0) {
                     scene = 5;
                     $("#modaltext").text("Поздравляю! Ты прошел сложный уровень!");
                     $("#imagecontainer").attr('class', 'hero_win');
