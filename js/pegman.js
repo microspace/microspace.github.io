@@ -77,6 +77,7 @@ var Pegman = {
     },
 
     reset2: function () {
+    console.log("ffff")
         TopDownGame.game.stage.updateTransform();
         TopDownGame.game.time.events.add(500, delayEnBody, this);
         try {
@@ -955,7 +956,6 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
             }
         }
 
-        //TopDownGame.game.state.getCurrentState().key == "Game" 
 
 
 
@@ -964,13 +964,16 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
 
 
 
-
-
-
-
-
-
-
+/* 
+                #   
+                #      ######  ####   ####   ####  #    #     ##   
+                #      #      #      #      #    # ##   #    # #   
+                #      #####   ####   ####  #    # # #  #      #   
+                #      #           #      # #    # #  # #      #   
+                #      #      #    # #    # #    # #   ##      #   
+                ###### ######  ####   ####   ####  #    #    #####  
+*/
+                                                           
         
         if (TopDownGame.game.state.getCurrentState().key == "lesson1") {
 
@@ -1088,13 +1091,14 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                         aliveBarrelsCount += 1;
                     }
                 });
-                if (aliveBarrelsCount == 0) {
+                if (aliveBarrelsCount >= 0) {
                     scene = 5;
                     $("#modaltext").text("Поздравляю! Ты прошел сложный уровень!");
                     $("#imagecontainer").attr('class', 'hero_win');
-                    $("#mood").attr("src", "assets/images/win.png");
+                    //$("#mood").attr("src", "assets/images/win.png");
                     $("#exampleModal").modal();
-                    toogleRunButton();
+                    
+                    $('#play').prop('disabled', true);
                     lastSuccessfullPosition.x = player.x;
                     lastSuccessfullPosition.y = player.y;
 
@@ -1107,30 +1111,42 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     } catch (e) {
                         console.log("couldn't save: " + e);
                     }
-
+                    toogleRunButton();
 
                 } else {
 
                     if (restrictedToHit == false) {
                         $("#modaltext").text("Ты убрал не все нужные бочки!");
                         $("#imagecontainer").attr('class', 'hero_fail');
-                        $("#mood").attr("src", "assets/images/fail.png");
+                       // $("#mood").attr("src", "assets/images/fail.png");
                         $("#exampleModal").modal();
                     }
 
                 }
             }  else if (scene == 5) { 
+                
                 // это уровень - заглушка
-                $("#modaltext").text("Ты уже прошел этот уровень!");
-                $("#imagecontainer").attr('class', 'hero_win');
-                $("#mood").attr("src", "assets/images/win.png");
-                $("#exampleModal").modal();
+
             }
-
-
-            //TopDownGame.game.state.getCurrentState().key == "Game" 
         }
 
+
+
+
+
+
+
+/* 
+                                                              #####  
+                #      ######  ####   ####   ####  #    #    #     # 
+                #      #      #      #      #    # ##   #          # 
+                #      #####   ####   ####  #    # # #  #     #####  
+                #      #           #      # #    # #  # #    #       
+                #      #      #    # #    # #    # #   ##    #       
+                ###### ######  ####   ####   ####  #    #    ####### 
+*/
+
+        
         if (TopDownGame.game.state.getCurrentState().key == "lesson21") {
 
             var aliveChestsCount = 0;
@@ -1645,6 +1661,7 @@ function saveWorkspace() {
 
     var datatoStore = {};
     datatoStore.code = newTemp;
+     
     datatoStore.scene = scene;
     datatoStore.positionX = lastSuccessfullPosition.x;
     datatoStore.positionY = lastSuccessfullPosition.y;
@@ -1829,6 +1846,7 @@ var runProgram = function () {
     } catch (e) {
         console.log("couldn't save: " + e);
     }
+    console.log('ru')
 }
 
 
@@ -1839,6 +1857,7 @@ var resetProgram = function () {
     } catch (e) {
 
     }
+    console.log('resetprogram')
     Pegman.reset2();
 
 }

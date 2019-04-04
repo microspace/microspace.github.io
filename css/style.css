@@ -132,21 +132,34 @@ padding: 5px 5px;
 width: 150px;
 }
 
-
 .hero {
+  object-fit: none;
+  object-position: 0 0;
+  width: 190px;
+  height: 316px;
   position: absolute;
-  bottom: 22px;
-  left: -55px;
+  bottom: 31px;
+  left: -40px;
   overflow: hidden;
   transform: scale(1.2);
 }
 
+
+
+
 .hero_fail {
   position: absolute;
   bottom: 0px;
-  left: -100px;
+  left: -80px;
   overflow: hidden;
 
+}
+
+.hero_fail > #mood{ 
+  object-fit: none; 
+   width: 300px;
+  height: 316px;
+  object-position: -192px 0px;
 }
 
 .hero_win {
@@ -157,7 +170,12 @@ width: 150px;
   overflow: hidden;
 
 }
-
+.hero_win > #mood{ 
+  object-fit: none; 
+   width: 300px;
+  height: 316px;
+  object-position: -490px 0px;
+}
 .modal-body{
   font-family: 'Montserrat', sans-serif;
   font-weight:bold;

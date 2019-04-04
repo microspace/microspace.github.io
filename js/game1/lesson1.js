@@ -32,7 +32,7 @@ TopDownGame.Lesson1.prototype = {
 
             if (scene === undefined || scene === null) {
 
-                scene = 0;
+                scene = 4;
             }
             if (scene == 0) {
                 var result = findObjectsByType('playerStartPosition', this.map, 'playerLayer');
@@ -41,6 +41,12 @@ TopDownGame.Lesson1.prototype = {
                     y: result[0].y
                 };
             } else if (scene == 5) {
+                $('#play').prop('disabled', true);
+
+                $("#modaltext").text("Ты уже прошел этот уровень!");
+                $("#imagecontainer").attr('class', 'hero_win');
+                $("#exampleModal").modal(); 
+
                 lastSuccessfullPosition = {
                     x: Maze.scenes[scene - 2].endPos[0],
                     y: Maze.scenes[scene - 2].endPos[0]
@@ -48,7 +54,7 @@ TopDownGame.Lesson1.prototype = {
             } else {
                 lastSuccessfullPosition = {
                     x: Maze.scenes[scene - 1].endPos[0],
-                    y: Maze.scenes[scene - 1].endPos[1]
+                    y: Maze.scenes[scene - 1].endPos[1] - 15
                 };
             }
 
@@ -210,10 +216,11 @@ TopDownGame.Lesson1.prototype = {
             $("#modaltext").text("Нельзя стрелять по бочкам с водой! Целься точнее!");
             $("#exampleModal").modal();
             restrictedToHit = true;
-            Pegman.reset2();
+            //Pegman.reset2();
+            Pegman.pegmanActions = [];
 
 
-            toogleRunButton();
+            //toogleRunButton();
         } else {
             if (sprite.health == 52) {
                 sprite.frame = 237;
