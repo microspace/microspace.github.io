@@ -10,7 +10,6 @@ var restrictedToHit = false; // нужна дял того чтобы запре
 // 0 is start scene of the level
 var goalbarrelcount;
 var xyqueue = getArrayWithLimitedLength(10);
-var lastSuccessfullPosition = {}; //хранит положение какое было у спрайта когда он в последний раз соверлаппился с целью
 //title screen
 TopDownGame.Lesson1 = function () {};
 TopDownGame.Lesson1.prototype = {
@@ -27,6 +26,7 @@ TopDownGame.Lesson1.prototype = {
         //create player
         // load all data from map json, populate the structure.
         this.loadSceneData();
+        console.log(scene)
 
         if (jQuery.isEmptyObject(lastSuccessfullPosition)) {
 

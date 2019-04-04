@@ -1845,7 +1845,6 @@ var runProgram = function () {
     } catch (e) {
         console.log("couldn't save: " + e);
     }
-    console.log('ru')
 }
 
 
@@ -1856,7 +1855,6 @@ var resetProgram = function () {
     } catch (e) {
 
     }
-    console.log('resetprogram')
     Pegman.reset2();
 
 }
