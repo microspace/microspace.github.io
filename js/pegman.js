@@ -1471,10 +1471,15 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                         $("#imagecontainer").attr('class', 'hero_win');
 
                         $("#exampleModal").modal();
-                        lastSuccessfullPosition.x = player.x;
-                        lastSuccessfullPosition.y = player.y;
+                        Pegman.lsp.x = player.x;
+                        Pegman.lsp.y = player.y;
+                        toogleRunButton();
+                        pointer.x = 0;
+                        pointer.y = 0;
+                        $("#play").prop('disabled', true);
                         Blockly.mainWorkspace.clear();
                         Blockly.mainWorkspace.clearUndo();
+                        scene = 43;
                         Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
                         try {
                             saveWorkspace();
@@ -1487,7 +1492,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                             console.log("couldn't set IsChecked For Lesson");
                         }
                     }
-                }
+                } 
             }
         }
 

@@ -61,7 +61,7 @@ TopDownGame.Lesson4.prototype = {
         weapon = this.game.add.weapon(20, 'bullet');
 
         if (scene === undefined || scene === null) {
-            scene = 42;
+            scene = 1;
         }
 
 
@@ -150,11 +150,28 @@ TopDownGame.Lesson4.prototype = {
         player.animations.play('STAND');
         Pegman.init(player);
 
-console.log(player)
-        if (scene != 42) {
+
+        if (scene != 42 && scene != 43) {
             load_scene();
         } else if (scene == 42) {
             load_map("lesson42");
+        } else if (scene == 43) {
+
+            load_map("lesson42");
+            var result = findObjectsByType('scene1Goal', map, 'playerLayer');
+            Pegman.lsp.x = result[0].x;
+            Pegman.lsp.y = result[0].y;
+
+            player.x = result[0].x;
+            player.y = result[0].y;
+
+            pointer.x = 0;
+            pointer.y = 0;
+            $("#modaltext").text("ты уже прошел этот уровень!");
+            $("#imagecontainer").attr('class', 'hero_win');
+            $("#exampleModal").modal();
+            $("#play").prop('disabled', true);
+
         }
         //the camera will follow the player in the world
         //this.game.camera.follow(player);
@@ -472,8 +489,11 @@ function load_map(name) {
 
 
     function fadePicture() {
-        $("#modaltext").text("Ха! Да ты со всем справился! А теперь последнее испытание. Оно только для бойцов со стальными нервами! Пройди по очень тонкому мосту над бездной и подстрели те бочки!");
+        if (scene == 42) {
+            $("#modaltext").text("Ха! Да ты со всем справился! А теперь последнее испытание. Оно только для бойцов со стальными нервами! Пройди по очень тонкому мосту над бездной и подстрели те бочки!");
         $("#exampleModal").modal();
+        }
+        
         // загнал сюда, потому что глюк возникает когда плеер не успевает успеть
         sinkLayer = map.createLayer('sinkLayer');
         map.setTileIndexCallback([...Array(500).keys()], sinkInWater, this, sinkLayer);
