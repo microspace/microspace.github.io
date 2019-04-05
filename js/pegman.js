@@ -1432,7 +1432,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     aliveBarrelsCount += 1;
                 }
             });
-            if (aliveBarrelsCount >= 0) {
+            if (aliveBarrelsCount == 0) {
                 if (scene < 5) {
 
                     this.lsp.x = player.x;
