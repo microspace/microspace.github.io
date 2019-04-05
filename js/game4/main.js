@@ -33,4 +33,3 @@ var init = function() {
     $("#nextButton").hide();
 };
 
-

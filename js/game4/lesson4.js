@@ -7,7 +7,7 @@ var cp;
 var barrels;
 var flag = false;
 var hitflag = false;
-var scene;
+
 var map;
 var drawLayer;
 var showflag = true;
@@ -19,13 +19,10 @@ var maxcaps2 = 100;
 var myHealthBar;
 var velocity = 400;
 var sinkflag = false;
-var lastSuccessfullPosition = {
-    x: Maze.SQUARE_SIZE * (4 + 0.5),
-    y: Maze.SQUARE_SIZE * (3 + 0.5)
-};
+
 var timeSinceLastIncrement = 0;
 //title screen
-TopDownGame.Lesson4 = function () { };
+TopDownGame.Lesson4 = function () {};
 TopDownGame.Lesson4.prototype = {
     create: function () {
 
@@ -55,25 +52,42 @@ TopDownGame.Lesson4.prototype = {
         pointer.animations.add('ANIM', [0, 1], 2, /*loop*/ true);
         pointer.visible = false;
         pointer.animations.play('ANIM');
-    
+
         this.game.physics.arcade.enable(pointer);
         pointer.anchor.setTo(0.5, 0.5);
         pointer.body.setSize(10, 65, 48, 10);
 
         this.createItems();
         weapon = this.game.add.weapon(20, 'bullet');
+
+        if (scene === undefined || scene === null) {
+            scene = 3;
+        }
+
+
         var result = findObjectsByType('playerStartPosition', map, 'playerLayer');
-        lastSuccessfullPosition = {
-            x: result[0].x,
-            y: result[0].y
-        };
-        player = this.game.add.sprite(result[0].x, result[0].y, 'pegman');
+
+        if (scene == 1 || scene == 2 || scene == 3) {
+           
+            Pegman.lsp.x = result[0].x;
+            Pegman.lsp.y = result[0].y;
+
+        } else if (scene == 4) {
+            var lastSuccessfullPosition = {
+                x: Maze.SQUARE_SIZE * (10 + 0.5),
+                y: Maze.SQUARE_SIZE * (14 + 0.5)
+            };
+
+        }
+
+        player = this.game.add.sprite(Pegman.lsp.x, Pegman.lsp.y, 'pegman');
+        
         upperLayer = map.createLayer('upperLayer');
 
 
         player.anchor.setTo(0.5, 0.5);
         this.game.physics.arcade.enable(player);
-        player.body.collideWorldBounds=true;
+        player.body.collideWorldBounds = true;
         player.body.setSize(60, 13, 40, 73);
         flour.resizeWorld();
 
@@ -95,18 +109,10 @@ TopDownGame.Lesson4.prototype = {
         myHealthBar = new HealthBar(TopDownGame.game, barConfig);
         myHealthBar.setFixedToCamera(true);
         myHealthBar.setPercent(capacity);
+        console.log(lastSuccessfullPosition);
 
-        Pegman.init(player);
-        if (scene === undefined || scene === null) {
-            scene = 1;
-        }
-        
-        if (scene != 42) {
-            load_scene();
-        } else if (scene == 42) {
-            load_map("lesson42");
-        }
-        
+       
+
 
         //bullets
 
@@ -141,7 +147,14 @@ TopDownGame.Lesson4.prototype = {
         player.animations.add('HIT', [25, 26, 27, 28, 29], fps, /*loop*/ false);
         player.animations.add('SHOOT', [20, 21, 22, 23, 24], fps, /*loop*/ false);
         player.animations.play('STAND');
+        Pegman.init(player);
 
+
+        if (scene != 42) {
+            load_scene();
+        } else if (scene == 42) {
+            load_map("lesson42");
+        }
         //the camera will follow the player in the world
         //this.game.camera.follow(player);
         //move player with cursor keys
@@ -149,46 +162,46 @@ TopDownGame.Lesson4.prototype = {
         map.setTileIndexCallback([...Array(500).keys()], sinkInWater, this, sinkLayer);
         map.setTileIndexCallback([...Array(500).keys()], hitEvent, this, blockLayer);
         TopDownGame.game.camera.flash(0x000000, 500);
-        h = this.game.input.keyboard.addKey(Phaser.Keyboard.H);
-        h.onDown.add(this.h_down, this);
-        h.onUp.add(this.h_up, this);
-        j = this.game.input.keyboard.addKey(Phaser.Keyboard.J);
-        j.onDown.add(this.j_down, this);
-        j.onUp.add(this.j_up, this);
-        k = this.game.input.keyboard.addKey(Phaser.Keyboard.K);
-        k.onDown.add(this.k_down, this);
-        k.onUp.add(this.k_up, this);
-        l = this.game.input.keyboard.addKey(Phaser.Keyboard.L);
-        l.onDown.add(this.l_down, this);
-        l.onUp.add(this.l_up, this);
+        /*         h = this.game.input.keyboard.addKey(Phaser.Keyboard.H);
+                h.onDown.add(this.h_down, this);
+                h.onUp.add(this.h_up, this);
+                j = this.game.input.keyboard.addKey(Phaser.Keyboard.J);
+                j.onDown.add(this.j_down, this);
+                j.onUp.add(this.j_up, this);
+                k = this.game.input.keyboard.addKey(Phaser.Keyboard.K);
+                k.onDown.add(this.k_down, this);
+                k.onUp.add(this.k_up, this);
+                l = this.game.input.keyboard.addKey(Phaser.Keyboard.L);
+                l.onDown.add(this.l_down, this);
+                l.onUp.add(this.l_up, this); */
     },
     animationStopped: function (sprite, animation) {
         explosion.visible = false;
     },
-    h_down: function () {
-        player.body.velocity.x = -1 * velocity;
-    },
-    h_up: function () {
-        player.body.velocity.x = 0;
-    },
-    j_down: function () {
-        player.body.velocity.y = -1 * velocity;
-    },
-    j_up: function () {
-        player.body.velocity.y = 0;
-    },
-    k_down: function () {
-        player.body.velocity.y =  velocity;
-    },
-    k_up: function () {
-        player.body.velocity.y = 0;
-    },
-    l_down: function () {
-        player.body.velocity.x = velocity;
-    },
-    l_up: function () {
-        player.body.velocity.x = 0;
-    },
+    /*     h_down: function () {
+            player.body.velocity.x = -1 * velocity;
+        },
+        h_up: function () {
+            player.body.velocity.x = 0;
+        },
+        j_down: function () {
+            player.body.velocity.y = -1 * velocity;
+        },
+        j_up: function () {
+            player.body.velocity.y = 0;
+        },
+        k_down: function () {
+            player.body.velocity.y =  velocity;
+        },
+        k_up: function () {
+            player.body.velocity.y = 0;
+        },
+        l_down: function () {
+            player.body.velocity.x = velocity;
+        },
+        l_up: function () {
+            player.body.velocity.x = 0;
+        }, */
 
     update: function () {
         this.game.physics.arcade.overlap(barrels, weapon.bullets, this.bulletHitBarrel, null, this);
@@ -199,8 +212,7 @@ TopDownGame.Lesson4.prototype = {
         if (this.cursors.up.isDown) {
             this.game.camera.unfollow();
             this.game.camera.y -= cameraSpeed;
-        }
-        else if (this.cursors.down.isDown) {
+        } else if (this.cursors.down.isDown) {
             this.game.camera.unfollow();
             this.game.camera.y += cameraSpeed;
         }
@@ -208,17 +220,16 @@ TopDownGame.Lesson4.prototype = {
         if (this.cursors.left.isDown) {
             this.game.camera.unfollow();
             this.game.camera.x -= cameraSpeed;
-        }
-        else if (this.cursors.right.isDown) {
+        } else if (this.cursors.right.isDown) {
             this.game.camera.unfollow();
             this.game.camera.x += cameraSpeed;
         }
         //camera end
 
 
-       
-            myHealthBar.setPercent(workspace.remainingCapacity() / (maxcaps2 - 1) * 100);
-        
+
+        myHealthBar.setPercent(workspace.remainingCapacity() / (maxcaps2 - 1) * 100);
+
     },
 
     createItems: function () {
@@ -238,7 +249,7 @@ TopDownGame.Lesson4.prototype = {
         var sprite = group.create(element.x, element.y, 'totalsheet', 195);
         //copy all properties to the sprite
         element.properties.forEach(function (element) {
-        
+
 
             sprite[element.name] = element.value;
         });
@@ -304,6 +315,7 @@ function sinkInWater() {
         }, this);
     }
 };
+
 function load_scene() {
     showflag = true;
 
@@ -315,8 +327,7 @@ function load_scene() {
         myHealthBar.barSprite.visible = false;
         myHealthBar.bgSprite.visible = false;
         myHealthBar.borderSprite.visible = false;
-    }
-    else if (scene == 2) {
+    } else if (scene == 2) {
         var newTree = `
         <xml id="toolbox" style="display: none; background-color: #4d90fe;">
         
@@ -334,7 +345,7 @@ function load_scene() {
         myHealthBar.barSprite.visible = true;
         myHealthBar.bgSprite.visible = true;
         myHealthBar.borderSprite.visible = true;
-        
+
     } else if (scene == 3) {
         var newTree = `
         <xml id="toolbox" style="display: none; background-color: #4d90fe;">
@@ -384,7 +395,7 @@ function load_scene() {
         pointer.y = result[0].y;
         pointer.visible = true;
         pointer.animations.play('ANIM');
-    
+
     }
     barrels.forEach(function (c) {
         if (c.scene == scene) {
@@ -421,7 +432,7 @@ function load_map(name) {
         sinkLayer.destroy();
         upperLayer.destroy();
         barrels.callAll('kill');
-    } catch (e) { }
+    } catch (e) {}
 
 
     map = TopDownGame.game.add.tilemap(name); //add tileset image     
@@ -470,18 +481,18 @@ function load_map(name) {
             TopDownGame.game.world.bringToTop(pointer);
             TopDownGame.game.world.bringToTop(barrels);
             TopDownGame.game.world.bringToTop(explosion);
-            
+
             TopDownGame.game.world.bringToTop(weapon.bullets);
             TopDownGame.game.world.bringToTop(player);
             TopDownGame.game.world.bringToTop(myHealthBar.borderSprite);
             TopDownGame.game.world.bringToTop(myHealthBar.bgSprite);
             TopDownGame.game.world.bringToTop(myHealthBar.barSprite);
-            
-        } catch (e) { 
+
+        } catch (e) {
 
         }
 
-        
+
     }
     //scene1Goal
 

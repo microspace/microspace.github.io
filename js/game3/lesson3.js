@@ -242,7 +242,7 @@ function change_map(name) {
     }
 
     workspace.updateToolbox(newTree);
-    $("#nextButton").hide();
+    
 
 
 
