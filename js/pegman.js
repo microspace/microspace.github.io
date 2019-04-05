@@ -68,7 +68,7 @@ var Pegman = {
             $("#modaltext").text("На этом этапе необходимо достроить недостающую часть карты.");
             $("#exampleModal").modal();
         }
-        if (TopDownGame.game.state.getCurrentState().key == "lesson4") {
+        if (TopDownGame.game.state.getCurrentState().key == "lesson4" && scene == 1) {
             $("#modaltext").text(Pegman.firstName + ", только что с учебки, а уже сразу на такое опасное задание?!! Сначала докажи, что умеешь стрелять!");
             $("#exampleModal").modal();
         }
@@ -1432,7 +1432,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     aliveBarrelsCount += 1;
                 }
             });
-            if (aliveBarrelsCount == 0) {
+            if (aliveBarrelsCount >= 0) {
                 if (scene < 5) {
 
                     this.lsp.x = player.x;

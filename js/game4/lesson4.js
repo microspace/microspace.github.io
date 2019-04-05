@@ -61,27 +61,27 @@ TopDownGame.Lesson4.prototype = {
         weapon = this.game.add.weapon(20, 'bullet');
 
         if (scene === undefined || scene === null) {
-            scene = 1;
+            scene = 42;
         }
 
 
         var result = findObjectsByType('playerStartPosition', map, 'playerLayer');
 
         if (scene == 1 || scene == 2 || scene == 3) {
-           
+
             Pegman.lsp.x = result[0].x;
             Pegman.lsp.y = result[0].y;
 
         } else if (scene == 4) {
-            var lastSuccessfullPosition = {
-                x: Maze.SQUARE_SIZE * (10 + 0.5),
-                y: Maze.SQUARE_SIZE * (14 + 0.5)
-            };
-
-        }
+            Pegman.lsp.x = Maze.SQUARE_SIZE * (10 + 0.5);
+            Pegman.lsp.y = Maze.SQUARE_SIZE * (14 + 0.3);
+        } else if (scene == 5) {
+            Pegman.lsp.x = Maze.SQUARE_SIZE * (9 + 0.5);
+            Pegman.lsp.y = Maze.SQUARE_SIZE * (4 + 0.3);
+        } 
 
         player = this.game.add.sprite(Pegman.lsp.x, Pegman.lsp.y, 'pegman');
-        
+
         upperLayer = map.createLayer('upperLayer');
 
 
@@ -109,10 +109,10 @@ TopDownGame.Lesson4.prototype = {
         myHealthBar = new HealthBar(TopDownGame.game, barConfig);
         myHealthBar.setFixedToCamera(true);
         myHealthBar.setPercent(capacity);
-      
 
 
-       
+
+
 
 
         //bullets
@@ -150,7 +150,7 @@ TopDownGame.Lesson4.prototype = {
         player.animations.play('STAND');
         Pegman.init(player);
 
-
+console.log(player)
         if (scene != 42) {
             load_scene();
         } else if (scene == 42) {
@@ -446,8 +446,9 @@ function load_map(name) {
     var result = findObjectsByType('playerStartPosition', map, 'playerLayer');
     // player.x = result[0].x;
     // player.y = result[0].y;
-    lastSuccessfullPosition.x = result[0].x;
-    lastSuccessfullPosition.y = result[0].y;
+    Pegman.lsp.x = result[0].x;
+    console.log(Pegman.lsp.x , Pegman)
+    Pegman.lsp.y = result[0].y;
     Pegman.reset2();
 
 
