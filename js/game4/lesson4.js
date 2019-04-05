@@ -61,7 +61,7 @@ TopDownGame.Lesson4.prototype = {
         weapon = this.game.add.weapon(20, 'bullet');
 
         if (scene === undefined || scene === null) {
-            scene = 3;
+            scene = 1;
         }
 
 
@@ -109,7 +109,8 @@ TopDownGame.Lesson4.prototype = {
         myHealthBar = new HealthBar(TopDownGame.game, barConfig);
         myHealthBar.setFixedToCamera(true);
         myHealthBar.setPercent(capacity);
-        console.log(lastSuccessfullPosition);
+      
+
 
        
 
