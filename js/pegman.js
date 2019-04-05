@@ -460,6 +460,7 @@ var Pegman = {
                 this.direction = Maze.DirectionType.WEST;
                 var step = Maze.getStepInDirection["WEST"];
                 this.pegmanSprite.scale.x = -1;
+                this.flipX = true;
                 try {
                     weapon.fireAngle = Phaser.ANGLE_LEFT;
                 } catch (e) {}
@@ -469,6 +470,7 @@ var Pegman = {
                 this.direction = Maze.DirectionType.EAST;
                 var step = Maze.getStepInDirection["EAST"];
                 this.pegmanSprite.scale.x = 1;
+                this.flipX = false;
                 try {
                     weapon.fireAngle = Phaser.ANGLE_RIGHT;
                 } catch (e) {}
