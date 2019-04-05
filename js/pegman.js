@@ -941,7 +941,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     var messagetext = "Отлично! Все кадеты в сборе! Теперь мы летим в космос! Там вас ждет учебный бой против наших роботов.";
                     $("#modaltext").text(messagetext);
                     $("#imagecontainer").attr('class', 'hero_win');
-                    $("#mood").attr("src", "assets/images/win.png");
+                    
                     $("#exampleModal").modal();
                     lastSuccessfullPosition.x = player.x;
                     lastSuccessfullPosition.y = player.y;
@@ -1094,7 +1094,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     scene = 5;
                     $("#modaltext").text("Поздравляю! Ты прошел сложный уровень!");
                     $("#imagecontainer").attr('class', 'hero_win');
-                    //$("#mood").attr("src", "assets/images/win.png");
+                    //
                     $("#exampleModal").modal();
                     
                     $('#play').prop('disabled', true);
@@ -1117,7 +1117,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     if (restrictedToHit == false) {
                         $("#modaltext").text("Ты убрал не все нужные бочки!");
                         $("#imagecontainer").attr('class', 'hero_fail');
-                       // $("#mood").attr("src", "assets/images/fail.png");
+                       // 
                         $("#exampleModal").modal();
                     }
 
@@ -1172,7 +1172,6 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
             } else {
                 $("#modaltext").text("Ты подобрал не все сундуки!");
                 $("#imagecontainer").attr('class', 'hero_fail');
-                $("#mood").attr("src", "assets/images/fail.png");
                 $("#exampleModal").modal();
             }
 
@@ -1202,7 +1201,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
             } else {
                 $("#modaltext").text("Ты подобрал не все сундуки!");
                 $("#imagecontainer").attr('class', 'hero_fail');
-                $("#mood").attr("src", "assets/images/fail.png");
+                
                 $("#exampleModal").modal();
             }
 
@@ -1234,7 +1233,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
             } else {
                 $("#modaltext").text("Ты подобрал не все сундуки!");
                 $("#imagecontainer").attr('class', 'hero_fail');
-                $("#mood").attr("src", "assets/images/fail.png");
+                
                 $("#exampleModal").modal();
             }
         }
@@ -1271,7 +1270,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
             } else {
                 $("#modaltext").text("Ты подобрал не все сундуки!");
                 $("#imagecontainer").attr('class', 'hero_fail');
-                $("#mood").attr("src", "assets/images/fail.png");
+                
                 $("#exampleModal").modal();
             }
         }
@@ -1286,7 +1285,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
 
                 $("#modaltext").text("Поздравляю! Ты прошел сложный уровень!");
                 $("#imagecontainer").attr('class', 'hero_win');
-                $("#mood").attr("src", "assets/images/win.png");
+                
                 $("#exampleModal").modal();
                 lastSuccessfullPosition.x = player.x;
                 lastSuccessfullPosition.y = player.y;
@@ -1308,7 +1307,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
             } else {
                 $("#modaltext").text("Ты собрал не все сундуки!");
                 $("#imagecontainer").attr('class', 'hero_fail');
-                $("#mood").attr("src", "assets/images/fail.png");
+                
                 $("#exampleModal").modal();
             }
         }
@@ -1404,7 +1403,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     if (isOverlapping == true) {
                         $("#modaltext").text("Ты отлично справился! Альянс может гордится, что в его рядах есть такие умелые и умные рейнджеры как ты!");
                         $("#imagecontainer").attr('class', 'hero_win');
-                        $("#mood").attr("src", "assets/images/win.png");
+                        
                         $("#exampleModal").modal();
                         lastSuccessfullPosition.x = player.x;
                         lastSuccessfullPosition.y = player.y;
@@ -1477,7 +1476,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
 
                         $("#modaltext").text(" Тут повсюду трупы. Что тут произошло? Надеюсь с отрядом все в порядке.");
                         $("#imagecontainer").attr('class', 'hero_fail');
-                        $("#mood").attr("src", "assets/images/fail.png");
+                        
                         $("#exampleModal").modal();
                     } else if (scene == "521") {
                         lastSuccessfullPosition.x = player.x;
@@ -1523,7 +1522,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                         } else {
                             $("#modaltext").text("Поздравляю! Следующий урок разблокирован!");
                             $("#imagecontainer").attr('class', 'hero_win');
-                            $("#mood").attr("src", "assets/images/win.png");
+                            
                             $("#exampleModal").modal();
                             lastSuccessfullPosition.x = player.x;
                             lastSuccessfullPosition.y = player.y;

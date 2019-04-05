@@ -40,7 +40,7 @@ TopDownGame.Lesson1.prototype = {
 
             if (scene === undefined || scene === null) {
 
-                scene = 0;
+                scene = 4;
             }
             if (scene == 0) {
                 var result = findObjectsByType('playerStartPosition', this.map, 'playerLayer');
@@ -217,6 +217,7 @@ TopDownGame.Lesson1.prototype = {
         if (sprite["sprite"] == "restrictedToHit") {
 
             $("#modaltext").text("Нельзя стрелять по бочкам с водой! Целься точнее!");
+            $("#imagecontainer").attr('class', 'hero_fail');
             $("#exampleModal").modal();
             restrictedToHit = true;
             //Pegman.reset2();

@@ -150,7 +150,7 @@ width: 150px;
 .hero_fail {
   position: absolute;
   bottom: 0px;
-  left: -80px;
+  left: -102px;
   overflow: hidden;
 
 }
@@ -165,7 +165,7 @@ width: 150px;
 .hero_win {
   position: absolute;
   bottom: 31px;
-  left: -25px;
+  left: -35px;
   transform: scale(1.2);
   overflow: hidden;
 
