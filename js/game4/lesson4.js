@@ -64,6 +64,7 @@ TopDownGame.Lesson4.prototype = {
             scene = 1;
         }
 
+        console.log (Pegman.lsp.x, Pegman.lsp.y)
         if (Pegman.lsp.x * Pegman.lsp.y == 0) {
             var result = findObjectsByType('playerStartPosition', map, 'playerLayer');
 
