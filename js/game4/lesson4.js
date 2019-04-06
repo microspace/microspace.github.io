@@ -64,21 +64,24 @@ TopDownGame.Lesson4.prototype = {
             scene = 1;
         }
 
+        if (Pegman.lsp.x * Pegman.lsp.y == 0) {
+            var result = findObjectsByType('playerStartPosition', map, 'playerLayer');
 
-        var result = findObjectsByType('playerStartPosition', map, 'playerLayer');
+            if (scene == 1 || scene == 2 || scene == 3) {
 
-        if (scene == 1 || scene == 2 || scene == 3) {
+                Pegman.lsp.x = result[0].x;
+                Pegman.lsp.y = result[0].y;
 
-            Pegman.lsp.x = result[0].x;
-            Pegman.lsp.y = result[0].y;
+            } else if (scene == 4) {
+                Pegman.lsp.x = Maze.SQUARE_SIZE * (10 + 0.5);
+                Pegman.lsp.y = Maze.SQUARE_SIZE * (14 + 0.3);
+            } else if (scene == 5) {
+                Pegman.lsp.x = Maze.SQUARE_SIZE * (9 + 0.5);
+                Pegman.lsp.y = Maze.SQUARE_SIZE * (4 + 0.3);
+            }
+        }
 
-        } else if (scene == 4) {
-            Pegman.lsp.x = Maze.SQUARE_SIZE * (10 + 0.5);
-            Pegman.lsp.y = Maze.SQUARE_SIZE * (14 + 0.3);
-        } else if (scene == 5) {
-            Pegman.lsp.x = Maze.SQUARE_SIZE * (9 + 0.5);
-            Pegman.lsp.y = Maze.SQUARE_SIZE * (4 + 0.3);
-        } 
+
 
         player = this.game.add.sprite(Pegman.lsp.x, Pegman.lsp.y, 'pegman');
 
@@ -464,7 +467,7 @@ function load_map(name) {
     // player.x = result[0].x;
     // player.y = result[0].y;
     Pegman.lsp.x = result[0].x;
-    console.log(Pegman.lsp.x , Pegman)
+    console.log(Pegman.lsp.x, Pegman)
     Pegman.lsp.y = result[0].y;
     Pegman.reset2();
 
@@ -491,9 +494,9 @@ function load_map(name) {
     function fadePicture() {
         if (scene == 42) {
             $("#modaltext").text("Ха! Да ты со всем справился! А теперь последнее испытание. Оно только для бойцов со стальными нервами! Пройди по очень тонкому мосту над бездной и подстрели те бочки!");
-        $("#exampleModal").modal();
+            $("#exampleModal").modal();
         }
-        
+
         // загнал сюда, потому что глюк возникает когда плеер не успевает успеть
         sinkLayer = map.createLayer('sinkLayer');
         map.setTileIndexCallback([...Array(500).keys()], sinkInWater, this, sinkLayer);

@@ -1817,17 +1817,16 @@ function loadWorkspace(clesson) {
                         TopDownGame.game.state.start(clesson + scene);
                     } else {
 
-                        try {
+                        if (clesson == 'lesson4') {
+                            Pegman.lsp.x = JSON.parse(data.data).positionX;
+                            Pegman.lsp.y = JSON.parse(data.data).positionY;
+                        } else {
                             lastSuccessfullPosition = {
                                 x: JSON.parse(data.data).positionX,
                                 y: JSON.parse(data.data).positionY
                             };
-                        } catch (e) {
-                            Pegman.lsp.x = JSON.parse(data.data).positionX;
-                            Pegman.lsp.y = JSON.parse(data.data).positionY;
-
                         }
-
+                        
                         TopDownGame.game.state.start(clesson);
                     }
 
