@@ -395,7 +395,7 @@ function load_scene() {
         <block type="repeat_n_times"></block>
         </xml>`;
         workspace.updateToolbox(newTree);
-        maxcaps2 = 6 + 1;
+        maxcaps2 = 15 + 1;
         workspace.options.maxBlocks = maxcaps2;
     } else if (scene == 5) {
         var newTree = `
@@ -409,7 +409,7 @@ function load_scene() {
         <block type="repeat_n_times"></block>
         </xml>`;
         workspace.updateToolbox(newTree);
-        maxcaps2 = 16 + 1;
+        maxcaps2 = 17 + 1;
         workspace.options.maxBlocks = maxcaps2;
 
         var result = findObjectsByType('scene5Goal', map, 'playerLayer');
