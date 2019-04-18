@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Game</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script type="text/javascript" src="js/lib/phaser.min.js"></script>
+    <script src="//code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="js/lib/plugin.min.js"></script>
+    <script type="text/javascript" src="js/lib/blockly/blockly_compressed.js"></script>
+    <script type="text/javascript" src="js/lib/blockly/blocks_compressed.js"></script>
+    <script type="text/javascript" src="js/lib/blockly/javascript_compressed.js"></script>
+    <script type="text/javascript" src="js/lib/blockly/msg/js/ru.js"></script>
+    <script type="text/javascript" src="js/lib/HealthBar.standalone.js"></script>
+    <script type="text/javascript" src="js/lib/platform.js"></script>
+    <script type="text/javascript" src="js/blocks.js"></script>
+    <script type="text/javascript" src="js/config.js"></script>
+
+    <script type="text/javascript" src="js/maze.js"></script>
+    <script type="text/javascript" src="js/pegman.js"></script>
+
+    <script type="text/javascript" src="js/game5/Boot.js"></script>
+    <script type="text/javascript" src="js/game5/Preload.js"></script>
+    <script type="text/javascript" src="js/game5/lesson5.js"></script>
+
+    <script type="text/javascript" src="js/game5/main.js"></script>
+
+</head>
+
+<body>
+    <div id="full-size">
+        <div id="layer1" style="z-index: 0;">
+            <div class="canvas" id="canvasContainer"></div>
+        </div>
+    </div>
+    <div id="layer2" style="z-index: 1;">
+        <div class="canvas" id="blocklyDiv" style="position: absolute"></div>
+    </div>
+    <div id="resstart" style="position: absolute; left: 0px; top: 552px;z-index: 2 ">
+        <button class="play" id="play" value="play"><i id="play" class="fa fa-play"
+                aria-hidden="true"></i>&nbsp;<span>Запуск</span></button>
+        <!-- <div class="btn-group btn-group-toggle btn-block" data-toggle="buttons">
+                <label class="btn btn-secondary">
+                  <input type="radio" name="options" id="option05" autocomplete="off"> x0,5
+                </label>
+                <label class="btn btn-secondary active">
+                  <input type="radio" name="options" id="option1" autocomplete="off" checked> x1
+                </label>
+                <label class="btn btn-secondary">
+                  <input type="radio" name="options" id="option2" autocomplete="off"> x2
+                </label>
+                <label class="btn btn-secondary">
+                  <input type="radio" name="options" id="option6" autocomplete="off"> x6
+                </label>
+              </div> -->
+    </div>
+    <xml id="toolbox" style="display: none; background-color: #4d90fe;">
+        <block type="maze_up"></block>
+        <block type="maze_down"></block>
+        <block type="maze_left"></block>
+        <block type="maze_right"></block>
+        <block type="fill_the_pit"></block>
+        <block type="repeat_n_times"></block>
+        <block type="obstacle"></block>
+        <block type="if_block"></block>
+        <block type="controls_ifelse"></block>
+
+
+
+
+
+    </xml>
+    <xml id="startBlocks" style="display: none">
+        <block type="factory_base" deletable="false" x="100" y="20"></block>
+    </xml>
+    <div class="modal" tabindex="-1" role="dialog" id="exampleModal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="modaltext"></p>
+                </div>
+                <div class="modal-footer">
+                    <div id="imagecontainer" class="hero">
+                        <img id="mood" src="assets/sprites/hero.png" />
+                    </div>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Вперёд!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- include the main game file -->
+    <script type="text/javascript">
+        //var workspace = Blockly.inject('blockly_editor', { toolbox: document.getElementById('toolbox') });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous">
+    </script>
+    <script>
+        var options = {
+            comments: true,
+            collapse: true,
+            disable: true,
+            maxBlocks: Infinity,
+            oneBasedIndex: true,
+            readOnly: false,
+            //rtl: false,
+            //scrollbars: true,
+            trashcan: true,
+            //toolbox: null,
+            horizontalLayout: false,
+            toolboxPosition: 'start',
+            zoom: {
+                controls: false,
+                wheel: true,
+                startScale: 0.8,
+                maxScale: 4,
+                minScale: 0.25,
+                scaleSpeed: 1.1
+            }
+        };
+        $('input[type=radio][name=options]').change(function () {
+            var optionValue = this.id;
+            if (optionValue == "option05") {
+                timeScale = 0.5;
+            } else if (optionValue == "option2") {
+                timeScale = 2;
+            } else if (optionValue == "option6") {
+                timeScale = 6;
+            } else if (optionValue == "option1") {
+                timeScale = 1;
+            }
+
+            try {
+                Pegman.tween.timeScale = timeScale;
+            } catch (e) {
+
+            }
+
+        });
+        var scene;
+
+
+
+
+        var blocklyArea = document.getElementById('full-size');
+        var blocklyDiv = document.getElementById('blocklyDiv');
+        options.toolbox = toolbox;
+        var workspace = Blockly.inject(blocklyDiv, options);
+
+        Blockly.BlockSvg.START_HAT = true;
+        //Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'),  workspace);
+        workspace.addChangeListener(Blockly.Events.disableOrphans);
+        var onresize = function (e) {
+            // Compute the absolute coordinates and dimensions of blocklyArea.
+            var element = blocklyArea;
+            var x = 0;
+            var y = 0;
+            do {
+                x += element.offsetLeft;
+                y += element.offsetTop;
+                element = element.offsetParent;
+            } while (element);
+            // Position blocklyDiv over blocklyArea.
+            blocklyDiv.style.left = x + 'px';
+            blocklyDiv.style.top = y + 'px';
+            blocklyDiv.style.width = blocklyArea.offsetWidth + 'px';
+            blocklyDiv.style.height = blocklyArea.offsetHeight + 'px';
+            Blockly.svgResize(workspace);
+        };
+        window.addEventListener('resize', onresize, false);
+        onresize();
+        Blockly.svgResize(workspace);
+
+        $("#resstart").css({
+            "z-index": 20
+        });
+        var buttonh = blocklyArea.offsetHeight - 200;
+        $("#resstart").css({
+            "z-index": 20
+        });
+        $("#resstart").css({
+            "top": buttonh + 'px'
+        });
+
+        function onFirstComment(event) {
+            if (event.type == Blockly.Events.MOVE) {
+                try {
+                    bl = workspace.getBlockById(event.blockId);
+                    var dx = Math.abs(event.newCoordinate.x - event.oldCoordinate.x);
+                    if (event.newCoordinate.x < 0 && bl.type == "factory_base") {
+                        bl.moveBy(dx, 0);
+                    }
+                } catch (e) {
+
+                }
+            }
+        }
+        workspace.addChangeListener(onFirstComment);
+    </script>
+</body>
+
+</html>

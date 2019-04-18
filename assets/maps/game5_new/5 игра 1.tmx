@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.2" tiledversion="1.2.1" orientation="orthogonal" renderorder="right-down" width="24" height="18" tilewidth="64" tileheight="64" infinite="0" nextlayerid="13" nextobjectid="14">
  <tileset firstgid="1" name="tileSheetWinter" tilewidth="64" tileheight="64" tilecount="286" columns="13">
-  <image source="tileSheetWinter30-12.png" width="832" height="1408"/>
+  <image source="tileSheetWinter17-01-19.png" width="832" height="1408"/>
  </tileset>
  <layer id="1" name="flour" width="24" height="18">
   <data encoding="csv">
@@ -9,7 +9,7 @@
 15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,16,0,0,0,0,0,0,0,0,
 15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,3,0,0,0,0,0,0,0,
 15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,16,0,0,0,0,0,0,0,
-15,15,15,15,15,235,15,15,15,15,15,15,15,15,15,15,15,3,0,0,0,0,0,0,
+15,15,15,15,15,237,237,237,237,237,237,237,237,15,15,15,15,3,0,0,0,0,0,0,
 28,28,28,28,28,28,15,15,15,15,15,15,15,15,15,15,15,16,0,0,0,0,0,0,
 0,0,0,0,0,0,27,28,28,28,15,15,15,15,15,15,15,16,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,27,15,15,15,15,15,15,29,0,0,0,0,0,0,

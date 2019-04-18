@@ -337,7 +337,7 @@ var Pegman = {
 
             });
         }
-        if (TopDownGame.game.state.getCurrentState().key == "lesson5") {
+        if (TopDownGame.game.state.getCurrentState().key == "lesson5_new") {
 
             if (map.key != "lesson53") {
 
@@ -389,6 +389,60 @@ var Pegman = {
                 revealArea();
             }
         }
+
+        if (TopDownGame.game.state.getCurrentState().key == "lesson5") {
+
+            if (map.key != "lesson53") {
+
+                for (var y = 0; y < map.height; ++y) {
+                    for (var x = 0; x < map.width; ++x) {
+                        //  if (map.getTile(x, y, 'fog')) {
+                        map.putTile(232, x, y, "fog");
+                        //  }
+                    }
+                }
+                Pegman.dposX = Math.floor(player.x / 64);
+                Pegman.dposY = Math.floor(player.y / 64);
+                Pegman.vdposX = Pegman.dposX;
+                Pegman.vdposY = Pegman.dposY;
+                for (var y = Pegman.dposY - 1; y <= Pegman.dposY + 1; ++y) {
+                    for (var x = Pegman.dposX - 1; x <= Pegman.dposX + 1; ++x) {
+                        map.putTile(244, x, y, fog);
+                    }
+                }
+
+                for (var y = Pegman.dposY - 2; y <= Pegman.dposY + 2; ++y) {
+                    for (var x = Pegman.dposX - 2; x <= Pegman.dposX + 2; ++x) {
+                        if ((x >= Pegman.dposX + 1 || x <= Pegman.dposX - 1) || (y >= Pegman.dposY + 1 || y <= Pegman.dposY - 1)) {
+                            var t_id = normalize(x, y);
+                            map.putTile(t_id, x, y, fog);
+                        }
+                    }
+                }
+            } else {
+                map.replace(236, 235, 9, 6, 6, 2, flour);
+            }
+            if (scene == "510") {
+
+            } else if (scene == "511") {
+                map.replace(235, 15, 6, 4, 6, 2, map.getLayer());
+                map.replace(236, 15, 6, 4, 6, 2, map.getLayer());
+                map.replace(15, 235, 6 + getRandomInt(0, 6), 4, 1, 1, map.getLayer());
+                map.replace(15, 235, 6 + getRandomInt(0, 6), 5, 1, 1, map.getLayer());
+            } else if (scene == "512") {
+
+                this.refillarea(12, 6, 15, 12);
+            } else if (scene == "513") {
+                this.refillarea(16, 11, 22, 14);
+            } else if (scene == "521") {
+                this.refillarea(6, 10, 9, 14);
+            } else if (scene == "522") {
+                this.refillarea(12, 10, 18, 12);
+                this.refillarea(16, 3, 19, 9);
+                revealArea();
+            }
+        }
+
 
         this.pegmanSprite.animations.play('STAND');
 

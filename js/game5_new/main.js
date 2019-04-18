@@ -5,7 +5,12 @@ $(window).resize(function() {
     window.resizeGame();
 });
 
-TopDownGame.game = new Phaser.Game($(window).width(), $(window).height(), Phaser.AUTO, 'canvasContainer', null, false, true);
+const thisDeviceOS = platform.os.family;
+let renderEngine = Phaser.AUTO;
+if (thisDeviceOS == "Android" || thisDeviceOS == "iOS") {
+    renderEngine = Phaser.CANVAS;
+} 
+TopDownGame.game = new Phaser.Game($(window).width(), $(window).height(), renderEngine, 'canvasContainer', null, false, true);
 TopDownGame.game.state.add('Boot', TopDownGame.Boot);
 TopDownGame.game.state.add('Preload', TopDownGame.Preload);
 TopDownGame.game.state.add('lesson5', TopDownGame.Lesson5);
@@ -55,7 +60,7 @@ var resetProgram = function() {
 
     try {
         weapon.fireAngle = Phaser.ANGLE_RIGHT;
-    } catch {
+    } catch (e) {
 
     }
     TopDownGame.game.stage.updateTransform();
