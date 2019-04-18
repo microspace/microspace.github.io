@@ -1867,6 +1867,7 @@ function loadWorkspace(clesson) {
                 try {
                     var code = JSON.parse(data.data).code;
                     scene = JSON.parse(data.data).scene;
+                    console.log("scene = ", scene)
                     if (clesson == 'lesson2') {
                         TopDownGame.game.state.start(clesson + scene);
                     } else {
