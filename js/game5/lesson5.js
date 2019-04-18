@@ -40,9 +40,8 @@ TopDownGame.Lesson5.prototype = {
             Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
             scene = "510";
         }
-        console.log(scene)
         player = this.game.add.sprite(0, 0, 'pegman');
-        loadmap("lesson" + scene.substring(0, 2));
+        loadmap("lesson" + scene.toString().substring(0, 2));
         player.anchor.setTo(0.5, 0.5);
         this.game.physics.arcade.enable(player);
         player.body.collideWorldBounds=true;
