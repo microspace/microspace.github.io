@@ -1,0 +1,3 @@
+[submodule "abacus"]
+	path = abacus
+	url = git@bitbucket.org:microspace/abacus-tutorial.git
