@@ -1,0 +1,306 @@
+﻿<head>
+	<meta charset="utf-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<meta name="description" content=""/>
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="js/jquery-ui.css">
+	<script src="js/jquery.js"></script>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/jquery-ui.js"></script>
+	<script src="js/jquery-ui.min.js"></script>
+</head>
+<body>
+	<div class="container-fluid">
+		<nav>
+
+		</nav>
+
+		<div class="screen">
+			<div class="score"> </div>
+			<div class="frame">
+				<img id = "laser" src="img/laserBeam2.png" class = "spaceShip">
+				<img id = "spaceShip" src="img/spaceShipStanding.png" class = "spaceShip">
+				<div class = "Asteroids" id = "Asteroid0">
+					<img class="image" src="img/Asteroid0.png">
+					<div class = "AsteroidNumber" id = "Number0"> 5 </div>
+				</div>
+				<div class = "Asteroids" id = "Asteroid1">
+					<img class="image" src="img/Asteroid1.png">
+					<div class = "AsteroidNumber" id = "Number1"> 10 </div>
+				</div>
+				<div class = "Asteroids" id = "Asteroid2">
+					<img class="image" src="img/Asteroid2.png">
+					<div class = "AsteroidNumber" id = "Number2"> 15 </div>
+				</div>
+			</div>
+			<div class="footer">
+				<div class = "recharge"> 
+					<div class="rechargeBar"> </div>
+				</div>
+				<div class = "torpedoRight"> 
+					<img src="img/torpedoLeft.png" class="torpedo1" height="150" width="150">
+					<div class="number" id = "torpedoRight"> 5 </div>
+				</div>
+				<div class = "torpedoLeft"> 
+					<img src="img/torpedoRight.png" class="torpedo2" height="150" width="150">
+					<div class="number" id = "torpedoLeft"> 10 </div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		$(function(){
+			var screenWidth = $(window).width();
+			var screenHeight = $(window).height();
+
+    		StartGame();
+
+  			$(window).resize(function(){
+    			changeImg();
+  			});
+		});
+	</script>
+
+	<script type="text/javascript">
+		var spaceShip = {};
+		var Asteroids = [];
+		spaceShip.line = 1;
+		spaceShip.distance = 0;
+		timeToFinish = 5;
+		var distance = 0;
+		var changeHeight;
+		var shotState = false;
+		var timeout_id;
+		var AsteroidNumber = [];
+		var result;
+		var number1, number2;
+		var victory = false;
+
+		//67890-9876545678
+
+		function StartGame()
+		{
+			changeImg();
+			numberGenerator();
+			
+		}
+
+		function numberGenerator()
+		{
+			var min = 1;
+			var max = 5;
+			number1 = randomInteger(min, max);
+			number2 = randomInteger(min, max);
+			result = number1 + number2;
+
+			$("#torpedoLeft").text(number1);
+			$("#torpedoRight").text(number2);
+
+			AsteroidNumber[0] = result;
+			do {
+				AsteroidNumber[1] = result + randomInteger(min-result, min+result);
+				AsteroidNumber[2] = result + randomInteger(min-result, min+result);
+			} while(AsteroidNumber[0] == AsteroidNumber[1] || AsteroidNumber[1] == AsteroidNumber[2] || AsteroidNumber[0]==AsteroidNumber[2])
+
+			AsteroidNumber.sort(compareRandom);
+
+			for (var i=0; i<3; i++) {
+				$("#Number" + i).text(AsteroidNumber[i]);
+			}
+		}
+
+		function compareRandom(a, b) {
+  			return Math.random() - 0.5; // Перемешивание массива
+		}
+
+		function randomInteger(min, max) {
+    		var rand = min - 0.5 + Math.random() * (max - min + 1)
+    		rand = Math.round(rand);
+    		return rand;
+ 		}
+
+ 		/*function initialData()
+ 		{
+
+ 		}*/
+
+		function changeImg()
+		{	
+
+			screenWidth = $(window).width();
+			screenHeight = $(window).height();
+
+			if (screenWidth < screenHeight*0.8) 
+  				$('.screen').width("100%");
+  			else 
+  				$('.screen').width(screenHeight*0.8);
+
+			$('.spaceShip').height($('.frame').width()/6 * $('#spaceShip').height() / $('#spaceShip').width());
+			$('.spaceShip').width($('.frame').width()/6);
+			$(".spaceShip").css({top: $('.frame').height()*0.98-$('#spaceShip').height(), left: $('#spaceShip').width()*(spaceShip.line*2+0.5), position:'absolute'});
+			$('.Asteroids, .image').height($('.frame').width()/6 * $('.image').height() / $('.image').width());
+			$('.Asteroids, .AsteroidNumber, .image').width($('.frame').width()/6);
+			$('.AsteroidNumber').css({top: $('.Asteroids').height()/2 - $('.AsteroidNumber').height()/2});
+
+			for (var i=0; i<3; i++)
+			{
+				$("#Asteroid" + i).css({left: $('.Asteroids').width()*(Asteroids[i].line*2+0.5), position:'absolute'});
+				if (distance == 0) $("#Asteroid" + i).css({top: $('.frame').height()*0.02, position:'absolute'});
+			}
+
+			$('.recharge').height($('.footer').height()*0.1);
+			$('.recharge').width("100%");
+			$('.rechargeBar').height($('.recharge').height());
+			$('.rechargeBar').width("0%");   // Расположение полосы перезарядки
+			
+
+			$('.torpedoRight, .torpedoLeft').css({'height': $('.footer').height()*0.9}) // Расположение торпед
+			
+			$('.number').css({left: '50%', top: $('.footer').height()*0.3}); // Расположение торпедных чисел
+			
+
+			/*
+				spaceShip.distance - расстояние между кораблем и начальным путем Астероидов
+				distance - предыдущее растояние между кораблем и начальным расположением Астероида (При изменении окна)
+				
+
+			*/
+			spaceShip.distance = Math.round($('.frame').height()*0.98 - $('#spaceShip').height() - $('.Asteroids').height());
+
+			$('.Asteroids').stop(); // Остановить анимацию передвижения астероида при изменении экрана
+			$('.Asteroids').animate({ top: $('.Asteroids').position().top * spaceShip.distance / distance },  0, 'linear');
+
+			distance = Math.round($('.frame').height()*0.98 - $('#spaceShip').height() - $('.Asteroids').height());
+
+
+		}
+
+		function progress(timeleft, timetotal, $element) {
+		    var progressHeight = timeleft * Math.round($('.frame').height()*0.98 - $('#spaceShip').height() - $('.Asteroids').height()) / timetotal;
+		    $element.animate({ top: Math.round($('.frame').height()*0.02) + progressHeight }, 200, 'linear');
+		    if(timeleft < timetotal) {
+		        timeout_id = setTimeout(function() {
+		            progress(timeleft + 0.2, timetotal, $element);
+		        }, 200);
+		    }
+		    else setTimeout( defeat , 200);
+		};
+
+		progress(0, 5, $('.Asteroids')); // Начало движения
+
+
+		for (var i=0; i<3; i++)
+		{
+			Asteroids[i] = {};
+			Asteroids[i].id = "Asteroid" + i;
+			Asteroids[i].line = i;
+			Asteroids[i].object = document.getElementById(Asteroids[i].id);
+		}
+
+		function defeat()
+		{
+			if ($('.Asteroids').position().top + $('.Asteroids').height() >= $('#spaceShip').position().top) {
+				$('.Asteroids').css({ top: Math.round($('.frame').height()*0.02) + Math.round($('.frame').height()*0.98 - $('#spaceShip').height() - $('.Asteroids').height())});
+				alert("Поражение");
+			}
+		}
+
+		function moveAsteroids(distance, time)
+		{
+			$('.Asteroids').animate({top: distance }, 1000 * time, "linear");
+		}
+
+		$(".Asteroids").click( function(){
+			if (shotState == false) {
+				shotState = true;
+				var obj = Asteroids.find(obj => obj.id == this.id);
+
+				if ($('#Number' + obj.line).text() == result) // Проверка результата
+					victory = true;
+				//console.log(victory);
+	    		if (spaceShip.line != obj.line) {
+	    			$('.spaceShip').animate({left: $('#spaceShip').width()*(obj.line*2+0.5) }, 500);	// Перемещение корабля на нужную линюю
+	    			setTimeout(spaceShipStop, 500);
+	    		}	
+	    		else setTimeout(spaceShipStop, 100);
+
+	    		if (spaceShip.line < obj.line)
+	    			$("#spaceShip").attr("src","img/spaceShipFlyingRight.png");
+
+	    		if (spaceShip.line > obj.line)
+	    			$("#spaceShip").attr("src","img/spaceShipFlyingLeft.png");
+	    		
+	    		spaceShip.line = obj.line;
+	    		
+	    		function spaceShipStop()
+	    		{
+	    			$("#spaceShip").attr("src","img/spaceShipStanding.png");
+	    			flightLaser();
+	    			$('.rechargeBar').width("100%");
+					progressBar(1.2, 1.2, $('.recharge'));
+	    		}
+	    	}
+		});
+
+		function flightLaser()
+		{
+			if ($("#laser").position().top <= $(".Asteroids").position().top) 
+			{
+				if (victory) {
+					$('.Asteroids').stop(true, true);
+					$("#laser").css("visibility", "hidden");
+					rightHit();
+				}
+				else {
+					$("#laser").css("visibility", "hidden");
+				}
+				victory = false;
+				recharge();
+				numberGenerator();
+				return 0;
+			}
+
+			$("#laser").css("top", $("#laser").position().top - 10);
+			setTimeout("flightLaser();", 25);
+		}
+
+		function recharge()
+		{
+			$("#laser").css("visibility", "visible");
+			$("#laser").css({"top" : $('#spaceShip').position().top, "left" : $('#spaceShip').position().left});
+		}
+		
+		function rightHit()
+		{
+			
+			console.log("Завершение");
+			for (var i=0; i<3; i++)
+				Asteroids[i].object.style.top = Math.round($('.frame').height()*0.02, 0);
+
+			clearTimeout(timeout_id);
+			$('.Asteroids').stop();
+			progress(0, 5, $('.Asteroids'));
+		}
+
+		function progressBar(timeleft, timetotal, $element) {
+			console.log ($element.width());
+    		var progressBarWidth = timeleft * $element.width() / timetotal;
+    		console.log (progressBarWidth);
+    		$('.rechargeBar').animate({ width: progressBarWidth }, timeleft == timetotal ? 0 : 300, 'linear');
+    		if(timeleft > 0) {
+        		setTimeout(function() {
+            		progressBar(timeleft - 0.3, timetotal, $element);
+        		}, 300);
+   			}
+   			else setTimeout(allowFire, 300);
+		};
+
+		function allowFire()
+		{
+			shotState = false;
+		}
+
+	</script>
+</body>
