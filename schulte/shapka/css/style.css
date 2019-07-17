@@ -1,0 +1,284 @@
+@font-face {
+    font-family: 'RubikRegular';
+    src: url('fonts/Rubik-Regular.ttf');
+}
+@font-face {
+    font-family: 'RubikMedium';
+    src: url('fonts/Rubik-Medium.ttf');
+}
+@font-face {
+    font-family: 'RubikLight';
+    src: url('fonts/Rubik-Light.ttf');
+}
+
+/************  Удалить  ***********/
+
+.start_game{
+    height: 200px;
+}
+.buttons_field {
+    margin-top: 50px;
+    display: none;
+}
+.buttons_field div{
+    margin: 5px;
+}
+
+.badge:empty{
+    width:20px;
+    display: inline-block;
+}
+/**********************************/
+
+
+.container_progress_line{
+    font-family: 'RubikRegular', serif;
+    background-color: #441d67;
+    padding: 15px 0;
+    color: #fff;
+}
+.row_2 {
+    padding-top: 3px;
+}
+.min_max_points_line{
+    width: 93%;
+    margin: 0 auto;
+    font-family: 'RubikMedium', serif;
+    /*background-color: #381256;*/
+    line-height: 30px;
+    border-radius: 50px;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+
+    background: -moz-linear-gradient(left,  rgba(56,18,86,1) 0%, rgba(56,18,86,0) 50%, rgba(56,18,86,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left,  rgba(56,18,86,1) 0%,rgba(56,18,86,0) 50%,rgba(56,18,86,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right,  rgba(56,18,86,1) 0%,rgba(56,18,86,0) 50%,rgba(56,18,86,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#381256', endColorstr='#381256',GradientType=1 ); /* IE6-9 */
+
+}
+.min_points,.max_points{
+    color: #9c76ce;
+    font-size: 16px;
+}
+.time, .points{
+    font-family: 'RubikLight', serif;
+
+    font-size: 24px;
+    display: inline-block;
+
+    -webkit-transition: opacity 3s ease;
+    -moz-transition: opacity 3s ease;
+    -ms-transition: opacity 3s ease;
+    -o-transition: opacity 3s ease;
+    transition: opacity 3s ease;
+}
+
+.level_text{
+    font-size: 16px;
+    /*line-height: 12px;*/
+    text-transform: uppercase;
+}
+.time,.record{
+    line-height: 30px;
+    color: #f46692;
+}
+.record{
+    font-family: 'RubikMedium', serif;
+}
+.level{
+    font-family: 'RubikMedium', serif;
+    font-size: 45px;
+    line-height: 45px;
+
+    -webkit-transition: opacity 0.5s ease;
+    -moz-transition: opacity 0.5s ease;
+    -ms-transition: opacity 0.5s ease;
+    -o-transition: opacity 0.5s ease;
+    transition: opacity 0.5s ease;
+}
+.min_points_icon, .max_points_icon {
+    color: #9c76ce;
+    width: 20px;
+    height: 20px;
+    padding: 0 3px;
+}
+
+.min_points_icon {
+    background: url('icons/arrow-left.svg') no-repeat;
+    background-position: left;
+    background-size: 50%;
+}
+.max_points_icon {
+    background: url('icons/arrow-right.svg') no-repeat;
+    background-position: right;
+    background-size: 50%;
+}
+
+.record_icon,.time_icon{
+    margin-top: -7px;
+    display: inline-block;
+    color: #9c76ce;
+    width: 30px;
+    height: 30px;
+}
+.time_icon {
+    background: url('icons/clock-for-top.svg') no-repeat;
+    background-position: center;
+    background-size: 60%;
+
+}
+.record_icon {
+    background: url('icons/star-for-top.svg') no-repeat;
+    background-position: right;
+    background-size: 80%;
+}
+
+.wrong_answers, .levels, .correct_answers{
+    display: inline-block;
+}
+.wrong_answer,.correct_answer {
+    display: inline-block;
+    height: 22px;
+    width: 22px;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    margin: 3px;
+    margin-bottom: 0px;
+    border: 2px solid rgba(255,255,255,0.25);
+
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+.wrong_answer.active{
+    border-color: #ef3054;
+    background-color: #ef3054;
+}
+.correct_answer.active{
+    border-color: #29b473;
+    background-color: #29b473;
+}
+
+.back_arrow{
+    background-color: #381260;
+    color: #fff;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+}
+.back_arrow_icon{
+    color: #fff;
+
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+
+    background: url('icons/arrow-left_2.svg') no-repeat;
+    background-position: center;
+    background-size: 40%;
+
+}
+
+@media (max-width: 770px) {
+    .time, .points{
+        font-size: 18px;
+    }
+    .level_text{
+        font-size: 14px;
+    }
+    .level{
+        font-size: 40px;
+    }
+    .min_points,.max_points{
+        font-size: 12px;
+    }
+
+    .wrong_answer,.correct_answer {
+        display: inline-block;
+        height: 18px;
+        width: 18px;
+    }
+}
+
+@media (max-width: 576px) {
+    .container_progress_line{
+        padding-left:10px;
+        padding-right:10px;
+    }
+    .wrong_answer,.correct_answer {
+        display: inline-block;
+        height: 16px;
+        width: 16px;
+        margin: 1px;
+    }
+    .min_max_points_line {
+        width: 100%;
+    }
+}
+@media (max-width: 440px) {
+    .time, .points{
+        font-size: 12px;
+    }
+    .level_text, .record{
+        font-size: 12px;
+    }
+    .level{
+        font-size: 40px;
+    }
+    .min_points,.max_points{
+        font-size: 10px;
+    }
+    .wrong_answer,.correct_answer {
+        display: inline-block;
+        height: 14px;
+        width: 14px;
+        margin: 1px;
+    }
+    .record_icon,.time_icon {
+        margin-top: -3px;
+    }
+    .time_icon{
+        background-size: 45%;
+    }
+    .min_points_icon, .max_points_icon{
+        background-size: 30%;
+        background-position: center;
+    }
+    .record_icon{
+        background-size: 50%;
+    }
+    .min_max_points_line div{
+        padding: 0 5px;
+    }
+
+}
+@media (max-width: 378px) {
+    .min_points_icon, .max_points_icon {
+        display: none;
+    }
+}
+
+
+.progressBar {
+    height: 5px;
+    overflow: hidden;
+    background-color: rgba(68, 29, 103, 0.8);
+    border-radius: .25rem;
+
+    -webkit-transition: all 2s ease;
+    -moz-transition: all 2s ease;
+    -ms-transition: all 2s ease;
+    -o-transition: all 2s ease;
+    transition: all 2s ease;
+
+}
+
+.progressBar div {
+    background-color: #fff;
+    height: 100%;
+}

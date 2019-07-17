@@ -4,16 +4,32 @@
 	margin: 0;
 }
 
+/* raleway-regular - latin */
+@font-face {
+	font-family: 'Raleway';
+	font-style: normal;
+	src: url('../fonts/raleway-v12-latin-regular.eot'); /* IE9 Compat Modes */
+	src: local('Raleway'), local('Raleway-Regular'),
+		 url('../fonts/raleway-v12-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+		 url('../fonts/raleway-v12-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+		 url('../fonts/raleway-v12-latin-regular.woff') format('woff'), /* Modern Browsers */
+		 url('../fonts/raleway-v12-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+		 url('../fonts/raleway-v12-latin-regular.svg#Raleway') format('svg'); /* Legacy iOS */
+  }
+
 html {
 	position: relative;
 	min-height: 100%;
+	overscroll-behavior: none 
 }
 
 body {
 	background-image: url(../img/background.png);
 	background-repeat: no-repeat;
 	background-position: center bottom;
-	background-size: cover
+	background-size: cover;
+
+	overscroll-behavior: none 
 }
 
 
@@ -120,7 +136,7 @@ img {
 #grid>div {
 	overflow: hidden;
 	font-family: 'Raleway', sans-serif;
-	font-size: 7vmin;
+	font-size: 8vmin;
 	margin: 1px;
 	background: gold;
 	display: flex;
@@ -157,3 +173,5 @@ div.stretchy-wrapper {
     white-space:normal !important;
     word-wrap: break-word; 
 }
+
+

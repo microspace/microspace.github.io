@@ -24,6 +24,12 @@ function chooseLevelScreen() {
 					<label class="btn btn-primary">
 						<input type="radio" name="size" value="7" autocomplete="off"> 7x7
 					</label>
+					<label class="btn btn-primary">
+					<input type="radio" name="size" value="8" autocomplete="off"> 8x8
+				</label>
+				<label class="btn btn-primary">
+				<input type="radio" name="size" value="9" autocomplete="off"> 8x8
+			</label>
         </div>
       </div>
     </div>
@@ -105,7 +111,7 @@ function chooseLevelScreen() {
 		
 	</div>
 `
-const upperMenu = `
+	const upperMenu = `
 <nav class="navbar navbar-light">
 <h1><a class="navbar-brand" href="#">Таблицы Шульте</a></h1>
 </nav>
@@ -116,7 +122,7 @@ const upperMenu = `
 	toggleMenu();
 	updateMenuWithSettingsFormConfig();
 
-	$('.my-start').on('click', function () {
+	$('.my-start').on('touchend click', function () {
 		gameSettings.size = $('.my-grid-size > label.active input[value]').val();
 		gameSettings.operation = $('.my-grid-operation > label.active input[value]').val();
 		gameSettings.order = $('.my-grid-order > label.active input[value]').val();

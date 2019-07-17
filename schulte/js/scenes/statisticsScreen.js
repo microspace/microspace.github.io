@@ -49,10 +49,10 @@ function viewStats() {
 	$(".uppermenu").html(upperMenu);
     $( ".screen" ).html(stats );
 
-    $('.my-restart').on('click', function () {
+    $('.my-restart').on('touchend click', function () {
       startGameF();
 	});
-	$('.my-gotomenu').on('click', function () {
+	$('.my-gotomenu').on('touchend click', function () {
 		chooseLevelScreen();
 	});
 }

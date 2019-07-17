@@ -2,47 +2,123 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8">
+
 	<title>Shulz table</title>
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
-	 crossorigin="anonymous">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-	 crossorigin="anonymous">
+	<link rel="stylesheet" href="css/fa/all.css">
 
-	<link href="https://fonts.googleapis.com/css?family=Oxygen:400,700&amp;subset=latin-ext" rel="stylesheet">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="css/style.css">
-	<link rel="stylesheet" href="fontello/css/fontello.css">
 
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Rubik:400,900&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="css/newstyle.css">
+	<link rel="stylesheet" href="vixfs-vixfs.bitbucket.io-d5f99f04260b/css/style.css">
+	<script src="lib/jquery-3.3.1.min.js"></script>
+	<link href="https://fonts.googleapis.com/css?family=Rubik:400,500,900&display=swap" rel="stylesheet">
 </head>
 
 <body>
-	<div class="container-fluid">
-		<div class="uppermenu">
-			<nav class="navbar navbar-light">
-				<h1><a class="navbar-brand" href="#">Таблицы Шульте</a></h1>
-			</nav>
+
+	<div id="outer">
+		<div class="box">
+			<div class="gametitle">
+				<div class="title">Игра №3</div>
+			</div>
+			<div class="bigbox">
+				<div class="bigtitle">агент молния</div>
+			</div>
+			<div class="desctext">
+				Только твоя молниеносная реакция поможет предотвратить взрыв. Нажми все числа или буквы в возрастающем
+				порядке. Любая ошибка и придется начинать с начала.
+			</div>
+			<div class="readybuttongroup" onclick="newGame()">
+				<div class="buttonrect">Готов?</div>
+			</div>
+
 		</div>
-
-		<div class="screen">
-
-		</div>
-
 	</div>
+	<section class="game_container">
+		<div class="progress_line">
+		</div>
+
+	</section>
 </body>
 <script>
 
 </script>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
- crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
- crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
- crossorigin="anonymous"></script>
 
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+</script>
+<script src="vixfs-vixfs.bitbucket.io-d5f99f04260b/js/example_game.js"></script>
 <script src="js/colors.js"></script>
 <script src="js/script.js"></script>
 <script src="js/scenes/chooseLevelScreen.js"></script>
 <script src="js/scenes/gameScreen.js"></script>
 <script src="js/scenes/statisticsScreen.js"></script>
+
+<script src="vixfs-vixfs.bitbucket.io-d5f99f04260b/js/generate.js"></script>
+<script src="vixfs-vixfs.bitbucket.io-d5f99f04260b/js/progress_line.js"></script>
+
+<script>
+	function setAspectRatio() {
+		var outer = $('#outer');
+		var box = $('.box');
+
+		if (outer.height() > outer.width() * (16 / 9)) {
+			box.css({
+				'width': '100%'
+			});
+			box.css({
+				'height': box.width() * (16 / 9)
+			});
+
+		} else {
+			box.css({
+				'height': '100%'
+			});
+			box.css({
+				'width': box.height() / (16 / 9)
+			});
+		}
+	}
+
+	function setSquare() {
+		var square = $('.square');
+		square.css({
+			'height': square.width(),
+		});
+	}
+
+	function setFont() {
+		var buttonbox = $('.buttonbox');
+		let size = 34 / 80 * buttonbox.height();
+		var font = $('.bboxtext');
+		font.css("font-size", size + "px");
+		
+	}
+
+	$(document).ready(function () {
+		setAspectRatio();
+		setSquare();
+		setFont();
+
+		$(window).resize(function () {
+			setAspectRatio();
+			setSquare();
+			setFont();
+		})
+	})
+</script>
+
 </html>

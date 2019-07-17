@@ -1,0 +1,270 @@
+* {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: -moz-none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+.box {
+    position: relative;
+    background: #DD4074;
+    margin: 0px auto;
+    background-image: url(../img/image.svg);
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+
+
+#outer {
+    overflow: hidden;
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    align-items: center;
+}
+
+.gametitle {
+    position: absolute;
+    left: 12.53%;
+    right: 12%;
+    top: 11.54%;
+    bottom: 84.41%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+
+}
+
+.title {
+    font-family: 'Rubik', sans-serif;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 16px;
+    line-height: 19px;
+    /* or 119% */
+
+    text-align: center;
+    vertical-align: middle;
+
+    text-transform: uppercase;
+
+    color: #FFFFFF;
+}
+
+.bigbox {
+    position: absolute;
+    left: 12.8%;
+    right: 12.53%;
+    top: 16.64%;
+    bottom: 69.09%;
+    border: 3px solid #FF6D97;
+    border-radius: 12px;
+    background-image: url(../img/bigtitle.svg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.bigtitle {
+
+
+
+
+
+    font-family: Rubik;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 27px;
+    line-height: 32px;
+    /* or 119% */
+
+
+    vertical-align: middle;
+    text-transform: uppercase;
+
+    color: #FFFFFF;
+}
+
+.desctext {
+
+
+    position: absolute;
+    left: 12.53%;
+    right: 12.53%;
+    top: 34.03%;
+    bottom: 50.22%;
+
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+    /* or 150% */
+
+    text-align: center;
+
+    color: #FFFFFF;
+}
+
+.readybuttongroup {
+    position: absolute;
+    left: 5.33%;
+    right: 5.33%;
+    top: 87.41%;
+    bottom: 3%;
+    background: #FFFFFF;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.readybuttongroup:active {
+    transform: translateY(5px)
+}
+
+.buttonrect {
+    /* Btn Text */
+    font-family: 'Rubik';
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 21px;
+    /* identical to box height */
+    text-align: center;
+    color: #4734BD;
+}
+
+
+
+.timerbox {
+
+    position: absolute;
+    left: 37.07%;
+    right: 38.4%;
+    top: 13.19%;
+    bottom: 80.81%;
+
+
+    background: #FFFFFF;
+    border: 2.5px solid #000000;
+    box-sizing: border-box;
+    border-radius: 8px;
+
+
+    font-family: "Rubik";
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 28px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    color: #000000;
+    -webkit-box-shadow: 5px 5px 0px 0px rgba(0, 0, 0, 1);
+    -moz-box-shadow: 5px 5px 0px 0px rgba(0, 0, 0, 1);
+    box-shadow: 5px 5px 0px 0px rgba(0, 0, 0, 1);
+}
+
+
+#outer {
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    align-items: center;
+}
+
+.square {
+    position: absolute;
+    width: 100%;
+    margin-top: 40%;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-column-gap: 3%;
+    grid-row-gap: 3%;
+    justify-items: stretch;
+    align-items: stretch;
+    padding-left: 4%;
+    padding-right: 4%;
+}
+
+.buttonbox {
+    background: #F2BBC9;
+    border: 2px solid #FFD7EB;
+    box-sizing: border-box;
+    border-radius: 11px;
+    -webkit-box-shadow: 10px 10px 0px 0px rgba(178, 47, 97, 1);
+    -moz-box-shadow: 10px 10px 0px 0px rgba(178, 47, 97, 1);
+    box-shadow: 10px 10px 0px 0px rgba(178, 47, 97, 1);
+    width: 100%;
+
+    font-family: "Rubik";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 34px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+
+    color: #000000;
+
+}
+
+.buttonbox:active {
+    transform: translateY(5px);
+    background: #FFFFFF;
+    -webkit-box-shadow: 5px 5px 0px 0px rgba(178, 47, 97, 1);
+    -moz-box-shadow: 5px 5px 0px 0px rgba(178, 47, 97, 1);
+    box-shadow: 5px 5px 0px 0px rgba(178, 47, 97, 1);
+}
+
+.bboxtext {
+    pointer-events: none;
+}
+
+
+
+.rotate_0 {
+	transform: rotate(0deg);
+	-webkit-transform: rotate(0deg);
+	-moz-transform: rotate(0deg);
+	-ms-transform: rotate(0deg);
+	-o-transform: rotate(0deg);
+}
+
+.rotate_90 {
+	transform: rotate(90deg);
+	-webkit-transform: rotate(90deg);
+	-moz-transform: rotate(90deg);
+	-ms-transform: rotate(90deg);
+	-o-transform: rotate(90deg);
+}
+
+.rotate_180 {
+	transform: rotate(180deg);
+	-webkit-transform: rotate(180deg);
+	-moz-transform: rotate(180deg);
+	-ms-transform: rotate(180deg);
+	-o-transform: rotate(180deg);
+}
+
+.rotate_270 {
+	transform: rotate(-90deg);
+	-webkit-transform: rotate(-90deg);
+	-moz-transform: rotate(-90deg);
+	-ms-transform: rotate(-90deg);
+	-o-transform: rotate(-90deg);
+}

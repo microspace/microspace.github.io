@@ -2,13 +2,21 @@ let gameSettings = {
 	size: 3,
 	operation: "standard",
 	order: "direct",
-	timer: "notimelimit",
-	allClicks: 0,
-	errorClicks: 0,
-	pTime: "",
 }
 
 
+const gamePossibilities = [
+	["standard", "rotated", "colored"],
+	["standard", "rotated", "colored"],
+	["standard", "rotated", "colored"],
+	["standard", "rotated", "colored", "alphabet"],
+	["standard", "rotated", "colored", "alphabet"],
+	["standard", "rotated", "colored", "alphabet"],
+	["standard", "rotated", "colored", "alphabet", "alphabet_numbers"],
+	["standard", "rotated", "colored", "alphabet"],
+	["standard", "rotated", "colored", "alphabet", "alphabet_numbers"],
+	["standard", "rotated", "colored", "alphabet", "alphabet_numbers"],
+]
 
 function setSquareSize() {
 	/* Подгоняем размер квадрата под размер окна с контентом. */

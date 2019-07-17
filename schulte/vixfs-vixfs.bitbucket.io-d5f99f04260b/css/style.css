@@ -1,0 +1,245 @@
+@font-face {
+    font-family: 'RubikRegular';
+    src: url('fonts/Rubik-Regular.ttf');
+}
+@font-face {
+    font-family: 'RubikMedium';
+    src: url('fonts/Rubik-Medium.ttf');
+}
+@font-face {
+    font-family: 'RubikLight';
+    src: url('fonts/Rubik-Light.ttf');
+}
+
+/************  Удалить  ***********/
+
+.start_game{
+    height: 200px;
+}
+.buttons_field {
+    margin-top: 50px;
+    display: none;
+}
+.buttons_field div{
+    margin: 5px;
+}
+
+.badge:empty{
+    width:20px;
+    display: inline-block;
+}
+/**********************************/
+
+.game_container{
+    overflow: hidden;
+
+}
+.container_progress_line{
+    font-family: 'RubikRegular', serif;
+    background-color: #9E1F63;
+    padding: 0 8px;
+    color: #fff;
+    width: 100%;
+    height: 65px;
+}
+
+.back_arrow{
+    background-color: #921656;
+    color: #fff;
+    width: 21px;
+    height: 21px;
+    border-radius: 7px;
+    -moz-border-radius: 7px;
+    -webkit-border-radius: 7px;
+    margin-top: 8px;
+}
+.back_arrow_icon{
+    color: #fff;
+
+    display: inline-block;
+    width: 21px;
+    height: 21px;
+
+    background: url('icons/arrow-left_2.svg') no-repeat;
+    background-position: center;
+    background-size: 35%;
+}
+.time, .points{
+    font-family: 'RubikRegular', serif;
+    font-size: 16px;
+    line-height: 19px;
+    display: inline-block;
+    -webkit-transition: opacity 3s ease;
+    -moz-transition: opacity 3s ease;
+    -ms-transition: opacity 3s ease;
+    -o-transition: opacity 3s ease;
+    transition: opacity 3s ease;
+}
+.time,.record{
+    color: #FF6B95;
+}
+.points{
+    margin-top: 12px;
+}
+
+.dd {
+    overflow: hidden;
+}
+.record{
+    font-family: 'RubikMedium', serif;
+    font-size: 10px;
+    line-height: 12px;
+    display: inline-block;
+    margin-top: 5px;
+}
+.record_icon,.time_icon{
+    display: inline-block;
+    color: #FF6B95;
+}
+.time_icon {
+    width: 13px;
+    height: 16px;
+    margin: 0 4px;
+    margin-top: -3px;
+    background: url('icons/clock-for-top.svg') no-repeat;
+    background-position: center;
+    background-size: 100%;
+
+}
+.record_icon {
+    width: 14px;
+    height: 15px;
+    margin-left: 4px;
+
+    background: url('icons/star-for-top.svg') no-repeat;
+    background-position: right;
+    background-size: 100%;
+}
+.level{
+    font-family: 'RubikMedium', serif;
+    font-size: 30px;
+    line-height: 36px;
+    margin-top: 3px;
+    -webkit-transition: opacity 0.5s ease;
+    -moz-transition: opacity 0.5s ease;
+    -ms-transition: opacity 0.5s ease;
+    -o-transition: opacity 0.5s ease;
+    transition: opacity 0.5s ease;
+}
+.level_cont {
+    padding: 0px;
+}
+
+.cont_wrong_correct_answer{
+    width: 85%;
+    margin: 0 auto;
+}
+.wrong_answer,.correct_answer {
+    display: inline-block;
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    margin-left: 7px;
+    /*margin-bottom: 0px;*/
+    border: 1.24px solid #DD4074;
+
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+.wrong_answer:first-child,.correct_answer:first-child {
+    margin-left: 0px;
+}
+
+.wrong_answer.active{
+    border-color: #ef3054;
+    background-color: #ef3054;
+}
+.correct_answer.active{
+    border-color: #29b473;
+    background-color: #29b473;
+}
+.row_2 {
+    margin-top: -3px;
+}
+.min_max_points_line{
+    width: 85%;
+    margin: 0 auto;
+    margin-top: 1.5px;
+    padding: 0 3px;
+    height: 16px;
+    border-radius: 50px;
+    -moz-border-radius: 50px;
+    -webkit-border-radius: 50px;
+
+    background-color: #840950;
+    /*background: -moz-linear-gradient(left,  rgba(56,18,86,1) 0%, rgba(56,18,86,0) 50%, rgba(56,18,86,1) 100%); !* FF3.6-15 *!*/
+    /*background: -webkit-linear-gradient(left,  rgba(56,18,86,1) 0%,rgba(56,18,86,0) 50%,rgba(56,18,86,1) 100%); !* Chrome10-25,Safari5.1-6 *!*/
+    /*background: linear-gradient(to right,  rgba(56,18,86,1) 0%,rgba(56,18,86,0) 50%,rgba(56,18,86,1) 100%); !* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ *!*/
+    /*filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#381256', endColorstr='#381256',GradientType=1 ); !* IE6-9 *!*/
+}
+
+.min_points_icon, .max_points_icon {
+    color: #F7A1B7;
+    width: 5px;
+    height: 7px;
+    margin: 0 3px;
+}
+.min_points,.max_points, .level_text {
+    font-family: 'RubikMedium', serif;
+    font-size: 9px;
+    line-height: 11px;
+}
+.min_points,.max_points{
+    color: #F7A1B7;
+}
+.level_text{
+    text-transform: uppercase;
+}
+.min_points_icon {
+    background: url('icons/arrow-left.svg') no-repeat;
+    background-position: left;
+    background-size: 100%;
+    fill: #F7A1B7;
+}
+.max_points_icon {
+    background: url('icons/arrow-right.svg') no-repeat;
+    background-position: right;
+    background-size: 100%;
+}
+
+.progressBar {
+    height: 3px;
+    overflow: hidden;
+    background-color: rgba(70, 29, 107, 0.5);
+    border-radius: .25rem;
+
+    -webkit-transition: all 2s ease;
+    -moz-transition: all 2s ease;
+    -ms-transition: all 2s ease;
+    -o-transition: all 2s ease;
+    transition: all 2s ease;
+
+}
+
+.progressBar div {
+    overflow: hidden;
+    background-color: #fff;
+    height: 100%;
+}
+
+@media (max-width: 330px) { 
+    .wrong_answer,.correct_answer {
+        height: 9px;
+        width: 9px;
+    }
+
+    .time, .points{
+        font-size: 12px;
+        line-height: 19px;
+    }
+}
