@@ -113,7 +113,7 @@ function generateLine() {
     $(".box").html(gg);
     $(".box").append(progr_line);
     setSquare();
-    $('.box').css("background-image", "url(../img/game.svg)");
+    $('.box').css("background-image", "url(img/game.svg)");
     $('.box').css("background-position", "bottom");
 
     startGameF();
