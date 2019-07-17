@@ -4,7 +4,7 @@ let level,
         {
             minPoints: 100,
             maxPoints: 400,
-            time: 10, // в секундах
+            time: 15, // в секундах
             delay_time: 1, //задержка перед началом игры, не обязательно
             playedgames: 1,
             size: 3
@@ -12,28 +12,28 @@ let level,
         {
             minPoints: 400,
             maxPoints: 700,
-            time: 20, // в секундах
+            time: 25, // в секундах
             playedgames: 0,
             size: 4
         },
         {
             minPoints: 700,
             maxPoints: 1000,
-            time: 40, // в секундах
+            time: 45, // в секундах
             playedgames: 0,
             size: 5
         },
         {
             minPoints: 700,
             maxPoints: 1000,
-            time: 40, // в секундах
+            time: 45, // в секундах
             playedgames: 0,
             size: 5
         },
         {
             minPoints: 1000,
             maxPoints: 1300,
-            time: 80, // в секундах
+            time: 85, // в секундах
             playedgames: 0,
             size: 6
         }
@@ -41,7 +41,7 @@ let level,
         {
             minPoints: 1300,
             maxPoints: 1600,
-            time: 100, // в секундах
+            time: 105, // в секундах
             playedgames: 0,
             size: 7
         }
@@ -127,6 +127,7 @@ function newGame() {
             }
 
         } else {
+            
             changePoints(-50);
         }
     });

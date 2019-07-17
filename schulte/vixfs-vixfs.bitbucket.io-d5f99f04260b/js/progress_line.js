@@ -41,7 +41,7 @@ function initProgressLine() {
 
 function getInitialDataServer() {
     // TODO связь с сервером, получение данных
-    let data = '{ "startLevel": "1", "record": "0" }';
+    let data = '{ "startLevel": "9", "record": "0" }';
     return data;
 }
 function setInitialDataServer(startLevel, record) {
