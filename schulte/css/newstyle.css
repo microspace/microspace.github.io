@@ -6,6 +6,20 @@
     user-select: none;
 }
 
+/* body {
+    background: #DD4074;
+} */
+
+.bombs {
+    position: absolute;
+    top: 90px;
+    left: 37px;
+    background-image: url(../img/bombs.svg);
+    height: 30px;
+    width: 300px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
 .box {
     position: relative;
     background: #DD4074;
@@ -170,9 +184,9 @@
     text-align: center;
     justify-content: center;
     color: #000000;
-    -webkit-box-shadow: 5px 5px 0px 0px rgba(0, 0, 0, 1);
-    -moz-box-shadow: 5px 5px 0px 0px rgba(0, 0, 0, 1);
-    box-shadow: 5px 5px 0px 0px rgba(0, 0, 0, 1);
+    -webkit-box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 1);
+    -moz-box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 1);
+    box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 1);
 }
 
 
@@ -223,13 +237,13 @@
 
 }
 
-.buttonbox:active {
+/* .buttonbox:active {
     transform: translateY(5px);
     background: #FFFFFF;
     -webkit-box-shadow: 5px 5px 0px 0px rgba(178, 47, 97, 1);
     -moz-box-shadow: 5px 5px 0px 0px rgba(178, 47, 97, 1);
     box-shadow: 5px 5px 0px 0px rgba(178, 47, 97, 1);
-}
+} */
 
 .bboxtext {
     pointer-events: none;

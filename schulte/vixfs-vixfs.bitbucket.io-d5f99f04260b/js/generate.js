@@ -6,6 +6,9 @@ function generateLine() {
 </div>
 <div class="timerbox">0:09</div>
 
+
+
+
 <div class="square" id="grid">
 
 
@@ -115,6 +118,10 @@ function generateLine() {
     setSquare();
     $('.box').css("background-image", "url(img/game.svg)");
     $('.box').css("background-position", "bottom");
+
+    $('.box1').css("background-image", "url(img/game2.svg)");
+    $('.box1').css("background-position", "top");
+    
 
     startGameF();
 }

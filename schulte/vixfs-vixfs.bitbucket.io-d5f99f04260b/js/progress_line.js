@@ -116,7 +116,7 @@ function startTimer(time) {
             fieldGame.progressBar.querySelector('div').style.width = "0";
             return;
         }
-        widthProgress = Math.floor((widthProgress - percentVal) * 1000) / 1000;
+        widthProgress = 100 * (1 - (timePassed / 1000) / time);
         fieldGame.progressBar.querySelector('div').style.width = widthProgress + "%";
     }
     timer();

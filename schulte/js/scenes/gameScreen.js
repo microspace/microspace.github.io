@@ -151,6 +151,7 @@ function startGameF() {
 	}
 	setFont();
 	setSquare();
+	scaleBombs ()
 }
 
 

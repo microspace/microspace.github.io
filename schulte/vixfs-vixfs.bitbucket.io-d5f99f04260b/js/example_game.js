@@ -95,7 +95,7 @@ function newGame() {
     //
 
     initProgressLine();
-    
+
     /** При правильном/неправильном ответе изменение количества очков
      * @param {number} points - кол-во очков за ответ (положительное или отрицательное число)
      *
@@ -107,7 +107,33 @@ function newGame() {
      *
      * changeLevelState();
      */
-    $('#grid').on('touchend click', 'div', function () {
+    $('#grid').on('touchend mouseup', 'div', function (e) {
+
+
+        $(this).css({
+            "background": "#F2BBC9",
+            "transform": "translateY(0px)",
+            "-webkit-box-shadow": "10px 10px 0px 0px rgba(178, 47, 97, 1)",
+            "-moz-box-shadow": "10px 10px 0px 0px rgba(178, 47, 97, 1)",
+            "box-shadow": "10px 10px 0px 0px rgba(178, 47, 97, 1)",
+        });
+
+        e.preventDefault();
+
+
+
+    });
+
+
+
+
+    $('#grid').on('touchstart mousedown', 'div', function (e) {
+
+
+
+
+        e.preventDefault();
+
         //gameSettings.allClicks++;
 
         let clickedNumber = parseInt($(this).attr('id'));
@@ -116,7 +142,13 @@ function newGame() {
             successClicks++;
             changePoints(50);
             prevNumber = clickedNumber;
-
+            $(this).css({
+                "background": "#FFFFFF",
+                "transform": "translateY(5px)",
+                "-webkit-box-shadow": "5px 5px 0px 0px rgba(178, 47, 97, 1)",
+                "-moz-box-shadow": "5px 5px 0px 0px rgba(178, 47, 97, 1)",
+                "box-shadow": "5px 5px 0px 0px rgba(178, 47, 97, 1)",
+            });
             if (prevNumber === goalNumber - 1 * signed1) {
                 //clickTime = +new Date();
 
@@ -127,7 +159,13 @@ function newGame() {
             }
 
         } else {
-            
+            $(this).css({
+                "background": "#EF3054",
+                "transform": "translateY(5px)",
+                "-webkit-box-shadow": "5px 5px 0px 0px rgba(178, 47, 97, 1)",
+                "-moz-box-shadow": "5px 5px 0px 0px rgba(178, 47, 97, 1)",
+                "box-shadow": "5px 5px 0px 0px rgba(178, 47, 97, 1)",
+            });
             changePoints(-50);
         }
     });
