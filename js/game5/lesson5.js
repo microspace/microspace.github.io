@@ -38,7 +38,7 @@ TopDownGame.Lesson5.prototype = {
     create: function () {
         if (scene === undefined || scene === null) {
             Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
-            scene = "510";
+            scene = "521";
         }
         player = this.game.add.sprite(0, 0, 'pegman');
         loadmap("lesson" + scene.toString().substring(0, 2));
@@ -304,7 +304,7 @@ function hitEvent() {
 
 function sinkInWater() {
 
-    if (sinkflag == false) {
+    
         player.body.enable = false;
         sinkflag = true;
         var step = Maze.getStepInDirection[Maze.directionToString(Pegman.direction)];
@@ -332,7 +332,7 @@ function sinkInWater() {
                 player.visible = false;
             }, this);
         }, this);
-    }
+    
 };
 
 
@@ -487,20 +487,20 @@ Maze.tile_SHAPES = {
 
 function load_scene(scene) {
     if (scene == "510") {
-        try { player.body.enable = false; } catch { }
+        //try { player.body.enable = false; } catch { }
         var result = findObjectsByType('playerStartPosition', map, 'playerLayer');
         lastSuccessfullPosition.x = result[0].x;
         lastSuccessfullPosition.y = result[0].y;
     }
 
     if (scene == "521") {
-        try { player.body.enable = false; } catch { }
+        //try { player.body.enable = false; } catch { }
         var result = findObjectsByType('playerStartPosition', map, 'playerLayer');
         lastSuccessfullPosition.x = result[0].x;
         lastSuccessfullPosition.y = result[0].y;
     }
-    if (scene == "531" && lastSuccessfullPosition.x == null) {
-        try { player.body.enable = false; } catch { }
+    if (scene == "531") {
+        //try { player.body.enable = false; } catch { }
         var result = findObjectsByType('playerStartPosition', map, 'playerLayer');
         lastSuccessfullPosition.x = result[0].x;
         lastSuccessfullPosition.y = result[0].y;
@@ -559,7 +559,7 @@ function loadmap(name) {
     sinkLayer = map.createLayer('sinkLayer');
     map.setTileIndexCallback([...Array(500).keys()], sinkInWater, this, sinkLayer);
     map.setTileIndexCallback([...Array(500).keys()], hitEvent, this, blockLayer);
-
+    map.setTileIndexCallback(235, sinkInWater, this, flour);
     upperLayer = map.createLayer('upperLayer');
 
     if (map.key != "lesson53") {

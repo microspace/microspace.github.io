@@ -38,7 +38,7 @@ TopDownGame.Lesson5.prototype = {
     create: function () {
         if (scene === undefined || scene === null) {
             Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
-            scene = "511";
+            scene = "510";
         }
         player = this.game.add.sprite(0, 0, 'pegman');
         loadmap("lesson" + scene.substring(0, 2));
@@ -291,9 +291,7 @@ TopDownGame.Lesson5.prototype = {
 };
 
 function hitEvent(a, b) {
-    console.log(a, b);
     if (!hitflag) {
-        console.log("hit");
         player.body.enable = false;
         Pegman.pegmanActions = [];
         if (Pegman.tween) {
@@ -305,7 +303,6 @@ function hitEvent(a, b) {
 };
 
 function sinkInWater() {
-    console.log("sink");
     if (sinkflag == false) {
         player.body.enable = false;
         sinkflag = true;

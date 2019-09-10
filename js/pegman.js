@@ -1637,6 +1637,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     } else if (scene == "521") {
                         lastSuccessfullPosition.x = player.x;
                         lastSuccessfullPosition.y = player.y;
+                        $("#imagecontainer").attr('class', "hero");
                         $("#modaltext").text("Наконец-то пришла помощь! Мы нашли важный след Агносто. Но нас атаковали и мы не можем вернуться. Есть раненные. Помоги нам доставить следы Агносто на базу альянса!");
                         $("#exampleModal").modal();
                         revealArea();
@@ -2002,6 +2003,7 @@ var runProgram = function () {
 
     try {
         eval(code);
+
     } catch (e) {
         alert(e);
     }

@@ -36,8 +36,6 @@ Blockly.JavaScript['maze_up'] = function (block) {
     if (TopDownGame.game.state.getCurrentState().key == "lesson5") {
         var step = Maze.getStepInDirection["NORTH"];
         Pegman.vdposY = Pegman.vdposY + step[1] * operator; 
-        console.log("dpos ", Pegman.dposX, Pegman.dposY);
-        console.log("vdpos ", Pegman.vdposX, Pegman.vdposY);
         try {
         var tileLeft = map.getTile(Pegman.vdposX - 1, Pegman.vdposY, flour);
         Pegman.isGladeToLeft = tileLeft.index == 235;
@@ -50,10 +48,6 @@ Blockly.JavaScript['maze_up'] = function (block) {
         var tileAbove = map.getTile(Pegman.vdposX, Pegman.vdposY - 1, flour);
         Pegman.isGladeAbove = tileAbove.index == 235;
         } catch (e) {}
-        
-        
-        
-        console.log(Pegman.isGladeAbove, Pegman.isGladeBelow, Pegman.isGladeToRight, Pegman.isGladeToLeft);
     }
     `
     return code;
@@ -95,8 +89,7 @@ Blockly.JavaScript['maze_down'] = function (block) {
     if (TopDownGame.game.state.getCurrentState().key == "lesson5") {
         var step = Maze.getStepInDirection["SOUTH"];
         Pegman.vdposY = Pegman.vdposY + step[1] * operator; 
-        console.log("dpos ", Pegman.dposX, Pegman.dposY);
-        console.log("vdpos ", Pegman.vdposX, Pegman.vdposY);
+
         try {
             var tileLeft = map.getTile(Pegman.vdposX - 1, Pegman.vdposY, flour);
             Pegman.isGladeToLeft = tileLeft.index == 235;
@@ -113,7 +106,6 @@ Blockly.JavaScript['maze_down'] = function (block) {
         Pegman.isGladeBelow = tileDown.index == 235;
         } catch (e) {}
 
-        console.log(Pegman.isGladeAbove, Pegman.isGladeBelow, Pegman.isGladeToRight, Pegman.isGladeToLeft);
 
     }
     `
@@ -159,8 +151,7 @@ Blockly.JavaScript['maze_right'] = function (block) {
     if (TopDownGame.game.state.getCurrentState().key == "lesson5") {
         var step = Maze.getStepInDirection["EAST"];
         Pegman.vdposX = Pegman.vdposX + step[0] * operator; 
-        console.log("dpos ", Pegman.dposX, Pegman.dposY);
-        console.log("vdpos ", Pegman.vdposX, Pegman.vdposY);
+ 
 
 
     try {
@@ -183,9 +174,6 @@ Blockly.JavaScript['maze_right'] = function (block) {
     }
 
         
-        
-        
-        console.log(Pegman.isGladeAbove, Pegman.isGladeBelow, Pegman.isGladeToRight, Pegman.isGladeToLeft);
     }
     `
     return code;
@@ -226,8 +214,7 @@ Blockly.JavaScript['maze_left'] = function (block) {
     if (TopDownGame.game.state.getCurrentState().key == "lesson5") {
         var step = Maze.getStepInDirection["WEST"];
         Pegman.vdposX = Pegman.vdposX + step[0] * operator; 
-        console.log("dpos ", Pegman.dposX, Pegman.dposY);
-        console.log("vdpos ", Pegman.vdposX, Pegman.vdposY);
+
 
     try {
         var tileAbove = map.getTile(Pegman.vdposX, Pegman.vdposY - 1, flour);
@@ -242,10 +229,6 @@ Blockly.JavaScript['maze_left'] = function (block) {
         Pegman.isGladeToLeft = tileLeft.index == 235;
     } catch (e) {}
 
-        
-        
-        
-        console.log(Pegman.isGladeAbove, Pegman.isGladeBelow, Pegman.isGladeToRight, Pegman.isGladeToLeft);
     }
     `
     return code;
@@ -872,8 +855,6 @@ Blockly.JavaScript['pickup'] = function (block) {
     function processCallback1 (sprite, battery) {
         console.log("processCallback");
     };
-    console.log(Pegman.vdposX, Pegman.vdposY);
-    console.log(Pegman.dposX, Pegman.dposY);
     if (isOverlapping) {
         //Pegman.nextAction("pickup");
     }`
