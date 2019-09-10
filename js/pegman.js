@@ -20,7 +20,7 @@ var Pegman = {
     isGladeBelow: false,
     firstName: "Рекрут",
     hasGoldenKey: false,
-    flipX: false,
+    nswe: false,
     lsp: {
         x: 0,
         y: 0
@@ -81,6 +81,7 @@ var Pegman = {
     },
 
     reset2: function () {
+        globalhittedFlag = false;
         TopDownGame.game.stage.updateTransform();
         TopDownGame.game.time.events.add(500, delayEnBody, this);
         try {
@@ -580,13 +581,14 @@ var Pegman = {
                 var goaly = Maze.SQUARE_SIZE * (-1 * toy + Maze.coordoffset_y) + 14;
                 if (goalx < player.x) {
                     this.pegmanSprite.scale.x = -1;
+                    this.flipX = true;
                     try {
                         weapon.fireAngle = Phaser.ANGLE_LEFT
                     } catch (e) {};
                     this.direction = Maze.DirectionType.WEST;
-
                 } else {
                     this.pegmanSprite.scale.x = 1;
+                    this.flipX = false;
                     try {
                         weapon.fireAngle = Phaser.ANGLE_RIGHT
                     } catch (e) {};
@@ -1379,10 +1381,13 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 // }
 
             } else {
-                $("#modaltext").text("Ты собрал не все сундуки!");
+                if (globalhittedFlag != true) {
+                    $("#modaltext").text("Ты собрал не все сундуки!");
                 $("#imagecontainer").attr('class', 'hero_fail');
 
                 $("#exampleModal").modal();
+                }
+                
             }
         }
 
@@ -1411,6 +1416,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
             if (setblocks == tilestodraw.length) {
                 if (scene == 6) {
                     $("#modaltext").text("Поздравляю! Ты закончил уровень №3");
+                    $("#imagecontainer").attr('class', 'hero_win');
                     $("#exampleModal").modal();
                     lastSuccessfullPosition.x = player.x;
                     lastSuccessfullPosition.y = player.y;
@@ -2003,6 +2009,7 @@ var runProgram = function () {
 
     try {
         eval(code);
+        console.log(code)
 
     } catch (e) {
         alert(e);

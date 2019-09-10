@@ -7,7 +7,7 @@ var weapon;
 var explosion;
 var items;
 var barrels;
-
+var globalhittedFlag = false;
 var goalbarrelcount;
 var xyqueue = getArrayWithLimitedLength(10);
 var lastSuccessfullPosition = {
@@ -249,6 +249,7 @@ TopDownGame.Lesson25.prototype = {
         sprite.damage(damage);
         if (sprite["sprite"] == "restrictedToHit") {
             $("#modaltext").text("Нельзя стрелять по бочкам с водой! Целься точнее!");
+            $("#imagecontainer").attr('class', 'hero_fail');
             $("#exampleModal").modal();
             Pegman.reset2();
         } else {
@@ -277,6 +278,7 @@ TopDownGame.Lesson25.prototype = {
         explosion.visible = true;
         explosion.animations.play('EXPL');
         bullet.kill();
+        globalhittedFlag = true;
     },
     chestCallback: function(sprite, chest) {
         chest.visible = false;
