@@ -7,7 +7,7 @@ var weapon;
 var explosion;
 var items;
 var barrels;
-var globalhittedFlag = false;
+
 var goalbarrelcount;
 var xyqueue = getArrayWithLimitedLength(10);
 var lastSuccessfullPosition = {
@@ -278,7 +278,7 @@ TopDownGame.Lesson25.prototype = {
         explosion.visible = true;
         explosion.animations.play('EXPL');
         bullet.kill();
-        globalhittedFlag = true;
+        Pegman.globalhittedFlag = true;
     },
     chestCallback: function(sprite, chest) {
         chest.visible = false;

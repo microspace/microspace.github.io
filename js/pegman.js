@@ -20,6 +20,7 @@ var Pegman = {
     isGladeBelow: false,
     firstName: "Рекрут",
     hasGoldenKey: false,
+    globalhittedFlag: false,
     nswe: false,
     lsp: {
         x: 0,
@@ -81,7 +82,7 @@ var Pegman = {
     },
 
     reset2: function () {
-        globalhittedFlag = false;
+        this.globalhittedFlag = false;
         TopDownGame.game.stage.updateTransform();
         TopDownGame.game.time.events.add(500, delayEnBody, this);
         try {
@@ -1381,7 +1382,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 // }
 
             } else {
-                if (globalhittedFlag != true) {
+                if (this.globalhittedFlag != true) {
                     $("#modaltext").text("Ты собрал не все сундуки!");
                 $("#imagecontainer").attr('class', 'hero_fail');
 
