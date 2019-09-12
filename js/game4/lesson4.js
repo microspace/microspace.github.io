@@ -64,7 +64,6 @@ TopDownGame.Lesson4.prototype = {
             scene = 1;
         }
 
-        console.log (Pegman.lsp.x, Pegman.lsp.y)
         if (Pegman.lsp.x * Pegman.lsp.y == 0) {
             var result = findObjectsByType('playerStartPosition', map, 'playerLayer');
 
@@ -353,10 +352,7 @@ function load_scene() {
         var newTree = `
         <xml id="toolbox" style="display: none; background-color: #4d90fe;">
         
-        <block type="maze_up"></block>
-        <block type="maze_down"></block>
-        <block type="maze_left"></block>
-        <block type="maze_right"></block>
+
         <block type="fire"></block>
         <block type="uturn"></block>
         <block type="repeat_n_times"></block>
@@ -383,7 +379,7 @@ function load_scene() {
         maxcaps2 = 12 + 1;
         workspace.options.maxBlocks = maxcaps2;
     } else if (scene == 4) {
-        console.log(scene);
+       
         var newTree = `
         <xml id="toolbox" style="display: none; background-color: #4d90fe;">
         <block type="maze_up"></block>
@@ -395,7 +391,7 @@ function load_scene() {
         <block type="repeat_n_times"></block>
         </xml>`;
         workspace.updateToolbox(newTree);
-        maxcaps2 = 15 + 1;
+        maxcaps2 = 5 + 1;
         workspace.options.maxBlocks = maxcaps2;
     } else if (scene == 5) {
         var newTree = `
@@ -468,7 +464,6 @@ function load_map(name) {
     // player.x = result[0].x;
     // player.y = result[0].y;
     Pegman.lsp.x = result[0].x;
-    console.log(Pegman.lsp.x, Pegman)
     Pegman.lsp.y = result[0].y;
     Pegman.reset2();
 
@@ -494,7 +489,8 @@ function load_map(name) {
 
     function fadePicture() {
         if (scene == 42) {
-            $("#modaltext").text("Ха! Да ты со всем справился! А теперь последнее испытание. Оно только для бойцов со стальными нервами! Пройди по очень тонкому мосту над бездной и подстрели те бочки!");
+            $("#imagecontainer").attr('class', "hero");
+            $("#modaltext").text("Ха! Да вы со всем справились! А теперь последнее испытание! Если сможете пересечь ущелье и подстрелить те бочки, я разрешу вам сопровождать информацию об Агносто!");
             $("#exampleModal").modal();
         }
 

@@ -186,9 +186,7 @@ TopDownGame.Lesson22.prototype = {
         if (!flag) {
             player.body.enable = false;
             flag = true;
-            console.log("sinkInWater");
             b.visible = false;
-
             Pegman.pegmanActions = [];
             if (Pegman.tween) {
                 Pegman.tween.stop();

@@ -850,14 +850,7 @@ Blockly.JavaScript['pickup'] = function (block) {
     var playerCopy = TopDownGame.game.add.sprite(player.x, player.y, player.key, player.frame);
     playerCopy.x = Pegman.vdposX * 64;
     playerCopy.y = Pegman.vdposY * 64;
-
-    var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, batteries, null, processCallback1, TopDownGame);
-    function processCallback1 (sprite, battery) {
-        console.log("processCallback");
-    };
-    if (isOverlapping) {
-        //Pegman.nextAction("pickup");
-    }`
+   `
     return code;
 
 

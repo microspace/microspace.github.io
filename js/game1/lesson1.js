@@ -27,7 +27,7 @@ TopDownGame.Lesson1.prototype = {
         // load all data from map json, populate the structure.
         this.loadSceneData();
 
-        console.log(scene)
+        
         if (scene == 5) {
             $('#play').prop('disabled', true);
 

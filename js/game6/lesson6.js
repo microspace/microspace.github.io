@@ -245,7 +245,7 @@ TopDownGame.lesson6.prototype = {
 
 function hitEvent() {
     if (!hitflag) {
-        console.log("hit");
+
         player.body.enable = false;
         Pegman.pegmanActions = [];
         if (Pegman.tween) {

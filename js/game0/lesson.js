@@ -232,7 +232,6 @@ TopDownGame.Lesson0.prototype = {
         }
     },
     sinkInWater: function () {
-        console.log("sink");
         if (!flag) {
             Pegman.pegmanActions = [];
             if (Pegman.tween) {

@@ -38,7 +38,7 @@ TopDownGame.Lesson5.prototype = {
     create: function () {
         if (scene === undefined || scene === null) {
             Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
-            scene = "521";
+            scene = "510";
         }
         player = this.game.add.sprite(0, 0, 'pegman');
         loadmap("lesson" + scene.toString().substring(0, 2));
@@ -185,6 +185,7 @@ TopDownGame.Lesson5.prototype = {
     },
     switch531: function() {
         loadmap('lesson53');
+        $("#imagecontainer").attr('class', "hero");
         $("#modaltext").text("Путь к точке эвакуации проходит через реку. Нужно засыпать дорогу для отряда.");
         $("#exampleModal").modal();
         scene = "531";        
@@ -193,6 +194,7 @@ TopDownGame.Lesson5.prototype = {
     switch521: function() {
         loadmap('lesson52');
         scene = "521";
+        $("#imagecontainer").attr('class', "hero");
         $("#modaltext").text(" Тут повсюду трупы. Что тут произошло? Надеюсь с отрядом все в порядке.");
         $("#exampleModal").modal();
         load_scene(scene);
@@ -291,7 +293,7 @@ TopDownGame.Lesson5.prototype = {
 
 function hitEvent() {
     if (!hitflag) {
-        console.log("hit");
+        
         player.body.enable = false;
         Pegman.pegmanActions = [];
         if (Pegman.tween) {

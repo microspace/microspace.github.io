@@ -38,9 +38,7 @@ TopDownGame.Lesson23.prototype = {
             y: result[0].y
         };
         player = this.game.add.sprite(result[0].x, result[0].y, 'pegman');
-        //player.kill();
-        //console.log(scene2s[currentscene2].startPos[0]);
-        //console.log(scene2s[currentscene2].startPos[1]);
+
 
 
         player.anchor.setTo(0.5, 0.5);

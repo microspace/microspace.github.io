@@ -35,25 +35,14 @@ TopDownGame.Lesson24.prototype = {
         weapon = this.game.add.weapon(20, 'bullet');
         // here we count barrels which we need to hit
 
-        /*        barrels.forEach(function(c) {
-                    console.log(c.health);
-                });*/
-
-        // weapon = this.game.add.weapon(20, 'bullet');
-        // game goal pointer
-        /*        pointer = this.game.add.sprite(Maze.scenes[scene2].endPos[0], Maze.scenes[scene2].endPos[1], 'pointer');
-                pointer.scale.setTo(0.8, 0.8);
-                pointer.animations.add('ANIM', [0, 1], 2, true);
-                pointer.animations.play('ANIM');*/
+ 
         var result = findObjectsByType('playerStartPosition', this.map, 'playerLayer');
         lastSuccessfullPosition = {
             x: result[0].x,
             y: result[0].y
         };
         player = this.game.add.sprite(result[0].x, result[0].y, 'pegman');
-        //player.kill();
-        //console.log(scene2s[currentscene2].startPos[0]);
-        //console.log(scene2s[currentscene2].startPos[1]);
+
 
 
         player.anchor.setTo(0.5, 0.5);
@@ -218,7 +207,7 @@ TopDownGame.Lesson24.prototype = {
     },
     sinkInWater: function() {
         if (!flag) {
-            console.log("sinkInWater");
+           
             player.body.enable = false;
             b.visible = false;
 
@@ -254,6 +243,7 @@ TopDownGame.Lesson24.prototype = {
         var damage = 48;
         sprite.damage(damage);
         if (sprite["sprite"] == "restrictedToHit") {
+            $("#imagecontainer").attr('class', "hero_fail");
             $("#modaltext").text("Нельзя стрелять по бочкам с водой! Целься точнее!");
             $("#exampleModal").modal();
             Pegman.reset2();
