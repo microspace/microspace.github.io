@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Alliance</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta http-equiv="cleartype" content="on">
+    <meta name="format-detection" content="telephone=no">
+    <link href="https://fonts.googleapis.com/css?family=Russo+One" rel="stylesheet">
+    <script type="text/javascript" src="src/blockly/blockly_compressed.js"></script>
+    <script type="text/javascript" src="src/blockly/blocks_compressed.js"></script>
+    <script type="text/javascript" src="src/blockly/javascript_compressed.js"></script>
+    <script type="text/javascript" src="src/blockly/msg/js/ru.js"></script>
+    <script type="text/javascript" src="src/blocks.js"></script>
+    <style>
+        .custom-class-1 {
+            font-family: 'Russo One', sans-serif;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            image-rendering: optimizeSpeed;
+            /* Older versions of FF */
+            image-rendering: -moz-crisp-edges;
+            /* FF 6.0+ */
+            image-rendering: -webkit-optimize-contrast;
+            /* Webkit (non standard naming) */
+            image-rendering: -o-crisp-edges;
+            /* OS X & Windows Opera (12.02+) */
+            image-rendering: crisp-edges;
+            /* Possible future browsers. */
+            -ms-interpolation-mode: nearest-neighbor;
+            /* IE (non standard naming) */
+            image-rendering: pixelated;
+            /* Chrome 41 */
+        }
+
+        @media (orientation: landscape) {
+            .container {
+                display: grid;
+                grid-template-columns: 40% 60%;
+                grid-template-rows: 1fr;
+            }
+
+            .container>div {
+                height: 100vh;
+            }
+        }
+
+        @media (orientation: portrait) {
+            .container {
+                display: grid;
+                grid-template-rows: 40% 60%;
+                grid-template-columns: 1fr;
+            }
+
+            .leftside {
+                height: 40vh;
+            }
+
+            .rightside {
+                height: 60vh;
+            }
+        }
+
+        button.play {
+            font-family: 'Russo One', sans-serif;
+            background: rgb(255, 164, 0);
+            cursor: pointer;
+            border-top: solid 0px #eaeaea;
+            border-left: solid 0px #eaeaea;
+            border-bottom: solid 0px #777;
+            border-right: solid 0px #777;
+            padding: 10px 10px;
+            width: 120px;
+        }
+
+        button.reset {
+            font-family: 'Russo One', sans-serif;
+            background: #0094ca;
+            cursor: pointer;
+            border-top: solid 0px #eaeaea;
+            border-left: solid 0px #eaeaea;
+            border-bottom: solid 0px #777;
+            border-right: solid 0px #777;
+            padding: 10px 10px;
+            width: 120px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="leftside" id="blocklyArea">
+            <div id="blocklyDiv" style="position: absolute">
+            </div>
+            <div id="resstart" style="position: fixed; bottom: 0px; left: 0px; z-index: 2;">
+                <button class="play" id="play" value="play"><i id="play" class="fa fa-play"
+                        aria-hidden="true"></i>&nbsp;<span>Запуск</span></button>
+            </div>
+        </div>
+        <div class="rightside" id="phaser-example"></div>
+
+    </div>
+    <xml id="toolbox" style="display: none; background-color: #4d90fe;">
+        <block type="maze_up"></block>
+        <block type="maze_down"></block>
+        <block type="maze_left"></block>
+        <block type="maze_right"></block>
+    </xml>
+    <xml id="startBlocks" style="display: none">
+        <block type="factory_base" deletable="false" x="10" y="20"></block>
+    </xml>
+    <script>
+        var options = {
+            comments: true,
+            collapse: true,
+            disable: true,
+            maxBlocks: Infinity,
+            oneBasedIndex: true,
+            readOnly: false,
+            //rtl: false,
+            //scrollbars: true,
+            trashcan: true,
+            //toolbox: null,
+            horizontalLayout: false,
+            toolboxPosition: 'start',
+            zoom: {
+                controls: true,
+                wheel: false,
+                startScale: 0.8,
+                maxScale: 4,
+                minScale: 0.25,
+                scaleSpeed: 1.1
+            }
+        };
+
+        var blocklyArea = document.getElementById('blocklyArea');
+        
+        var blocklyDiv = document.getElementById('blocklyDiv');
+        
+        options.toolbox = toolbox;
+        var workspace = Blockly.inject(blocklyDiv, options);
+        Blockly.BlockSvg.START_HAT = true;
+        let sb = document.getElementById('startBlocks')
+        Blockly.Xml.domToWorkspace(sb, workspace);
+        workspace.addChangeListener(Blockly.Events.disableOrphans);
+        var onresize = function (e) {
+            // Compute the absolute coordinates and dimensions of blocklyArea.
+            var element = blocklyArea;
+            var x = 0;
+            var y = 0;
+            do {
+                x += element.offsetLeft;
+                y += element.offsetTop;
+                element = element.offsetParent;
+            } while (element);
+            // Position blocklyDiv over blocklyArea.
+            blocklyDiv.style.left = x + 'px';
+            blocklyDiv.style.top = y + 'px';
+
+            blocklyDiv.style.width = blocklyArea.offsetWidth + 'px';
+            blocklyDiv.style.height = blocklyArea.offsetHeight + 'px';
+            Blockly.svgResize(workspace);
+        };
+        window.addEventListener('resize', onresize, false);
+        onresize();
+        Blockly.svgResize(workspace);
+
+    </script>
+</body>
