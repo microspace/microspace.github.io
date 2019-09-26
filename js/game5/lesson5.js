@@ -116,21 +116,6 @@ TopDownGame.Lesson5.prototype = {
         l.onDown.add(this.l_down, this);
         l.onUp.add(this.l_up, this);
 
-        // a = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
-        // a.onDown.add(this.switch511, this);
-        // s = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
-        // s.onDown.add(this.switch512, this);
-        // d = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
-        // d.onDown.add(this.switch513, this);
-        // f = this.game.input.keyboard.addKey(Phaser.Keyboard.F);
-        // f.onDown.add(this.switch521, this);
-        // g = this.game.input.keyboard.addKey(Phaser.Keyboard.G);
-        // g.onDown.add(this.switch522, this);
-        
-        v = this.game.input.keyboard.addKey(Phaser.Keyboard.V);
-        v.onDown.add(this.switch521, this);
-        b = this.game.input.keyboard.addKey(Phaser.Keyboard.B);
-        b.onDown.add(this.switch531, this);   
 
         if (map.key != "lesson53") {
             map.putTile(244, Pegman.dposX, Pegman.dposY, fog);
@@ -182,22 +167,6 @@ TopDownGame.Lesson5.prototype = {
     },
     l_up: function () {
         player.body.velocity.x = 0;
-    },
-    switch531: function() {
-        loadmap('lesson53');
-        $("#imagecontainer").attr('class', "hero");
-        $("#modaltext").text("Путь к точке эвакуации проходит через реку. Нужно засыпать дорогу для отряда.");
-        $("#exampleModal").modal();
-        scene = "531";        
-        load_scene(scene);
-    },
-    switch521: function() {
-        loadmap('lesson52');
-        scene = "521";
-        $("#imagecontainer").attr('class', "hero");
-        $("#modaltext").text(" Тут повсюду трупы. Что тут произошло? Надеюсь с отрядом все в порядке.");
-        $("#exampleModal").modal();
-        load_scene(scene);
     },
     update: function () {
         if (map.key != "lesson53") {

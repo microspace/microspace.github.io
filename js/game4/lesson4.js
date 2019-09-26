@@ -170,9 +170,6 @@ TopDownGame.Lesson4.prototype = {
 
             pointer.x = 0;
             pointer.y = 0;
-            $("#modaltext").text("ты уже прошел этот уровень!");
-            $("#imagecontainer").attr('class', 'hero_win');
-            $("#exampleModal").modal();
             $("#play").prop('disabled', true);
 
         }
@@ -490,7 +487,7 @@ function load_map(name) {
     function fadePicture() {
         if (scene == 42) {
             $("#imagecontainer").attr('class', "hero");
-            $("#modaltext").text("Ха! Да вы со всем справились! А теперь последнее испытание! Если сможете пересечь ущелье и подстрелить те бочки, я разрешу вам сопровождать информацию об Агносто!");
+            $("#modaltext").text(get_l10n("game4", "m6"));
             $("#exampleModal").modal();
         }
 

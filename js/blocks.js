@@ -7,7 +7,7 @@ Blockly.Blocks['maze_up'] = {
      */
     init: function () {
         this.jsonInit({
-            "message0": 'Вверх %1',
+            "message0": get_l10n("blocks", "up") + ' %1',
             "previousStatement": null,
             "nextStatement": null,
             "tooltip": 'maze_turnRightTooltip',
@@ -63,7 +63,7 @@ Blockly.Blocks['maze_down'] = {
      */
     init: function () {
         this.jsonInit({
-            "message0": 'Вниз %1',
+            "message0": get_l10n("blocks", "down") + ' %1',
             "previousStatement": null,
             "nextStatement": null,
             "tooltip": 'maze_turnRightTooltip',
@@ -123,7 +123,7 @@ Blockly.Blocks['maze_right'] = {
      */
     init: function () {
         this.jsonInit({
-            "message0": 'Направо %1',
+            "message0": get_l10n("blocks", "right") + ' %1',
             "previousStatement": null,
             "nextStatement": null,
             "tooltip": 'maze_turnRightTooltip',
@@ -188,7 +188,7 @@ Blockly.Blocks['maze_left'] = {
      */
     init: function () {
         this.jsonInit({
-            "message0": 'Налево %1',
+            "message0": get_l10n("blocks", "left") + ' %1',
             "previousStatement": null,
             "nextStatement": null,
             "tooltip": 'maze_turnRightTooltip',
@@ -242,7 +242,7 @@ Blockly.Blocks['fire'] = {
      */
     init: function () {
         this.jsonInit({
-            "message0": 'Огонь!',
+            "message0": get_l10n("blocks", "fire"),
             "previousStatement": null,
             "nextStatement": null,
             "colour": 0,
@@ -263,7 +263,7 @@ Blockly.Blocks['factory_base'] = {
     init: function () {
         this.jsonInit({
             "type": "block_type",
-            "message0": "Нажмите %1",
+            "message0": get_l10n("blocks", "press") + ' %1',
             "args0": [{
                 "type": "field_image",
                 "src": "assets/images/play_icon.png",
@@ -271,7 +271,7 @@ Blockly.Blocks['factory_base'] = {
                 "height": 17,
                 "alt": "▶"
             }],
-            "message1": "для запуска %1",
+            "message1": get_l10n("blocks", "to_launch") + ' %1',
             "args1": [{
                 "type": "input_statement",
                 "name": "STACK"
@@ -300,7 +300,7 @@ Blockly.Blocks['floatto'] = {
     init: function () {
         this.jsonInit({
             "type": "floatto",
-            "message0": "Плыть%1 секунду в точку x:%2 y:%3",
+            "message0": get_l10n("blocks", "float"),
             "args0": [{
                 "type": "field_number",
                 "name": "seconds",
@@ -329,7 +329,7 @@ Blockly.Blocks['floatto'] = {
             "previousStatement": null,
             "nextStatement": null,
             "colour": 230,
-            "tooltip": "Плыть в точку на карте в течение определенного времени. Остерегайся препятствий!",
+            "tooltip": "",
             "helpUrl": ""
         });
     }
@@ -351,10 +351,10 @@ Blockly.Blocks['changeskin'] = {
      */
     init: function () {
         this.jsonInit({
-            "message0": 'сменить костюм на %1',
+            "message0": get_l10n("blocks", "changeskin"),
             "previousStatement": null,
             "nextStatement": null,
-            "tooltip": 'Сменить костюм',
+            "tooltip": '',
             "colour": 160,
             "args0": [{
                 "type": "field_dropdown",
@@ -444,10 +444,10 @@ Blockly.Blocks['changex'] = {
      */
     init: function () {
         this.jsonInit({
-            "message0": 'Изменить х на %1',
+            "message0": get_l10n("blocks", "changex"),
             "previousStatement": null,
             "nextStatement": null,
-            "tooltip": 'Увеличить или уменьшить координату',
+            "tooltip": '',
             "colour": 160,
             "args0": [{
                 "type": "field_number",
@@ -475,10 +475,10 @@ Blockly.Blocks['changey'] = {
      */
     init: function () {
         this.jsonInit({
-            "message0": 'Изменить y на %1',
+            "message0": get_l10n("blocks", "changey"),
             "previousStatement": null,
             "nextStatement": null,
-            "tooltip": 'Увеличить или уменьшить координату',
+            "tooltip": '',
             "colour": 160,
             "args0": [{
                 "type": "field_number",
@@ -508,11 +508,11 @@ Blockly.Blocks['build'] = {
      */
     init: function () {
         this.jsonInit({
-            "message0": 'Построить',
+            "message0": get_l10n("blocks", "build"),
             "previousStatement": null,
             "nextStatement": null,
             "colour": 0,
-            "tooltip": 'Устанавливает выделенный блок на карту'
+            "tooltip": ''
         });
     }
 };
@@ -530,10 +530,10 @@ Blockly.Blocks['setx'] = {
      */
     init: function () {
         this.jsonInit({
-            "message0": 'Установить x в %1',
+            "message0": get_l10n("blocks", "setx"),
             "previousStatement": null,
             "nextStatement": null,
-            "tooltip": 'Перейти в х координату',
+            "tooltip": '',
             "colour": 60,
             "args0": [{
                 "type": "field_number",
@@ -560,10 +560,10 @@ Blockly.Blocks['sety'] = {
      */
     init: function () {
         this.jsonInit({
-            "message0": 'Установить y в %1',
+            "message0": get_l10n("blocks", "sety"),
             "previousStatement": null,
             "nextStatement": null,
-            "tooltip": 'Перейти в х координату',
+            "tooltip": '',
             "colour": 60,
             "args0": [{
                 "type": "field_number",
@@ -591,10 +591,10 @@ Blockly.Blocks['setxy'] = {
      */
     init: function () {
         this.jsonInit({
-            "message0": 'перейти в х: %1 у: %2',
+            "message0": get_l10n("blocks", "setxy"),
             "previousStatement": null,
             "nextStatement": null,
-            "tooltip": 'Перейти в х координату',
+            "tooltip": '',
             "colour": 60,
             "args0": [{
                 "type": "field_number",
@@ -630,7 +630,7 @@ Blockly.Blocks['repeat_n_times'] = {
     init: function () {
         this.jsonInit({
 
-            "message0": "Повтори %1 раз",
+            "message0": get_l10n("blocks", "repeat"),
             "args0": [
                 {
                     "type": "field_number",
@@ -638,7 +638,7 @@ Blockly.Blocks['repeat_n_times'] = {
                     "value": 4
                 }
             ],
-            "message1": "выполнить %1",
+            "message1": get_l10n("blocks", "times"),
             "args1": [
                 { "type": "input_statement", "name": "DO" }
             ],
@@ -673,11 +673,11 @@ Blockly.Blocks['uturn'] = {
      */
     init: function () {
         this.jsonInit({
-            "message0": 'Разворот',
+            "message0": get_l10n("blocks", "uturn"),
             "previousStatement": null,
             "nextStatement": null,
             "colour": 100,
-            "tooltip": 'Развернуться на месте кругом!'
+            "tooltip": ''
         });
     }
 };
@@ -696,14 +696,14 @@ Blockly.Blocks['obstacle'] = {
      */
     init: function () {
         this.jsonInit({
-            "message0": "%1 полынья",
+            "message0": get_l10n("blocks", "obstacle"),
             "output": "Boolean",
             "colour": 215,
             "args0": [
                 {
                     "type": "field_dropdown",
                     "name": "DIRECTION",
-                    "options": [["справа", "RIGHT"], ["слева", "LEFT"], ["сверху", "ABOVE"], ["снизу", "BELOW"]]
+                    "options": [[get_l10n("blocks", "onright"), "RIGHT"], [get_l10n("blocks", "onleft"), "LEFT"], [get_l10n("blocks", "above"), "ABOVE"], [get_l10n("blocks", "below"), "BELOW"]]
                 }
             ]
         });
@@ -733,16 +733,15 @@ Blockly.Blocks['fill_the_pit'] = {
      */
     init: function () {
         this.jsonInit({
-            "message0": 'засыпать %1',
+            "message0": get_l10n("blocks", "fill_the_pit"),
             "previousStatement": null,
             "nextStatement": null,
-            "tooltip": 'Засыпать полынью',
+            "tooltip": '',
             "colour": 0,
             "args0": [{
                 "type": "field_dropdown",
                 "name": "FILLDIRECTION",
-                "options": [["справа", "RIGHT"], ["слева", "LEFT"], ["сверху", "ABOVE"], ["снизу", "BELOW"]]
-
+                "options": [[get_l10n("blocks", "onright"), "RIGHT"], [get_l10n("blocks", "onleft"), "LEFT"], [get_l10n("blocks", "above"), "ABOVE"], [get_l10n("blocks", "below"), "BELOW"]]
             }]
         });
     }
@@ -761,7 +760,7 @@ Blockly.JavaScript['fill_the_pit'] = function (block) {
     } else if (direction == "BELOW") {
         dirnum = 3;
     }
-    
+
     var code = `
     Pegman.isGladeAbove = Pegman.isGladeBelow = Pegman.isGladeToRight = Pegman.isGladeToLeft = false;
     
@@ -797,34 +796,34 @@ Blockly.Blocks['if_block'] = {
     init: function () {
         this.jsonInit({
             "type": "if_block",
-            "message0": "если %1 выполнить %2",
+            "message0": get_l10n("blocks", "if_block"),
             "args0": [
-              {
-                "type": "input_value",
-                "name": "condition",
-                "check": "Boolean"
-              },
-              {
-                "type": "input_statement",
-                "name": "true_statement"
-              }
+                {
+                    "type": "input_value",
+                    "name": "condition",
+                    "check": "Boolean"
+                },
+                {
+                    "type": "input_statement",
+                    "name": "true_statement"
+                }
             ],
             "previousStatement": null,
             "nextStatement": null,
             "colour": 210,
             "tooltip": "",
             "helpUrl": ""
-          });
+        });
     }
 };
 
-Blockly.JavaScript['if_block'] = function(block) {
-  var value_condition = Blockly.JavaScript.valueToCode(block, 'condition', Blockly.JavaScript.ORDER_ATOMIC);
-  var true_code = Blockly.JavaScript.statementToCode(block, 'true_statement');
+Blockly.JavaScript['if_block'] = function (block) {
+    var value_condition = Blockly.JavaScript.valueToCode(block, 'condition', Blockly.JavaScript.ORDER_ATOMIC);
+    var true_code = Blockly.JavaScript.statementToCode(block, 'true_statement');
 
-  // TODO: Assemble JavaScript into code variable.
-  var code = 'if (' + value_condition + ') {' + true_code + '};' 
-  return code;
+    // TODO: Assemble JavaScript into code variable.
+    var code = 'if (' + value_condition + ') {' + true_code + '};'
+    return code;
 };
 
 
@@ -835,11 +834,11 @@ Blockly.Blocks['pickup'] = {
      */
     init: function () {
         this.jsonInit({
-            "message0": 'Поднять',
+            "message0": get_l10n("blocks", "pickup"),
             "previousStatement": null,
             "nextStatement": null,
             "colour": 0,
-            "tooltip": 'Поднимает предмет '
+            "tooltip": ''
         });
     }
 };

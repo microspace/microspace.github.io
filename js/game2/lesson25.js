@@ -234,7 +234,7 @@ TopDownGame.Lesson25.prototype = {
         var damage = 48;
         sprite.damage(damage);
         if (sprite["sprite"] == "restrictedToHit") {
-            $("#modaltext").text("Нельзя стрелять по бочкам с водой! Целься точнее!");
+            $("#modaltext").text(get_l10n("game1", "fail_water"));
             $("#imagecontainer").attr('class', 'hero_fail');
             $("#exampleModal").modal();
             Pegman.reset2();

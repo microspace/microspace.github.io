@@ -131,14 +131,15 @@ $(function () {
 function play_int() {
     $('#play').val("pause");
     // $('#play').text("Сброс");
-    $('#play').find('span').text("Сбросить");
+    $('#play').find('span').text(get_l10n("common", "reset"));
+
     runProgram();
     // do play
 }
 
 function play_pause() {
     $('#play').val("play");
-    $('#play').find('span').text("Запуск");
+    $('#play').find('span').text(get_l10n("common", "start"));
     resetProgram();
     //$('#play').text("Запуск");
     // do pause

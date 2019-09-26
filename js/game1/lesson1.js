@@ -28,13 +28,7 @@ TopDownGame.Lesson1.prototype = {
         this.loadSceneData();
 
         
-        if (scene == 5) {
-            $('#play').prop('disabled', true);
-
-            $("#modaltext").text("Ты уже прошел этот уровень!");
-            $("#imagecontainer").attr('class', 'hero_win');
-            $("#exampleModal").modal();
-        }
+        console.log(document.getElementsByTagName('html')[0].getAttribute('lang'));
         
         if (jQuery.isEmptyObject(lastSuccessfullPosition)) {
 
@@ -216,7 +210,7 @@ TopDownGame.Lesson1.prototype = {
         sprite.damage(damage);
         if (sprite["sprite"] == "restrictedToHit") {
 
-            $("#modaltext").text("Нельзя стрелять по бочкам с водой! Целься точнее!");
+            $("#modaltext").text(get_l10n("game1", "fail_water"));
             $("#imagecontainer").attr('class', 'hero_fail');
             $("#exampleModal").modal();
             restrictedToHit = true;

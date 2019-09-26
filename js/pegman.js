@@ -42,7 +42,7 @@ var Pegman = {
             if (TopDownGame.game.state.getCurrentState().key == "lesson1" && scene == 0) {
 
 
-                $("#modaltext").text("Привет! Я научу тебя пользоваться твоим робокостюмом. Для начала попробуй просто сдвинуться с места!");
+                $("#modaltext").text(get_l10n("game1", "start"));
                 $("#imagecontainer").attr('class', "hero");
                 $("#exampleModal").modal();
             }
@@ -53,7 +53,7 @@ var Pegman = {
             }
 
             if (TopDownGame.game.state.getCurrentState().key == "lesson0") {
-                $("#modaltext").text("Привет! Ты должен дойти до пункта сбора. Управляй робокостюмом с помощью блоков и добирайся до указателей. Используй стрелки на клавиатуре для просмотра карты.");
+                $("#modaltext").text(get_l10n("game0", "start"));
                 $("#imagecontainer").attr('class', "hero");
                 $("#exampleModal").modal();
             }
@@ -64,26 +64,21 @@ var Pegman = {
         // сделать так чтобы это сообщение не выходило когда игрок начинает со второго уровня
 
         if (TopDownGame.game.state.getCurrentState().key == "lesson21") {
-            $("#modaltext").text("Кадет, тебе нужно собрать все сундуки с золотом. Управляй робокостюмом с помощью Галактической системы координат.");
+            $("#modaltext").text(get_l10n("game2", "start"));
             $("#imagecontainer").attr('class', "hero");
             $("#exampleModal").modal();
         }
         if (TopDownGame.game.state.getCurrentState().key == "lesson3") {
-            $("#modaltext").text("На этом этапе необходимо достроить недостающую часть карты.");
+            $("#modaltext").text(get_l10n("game3", "start"));
             $("#imagecontainer").attr('class', "hero");
             $("#exampleModal").modal();
         }
         if (TopDownGame.game.state.getCurrentState().key == "lesson4" && scene == 1) {
-            $("#modaltext").text("И кого за нами прислали?!! Вы совсем недавно учебку закончили! Сначала докажите нам, что умеете стрелять!");
+            $("#modaltext").text(get_l10n("game4", "start"));
             $("#imagecontainer").attr('class', "hero");
             $("#exampleModal").modal();
         }
 
-        if (TopDownGame.game.state.getCurrentState().key == "lesson5" && scene == 0 && map.key == "lesson51") {
-            $("#modaltext").text("Вокруг много подтаявшего льда, сквозь который можно провалиться. Давай проверим как ты умеешь засыпать полынью снегом. Используй блок засыпать");
-            $("#imagecontainer").attr('class', "hero");
-            $("#exampleModal").modal();
-        }
         this.reset2();
     },
 
@@ -316,22 +311,22 @@ var Pegman = {
 
 
             if (showflag && scene == 2) {
-                $("#modaltext").text("Я так и знал! На опасных заданиях каждый патрон, каждая энергетическая ячейка на счету! Вас что в учебке не учили использовать команду «Повтори»?!");
+                $("#modaltext").text(get_l10n("game4", "m2"));
                 $("#imagecontainer").attr('class', "hero");
                 $("#exampleModal").modal();
                 showflag = false;
             } else if (showflag && scene == 3) {
-                $("#modaltext").text("Тебе нужно потренироваться еще больше. Подстрели вот эти бочки.");
+                $("#modaltext").text(get_l10n("game4", "m3"));
                 $("#imagecontainer").attr('class', "hero");
                 $("#exampleModal").modal();
                 showflag = false;
             } else if (showflag && scene == 4) {
-                $("#modaltext").text("Отлично справляешься! Теперь я понимаю, почему тебе доверили такое важное задание!");
+                $("#modaltext").text(get_l10n("game4", "m4"));
                 $("#imagecontainer").attr('class', "hero");
                 $("#exampleModal").modal();
                 showflag = false;
             } else if (showflag && scene == 5) {
-                $("#modaltext").text("Мы почти закончили! Для тебя новое испытание.");
+                $("#modaltext").text(get_l10n("game4", "m5"));
                 $("#imagecontainer").attr('class', "hero");
                 $("#exampleModal").modal();
                 showflag = false;
@@ -348,58 +343,6 @@ var Pegman = {
                 c.body.enable = true;
 
             });
-        }
-        if (TopDownGame.game.state.getCurrentState().key == "lesson5_new") {
-
-            if (map.key != "lesson53") {
-
-                for (var y = 0; y < map.height; ++y) {
-                    for (var x = 0; x < map.width; ++x) {
-                        //  if (map.getTile(x, y, 'fog')) {
-                        map.putTile(232, x, y, "fog");
-                        //  }
-                    }
-                }
-                Pegman.dposX = Math.floor(player.x / 64);
-                Pegman.dposY = Math.floor(player.y / 64);
-                Pegman.vdposX = Pegman.dposX;
-                Pegman.vdposY = Pegman.dposY;
-                for (var y = Pegman.dposY - 1; y <= Pegman.dposY + 1; ++y) {
-                    for (var x = Pegman.dposX - 1; x <= Pegman.dposX + 1; ++x) {
-                        map.putTile(244, x, y, fog);
-                    }
-                }
-
-                for (var y = Pegman.dposY - 2; y <= Pegman.dposY + 2; ++y) {
-                    for (var x = Pegman.dposX - 2; x <= Pegman.dposX + 2; ++x) {
-                        if ((x >= Pegman.dposX + 1 || x <= Pegman.dposX - 1) || (y >= Pegman.dposY + 1 || y <= Pegman.dposY - 1)) {
-                            var t_id = normalize(x, y);
-                            map.putTile(t_id, x, y, fog);
-                        }
-                    }
-                }
-            } else {
-                map.replace(236, 235, 9, 6, 6, 2, flour);
-            }
-            if (scene == "510") {
-
-            } else if (scene == "511") {
-                map.replace(235, 15, 6, 4, 6, 2, map.getLayer());
-                map.replace(236, 15, 6, 4, 6, 2, map.getLayer());
-                map.replace(15, 235, 6 + getRandomInt(0, 6), 4, 1, 1, map.getLayer());
-                map.replace(15, 235, 6 + getRandomInt(0, 6), 5, 1, 1, map.getLayer());
-            } else if (scene == "512") {
-                this.fillpath(12, 6, 15, 11);
-                // this.fillpath(12, 6, 15, 12);
-            } else if (scene == "513") {
-                this.fillpath(16, 11, 22, 14);
-            } else if (scene == "521") {
-                this.refillarea(6, 10, 9, 14);
-            } else if (scene == "522") {
-                this.refillarea(12, 10, 18, 12);
-                this.refillarea(16, 3, 19, 9);
-                revealArea();
-            }
         }
 
         if (TopDownGame.game.state.getCurrentState().key == "lesson5") {
@@ -813,136 +756,11 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
 
 
     Pegman.checkFinal = function () {
-
-        if (TopDownGame.game.state.getCurrentState().key == "lesson_test") {
-            var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
-            if (isOverlapping == true) {
-                if (scene == 0) {
-                    var messagetext = "Отлично получилось! Теперь попробуй дойди до следующего указателя!";
-                    //modal.setContent(messagetext);
-                    var messagetext = `
-                    <div class="tingle-demo tingle-demo-tiny">
-                    <h1>Отлично получилось!</h1>
-                    <p> Теперь попробуй дойди до следующего указателя!</p>
-                    </div>`;
-
-                    modal.setContent(messagetext);
-
-                    modal.open();
-
-                    scene = 1;
-                    pointer.x = Maze.scenes[scene].endPos[0];
-                    pointer.y = Maze.scenes[scene].endPos[1];
-                    lastSuccessfullPosition.x = player.x;
-                    lastSuccessfullPosition.y = player.y;
-                    toogleRunButton();
-                    try {
-                        setIsCheckedForLesson();
-                    } catch (e) {
-                        console.log("couldn't set IsChecked For Lesson");
-                    }
-
-                } else if (scene == 1) {
-                    var messagetext = "Превосходно! Нажми на кнопку, чтобы восстановить мост!";
-                    var messagetext = `
-                    <div class="tingle-demo tingle-demo-tiny">
-                    <h1>Превосходно!</h1>
-                    <p>Нажми на кнопку <img src='assets/images/button.png' />, чтобы восстановить мост!</p>
-                    </div>`;
-
-                    modal.setContent(messagetext);
-
-                    modal.open();
-                    scene = 2;
-                    pointer.x = Maze.scenes[scene].endPos[0];
-                    pointer.y = Maze.scenes[scene].endPos[1];
-                    lastSuccessfullPosition.x = player.x;
-                    lastSuccessfullPosition.y = player.y;
-                    toogleRunButton();
-
-                } else if (scene == 2) {
-                    var messagetext = "Теперь нужно дойти до больших ворот, но они закрыты. Чтобы их открыть нужно взять ключ!";
-                    var messagetext = `
-                    <div class="tingle-demo tingle-demo-tiny">
-                    <h1></h1>
-                    <p>Теперь нужно дойти до больших ворот, но они закрыты. Чтобы их открыть нужно взять ключ!</p>
-                    </div>`;
-                    modal.setContent(messagetext);
-
-                    modal.open();
-                    scene = 3;
-                    pointer.x = Maze.scenes[scene].endPos[0];
-                    pointer.y = Maze.scenes[scene].endPos[1];
-                    lastSuccessfullPosition.x = player.x;
-                    lastSuccessfullPosition.y = player.y;
-                    toogleRunButton();
-
-                } else if (scene == 3) {
-
-
-                    if (Pegman.hasGoldenKey) {
-                        scene = 4;
-                        TopDownGame.game.time.events.add(500, openNarrow, this);
-                        TopDownGame.game.time.events.add(1000, openWide, this);
-
-                        function openNarrow() {
-                            map.replace(196, 198, 31, 8, 1, 1, blockLayer);
-                            map.replace(197, 199, 32, 8, 1, 1, blockLayer);
-
-                            map.replace(209, 211, 31, 9, 1, 1, blockLayer);
-                            map.replace(210, 212, 32, 9, 1, 1, blockLayer);
-
-                            map.replace(222, 224, 31, 10, 1, 1, blockLayer);
-                            map.replace(223, 225, 32, 10, 1, 1, blockLayer);
-
-
-                        }
-
-                        function openWide() {
-                            map.replace(198, 200, 31, 8, 1, 1, blockLayer);
-                            map.replace(199, 201, 32, 8, 1, 1, blockLayer);
-
-                            map.replace(211, 213, 31, 9, 1, 1, blockLayer);
-                            map.replace(212, 214, 32, 9, 1, 1, blockLayer);
-
-                            map.replace(224, 226, 31, 10, 1, 1, blockLayer);
-                            map.replace(225, 227, 32, 10, 1, 1, blockLayer);
-
-                        }
-                        pointer.x = Maze.scenes[scene].endPos[0];
-                        pointer.y = Maze.scenes[scene].endPos[1];
-                        lastSuccessfullPosition.x = player.x;
-                        lastSuccessfullPosition.y = player.y;
-                        toogleRunButton();
-                    }
-                } else if (scene == 4) {
-                    var messagetext = "Отлично! Все кадеты в сборе! Теперь мы летим в космос! Там вас ждет учебный бой против наших роботов.";
-                    var messagetext = `
-                    <div class="tingle-demo tingle-demo-tiny">
-                    <h1>Отлично!</h1>
-                    <p>Все кадеты в сборе! Теперь мы летим в космос! Там вас ждет учебный бой против наших роботов.</p>
-                    </div>`;
-                    modal.setContent(messagetext);
-
-                    modal.open();
-                    lastSuccessfullPosition.x = player.x;
-                    lastSuccessfullPosition.y = player.y;
-                    pointer.kill();
-                    try {
-                        setIsCheckedForLesson();
-                    } catch (e) {
-                        console.log("couldn't set IsChecked For Lesson:" + e);
-                    }
-                }
-            }
-        }
-
         if (TopDownGame.game.state.getCurrentState().key == "lesson0") {
             var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
             if (isOverlapping == true) {
                 if (scene == 0) {
-                    var messagetext = "Отлично получилось! Теперь попробуй дойди до следующего указателя!";
-                    $("#modaltext").text(messagetext);
+                    $("#modaltext").text(get_l10n("game0", "m2"));
                     $("#imagecontainer").attr('class', "hero");
                     $("#exampleModal").modal();
 
@@ -959,8 +777,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     }
 
                 } else if (scene == 1) {
-                    var messagetext = "Превосходно! Нажми на кнопку, чтобы восстановить мост!";
-                    $("#modaltext").text(messagetext);
+                    $("#modaltext").text(get_l10n("game0", "m3"));
                     $("#imagecontainer").attr('class', "hero");
                     $("#exampleModal").modal();
                     scene = 2;
@@ -971,8 +788,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     toogleRunButton();
 
                 } else if (scene == 2) {
-                    var messagetext = "Теперь нужно дойти до больших ворот, но они закрыты. Чтобы их открыть нужно взять ключ!";
-                    $("#modaltext").text(messagetext);
+                    $("#modaltext").text(get_l10n("game0", "m4"));
                     $("#imagecontainer").attr('class', "hero");
                     $("#exampleModal").modal();
                     scene = 3;
@@ -1021,8 +837,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                         toogleRunButton();
                     }
                 } else if (scene == 4) {
-                    var messagetext = "Отлично! Все в сборе! Теперь мы летим в космос! Там вас ждет учебный бой против наших роботов.";
-                    $("#modaltext").text(messagetext);
+                    $("#modaltext").text(get_l10n("game0", "win"));
                     $("#imagecontainer").attr('class', 'hero_win');
 
                     $("#exampleModal").modal();
@@ -1062,7 +877,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
             if (scene == 0) {
                 var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
                 if (isOverlapping == true) {
-                    $("#modaltext").text("Отлично получилось! Теперь попробуй дойди до конца коридора!");
+                    $("#modaltext").text(get_l10n("game1", "m2"));
                     $("#imagecontainer").attr('class', "hero");
                     $("#exampleModal").modal();
 
@@ -1089,7 +904,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
             } else if (scene == 1) {
                 var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
                 if (isOverlapping == true) {
-                    $("#modaltext").text("Превосходно! Сейчас надо дойти до тех бочек!");
+                    $("#modaltext").text(get_l10n("game1", "m3"));
                     $("#imagecontainer").attr('class', "hero");
                     $("#exampleModal").modal();
                     scene = 2;
@@ -1115,7 +930,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
             } else if (scene == 2) {
                 var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
                 if (isOverlapping == true) {
-                    $("#modaltext").text("Эти бочки преградили тебе путь. Расстреляй их, чтобы пройти дальше!");
+                    $("#modaltext").text(get_l10n("game1", "m4"));
                     $("#imagecontainer").attr('class', "hero");
                     $("#exampleModal").modal();
                     scene = 3;
@@ -1141,7 +956,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
             } else if (scene == 3) {
                 var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
                 if (isOverlapping == true) {
-                    $("#modaltext").text("А теперь нужно найти и подстрелить 5 бочек с мишенями. Нельзя стрелять по бочкам с водой. Используй стрелочки, чтобы двигать карту и искать цели.");
+                    $("#modaltext").text(get_l10n("game1", "m5"));
                     $("#imagecontainer").attr('class', "hero");
                     $("#exampleModal").modal();
                     scene = 4;
@@ -1179,7 +994,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 });
                 if (aliveBarrelsCount == 0) {
                     scene = 5;
-                    $("#modaltext").text("Поздравляю! Ты научился пользоваться робокостюмом!");
+                    $("#modaltext").text(get_l10n("game1", "win"));
                     $("#imagecontainer").attr('class', 'hero_win');
                     //
                     $("#exampleModal").modal();
@@ -1202,7 +1017,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 } else {
 
                     if (restrictedToHit == false) {
-                        $("#modaltext").text("Ты подстрелил не все нужные бочки!");
+                        $("#modaltext").text(get_l10n("game1", "fail"));
                         $("#imagecontainer").attr('class', 'hero_fail');
                         // 
                         $("#exampleModal").modal();
@@ -1257,7 +1072,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 }
 
             } else {
-                $("#modaltext").text("Ты подобрал не все сундуки!");
+                $("#modaltext").text(get_l10n("game2", "fail"));
                 $("#imagecontainer").attr('class', 'hero_fail');
                 $("#exampleModal").modal();
             }
@@ -1286,7 +1101,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 }
 
             } else {
-                $("#modaltext").text("Ты подобрал не все сундуки!");
+                $("#modaltext").text(get_l10n("game2", "fail"));
                 $("#imagecontainer").attr('class', 'hero_fail');
 
                 $("#exampleModal").modal();
@@ -1316,7 +1131,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 }
 
             } else {
-                $("#modaltext").text("Ты подобрал не все сундуки!");
+                $("#modaltext").text(get_l10n("game2", "fail"));
                 $("#imagecontainer").attr('class', 'hero_fail');
 
                 $("#exampleModal").modal();
@@ -1351,7 +1166,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
 
                 }
             } else {
-                $("#modaltext").text("Ты подобрал не все сундуки!");
+                $("#modaltext").text(get_l10n("game2", "fail"));
                 $("#imagecontainer").attr('class', 'hero_fail');
                 $("#exampleModal").modal();
             }
@@ -1365,7 +1180,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
             });
             if (aliveChestsCount == 0) {
 
-                $("#modaltext").text("Поздравляю! Ты отлично разбираешься в Галактической системе координат!");
+                $("#modaltext").text(get_l10n("game2", "win"));
                 $("#imagecontainer").attr('class', 'hero_win');
                 $("#exampleModal").modal();
 
@@ -1383,7 +1198,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
 
             } else {
                 if (this.globalhittedFlag != true) {
-                    $("#modaltext").text("Ты собрал не все сундуки!");
+                    $("#modaltext").text(get_l10n("game2", "fail"));
                     $("#imagecontainer").attr('class', 'hero_fail');
                     $("#exampleModal").modal();
                 }
@@ -1415,7 +1230,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
         if (TopDownGame.game.state.getCurrentState().key == "lesson3") {
             if (setblocks == tilestodraw.length) {
                 if (scene == 6) {
-                    $("#modaltext").text("Ты отлично справился! Теперь все руины исследованы!");
+                    $("#modaltext").text(get_l10n("game3", "win"));
                     $("#imagecontainer").attr('class', 'hero_win');
                     $("#exampleModal").modal();
                     lastSuccessfullPosition.x = player.x;
@@ -1526,7 +1341,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     console.log("scene = ", scene);
                     var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
                     if (isOverlapping == true) {
-                        $("#modaltext").text("Теперь я понял, почему отправили именно вас! Вы оказались очень умелыми рейнджерами! Вы легко сможете защитить информацию об Агносто!");
+                        $("#modaltext").text(get_l10n("game4", "win"));
                         $("#imagecontainer").attr('class', 'hero_win');
 
                         $("#exampleModal").modal();
@@ -1593,7 +1408,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     load_scene(scene);
                     toogleRunButton();
                     $("#imagecontainer").attr('class', "hero");
-                    $("#modaltext").text("Каждый раз ищи в тумане указатели, которые оставила пропавшая группа.");
+                    $("#modaltext").text(get_l10n("game5", "m1"));
                     $("#exampleModal").modal();
                 }
             } else {
@@ -1636,7 +1451,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                         }
 
 
-                        $("#modaltext").text(" Тут повсюду трупы. Что тут произошло? Надеюсь с отрядом все в порядке.");
+                        $("#modaltext").text(get_l10n("game5", "m2"));
                         $("#imagecontainer").attr('class', 'hero_fail');
 
                         $("#exampleModal").modal();
@@ -1644,7 +1459,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                         lastSuccessfullPosition.x = player.x;
                         lastSuccessfullPosition.y = player.y;
                         $("#imagecontainer").attr('class', "hero");
-                        $("#modaltext").text("Наконец-то пришла помощь! Мы нашли следы Агносто, но нас атаковали животные, которые проснулись из-за потепления. Один боец отправился подготовить точку эвакуации и пропал. Найдите его!");
+                        $("#modaltext").text(get_l10n("game5", "m3"));
                         $("#exampleModal").modal();
                         revealArea();
                         scene = "522";
@@ -1659,7 +1474,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     } else if (scene == "522") {
                         loadmap('lesson53');
                         $("#imagecontainer").attr('class', "hero");
-                        $("#modaltext").text("А вот и пропавший рейнджер! Оказывается точка эвакуации на другом берегу, а мост размыт! Засыпьте мост и подготовьте точку эвакуации, пока напарник вас прикрывает!");
+                        $("#modaltext").text(get_l10n("game5", "m4"));
                         $("#exampleModal").modal();
                         scene = "531";
                         load_scene(scene);
@@ -1682,10 +1497,10 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                         }
                         if (notfilledblocks > 0) {
                             $("#imagecontainer").attr('class', 'hero_fail');
-                            $("#modaltext").text("Нужно засыпать все блоки на мосту");
+                            $("#modaltext").text(get_l10n("game5", "fail"));
                             $("#exampleModal").modal();
                         } else {
-                            $("#modaltext").text("Ура! Ты починил мост и подготовил точку эвакуации! Теперь мы можем лететь домой!");
+                            $("#modaltext").text(get_l10n("game5", "win"));
                             $("#imagecontainer").attr('class', 'hero_win');
                             $("#exampleModal").modal();
 
