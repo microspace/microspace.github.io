@@ -11,6 +11,11 @@ var map;
 var drawLayer;
 Pegman.dposX = 11;
 Pegman.dposY = 7;
+var explosionSound = null;
+var hitWallSound = null;
+var bubbleSound = null;
+var keyPickUpSound = null;
+var clickSound = null;
 //var data;
 var crosses;
 var tileid_pairs = {
@@ -45,7 +50,13 @@ TopDownGame.Lesson3.prototype = {
     create: function() {
 
 
-
+        this.shotSound = this.game.add.audio('shot');
+        this.successSound = this.game.add.audio('success');
+        explosionSound = this.game.add.audio("explosion");
+        hitWallSound = this.game.add.audio('hitwall');
+        bubbleSound = this.game.add.audio('bubble');
+        keyPickUpSound = this.game.add.audio('keypickup');
+        clickSound = this.game.add.audio('click');
 
         fireButton = this.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
         sl1 = this.input.keyboard.addKey(Phaser.KeyCode.A);
@@ -76,7 +87,7 @@ TopDownGame.Lesson3.prototype = {
         player.body.setSize(60, 13, 40, 73);
         flour.resizeWorld();
         
-        Pegman.init(player);
+        Pegman.init(player, this);
 
         builddust = this.game.add.sprite(0, 0, 'build');
         builddust.visible = false;

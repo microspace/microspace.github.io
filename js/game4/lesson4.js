@@ -7,7 +7,11 @@ var cp;
 var barrels;
 var flag = false;
 var hitflag = false;
-
+var explosionSound = null;
+var hitWallSound = null;
+var bubbleSound = null;
+var keyPickUpSound = null;
+var clickSound = null;
 var map;
 var drawLayer;
 var showflag = true;
@@ -25,6 +29,14 @@ var timeSinceLastIncrement = 0;
 TopDownGame.Lesson4 = function () {};
 TopDownGame.Lesson4.prototype = {
     create: function () {
+
+        this.shotSound = this.game.add.audio('shot');
+        this.successSound = this.game.add.audio('success');
+        explosionSound = this.game.add.audio("explosion");
+        hitWallSound = this.game.add.audio('hitwall');
+        bubbleSound = this.game.add.audio('bubble');
+        keyPickUpSound = this.game.add.audio('keypickup');
+        clickSound = this.game.add.audio('click');
 
         Blockly.mainWorkspace.clear();
         Blockly.mainWorkspace.clearUndo();
@@ -151,7 +163,7 @@ TopDownGame.Lesson4.prototype = {
         player.animations.add('HIT', [25, 26, 27, 28, 29], fps, /*loop*/ false);
         player.animations.add('SHOOT', [20, 21, 22, 23, 24], fps, /*loop*/ false);
         player.animations.play('STAND');
-        Pegman.init(player);
+        Pegman.init(player, this);
 
 
         if (scene != 42 && scene != 43) {
@@ -196,31 +208,6 @@ TopDownGame.Lesson4.prototype = {
     animationStopped: function (sprite, animation) {
         explosion.visible = false;
     },
-    /*     h_down: function () {
-            player.body.velocity.x = -1 * velocity;
-        },
-        h_up: function () {
-            player.body.velocity.x = 0;
-        },
-        j_down: function () {
-            player.body.velocity.y = -1 * velocity;
-        },
-        j_up: function () {
-            player.body.velocity.y = 0;
-        },
-        k_down: function () {
-            player.body.velocity.y =  velocity;
-        },
-        k_up: function () {
-            player.body.velocity.y = 0;
-        },
-        l_down: function () {
-            player.body.velocity.x = velocity;
-        },
-        l_up: function () {
-            player.body.velocity.x = 0;
-        }, */
-
     update: function () {
         this.game.physics.arcade.overlap(barrels, weapon.bullets, this.bulletHitBarrel, null, this);
         this.game.physics.arcade.collide(player, sinkLayer);
@@ -276,6 +263,7 @@ TopDownGame.Lesson4.prototype = {
 
     },
     bulletHitBarrel: function (sprite, bullet) {
+        explosionSound.play();
         var damage = 48;
         sprite.damage(damage);
         if (sprite.health > 50) {
@@ -294,6 +282,7 @@ TopDownGame.Lesson4.prototype = {
 
 function hitEvent() {
     if (!hitflag) {
+        hitWallSound.play();
         Pegman.pegmanActions = [];
         if (Pegman.tween) {
             Pegman.tween.stop();
@@ -305,6 +294,7 @@ function hitEvent() {
 
 function sinkInWater() {
     if (sinkflag == false) {
+        bubbleSound.play();
         sinkflag = true;
         var step = Maze.getStepInDirection[Maze.directionToString(Pegman.direction)];
         //убейте меня!

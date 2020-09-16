@@ -33,6 +33,13 @@ TopDownGame.Preload.prototype = {
         this.load.image('gameTiles', 'assets/maps/game3/tileSheet.png');
         this.load.image('coordinateplane', 'assets/images/coordinatePlane.png');
 
+        this.load.audio('shot', 'assets/sounds/shot.mp3');
+        this.load.audio('explosion', 'assets/sounds/explosion.mp3');
+        this.load.audio('hitwall', 'assets/sounds/hitwall.mp3');
+        this.load.audio('bubble', 'assets/sounds/bubble.mp3');
+        this.load.audio('keypickup', 'assets/sounds/keypickup.mp3');
+        this.load.audio('click', 'assets/sounds/click.mp3');
+        this.load.audio('success', 'assets/sounds/success.mp3');
     },
     create: function() {
       //   

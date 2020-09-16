@@ -12,6 +12,8 @@ var Pegman = {
     direction: Maze.DirectionType.EAST,
     pegmanActions: [],
     pegmanSprite: null,
+    shotSound: null,
+    game: null,
     anim: null,
     tween: null,
     isGladeToRight: false,
@@ -28,7 +30,7 @@ var Pegman = {
     },
 
 
-    init: function (pegmanSprite) {
+    init: function (pegmanSprite, gameObj) {
         this.pegmanSprite = pegmanSprite;
         TopDownGame.game.time.events.add(500, delayEnBody, this);
         // getSelfInfo();
@@ -569,6 +571,7 @@ var Pegman = {
                 this.playNextAction();
                 break;
             case "fillpit":
+                //this.game.fillSound.play();
                 var direction_to_put = stepcount;
                 TopDownGame.game.camera.shake(0.003, 100);
                 var putx, puty;
@@ -721,6 +724,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
         TopDownGame.game.time.events.add(200, delayBeforeShoot, this);
 
         function delayBeforeShoot() {
+            this.game.shotSound.play();
             this.anim = this.pegmanSprite.animations.play("SHOOT");
             weapon.fire();
             weapon.onKill.addOnce(function () {
@@ -759,6 +763,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
         if (TopDownGame.game.state.getCurrentState().key == "lesson0") {
             var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
             if (isOverlapping == true) {
+                this.game.successSound.play();
                 if (scene == 0) {
                     $("#modaltext").text(get_l10n("game0", "m2"));
                     $("#imagecontainer").attr('class', "hero");
@@ -877,6 +882,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
             if (scene == 0) {
                 var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
                 if (isOverlapping == true) {
+                    this.game.successSound.play();
                     $("#modaltext").text(get_l10n("game1", "m2"));
                     $("#imagecontainer").attr('class', "hero");
                     $("#exampleModal").modal();
@@ -994,6 +1000,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 });
                 if (aliveBarrelsCount == 0) {
                     scene = 5;
+                    this.game.successSound.play();
                     $("#modaltext").text(get_l10n("game1", "win"));
                     $("#imagecontainer").attr('class', 'hero_win');
                     //
@@ -1061,7 +1068,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 Blockly.mainWorkspace.clear();
                 Blockly.mainWorkspace.clearUndo();
                 Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
-
+                this.game.successSound.play();
                 TopDownGame.game.state.start('lesson22');
                 scene = 2;
                 toogleRunButton();
@@ -1088,6 +1095,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 }
             });
             if (aliveChestsCount == 0) {
+                this.game.successSound.play();
                 TopDownGame.game.state.start('lesson23');
                 scene = 3;
                 toogleRunButton();
@@ -1118,6 +1126,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 }
             });
             if (aliveChestsCount == 0) {
+                this.game.successSound.play();
                 TopDownGame.game.state.start('lesson24');
                 scene = 4;
                 toogleRunButton();
@@ -1149,6 +1158,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
             });
             if (aliveChestsCount == 0) {
                 scene = 5;
+                this.game.successSound.play();
                 TopDownGame.game.state.start('lesson25');
                 Blockly.mainWorkspace.clear();
                 Blockly.mainWorkspace.clearUndo();
@@ -1179,7 +1189,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 }
             });
             if (aliveChestsCount == 0) {
-
+                this.game.successSound.play();
                 $("#modaltext").text(get_l10n("game2", "win"));
                 $("#imagecontainer").attr('class', 'hero_win');
                 $("#exampleModal").modal();
@@ -1230,6 +1240,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
         if (TopDownGame.game.state.getCurrentState().key == "lesson3") {
             if (setblocks == tilestodraw.length) {
                 if (scene == 6) {
+                    this.game.successSound.play();
                     $("#modaltext").text(get_l10n("game3", "win"));
                     $("#imagecontainer").attr('class', 'hero_win');
                     $("#exampleModal").modal();
@@ -1253,6 +1264,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     $("#nextButton").show();
 
                     $('#nextButton').one('click', function () {
+                        this.game.successSound.play();
                         scene += 1;
 
                         $(this).prop('disabled', true);
@@ -1312,7 +1324,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     this.lsp.x = player.x;
                     this.lsp.y = player.y;
                     scene += 1;
-
+                    this.game.successSound.play();
                     load_scene();
                     toogleRunButton();
                     try {
@@ -1323,6 +1335,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                 } else if (scene == 5) {
                     var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
                     if (isOverlapping == true) {
+                        this.game.successSound.play();
                         pointer.visible = false;
                         scene = 42;
                         toogleRunButton();
@@ -1341,6 +1354,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                     console.log("scene = ", scene);
                     var isOverlapping = TopDownGame.game.physics.arcade.overlap(player, pointer, null, null, this);
                     if (isOverlapping == true) {
+                        this.game.successSound.play();
                         $("#modaltext").text(get_l10n("game4", "win"));
                         $("#imagecontainer").attr('class', 'hero_win');
 
@@ -1403,7 +1417,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
         if (TopDownGame.game.state.getCurrentState().key == "lesson5") {
             if (scene == "510") {
                 if (map.getTile(5, 4, flour).index == 236) {
-
+                    this.game.successSound.play();
                     scene = "511";
                     load_scene(scene);
                     toogleRunButton();
@@ -1419,6 +1433,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                         lastSuccessfullPosition.y = player.y;
                         scene = "512";
                         toogleRunButton();
+                        this.game.successSound.play();
                         load_scene(scene);
                         try {
                             saveWorkspace();
@@ -1431,6 +1446,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                         lastSuccessfullPosition.y = player.y;
                         scene = "513";
                         toogleRunButton();
+                        this.game.successSound.play();
                         load_scene(scene);
                         try {
                             saveWorkspace();
@@ -1443,6 +1459,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                         loadmap('lesson52');
                         scene = "521";
                         toogleRunButton();
+                        this.game.successSound.play();
                         load_scene(scene);
                         try {
                             saveWorkspace();
@@ -1463,6 +1480,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                         $("#exampleModal").modal();
                         revealArea();
                         scene = "522";
+                        this.game.successSound.play();
                         load_scene(scene);
                         try {
                             saveWorkspace();
@@ -1477,6 +1495,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                         $("#modaltext").text(get_l10n("game5", "m4"));
                         $("#exampleModal").modal();
                         scene = "531";
+                        this.game.successSound.play();
                         load_scene(scene);
                         try {
                             saveWorkspace();
@@ -1500,6 +1519,7 @@ Pegman.moveNSWE = function (x, y, stepcount = 1) {
                             $("#modaltext").text(get_l10n("game5", "fail"));
                             $("#exampleModal").modal();
                         } else {
+                            this.game.successSound.play();
                             $("#modaltext").text(get_l10n("game5", "win"));
                             $("#imagecontainer").attr('class', 'hero_win');
                             $("#exampleModal").modal();

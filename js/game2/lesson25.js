@@ -7,7 +7,11 @@ var weapon;
 var explosion;
 var items;
 var barrels;
-
+var explosionSound = null;
+var hitWallSound = null;
+var bubbleSound = null;
+var keyPickUpSound = null;
+var clickSound = null;
 var goalbarrelcount;
 var xyqueue = getArrayWithLimitedLength(10);
 var lastSuccessfullPosition = {
@@ -15,11 +19,18 @@ var lastSuccessfullPosition = {
     y: null
 }; //хранит положение какое было у спрайта когда он в последний раз соверлаппился с целью
 //title screen
-TopDownGame.Lesson25 = function() {};
+TopDownGame.Lesson25 = function () { };
 TopDownGame.Lesson25.prototype = {
-    create: function() {
+    create: function () {
+        this.shotSound = this.game.add.audio('shot');
+        this.successSound = this.game.add.audio('success');
+        explosionSound = this.game.add.audio("explosion");
+        hitWallSound = this.game.add.audio('hitwall');
+        bubbleSound = this.game.add.audio('bubble');
+        keyPickUpSound = this.game.add.audio('keypickup');
+        clickSound = this.game.add.audio('click');
         scene = 5; // 0 is start scene2 of the level
-        this.game.forceSingleUpdate=false;
+        this.game.forceSingleUpdate = false;
         this.map = this.game.add.tilemap('lesson25');
         //the first parameter is the tileset name as specified in Tiled, the second is the key to the asset
         this.map.addTilesetImage('tileSheet04-01', 'gameTiles');
@@ -66,7 +77,7 @@ TopDownGame.Lesson25.prototype = {
 
         this.upperLayer = this.map.createLayer('upperLayer');
         this.game.physics.arcade.enable(player);
-        player.body.collideWorldBounds=true;
+        player.body.collideWorldBounds = true;
         //this.game.physics.arcade.enable(pointer);
         player.body.setSize(60, 13, 40, 73);
 
@@ -81,7 +92,7 @@ TopDownGame.Lesson25.prototype = {
         //this.map.setCollisionBetween(1, 4000, true, 'blockLayer');
         //resizes the game world to match the layer dimensions
         this.flour.resizeWorld();
-        Pegman.init(player);
+        Pegman.init(player, this);
 
         weapon.bulletKillType = Phaser.Weapon.KILL_WORLD_BOUNDS;
         weapon.bulletAngleOffset = 0;
@@ -115,13 +126,13 @@ TopDownGame.Lesson25.prototype = {
         explosion.visible = false;
         explanim = explosion.animations.add('EXPL', [0, 1, 2, 3, 4, 5], 20, /*loop*/ false);
         explanim.onComplete.add(this.animationStopped, this);
-        
+
 
     },
 
 
 
-    update: function() {
+    update: function () {
 
         // this.game.camera.focusOnXY(player.x, player.y);
 
@@ -176,29 +187,31 @@ TopDownGame.Lesson25.prototype = {
     hitWall: function (sprite) {
 
         if (!flag && sprite.key == "pegman") {
+            hitWallSound.play();
             player.y = xyqueue[7].y;
             player.x = xyqueue[7].x;
-           Pegman.pegmanActions = [];
-           if (Pegman.tween) {
-               Pegman.tween.stop();
-           }
-           player.animations.play('HIT');
-           flag = true;
-       } else if (sprite.key == "bullet") {        
-           explosion.x = sprite.x - 20;
-           explosion.y = sprite.y - 50;
-           explosion.visible = true;
-           explosion.animations.play('EXPL');
-           sprite.kill();
-          
-       }
+            Pegman.pegmanActions = [];
+            if (Pegman.tween) {
+                Pegman.tween.stop();
+            }
+            player.animations.play('HIT');
+            flag = true;
+        } else if (sprite.key == "bullet") {
+            explosionSound.play();
+            explosion.x = sprite.x - 20;
+            explosion.y = sprite.y - 50;
+            explosion.visible = true;
+            explosion.animations.play('EXPL');
+            sprite.kill();
+
+        }
     },
-    animationStopped: function(sprite, animation) {
+    animationStopped: function (sprite, animation) {
         explosion.visible = false;
     },
-    sinkInWater: function() {
+    sinkInWater: function () {
         if (!flag) {
-         
+            bubbleSound.play();
             player.body.enable = false;
             b.visible = false;
 
@@ -224,13 +237,14 @@ TopDownGame.Lesson25.prototype = {
                 y: 0.1
             }, 1000, Phaser.Easing.Linear.None, true);
 
-            this.tween.onComplete.addOnce(function() {
+            this.tween.onComplete.addOnce(function () {
                 player.kill();
             }, this);
             flag = true;
         }
     },
-    bulletHitBarrel: function(sprite, bullet) {
+    bulletHitBarrel: function (sprite, bullet) {
+        explosionSound.play();
         var damage = 48;
         sprite.damage(damage);
         if (sprite["sprite"] == "restrictedToHit") {
@@ -266,29 +280,29 @@ TopDownGame.Lesson25.prototype = {
         bullet.kill();
         Pegman.globalhittedFlag = true;
     },
-    chestCallback: function(sprite, chest) {
+    chestCallback: function (sprite, chest) {
         chest.visible = false;
     },
 
-    createItems: function() {
+    createItems: function () {
         //create items
         chests = this.game.add.group();
         chests.enableBody = true;
         result = findObjectsByType('chest', this.map, 'objectLayer');
-        result.forEach(function(element) {
+        result.forEach(function (element) {
             this.createFromTiledObject(element, chests);
         }, this);
 
         barrels = this.game.add.group();
         barrels.enableBody = true;
         result = findObjectsByType('barrel', this.map, 'objectLayer');
-        result.forEach(function(element) {
+        result.forEach(function (element) {
             this.createFromTiledObject(element, barrels);
         }, this);
     },
 
     //create a sprite from an object
-    createFromTiledObject: function(element, group) {
+    createFromTiledObject: function (element, group) {
         var sprite = group.create(element.x, element.y, 'totalsheet', 163);
         //copy all properties to the sprite
         element.properties.forEach(function (element) {
@@ -314,7 +328,7 @@ TopDownGame.Lesson25.prototype = {
 function getArrayWithLimitedLength(length) {
     var array = new Array();
 
-    array.push = function() {
+    array.push = function () {
         if (this.length >= length) {
             this.shift();
         }

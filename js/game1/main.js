@@ -30,36 +30,3 @@ function resizeGame() {
     }
 
 }
-
-
-
-/* var runProgram_ = function() {
-    getSelfInfo();
-    //var statements_stack = Blockly.JavaScript.statementToCode(Blockly.Blocks['factory_base'], 'STACK');
-    TopDownGame.game.stage.updateTransform();
-    var code = Blockly.JavaScript.workspaceToCode(workspace);
-    try {
-        eval(code);
-    } catch (e) {
-        alert(e);
-    }
-    TopDownGame.game.stage.updateTransform();
-    Pegman.play();
-    TopDownGame.game.stage.updateTransform();
-};
-
-var resetProgram_ = function() {
-
-    try {
-        weapon.fireAngle = Phaser.ANGLE_RIGHT;
-    } catch (e) {
-
-    }
-
-
-    TopDownGame.game.stage.updateTransform();﻿
-    Pegman.reset2();
-    TopDownGame.game.stage.updateTransform();﻿
-
-    //TopDownGame.game.camera.follow(player);
-} */

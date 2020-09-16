@@ -8,6 +8,11 @@ var explosion;
 var items;
 var barrels;
 var goalbarrelcount;
+var explosionSound = null;
+var hitWallSound = null;
+var bubbleSound = null;
+var keyPickUpSound = null;
+var clickSound = null;
 var xyqueue = getArrayWithLimitedLength(10);
 var lastSuccessfullPosition = {
     x: null,
@@ -17,6 +22,13 @@ var lastSuccessfullPosition = {
 TopDownGame.Lesson22 = function () { };
 TopDownGame.Lesson22.prototype = {
     create: function () {
+        this.shotSound = this.game.add.audio('shot');
+        this.successSound = this.game.add.audio('success');
+        explosionSound = this.game.add.audio("explosion");
+        hitWallSound = this.game.add.audio('hitwall');
+        bubbleSound = this.game.add.audio('bubble');
+        keyPickUpSound = this.game.add.audio('keypickup');
+        clickSound = this.game.add.audio('click');
         scene = 2; // 0 is start scene2 of the level
         this.map = this.game.add.tilemap('lesson22');
         //the first parameter is the tileset name as specified in Tiled, the second is the key to the asset
@@ -70,7 +82,7 @@ TopDownGame.Lesson22.prototype = {
         this.map.setTileIndexCallback([...Array(300).keys()], this.hitWall, this, 'blockLayer');
 
         this.flour.resizeWorld();
-        Pegman.init(player);
+        Pegman.init(player, this);
         weapon = this.game.add.weapon(20, 'bullet');
 
 
@@ -166,24 +178,27 @@ TopDownGame.Lesson22.prototype = {
     hitWall: function (sprite) {
 
         if (!flag && sprite.key == "pegman") {
+            hitWallSound.play();
             player.y = xyqueue[7].y;
             player.x = xyqueue[7].x;
-           Pegman.pegmanActions = [];
-           if (Pegman.tween) {
-               Pegman.tween.stop();
-           }
-           player.animations.play('HIT');
-           flag = true;
-       } else if (sprite.key == "bullet") {        
-           explosion.x = sprite.x - 20;
-           explosion.y = sprite.y - 50;
-           explosion.visible = true;
-           explosion.animations.play('EXPL');
-           sprite.kill();
-       }
+            Pegman.pegmanActions = [];
+            if (Pegman.tween) {
+                Pegman.tween.stop();
+            }
+            player.animations.play('HIT');
+            flag = true;
+        } else if (sprite.key == "bullet") {
+            explosionSound.play();
+            explosion.x = sprite.x - 20;
+            explosion.y = sprite.y - 50;
+            explosion.visible = true;
+            explosion.animations.play('EXPL');
+            sprite.kill();
+        }
     },
     sinkInWater: function () {
         if (!flag) {
+            bubbleSound.play();
             player.body.enable = false;
             flag = true;
             b.visible = false;

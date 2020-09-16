@@ -22,7 +22,11 @@ var bmd;
 var fringe;
 var fogCircle;
 var ccellx, xcelly;
-
+var explosionSound = null;
+var hitWallSound = null;
+var bubbleSound = null;
+var keyPickUpSound = null;
+var clickSound = null;
 var lastSuccessfullPosition = {
     x: null,
     y: null
@@ -36,6 +40,16 @@ var timeSinceLastIncrement = 0;
 TopDownGame.Lesson5 = function () { };
 TopDownGame.Lesson5.prototype = {
     create: function () {
+
+        this.shotSound = this.game.add.audio('shot');
+        this.successSound = this.game.add.audio('success');
+        this.fillSound = this.game.add.audio('fill');
+        explosionSound = this.game.add.audio("explosion");
+        hitWallSound = this.game.add.audio('hitwall');
+        bubbleSound = this.game.add.audio('bubble');
+        keyPickUpSound = this.game.add.audio('keypickup');
+        clickSound = this.game.add.audio('click');
+
         if (scene === undefined || scene === null) {
             Blockly.Xml.domToWorkspace(document.getElementById('startBlocks'), workspace);
             scene = "510";
@@ -60,7 +74,7 @@ TopDownGame.Lesson5.prototype = {
         pointer.body.setSize(10, 65, 48, 10);
         load_scene(scene);
 
-        Pegman.init(player);
+        Pegman.init(player, this);
 
         builddust = this.game.add.sprite(0, 0, 'build');
         builddust.visible = false;
@@ -262,7 +276,7 @@ TopDownGame.Lesson5.prototype = {
 
 function hitEvent() {
     if (!hitflag) {
-        
+        hitWallSound.play();
         player.body.enable = false;
         Pegman.pegmanActions = [];
         if (Pegman.tween) {
@@ -275,7 +289,7 @@ function hitEvent() {
 
 function sinkInWater() {
 
-    
+        bubbleSound.play();
         player.body.enable = false;
         sinkflag = true;
         var step = Maze.getStepInDirection[Maze.directionToString(Pegman.direction)];

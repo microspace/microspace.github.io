@@ -12,6 +12,11 @@ var blockLayer;
 var goldenKey;
 var flour;
 var sinkLayer;
+var explosionSound = null;
+var hitWallSound = null;
+var bubbleSound = null;
+var keyPickUpSound = null;
+var clickSound = null;
 // 0 is start scene of the level
 var goalbarrelcount;
 var xyqueue = getArrayWithLimitedLength(10);
@@ -21,6 +26,13 @@ TopDownGame.Lesson0 = function () { };
 TopDownGame.Lesson0.prototype = {
     create: function () {
         map = this.game.add.tilemap('lesson0');
+        this.shotSound = this.game.add.audio('shot');
+        this.successSound = this.game.add.audio('success');
+        explosionSound = this.game.add.audio("explosion");
+        hitWallSound = this.game.add.audio('hitwall');
+        bubbleSound = this.game.add.audio('bubble');
+        keyPickUpSound = this.game.add.audio('keypickup');
+        clickSound = this.game.add.audio('click');
         //the first parameter is the tileset name as specified in Tiled, the second is the key to the asset
         map.addTilesetImage('tileSheet04-01', 'gameTiles');
         //create layer
@@ -56,9 +68,9 @@ TopDownGame.Lesson0.prototype = {
         }
         var result = findObjectsByType('goldenKey', map, 'objectLayer');
         goldenKey = this.game.add.sprite(result[0].x + 16, result[0].y - 16, 'goldenKey');
-         goldenKey.animations.add('SHADOW', [1], 2, /*loop*/ false);
-         goldenKey.animations.add('NOSHADOW', [0], 2, /*loop*/ false);
-         goldenKey.animations.play('SHADOW');
+        goldenKey.animations.add('SHADOW', [1], 2, /*loop*/ false);
+        goldenKey.animations.add('NOSHADOW', [0], 2, /*loop*/ false);
+        goldenKey.animations.play('SHADOW');
         goldenKey.realX = goldenKey.x;
         goldenKey.realY = goldenKey.y;
         this.game.physics.arcade.enable(goldenKey);
@@ -112,7 +124,7 @@ TopDownGame.Lesson0.prototype = {
         //map.setCollisionBetween(1, 2000, true, 'blockLayer');
         //resizes the game world to match the layer dimensions
         blockLayer.resizeWorld();
-        Pegman.init(player);
+        Pegman.init(player, this);
         this.upperLayer = map.createLayer('upperLayer');
 
 
@@ -126,12 +138,13 @@ TopDownGame.Lesson0.prototype = {
         //this.game.physics.arcade.overlap(bullets, aliens, collisionHandler, null, this);
         //blockLayer.debug = true;
 
-  
+
     },
     animationStopped: function () {
         explosion.visible = false;
     },
     restoreBridge: function () {
+        clickSound.play();
         map.removeTile(19, 7, sinkLayer);
         map.removeTile(20, 7, sinkLayer);
         map.removeTile(21, 7, sinkLayer);
@@ -206,8 +219,9 @@ TopDownGame.Lesson0.prototype = {
     //     this.game.debug.body(goldenKey);
     // },
     hitWall: function () {
-        
+
         if (!flag) {
+            hitWallSound.play();
             player.y = xyqueue[7].y;
             player.x = xyqueue[7].x;
             Pegman.pegmanActions = [];
@@ -220,8 +234,9 @@ TopDownGame.Lesson0.prototype = {
     },
 
     goldenKeyCallback: function () {
-        
+
         if (!flag) {
+            keyPickUpSound.play()
             //goldenKey.visible = false;
             //goldenKey.body.enable = false;
             goldenKey.animations.play('NOSHADOW');
@@ -233,6 +248,7 @@ TopDownGame.Lesson0.prototype = {
     },
     sinkInWater: function () {
         if (!flag) {
+            bubbleSound.play();
             Pegman.pegmanActions = [];
             if (Pegman.tween) {
                 Pegman.tween.stop();

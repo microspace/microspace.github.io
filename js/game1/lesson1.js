@@ -7,6 +7,9 @@ var explosion;
 var items;
 var barrels;
 var restrictedToHit = false; // нужна дял того чтобы запретить конечную проверку при выстреле по бочке
+var explosionSound = null;
+var hitWallSound = null;
+var bubbleSound = null;
 // 0 is start scene of the level
 var goalbarrelcount;
 var xyqueue = getArrayWithLimitedLength(10);
@@ -15,6 +18,13 @@ TopDownGame.Lesson1 = function () {};
 TopDownGame.Lesson1.prototype = {
     create: function () {
         this.map = this.game.add.tilemap('lesson1');
+        this.shotSound = this.game.add.audio('shot');
+        this.successSound = this.game.add.audio('success');
+        explosionSound = this.game.add.audio("explosion");
+        hitWallSound = this.game.add.audio('hitwall');
+        bubbleSound = this.game.add.audio('bubble');
+        keyPickUpSound = this.game.add.audio('keypickup');
+        clickSound = this.game.add.audio('click');
         //the first parameter is the tileset name as specified in Tiled, the second is the key to the asset
         this.map.addTilesetImage('tileSheet04-01', 'gameTiles');
         //create layer
@@ -104,7 +114,7 @@ TopDownGame.Lesson1.prototype = {
         //this.map.setCollisionBetween(1, 2000, true, 'blockLayer');
         //resizes the game world to match the layer dimensions
         this.blockLayer.resizeWorld();
-        Pegman.init(player);
+        Pegman.init(player, this);
         //player.kill();
 
         //bullets
@@ -184,9 +194,7 @@ TopDownGame.Lesson1.prototype = {
     // render: function () {
 
     // },
-    hitWall: function (sprite) {
-
-
+    hitWall: (sprite) => {
         if (!flag && sprite.key == "pegman") {
             player.y = xyqueue[7].y;
             player.x = xyqueue[7].x;
@@ -196,7 +204,9 @@ TopDownGame.Lesson1.prototype = {
             }
             player.animations.play('HIT');
             flag = true;
+            hitWallSound.play();
         } else {
+            explosionSound.play();
             explosion.x = sprite.x - 20;
             explosion.y = sprite.y - 50;
             explosion.visible = true;
@@ -205,7 +215,7 @@ TopDownGame.Lesson1.prototype = {
         }
     },
     bulletHitBarrel: function (sprite, bullet) {
-
+        explosionSound.play();
         var damage = 48;
         sprite.damage(damage);
         if (sprite["sprite"] == "restrictedToHit") {
@@ -248,6 +258,7 @@ TopDownGame.Lesson1.prototype = {
     },
     sinkInWater: function () {
         if (!flag) {
+            bubbleSound.play();
             Pegman.pegmanActions = [];
             if (Pegman.tween) {
                 Pegman.tween.stop();
