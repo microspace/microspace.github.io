@@ -40,6 +40,7 @@ TopDownGame.Preload.prototype = {
         this.load.audio('keypickup', 'assets/sounds/keypickup.mp3');
         this.load.audio('click', 'assets/sounds/click.mp3');
         this.load.audio('success', 'assets/sounds/success.mp3');
+        this.load.audio('fill', 'assets/sounds/fill.mp3');
     },
     create: function() {
       //   
