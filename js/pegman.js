@@ -31,6 +31,7 @@ var Pegman = {
 
 
     init: function (pegmanSprite, gameObj) {
+        this.game = gameObj;
         this.pegmanSprite = pegmanSprite;
         TopDownGame.game.time.events.add(500, delayEnBody, this);
         // getSelfInfo();
@@ -571,7 +572,7 @@ var Pegman = {
                 this.playNextAction();
                 break;
             case "fillpit":
-                //this.game.fillSound.play();
+                this.game.fillSound.play();
                 var direction_to_put = stepcount;
                 TopDownGame.game.camera.shake(0.003, 100);
                 var putx, puty;
@@ -600,6 +601,7 @@ var Pegman = {
                 break;
 
             case "build":
+                this.game.fillSound.play();
                 var tileIDToReplace;
                 var tileToReplaceX;
                 var tileToReplaceY;
