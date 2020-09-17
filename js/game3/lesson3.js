@@ -52,6 +52,7 @@ TopDownGame.Lesson3.prototype = {
 
         this.shotSound = this.game.add.audio('shot');
         this.successSound = this.game.add.audio('success');
+        this.fillSound = this.game.add.audio('fill');
         explosionSound = this.game.add.audio("explosion");
         hitWallSound = this.game.add.audio('hitwall');
         bubbleSound = this.game.add.audio('bubble');
